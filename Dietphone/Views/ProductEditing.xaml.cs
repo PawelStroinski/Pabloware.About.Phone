@@ -29,7 +29,7 @@ namespace Dietphone.Views
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             viewModel = new ProductEditingViewModel(App.Factories, navigator);
             DataContext = viewModel;
-            MessageBox.Show("Świnoujście!");
+            MessageBox.Show("Tarnobrzeg!");
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
