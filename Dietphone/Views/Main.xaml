@@ -1,0 +1,99 @@
+﻿<phone:PhoneApplicationPage xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"  
+    xmlns:telerikPrimitivesLoopingList="clr-namespace:Telerik.Windows.Controls.LoopingList;assembly=Telerik.Windows.Controls.Primitives"
+    x:Class="Dietphone.Views.Main"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    shell:SystemTray.IsVisible="True" 
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"     
+    xmlns:watermark="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl" 
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:viewModels="clr-namespace:Dietphone.ViewModels" xmlns:views="clr-namespace:Dietphone.Views" 
+    BackKeyPress="Main_BackKeyPress" Loaded="Main_Loaded">
+
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="MealListItemsTemplate">
+            <Grid>
+                <TextBlock Margin="0,31,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextSmallStyle}" HorizontalAlignment="Left" Width="188" Text="{Binding Description}"/>
+                <TextBlock Margin="192,31,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextSmallStyle}" HorizontalAlignment="Left" Width="264" Text="{Binding Summary}"/>
+                <TextBlock Margin="92,0,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextSubtleStyle}" HorizontalAlignment="Left" Width="96" Text="{Binding CalendarDate}"/>
+                <TextBlock Margin="0" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Left" Width="35" Text="{Binding DayOfWeek}"/>
+                <TextBlock Margin="39,0,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Left" Width="49" Text="{Binding Time}"/>
+                <TextBlock Margin="0,0,182,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Right" Width="82" TextAlignment="Right" Text="{Binding CU}"/>
+                <TextBlock Margin="0,0,95,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Right" Width="83" TextAlignment="Right" Text="{Binding FPU}"/>
+                <TextBlock Margin="0" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}" HorizontalAlignment="Right" Width="91" TextAlignment="Right" Text="{Binding Energy}"/>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ProductListItemsTemplate">
+            <Grid>
+                <TextBlock Margin="0" Text="{Binding Name}" VerticalAlignment="Top" Style="{StaticResource PhoneTextNormalStyle}"/>
+                <TextBlock Margin="0,31,374,0" Text="{Binding CuPer100g}" VerticalAlignment="Top" Style="{StaticResource PhoneTextSmallStyle}" HorizontalAlignment="Right" Width="82" TextAlignment="Right" />
+                <TextBlock Margin="86,31,0,0" Text="{Binding FpuPer100g}" VerticalAlignment="Top" Style="{StaticResource PhoneTextSmallStyle}" HorizontalAlignment="Left" Width="83" TextAlignment="Right"/>
+                <TextBlock Margin="173,31,192,0" Text="{Binding EnergyPer100g}" VerticalAlignment="Top" Style="{StaticResource PhoneTextSmallStyle}" TextAlignment="Right" />
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="CommonListItemsStyle" TargetType="telerikPrimitivesLoopingList:LoopingListItem">
+            <Setter Property="CacheMode" Value="BitmapCache"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="telerikPrimitivesLoopingList:LoopingListItem">
+                        <Border x:Name="root" BorderThickness="0" Margin="0" Background="{TemplateBinding Background}">
+                            <ContentControl x:Name="contentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" DataContext="{TemplateBinding DataContext}" Padding="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Name="ShowSearchAnimation">
+            <DoubleAnimation Duration="0:0:0.3" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SearchBorder" d:IsOptimized="True"/>
+        </Storyboard>
+        <Storyboard x:Name="HideSearchAnimation">
+            <DoubleAnimation Duration="0:0:0.1" To="-100" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="SearchBorder" d:IsOptimized="True"/>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <controls:Pivot Title="DIETPHONE" x:Name="Pivot" SelectionChanged="Pivot_SelectionChanged" SelectedIndex="1">
+            <controls:PivotItem Header="posiłki">
+                <telerikPrimitives:RadLoopingList HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="MealListItems" CacheMode="BitmapCache" ItemSpacing="0" ItemHeight="70" ItemWidth="456" ItemTemplate="{StaticResource MealListItemsTemplate}" ItemStyle="{StaticResource CommonListItemsStyle}">
+                </telerikPrimitives:RadLoopingList>
+            </controls:PivotItem>
+            <controls:PivotItem Header="produkty" x:Name="Products">
+                <!--Width="480" Height="535" Margin="-12 0 -12 0"     /         Width="456" Height="535"-->
+                <views:ProductListing HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="535" Margin="-12 0 -12 0" x:Name="ProductListing" CategoriesPoppedUp="ProductListing_CategoriesPoppedUp" MouseEnter="ProductListing_MouseEnter" />
+            </controls:PivotItem>
+            <controls:PivotItem Header="potrawy"/>
+        </controls:Pivot>
+        <Border Name="SearchBorder" Height="60" Margin="{StaticResource PhoneHorizontalMargin}" VerticalAlignment="Top" Padding="0" BorderThickness="0" Background="{StaticResource PhoneBackgroundBrush}" RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <CompositeTransform TranslateY="-100"/>
+            </Border.RenderTransform>
+            <watermark:WatermarkTextBox Name="SearchBox" Height="72" VerticalAlignment="Top" WatermarkText="Szukaj" KeyUp="SearchBox_KeyUp" Text="{Binding Search, Mode=TwoWay}">
+                <i:Interaction.Behaviors>
+                    <viewModels:UpdateOnTextChangedBehavior/>
+                </i:Interaction.Behaviors>
+            </watermark:WatermarkTextBox>
+        </Border>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.add.rest.png" Text="dodaj"/>
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.search.rest.png" Text="szukaj" Click="SearchIcon_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
