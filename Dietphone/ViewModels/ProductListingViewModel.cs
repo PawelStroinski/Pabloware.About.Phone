@@ -26,6 +26,7 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler BeginDataUpdate;
         public event EventHandler EndDataUpdate;
+        public event EventHandler Invalidate;
         private Factories factories;
         private MaxNutritivesInCategories maxNutritives;
         private ProductViewModel selectedProduct;
@@ -83,6 +84,7 @@ namespace Dietphone.ViewModels
                 if (product != null)
                 {
                     product.Invalidate();
+                    OnInvalidate();
                 }
             }
         }
@@ -127,13 +129,25 @@ namespace Dietphone.ViewModels
         private void OnBeginDataUpdate()
         {
             if (BeginDataUpdate != null)
+            {
                 BeginDataUpdate(this, EventArgs.Empty);
+            }
         }
 
         private void OnEndDataUpdate()
         {
             if (EndDataUpdate != null)
+            {
                 EndDataUpdate(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnInvalidate()
+        {
+            if (Invalidate != null)
+            {
+                Invalidate(this, EventArgs.Empty);
+            }
         }
 
         private void OnSelectedProductChanged()
@@ -147,7 +161,7 @@ namespace Dietphone.ViewModels
             OnPropertyChanged("SelectedProduct");
         }
 
-        private class CategoriesAndProductsLoader
+        public class CategoriesAndProductsLoader
         {
             private ObservableCollection<CategoryViewModel> categories = new ObservableCollection<CategoryViewModel>();
             private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
@@ -163,16 +177,34 @@ namespace Dietphone.ViewModels
                 maxNutritives = viewModel.maxNutritives;
             }
 
+            public CategoriesAndProductsLoader(Factories factories)
+            {
+                this.factories = factories;
+            }
+
             public void LoadAsync()
             {
+                if (viewModel == null)
+                {
+                    throw new InvalidOperationException("Use other constructor for this operation.");
+                }
                 if (isLoading)
+                {
                     return;
+                }
                 var worker = new BackgroundWorker();
                 worker.DoWork += new DoWorkEventHandler(Worker_DoWork);
                 worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Worker_RunWorkerCompleted);
                 viewModel.IsBusy = true;
                 isLoading = true;
                 worker.RunWorkerAsync();
+            }
+
+            public ObservableCollection<CategoryViewModel> GetCategoriesSyncReloaded()
+            {
+                categories.Clear();
+                LoadCategories();
+                return categories;
             }
 
             private void Worker_DoWork(object sender, DoWorkEventArgs e)

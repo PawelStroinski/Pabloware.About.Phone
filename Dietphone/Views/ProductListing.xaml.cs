@@ -32,6 +32,7 @@ namespace Dietphone.Views
             ViewModel.UpdateSortDescriptors();
             ViewModel.BeginDataUpdate += new EventHandler(ViewModel_BeginDataUpdate);
             ViewModel.EndDataUpdate += new EventHandler(ViewModel_EndDataUpdate);
+            ViewModel.Invalidate += new EventHandler(ViewModel_Invalidate);
         }
 
         private void ViewModel_BeginDataUpdate(object sender, EventArgs e)
@@ -42,6 +43,16 @@ namespace Dietphone.Views
         private void ViewModel_EndDataUpdate(object sender, EventArgs e)
         {
             List.EndDataUpdate();
+        }
+
+        private void ViewModel_Invalidate(object sender, EventArgs e)
+        {
+            var top = List.TopVisibleItem;
+            List.RefreshData();
+            if (top != null && top.Value != null)
+            {
+                List.BringIntoView(top.Value);
+            }
         }
 
         private void List_GroupPickerItemTap(object sender, Telerik.Windows.Controls.GroupPickerItemTapEventArgs e)

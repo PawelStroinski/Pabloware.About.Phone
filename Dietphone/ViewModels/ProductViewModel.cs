@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using Dietphone.Models;
+using System.Collections.ObjectModel;
 
 namespace Dietphone.ViewModels
 {
     public class ProductViewModel : ViewModelBase
     {
         public Product Product { get; private set; }
+        public Collection<CategoryViewModel> Categories { private get; set; }
         private readonly MaxNutritivesInCategories maxNutritives;
         private const byte RECT_WIDTH = 25;
 
@@ -32,11 +34,15 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public Category Category
+        public CategoryViewModel Category
         {
             get
             {
-                return Product.Category;
+                if (Categories == null)
+                {
+                    throw new InvalidOperationException("Set Categories first.");
+                }
+                return GetCategory();
             }
             set
             {
@@ -257,7 +263,7 @@ namespace Dietphone.ViewModels
 
         public void Invalidate()
         {
-            maxNutritives.InvalidateCategory(Product.CategoryId);
+            maxNutritives.Invalidate();
             OnPropertyChanged(String.Empty);
         }
 
@@ -269,6 +275,14 @@ namespace Dietphone.ViewModels
             var width = multiplier * RECT_WIDTH;
             var roundedWidth = (byte)Math.Round(width);
             return roundedWidth;
+        }
+
+        private CategoryViewModel GetCategory()
+        {
+            var result = from viewModel in Categories
+                         where viewModel.Id == Product.CategoryId
+                         select viewModel;
+            return result.FirstOrDefault();
         }
 
         private void InvalidateMaxNutritives()
@@ -289,6 +303,11 @@ namespace Dietphone.ViewModels
         public MaxNutritivesInCategories(Finder finder)
         {
             this.finder = finder;
+        }
+
+        public void Invalidate()
+        {
+            nutritives.Clear();
         }
 
         public void InvalidateCategory(Guid categoryId)

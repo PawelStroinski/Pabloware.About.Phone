@@ -18,11 +18,15 @@ namespace Dietphone.ViewModels
 
         public CategoryViewModel(Category category)
         {
-            if (category == null)
-            {
-                throw new NullReferenceException("category");
-            }
             Category = category;
+        }
+
+        public Guid Id
+        {
+            get
+            {
+                return Category.Id;
+            }
         }
 
         public string Name

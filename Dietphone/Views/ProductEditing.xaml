@@ -11,7 +11,8 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True"
+    xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -25,7 +26,21 @@
         </StackPanel>
 
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top"/>
+            <StackPanel>
+                <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top"/>
+                <telerikInput:RadListPicker PopupHeader="KATEGORIA" Header="Kategoria" InlineModeThreshold="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}">
+                    <telerikInput:RadListPicker.PopupItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="16 -8 0 0"/>
+                        </DataTemplate>
+                    </telerikInput:RadListPicker.PopupItemTemplate>
+                    <telerikInput:RadListPicker.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" Margin="12 -3 0 0" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                        </DataTemplate>
+                    </telerikInput:RadListPicker.ItemTemplate>
+                </telerikInput:RadListPicker>
+            </StackPanel>
         </Grid>
     </Grid>
 
