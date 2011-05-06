@@ -144,10 +144,9 @@ namespace Dietphone.ViewModels
         {
             if (SelectedProduct != null)
             {
-                var model = SelectedProduct.Product;
-                Navigator.GoToProductEditing(model.Id);
+                IsBusy = true;
+                Navigator.GoToProductEditing(SelectedProduct.Id);
             }
-            OnPropertyChanged("SelectedProduct");
         }
 
         private void OnBeforeRefresh()
