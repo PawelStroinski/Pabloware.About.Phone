@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
 using System.Diagnostics;
+using Telerik.Windows.Data;
 
 namespace Dietphone.Views
 {
@@ -19,6 +20,8 @@ namespace Dietphone.Views
     {
         public ProductListingViewModel ViewModel { get; private set; }
         public event EventHandler CategoriesPoppedUp;
+        private Guid topItemId;
+        private bool topItemIsCategory;
 
         public ProductListing()
         {
@@ -32,7 +35,8 @@ namespace Dietphone.Views
             ViewModel.UpdateSortDescriptors();
             ViewModel.BeginDataUpdate += new EventHandler(ViewModel_BeginDataUpdate);
             ViewModel.EndDataUpdate += new EventHandler(ViewModel_EndDataUpdate);
-            ViewModel.Invalidate += new EventHandler(ViewModel_Invalidate);
+            ViewModel.BeforeRefresh += new EventHandler(ViewModel_BeforeRefresh);
+            ViewModel.AfterRefresh += new EventHandler(ViewModel_AfterRefresh);
         }
 
         private void ViewModel_BeginDataUpdate(object sender, EventArgs e)
@@ -45,14 +49,57 @@ namespace Dietphone.Views
             List.EndDataUpdate();
         }
 
-        private void ViewModel_Invalidate(object sender, EventArgs e)
+        Stopwatch sw = new Stopwatch();
+
+        private void ViewModel_BeforeRefresh(object sender, EventArgs e)
         {
-            var top = List.TopVisibleItem;
-            List.RefreshData();
-            if (top != null && top.Value != null)
+            sw.Start();
+            List.IsAsyncBalanceEnabled = false;
+            topItemId = Guid.Empty;
+            var topItemSource = List.TopVisibleItem;
+            if (topItemSource != null && topItemSource.Value != null)
             {
-                List.BringIntoView(top.Value);
+                var topItem = topItemSource.Value;
+                if (topItem is ProductViewModel)
+                {
+                    var product = topItem as ProductViewModel;
+                    topItemId = product.Id;
+                    topItemIsCategory = false;
+                }
+                else
+                    if (topItem is DataGroup)
+                    {
+                        var dataGroup = topItem as DataGroup;
+                        if (dataGroup.Key is CategoryViewModel)
+                        {
+                            var category = dataGroup.Key as CategoryViewModel;
+                            topItemId = category.Id;
+                            topItemIsCategory = true;
+                        }
+                    }
             }
+        }
+
+        private void ViewModel_AfterRefresh(object sender, EventArgs e)
+        {
+            object topItem = null;
+            if (topItemIsCategory)
+            {
+                var category = ViewModel.FindCategory(topItemId);
+                var group = from dataGroup in List.Groups
+                            where dataGroup.Key == category
+                            select dataGroup;
+                topItem = group.FirstOrDefault();
+            }
+            else
+            {
+                topItem = ViewModel.FindProduct(topItemId);
+            }
+            if (topItem != null)
+            {
+                List.BringIntoView(topItem);
+            }
+            List.IsAsyncBalanceEnabled = true;
         }
 
         private void List_GroupPickerItemTap(object sender, Telerik.Windows.Controls.GroupPickerItemTapEventArgs e)
@@ -66,6 +113,14 @@ namespace Dietphone.Views
             {
                 CategoriesPoppedUp(this, EventArgs.Empty);
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            //sw.Stop();
+            //if (sw.ElapsedMilliseconds != 0)
+            //    MessageBox.Show("L" + sw.ElapsedMilliseconds.ToString());
+            //sw.Reset();
         }
     }
 }

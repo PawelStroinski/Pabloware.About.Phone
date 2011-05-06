@@ -28,7 +28,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top"/>
-                <telerikInput:RadListPicker PopupHeader="KATEGORIA" Header="Kategoria" InlineModeThreshold="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}">
+                <telerikInput:RadListPicker Header="Kategoria" InlineModeThreshold="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}">
                     <telerikInput:RadListPicker.PopupItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="16 -8 0 0"/>
@@ -39,21 +39,15 @@
                             <TextBlock Text="{Binding Name}" Margin="12 -3 0 0" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
                         </DataTemplate>
                     </telerikInput:RadListPicker.ItemTemplate>
+                    <telerikInput:RadListPicker.PopupHeader>
+                        <StackPanel>
+                            <TextBlock Text="KATEGORIA"/>
+                        </StackPanel>
+                    </telerikInput:RadListPicker.PopupHeader>
                 </telerikInput:RadListPicker>
             </StackPanel>
         </Grid>
+        
     </Grid>
-
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-
+    
 </phone:PhoneApplicationPage>

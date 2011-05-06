@@ -1,19 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Telerik.Windows.Data;
-using Dietphone.Models;
-using System.ComponentModel;
+﻿using Dietphone.Models;
+using Dietphone.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using Telerik.Windows.Data;
+using System.Threading;
 
 namespace Dietphone.ViewModels
 {
@@ -26,7 +19,8 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler BeginDataUpdate;
         public event EventHandler EndDataUpdate;
-        public event EventHandler Invalidate;
+        public event EventHandler BeforeRefresh;
+        public event EventHandler AfterRefresh;
         private Factories factories;
         private MaxNutritivesInCategories maxNutritives;
         private ProductViewModel selectedProduct;
@@ -62,6 +56,15 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public override void Refresh()
+        {
+            OnBeforeRefresh();
+            maxNutritives.Reset();
+            var loader = new CategoriesAndProductsLoader(this);
+            loader.LoadAsync();
+            loader.AfterLoad += delegate { OnAfterRefresh(); };
+        }
+
         public void UpdateGroupDescriptors()
         {
             GroupDescriptors.Clear();
@@ -76,17 +79,20 @@ namespace Dietphone.ViewModels
             SortDescriptors.Add(sortByName);
         }
 
-        public void InvalidateProduct(Guid productId)
+        public ProductViewModel FindProduct(Guid productId)
         {
-            if (Products != null)
-            {
-                var product = FindProduct(productId);
-                if (product != null)
-                {
-                    product.Invalidate();
-                    OnInvalidate();
-                }
-            }
+            var result = from product in Products
+                         where product.Id == productId
+                         select product;
+            return result.FirstOrDefault();
+        }
+
+        public CategoryViewModel FindCategory(Guid categoryId)
+        {
+            var result = from category in Categories
+                         where category.Id == categoryId
+                         select category;
+            return result.FirstOrDefault();
         }
 
         protected override void OnSearchChanged()
@@ -113,16 +119,8 @@ namespace Dietphone.ViewModels
                 throw new NullReferenceException("product");
             }
             var result = from category in Categories
-                         where category.Category.Id == product.Product.CategoryId
+                         where category.Id == product.Product.CategoryId
                          select category;
-            return result.FirstOrDefault();
-        }
-
-        private ProductViewModel FindProduct(Guid productId)
-        {
-            var result = from product in Products
-                         where product.Product.Id == productId
-                         select product;
             return result.FirstOrDefault();
         }
 
@@ -142,27 +140,35 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void OnInvalidate()
-        {
-            if (Invalidate != null)
-            {
-                Invalidate(this, EventArgs.Empty);
-            }
-        }
-
         private void OnSelectedProductChanged()
         {
             if (SelectedProduct != null)
             {
                 var model = SelectedProduct.Product;
                 Navigator.GoToProductEditing(model.Id);
-                SelectedProduct = null;
             }
             OnPropertyChanged("SelectedProduct");
         }
 
+        private void OnBeforeRefresh()
+        {
+            if (BeforeRefresh != null)
+            {
+                BeforeRefresh(this, EventArgs.Empty);
+            }
+        }
+
+        private void OnAfterRefresh()
+        {
+            if (AfterRefresh != null)
+            {
+                AfterRefresh(this, EventArgs.Empty);
+            }
+        }
+
         public class CategoriesAndProductsLoader
         {
+            public EventHandler AfterLoad;
             private ObservableCollection<CategoryViewModel> categories = new ObservableCollection<CategoryViewModel>();
             private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
             private ProductListingViewModel viewModel;
@@ -193,32 +199,33 @@ namespace Dietphone.ViewModels
                     return;
                 }
                 var worker = new BackgroundWorker();
-                worker.DoWork += new DoWorkEventHandler(Worker_DoWork);
-                worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(Worker_RunWorkerCompleted);
+                worker.DoWork += delegate { DoWork(); };
+                worker.RunWorkerCompleted += delegate { WorkCompleted(); };
                 viewModel.IsBusy = true;
                 isLoading = true;
                 worker.RunWorkerAsync();
             }
 
-            public ObservableCollection<CategoryViewModel> GetCategoriesSyncReloaded()
+            public ObservableCollection<CategoryViewModel> GetCategoriesReloaded()
             {
                 categories.Clear();
                 LoadCategories();
                 return categories;
             }
 
-            private void Worker_DoWork(object sender, DoWorkEventArgs e)
+            private void DoWork()
             {
                 LoadCategories();
                 LoadProducts();
             }
 
-            private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+            private void WorkCompleted()
             {
                 AssignCategories();
                 AssignProducts();
                 viewModel.IsBusy = false;
                 isLoading = false;
+                OnAfterLoad();
             }
 
             private void LoadCategories()
@@ -257,6 +264,14 @@ namespace Dietphone.ViewModels
             {
                 viewModel.Products = products;
                 viewModel.OnPropertyChanged("Products");
+            }
+
+            private void OnAfterLoad()
+            {
+                if (AfterLoad != null)
+                {
+                    AfterLoad(this, EventArgs.Empty);
+                }
             }
         }
     }

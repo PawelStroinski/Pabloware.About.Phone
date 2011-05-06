@@ -30,16 +30,5 @@ namespace Dietphone.Views
             viewModel = new ProductEditingViewModel(App.Factories, navigator);
             DataContext = viewModel;
         }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            var main = e.Content as Main;
-            if (main != null)
-            {
-                var listing = main.ProductListing;
-                var listingViewModel = listing.ViewModel;
-                viewModel.GoingToProductListing(listingViewModel);
-            }
-        }
     }
 }

@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using Dietphone.ViewModels;
 using Dietphone.Models;
 using Dietphone.BinarySerializers;
+using Microsoft.Phone.Tasks;
 
 namespace Dietphone
 {
@@ -124,6 +125,25 @@ namespace Dietphone
             {
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
+            }
+            else
+            {
+                var exception = e.ExceptionObject;
+                MailException(exception.ToString());
+                e.Handled = true;
+            }
+        }
+
+        private void MailException(string exception)
+        {
+            if (MessageBox.Show(exception, "A niech to, pluskwa w aplikacji! Zgłosić autorowi?",
+                MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                EmailComposeTask task = new EmailComposeTask();
+                task.To = "pol84@live.com";
+                task.Body = String.Format("Hej! Zgłaszam następującą pluskwę:\r\n\r\n{0}", exception);
+                task.Subject = "Pluskwa!";
+                task.Show();
             }
         }
 

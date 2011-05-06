@@ -49,6 +49,10 @@ namespace Dietphone.ViewModels
         {
         }
 
+        public virtual void Refresh()
+        {
+        }
+
         protected virtual void OnSearchChanged()
         {
         }
@@ -84,6 +88,14 @@ namespace Dietphone.ViewModels
             {
                 navigator = value;
                 OnNavigatorChanged();
+            }
+        }
+
+        public void Refresh()
+        {
+            if (subViewModel != null)
+            {
+                subViewModel.Refresh();
             }
         }
 

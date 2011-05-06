@@ -39,14 +39,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void GoingToProductListing(ProductListingViewModel listingViewModel)
-        {
-            if (model != null)
-            {
-                listingViewModel.InvalidateProduct(model.Id);
-            }
-        }
-
         private void FindModel()
         {
             var id = navigator.GetProductId();
@@ -62,7 +54,7 @@ namespace Dietphone.ViewModels
         private void LoadCategories()
         {
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
-            Categories = loader.GetCategoriesSyncReloaded();
+            Categories = loader.GetCategoriesReloaded();
             Product.Categories = Categories;
         }
     }

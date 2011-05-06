@@ -43,6 +43,7 @@ namespace Dietphone.Views
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             subConnector.Navigator = navigator;
+            subConnector.Refresh();
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

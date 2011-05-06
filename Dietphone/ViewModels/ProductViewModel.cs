@@ -21,6 +21,14 @@ namespace Dietphone.ViewModels
             this.maxNutritives = maxNutritives;
         }
 
+        public Guid Id
+        {
+            get
+            {
+                return Product.Id;
+            }
+        }
+
         public string Name
         {
             get
@@ -48,7 +56,7 @@ namespace Dietphone.ViewModels
             {
                 var oldCategory = Product.CategoryId;
                 Product.CategoryId = value.Id;
-                maxNutritives.InvalidateCategory(oldCategory);
+                maxNutritives.ResetCategory(oldCategory);
                 InvalidateMaxNutritives();
                 OnPropertyChanged("Category");
             }
@@ -261,12 +269,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void Invalidate()
-        {
-            maxNutritives.Invalidate();
-            OnPropertyChanged(String.Empty);
-        }
-
         private byte GetWidthOfFilledRect(float value, float maxValue)
         {
             if (maxValue == 0)
@@ -287,7 +289,7 @@ namespace Dietphone.ViewModels
 
         private void InvalidateMaxNutritives()
         {
-            maxNutritives.InvalidateCategory(Product.CategoryId);
+            maxNutritives.ResetCategory(Product.CategoryId);
             OnPropertyChanged("WidthOfFilledCuRect");
             OnPropertyChanged("WidthOfEmptyCuRect");
             OnPropertyChanged("WidthOfFilledFpuRect");
@@ -305,12 +307,12 @@ namespace Dietphone.ViewModels
             this.finder = finder;
         }
 
-        public void Invalidate()
+        public void Reset()
         {
             nutritives.Clear();
         }
 
-        public void InvalidateCategory(Guid categoryId)
+        public void ResetCategory(Guid categoryId)
         {
             if (nutritives.ContainsKey(categoryId))
             {
