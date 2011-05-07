@@ -41,7 +41,7 @@ namespace Dietphone.ViewModels
 
         private void FindModel()
         {
-            var id = navigator.GetProductId();
+            var id = navigator.GetPassedProductId();
             model = finder.FindProductById(id);
         }
 

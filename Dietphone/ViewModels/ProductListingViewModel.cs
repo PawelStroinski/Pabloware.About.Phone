@@ -144,7 +144,6 @@ namespace Dietphone.ViewModels
         {
             if (SelectedProduct != null)
             {
-                IsBusy = true;
                 Navigator.GoToProductEditing(SelectedProduct.Id);
             }
         }

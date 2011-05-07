@@ -17,19 +17,19 @@ namespace Dietphone.ViewModels
     {
         void GoToProductEditing(Guid productId);
         void GoToMain();
-        Guid GetProductId();
+        Guid GetPassedProductId();
     }
 
     public class NavigatorImpl : Navigator
     {
         private readonly NavigationService service;
-        private readonly IDictionary<string, string> inputQueryString;
+        private readonly IDictionary<string, string> passedQueryString;
         private const string PRODUCT_ID = "ProductId";
 
         public NavigatorImpl(NavigationService service, NavigationContext context)
         {
             this.service = service;
-            inputQueryString = context.QueryString;
+            passedQueryString = context.QueryString;
         }
 
         public void GoToProductEditing(Guid productId)
@@ -48,11 +48,11 @@ namespace Dietphone.ViewModels
             Navigate(destination);
         }
 
-        public Guid GetProductId()
+        public Guid GetPassedProductId()
         {
-            if (inputQueryString.ContainsKey(PRODUCT_ID))
+            if (passedQueryString.ContainsKey(PRODUCT_ID))
             {
-                return new Guid(inputQueryString[PRODUCT_ID]);
+                return new Guid(passedQueryString[PRODUCT_ID]);
             }
             else
             {
