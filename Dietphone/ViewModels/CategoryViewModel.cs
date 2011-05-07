@@ -55,5 +55,10 @@ namespace Dietphone.ViewModels
                 return string.Compare(Category.Name, anotherCategory.Name);
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
