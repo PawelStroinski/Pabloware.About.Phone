@@ -26,28 +26,25 @@
         </StackPanel>
 
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel>
-                <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top"/>
-                <telerikInput:RadListPicker Header="Kategoria" InlineModeThreshold="5" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}">
-                    <telerikInput:RadListPicker.PopupItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="16 -8 0 0"/>
-                        </DataTemplate>
-                    </telerikInput:RadListPicker.PopupItemTemplate>
-                    <telerikInput:RadListPicker.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" Margin="12 -3 0 0" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                        </DataTemplate>
-                    </telerikInput:RadListPicker.ItemTemplate>
-                    <telerikInput:RadListPicker.PopupHeader>
-                        <StackPanel>
-                            <TextBlock Text="KATEGORIA"/>
-                        </StackPanel>
-                    </telerikInput:RadListPicker.PopupHeader>
-                </telerikInput:RadListPicker>
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
+            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}">
+                <telerikInput:RadListPicker.PopupItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="{StaticResource PhoneFontSizeLarge}" Margin="24, 16, 24, 16"/>
+                    </DataTemplate>
+                </telerikInput:RadListPicker.PopupItemTemplate>
+                <telerikInput:RadListPicker.PopupHeader>
+                    <StackPanel>
+                        <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </telerikInput:RadListPicker.PopupHeader>
+            </telerikInput:RadListPicker>
         </Grid>
-        
+
     </Grid>
-    
+
 </phone:PhoneApplicationPage>
