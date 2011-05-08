@@ -35,7 +35,14 @@
             <Setter Property="PopupHeaderTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold"/>
+                        <StackPanel>
+                            <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Nowa" />
+                                <Button Content="Usuń" />
+                                <Button Content="Zmień nazwę" />
+                            </StackPanel>
+                        </StackPanel>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
