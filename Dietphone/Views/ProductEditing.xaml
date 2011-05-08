@@ -21,7 +21,7 @@
             <Setter Property="PopupItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" FontSize="{StaticResource PhoneFontSizeLarge}" Margin="24, 16, 24, 16"/>
+                        <TextBlock Text="{Binding}" Margin="24, 4, 24, 4"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -50,8 +50,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
-            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" 
-                                        Style="{StaticResource KategoriaListPickerStyle}"/>
+            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource KategoriaListPickerStyle}" IsAnimationEnabled="False"/>
         </Grid>
     </Grid>
 
