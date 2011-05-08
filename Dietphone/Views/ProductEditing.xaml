@@ -14,6 +14,7 @@
     shell:SystemTray.IsVisible="True"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
     xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    xmlns:c4f="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
@@ -29,20 +30,6 @@
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Margin="24, 4, 24, 4" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="PopupHeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Grid Width="432">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Grid.Column="0"/>
-                            <Button Content="Nowa kategoria" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" HorizontalAlignment="Right" Grid.Column="1" />
-                        </Grid>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
@@ -64,7 +51,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
-            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource KategoriaListPickerStyle}" IsAnimationEnabled="False"/>
+            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource KategoriaListPickerStyle}" IsAnimationEnabled="False">
+                <telerikInput:RadListPicker.PopupHeader>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
+                        <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png"/>
+                    </StackPanel>
+                </telerikInput:RadListPicker.PopupHeader>
+            </telerikInput:RadListPicker>
         </Grid>
     </Grid>
 

@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coding4Fun.Phone.Controls">
+      <HintPath>..\..\..\windowsphone\Coding4Fun.Phone\bin\Release\Coding4Fun.Phone.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls">
       <Private>True</Private>
