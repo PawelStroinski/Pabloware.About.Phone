@@ -159,7 +159,7 @@ namespace Dietphone
         {
             EmailComposeTask task = new EmailComposeTask();
             task.To = "pol84@live.com";
-            task.Body = String.Format("Hej! Zgłaszam następującą pluskwę:\r\n\r\n{0}", exception);
+            task.Body = String.Format("Zgłaszam poniższą pluskwę:\r\n\r\n{0}", exception);
             task.Subject = "Pluskwa!";
             task.Show();
         }
