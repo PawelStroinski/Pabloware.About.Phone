@@ -18,10 +18,17 @@
 
     <phone:PhoneApplicationPage.Resources>
         <Style x:Key="KategoriaListPickerStyle" TargetType="telerikInput:RadListPicker">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
             <Setter Property="PopupItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" Margin="24, 4, 24, 4"/>
+                        <TextBlock Text="{Binding}" Margin="24, 4, 24, 4" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
