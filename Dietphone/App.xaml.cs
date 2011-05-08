@@ -124,6 +124,12 @@ namespace Dietphone
             {
                 System.Diagnostics.Debugger.Break();
             }
+            else
+            {
+                var exception = e.Exception;
+                SendExceptionQuestion(exception.ToString());
+                e.Handled = true;
+            }
         }
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
