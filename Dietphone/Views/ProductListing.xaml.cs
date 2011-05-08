@@ -49,12 +49,9 @@ namespace Dietphone.Views
             List.EndDataUpdate();
         }
 
-        Stopwatch sw = new Stopwatch();
-
         private void ViewModel_BeforeRefresh(object sender, EventArgs e)
         {
-            sw.Start();
-            List.IsAsyncBalanceEnabled = false;
+            MyStopwatch.Start();
             topItemId = Guid.Empty;
             var topItemSource = List.TopVisibleItem;
             if (topItemSource != null && topItemSource.Value != null)
@@ -99,7 +96,6 @@ namespace Dietphone.Views
             {
                 List.BringIntoView(topItem);
             }
-            List.IsAsyncBalanceEnabled = true;
         }
 
         private void List_GroupPickerItemTap(object sender, Telerik.Windows.Controls.GroupPickerItemTapEventArgs e)
@@ -117,10 +113,7 @@ namespace Dietphone.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //sw.Stop();
-            //if (sw.ElapsedMilliseconds != 0)
-            //    MessageBox.Show("L" + sw.ElapsedMilliseconds.ToString());
-            //sw.Reset();
+            MyStopwatch.Stop();
         }
     }
 }

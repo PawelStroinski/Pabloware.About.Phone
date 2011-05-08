@@ -109,6 +109,7 @@
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Finder.cs" />
     <Compile Include="Models\Storage.cs" />
+    <Compile Include="ViewModels\MyStopwatch.cs" />
     <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductEditingViewModel.cs" />
     <Compile Include="Views\Main.xaml.cs">
