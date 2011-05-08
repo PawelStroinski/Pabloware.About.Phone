@@ -9,7 +9,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480" Loaded="UserControl_Loaded">
+    d:DesignHeight="480" d:DesignWidth="480">
 
     <Grid>
         <telerikDataControls:RadJumpList IsAsyncBalanceEnabled="True" Name="List" x:FieldModifier="private" ItemsSource="{Binding Products}" GroupPickerItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" GroupPickerItemTap="List_GroupPickerItemTap" GroupHeaderItemTap="List_GroupHeaderItemTap">

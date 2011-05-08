@@ -51,7 +51,6 @@ namespace Dietphone.Views
 
         private void ViewModel_BeforeRefresh(object sender, EventArgs e)
         {
-            MyStopwatch.Start();
             topItemId = Guid.Empty;
             var topItemSource = List.TopVisibleItem;
             if (topItemSource != null && topItemSource.Value != null)
@@ -109,11 +108,6 @@ namespace Dietphone.Views
             {
                 CategoriesPoppedUp(this, EventArgs.Empty);
             }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            MyStopwatch.Stop();
         }
     }
 }
