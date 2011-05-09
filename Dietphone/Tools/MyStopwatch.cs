@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 
-namespace Dietphone.ViewModels
+namespace Dietphone.Tools
 {
     public static class MyStopwatch
     {
