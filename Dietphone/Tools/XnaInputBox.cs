@@ -11,8 +11,8 @@ namespace Dietphone.Tools
         public string Title { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
-        public event EventHandler Ok;
-        public event EventHandler Cancel;
+        public event EventHandler<ConfirmedEventArgs> Confirmed;
+        public event EventHandler Cancelled;
         private readonly UserControl sender;
 
         public XnaInputBox(UserControl sender)
@@ -35,28 +35,35 @@ namespace Dietphone.Tools
             var dispatcher = sender.Dispatcher;
             if (string.IsNullOrEmpty(Text))
             {
-                dispatcher.BeginInvoke(() => { OnCancel(); });
+                dispatcher.BeginInvoke(() => { OnCancelled(); });
             }
             else
             {
-                dispatcher.BeginInvoke(() => { OnOk(); });
+                dispatcher.BeginInvoke(() => { OnConfirmed(); });
             }
         }
 
-        private void OnOk()
+        private void OnConfirmed()
         {
-            if (Ok != null)
+            if (Confirmed != null)
             {
-                Ok(this, EventArgs.Empty);
+                var args = new ConfirmedEventArgs();
+                args.Text = Text;
+                Confirmed(this, args);
             }
         }
 
-        private void OnCancel()
+        private void OnCancelled()
         {
-            if (Cancel != null)
+            if (Cancelled != null)
             {
-                Cancel(this, EventArgs.Empty);
+                Cancelled(this, EventArgs.Empty);
             }
         }
+    }
+
+    public class ConfirmedEventArgs : EventArgs
+    {
+        public string Text { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace Dietphone.ViewModels
 {
-    public class ProductEditingViewModel
+    public class ProductEditingViewModel : ViewModelBase
     {
         public ObservableCollection<CategoryViewModel> Categories { get; private set; }
         public ProductViewModel Product { get; private set; }
@@ -39,7 +39,21 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void AddCategory(string name)
+        public string CategoryName
+        {
+            get
+            {
+                var category = Product.Category;
+                return category.Name;
+            }
+            set
+            {
+                var category = Product.Category;
+                category.Name = value;
+            }
+        }
+
+        public void AddAndSetCategory(string name)
         {
             var model = factories.CreateCategory();
             var viewModel = new CategoryViewModel(model);

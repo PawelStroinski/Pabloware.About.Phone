@@ -54,11 +54,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var oldCategory = Product.CategoryId;
-                Product.CategoryId = value.Id;
-                maxNutritives.ResetCategory(oldCategory);
-                InvalidateMaxNutritives();
-                OnPropertyChanged("Category");
+                if (value != null)
+                {
+                    SetCategory(value);
+                }
             }
         }
 
@@ -285,6 +284,15 @@ namespace Dietphone.ViewModels
                          where viewModel.Id == Product.CategoryId
                          select viewModel;
             return result.FirstOrDefault();
+        }
+
+        private void SetCategory(CategoryViewModel value)
+        {
+            var oldCategory = Product.CategoryId;
+            Product.CategoryId = value.Id;
+            maxNutritives.ResetCategory(oldCategory);
+            InvalidateMaxNutritives();
+            OnPropertyChanged("Category");
         }
 
         private void InvalidateMaxNutritives()

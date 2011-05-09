@@ -13,13 +13,13 @@ using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
+using Telerik.Windows.Controls;
 
 namespace Dietphone.Views
 {
     public partial class ProductEditing : PhoneApplicationPage
     {
         private ProductEditingViewModel viewModel;
-        private XnaInputBox addCategoryBox;
 
         public ProductEditing()
         {
@@ -33,23 +33,33 @@ namespace Dietphone.Views
             DataContext = viewModel;
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
             Categories.IsExpanded = false;
-            addCategoryBox = new XnaInputBox(this);
-            addCategoryBox.Title = "DODAJ KATEGORIĘ";
-            addCategoryBox.Description = "Nazwa";
-            addCategoryBox.Ok += new EventHandler(addCategoryBox_Ok);
-            addCategoryBox.Show();
+            var input = new XnaInputBox(this)
+            {
+                Title = "DODAJ KATEGORIĘ",
+                Description = "Nazwa"
+            };
+            input.Confirmed += delegate { viewModel.AddAndSetCategory(input.Text); };
+            input.Show();
         }
 
-        private void addCategoryBox_Ok(object sender, EventArgs e)
+        private void RenameCategory_Click(object sender, RoutedEventArgs e)
         {
-            // Czekamy aż wątek będzie wolny bo inaczej RadListPicker miewa problemy ze zmianą wartości
-            Dispatcher.BeginInvoke(() =>
+            Categories.IsExpanded = false;
+            var input = new XnaInputBox(this)
             {
-                viewModel.AddCategory(addCategoryBox.Text);
-            });
+                Title = "EDYTUJ KATEGORIĘ",
+                Description = "Nazwa",
+                Text = viewModel.CategoryName
+            };
+            input.Confirmed += delegate
+            {
+                viewModel.CategoryName = input.Text;
+                Categories.ForceRefresh(ProgressBar);
+            };
+            input.Show();
         }
     }
 }
