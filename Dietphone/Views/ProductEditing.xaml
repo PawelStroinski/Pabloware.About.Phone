@@ -18,7 +18,7 @@
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <Style x:Key="KategoriaListPickerStyle" TargetType="telerikInput:RadListPicker">
+        <Style x:Key="CategoriesStyle" TargetType="telerikInput:RadListPicker">
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -51,11 +51,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
-            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource KategoriaListPickerStyle}" IsAnimationEnabled="False">
+            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories">
                 <telerikInput:RadListPicker.PopupHeader>
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
-                        <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png"/>
+                        <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="Add_Click"/>
                     </StackPanel>
                 </telerikInput:RadListPicker.PopupHeader>
             </telerikInput:RadListPicker>

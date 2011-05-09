@@ -12,12 +12,14 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 using System.Windows.Navigation;
+using Dietphone.Tools;
 
 namespace Dietphone.Views
 {
     public partial class ProductEditing : PhoneApplicationPage
     {
         private ProductEditingViewModel viewModel;
+        private XnaInputBox addCategoryBox;
 
         public ProductEditing()
         {
@@ -29,6 +31,21 @@ namespace Dietphone.Views
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             viewModel = new ProductEditingViewModel(App.Factories, navigator);
             DataContext = viewModel;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            Categories.IsExpanded = false;
+            addCategoryBox = new XnaInputBox(this);
+            addCategoryBox.Title = "DODAJ KATEGORIĘ";
+            addCategoryBox.Description = "Nazwa";
+            addCategoryBox.Ok += new EventHandler(addCategoryBox_Ok);
+            addCategoryBox.Show();
+        }
+
+        private void addCategoryBox_Ok(object sender, EventArgs e)
+        {
+            viewModel.AddCategory(addCategoryBox.Text);
         }
     }
 }

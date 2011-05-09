@@ -39,6 +39,15 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void AddCategory(string name)
+        {
+            var model = factories.CreateCategory();
+            var viewModel = new CategoryViewModel(model);
+            viewModel.Name = name;
+            Categories.Add(viewModel);
+            Product.Category = viewModel;
+        }
+
         private void FindModel()
         {
             var id = navigator.GetPassedProductId();

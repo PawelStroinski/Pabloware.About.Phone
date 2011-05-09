@@ -45,12 +45,16 @@ namespace Dietphone.Models
 
         public Product CreateProduct()
         {
-            return productFactory.CreateEntity();
+            var product = productFactory.CreateEntity();
+            product.Id = Guid.NewGuid();
+            return product;
         }
 
         public Category CreateCategory()
         {
-            return categoryFactory.CreateEntity();
+            var category = categoryFactory.CreateEntity();
+            category.Id = Guid.NewGuid();
+            return category;
         }
 
         private void CreateFactories()

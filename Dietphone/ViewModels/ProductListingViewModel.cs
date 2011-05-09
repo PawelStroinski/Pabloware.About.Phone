@@ -166,7 +166,7 @@ namespace Dietphone.ViewModels
 
         public class CategoriesAndProductsLoader
         {
-            public EventHandler AfterLoad;
+            public event EventHandler AfterLoad;
             private ObservableCollection<CategoryViewModel> categories = new ObservableCollection<CategoryViewModel>();
             private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
             private ProductListingViewModel viewModel;
