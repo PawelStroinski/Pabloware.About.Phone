@@ -62,6 +62,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.GamerServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -115,6 +117,7 @@
     <Compile Include="Tools\MyStopwatch.cs" />
     <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductEditingViewModel.cs" />
+    <Compile Include="Tools\XnaInputBox.cs" />
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>

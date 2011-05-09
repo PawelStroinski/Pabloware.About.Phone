@@ -13,13 +13,13 @@ using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
-using Coding4Fun.Phone.Controls;
 
 namespace Dietphone.Views
 {
     public partial class ProductEditing : PhoneApplicationPage
     {
         private ProductEditingViewModel viewModel;
+        private XnaInputBox addCategoryBox;
 
         public ProductEditing()
         {
@@ -36,27 +36,21 @@ namespace Dietphone.Views
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             Categories.IsExpanded = false;
-            var addCategoryInput = new InputPrompt
-            {
-                Title = "DODAJ KATEGORIĘ",
-                Message = "Nazwa",
-                IsCancelVisible = true
-            };
-            addCategoryInput.Completed +=
-                new EventHandler<PopUpEventArgs<string, PopUpResult>>(addCategoryInput_Completed);
-            addCategoryInput.Show();
+            addCategoryBox = new XnaInputBox(this);
+            addCategoryBox.Title = "DODAJ KATEGORIĘ";
+            addCategoryBox.Description = "Nazwa";
+            addCategoryBox.Ok += new EventHandler(addCategoryBox_Ok);
+            addCategoryBox.Show();
         }
 
-        private void addCategoryInput_Completed(object sender, PopUpEventArgs<string, PopUpResult> e)
+        private void addCategoryBox_Ok(object sender, EventArgs e)
         {
-            if (e.PopUpResult == PopUpResult.Ok && e.Result != "")
-            {
+            viewModel.AddCategory(addCategoryBox.Text);
                 // Czekamy aż wątek będzie wolny bo inaczej RadListPicker miewa problemy ze zmianą wartości
                 Dispatcher.BeginInvoke(() =>
                 {
                     viewModel.AddCategory(e.Result);
                 });
-            }
         }
     }
 }
