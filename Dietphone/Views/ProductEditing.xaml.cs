@@ -51,7 +51,11 @@ namespace Dietphone.Views
         {
             if (e.PopUpResult == PopUpResult.Ok && e.Result != "")
             {
-                viewModel.AddCategory(e.Result);
+                // Czekamy aż wątek będzie wolny bo inaczej RadListPicker miewa problemy ze zmianą wartości
+                Dispatcher.BeginInvoke(() =>
+                {
+                    viewModel.AddCategory(e.Result);
+                });
             }
         }
     }
