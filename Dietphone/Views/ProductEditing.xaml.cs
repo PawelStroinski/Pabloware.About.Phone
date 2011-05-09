@@ -45,12 +45,11 @@ namespace Dietphone.Views
 
         private void addCategoryBox_Ok(object sender, EventArgs e)
         {
-            viewModel.AddCategory(addCategoryBox.Text);
-                // Czekamy aż wątek będzie wolny bo inaczej RadListPicker miewa problemy ze zmianą wartości
-                Dispatcher.BeginInvoke(() =>
-                {
-                    viewModel.AddCategory(e.Result);
-                });
+            // Czekamy aż wątek będzie wolny bo inaczej RadListPicker miewa problemy ze zmianą wartości
+            Dispatcher.BeginInvoke(() =>
+            {
+                viewModel.AddCategory(addCategoryBox.Text);
+            });
         }
     }
 }
