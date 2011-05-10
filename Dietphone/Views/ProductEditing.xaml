@@ -66,4 +66,11 @@
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" Name="ProgressBar"/>
     </Grid>
 
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="SaveIcon_Click" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png" Text="anuluj" Click="CancelIcon_Click" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
 </phone:PhoneApplicationPage>

@@ -37,8 +37,11 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                Product.Name = value;
-                OnPropertyChanged("Name");
+                if (value != Product.Name)
+                {
+                    Product.Name = value;
+                    OnPropertyChanged("Name");
+                }
             }
         }
 

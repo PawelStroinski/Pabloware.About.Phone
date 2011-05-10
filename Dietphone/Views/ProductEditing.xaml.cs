@@ -14,6 +14,8 @@ using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
 using Telerik.Windows.Controls;
+using System.ComponentModel;
+using Microsoft.Phone.Shell;
 
 namespace Dietphone.Views
 {
@@ -31,6 +33,8 @@ namespace Dietphone.Views
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             viewModel = new ProductEditingViewModel(App.Factories, navigator);
             DataContext = viewModel;
+            viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
+            viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -95,5 +99,43 @@ namespace Dietphone.Views
                 });
             }
         }
+
+        private void SaveIcon_Click(object sender, EventArgs e)
+        {
+            if (viewModel.CanSave())
+            {
+                viewModel.SaveAndReturn();
+            }
+        }
+
+        private void CancelIcon_Click(object sender, EventArgs e)
+        {
+            viewModel.CancelAndReturn();
+        }
+
+        private void viewModel_GotDirty(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                GetButton(ButtonTypes.Save).IsEnabled = true;
+            });
+        }
+
+        private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
+        {
+            e.Ignore = (MessageBox.Show(e.Reason, "Czy na pewno chcesz zapisać ten produkt?",
+                MessageBoxButton.OKCancel) == MessageBoxResult.OK);
+        }
+
+        private ApplicationBarIconButton GetButton(ButtonTypes whichButton)
+        {
+            return ApplicationBar.Buttons[(int)whichButton] as ApplicationBarIconButton;
+        }
+    }
+
+    public enum ButtonTypes
+    {
+        Save = 0,
+        Cancel = 1
     }
 }

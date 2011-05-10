@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Dietphone.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Dietphone.ViewModels
 {
@@ -17,6 +18,8 @@ namespace Dietphone.ViewModels
     {
         public ObservableCollection<CategoryViewModel> Categories { get; private set; }
         public ProductViewModel Product { get; private set; }
+        public event EventHandler GotDirty;
+        public event EventHandler<CannotSaveEventArgs> CannotSave;
         private Factories factories;
         private Finder finder;
         private Navigator navigator;
@@ -83,6 +86,29 @@ namespace Dietphone.ViewModels
             models.Remove(delete.Category);
         }
 
+        public bool CanSave()
+        {
+            var validation = model.Validate();
+            if (!string.IsNullOrEmpty(validation))
+            {
+                var args = new CannotSaveEventArgs();
+                args.Reason = validation;
+                OnCannotSave(args);
+                return args.Ignore;
+            }
+            return true;
+        }
+
+        public void SaveAndReturn()
+        {
+            navigator.GoToMain();
+        }
+
+        public void CancelAndReturn()
+        {
+            navigator.GoToMain();
+        }
+
         private void FindModel()
         {
             var id = navigator.GetPassedProductId();
@@ -93,6 +119,7 @@ namespace Dietphone.ViewModels
         {
             var maxNutritives = new MaxNutritivesInCategories(finder);
             Product = new ProductViewModel(model, maxNutritives);
+            Product.PropertyChanged += delegate { OnGotDirty(); };
         }
 
         private void LoadCategories()
@@ -101,5 +128,27 @@ namespace Dietphone.ViewModels
             Categories = loader.GetCategoriesReloaded();
             Product.Categories = Categories;
         }
+
+        protected void OnGotDirty()
+        {
+            if (GotDirty != null)
+            {
+                GotDirty(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnCannotSave(CannotSaveEventArgs e)
+        {
+            if (CannotSave != null)
+            {
+                CannotSave(this, e);
+            }
+        }
+    }
+
+    public class CannotSaveEventArgs : EventArgs
+    {
+        public string Reason { get; set; }
+        public bool Ignore { get; set; }
     }
 }
