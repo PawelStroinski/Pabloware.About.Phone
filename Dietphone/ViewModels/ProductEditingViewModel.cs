@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Dietphone.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -23,8 +24,10 @@ namespace Dietphone.ViewModels
         private Factories factories;
         private Finder finder;
         private Navigator navigator;
-        private Product model;
+        private Product modelCopy;
         private Product modelSource;
+        private List<CategoryViewModel> addedCategories = new List<CategoryViewModel>();
+        private List<CategoryViewModel> deletedCategories = new List<CategoryViewModel>();
 
         public ProductEditingViewModel(Factories factories, Navigator navigator)
         {
@@ -32,7 +35,7 @@ namespace Dietphone.ViewModels
             this.finder = factories.Finder;
             this.navigator = navigator;
             FindAndCopyModel();
-            if (model == null)
+            if (modelCopy == null)
             {
                 navigator.GoBack();
             }
@@ -59,37 +62,39 @@ namespace Dietphone.ViewModels
 
         public void AddAndSetCategory(string name)
         {
-            var model = factories.CreateCategory();
-            var viewModel = new CategoryViewModel(model);
+            var tempModel = factories.CreateCategory();
+            var models = factories.Categories;
+            models.Remove(tempModel);
+            var viewModel = new CategoryViewModel(tempModel);
             viewModel.Name = name;
             Categories.Add(viewModel);
             Product.Category = viewModel;
+            addedCategories.Add(viewModel);
         }
 
         public bool CanDeleteCategory()
         {
-            var categoryId = model.CategoryId;
+            var categoryId = modelCopy.CategoryId;
             var productsInCategory = finder.FindProductsByCategory(categoryId);
             return productsInCategory.Count == 1 && Categories.Count > 1;
         }
 
         public void DeleteCategory()
         {
-            var delete = Product.Category;
-            var newIndex = Categories.IndexOf(delete) + 1;
+            var toDelete = Product.Category;
+            var newIndex = Categories.IndexOf(toDelete) + 1;
             if (newIndex > Categories.Count - 1)
             {
                 newIndex -= 2;
             }
             Product.Category = Categories[newIndex];
-            Categories.Remove(delete);
-            var models = factories.Categories;
-            models.Remove(delete.Category);
+            Categories.Remove(toDelete);
+            deletedCategories.Add(toDelete);
         }
 
         public bool CanSave()
         {
-            var validation = model.Validate();
+            var validation = modelCopy.Validate();
             if (!string.IsNullOrEmpty(validation))
             {
                 var args = new CannotSaveEventArgs();
@@ -102,7 +107,8 @@ namespace Dietphone.ViewModels
 
         public void SaveAndReturn()
         {
-            model.CopyToSameType(modelSource);
+            modelCopy.CopyToSameType(modelSource);
+            SaveAddingAndDeletingCategories();
             navigator.GoBack();
         }
 
@@ -117,16 +123,16 @@ namespace Dietphone.ViewModels
             modelSource = finder.FindProductById(id);
             if (modelSource != null)
             {
-                model = new Product();
-                modelSource.CopyToSameType(model);
-                model.Owner = factories;
+                modelCopy = new Product();
+                modelSource.CopyToSameType(modelCopy);
+                modelCopy.Owner = factories;
             }
         }
 
         private void CreateProductViewModel()
         {
             var maxNutritives = new MaxNutritivesInCategories(finder);
-            Product = new ProductViewModel(model, maxNutritives);
+            Product = new ProductViewModel(modelCopy, maxNutritives);
             Product.PropertyChanged += delegate { OnGotDirty(); };
         }
 
@@ -135,6 +141,19 @@ namespace Dietphone.ViewModels
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
             Categories = loader.GetCategoriesReloaded();
             Product.Categories = Categories;
+        }
+
+        private void SaveAddingAndDeletingCategories()
+        {
+            var models = factories.Categories;
+            foreach (var viewModel in addedCategories)
+            {
+                models.Add(viewModel.Category);
+            }
+            foreach (var viewModel in deletedCategories)
+            {
+                models.Remove(viewModel.Category);
+            }
         }
 
         protected void OnGotDirty()
