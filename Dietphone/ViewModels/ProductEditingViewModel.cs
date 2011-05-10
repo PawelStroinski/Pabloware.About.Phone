@@ -34,7 +34,7 @@ namespace Dietphone.ViewModels
             FindAndCopyModel();
             if (model == null)
             {
-                navigator.GoToMain();
+                navigator.GoBack();
             }
             else
             {
@@ -103,12 +103,12 @@ namespace Dietphone.ViewModels
         public void SaveAndReturn()
         {
             model.CopyToSameType(modelSource);
-            navigator.GoToMain();
+            navigator.GoBack();
         }
 
         public void CancelAndReturn()
         {
-            navigator.GoToMain();
+            navigator.GoBack();
         }
 
         private void FindAndCopyModel()

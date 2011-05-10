@@ -15,6 +15,7 @@ namespace Dietphone.ViewModels
 {
     public interface Navigator
     {
+        void GoBack();
         void GoToProductEditing(Guid productId);
         void GoToMain();
         Guid GetPassedProductId();
@@ -30,6 +31,14 @@ namespace Dietphone.ViewModels
         {
             this.service = service;
             passedQueryString = context.QueryString;
+        }
+
+        public void GoBack()
+        {
+            if (service.CanGoBack)
+            {
+                service.GoBack();
+            }
         }
 
         public void GoToProductEditing(Guid productId)
