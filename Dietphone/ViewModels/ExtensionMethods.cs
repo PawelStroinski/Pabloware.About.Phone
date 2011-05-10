@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Metody CopyTo* inspirowane metodą CopyTo z http://stackoverflow.com/questions/78536/cloning-objects-in-c
+using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +59,49 @@ namespace Dietphone.ViewModels
                 picker.IsEnabled = true;
                 progressBar.IsIndeterminate = false;
             });
+        }
+
+        public static void CopyToSameType<T>(this T source, T target) where T : class
+        {
+            var type = source.GetType();
+            var properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                var getMethod = property.GetGetMethod();
+                var setMethod = property.GetSetMethod();
+                if (getMethod != null && setMethod != null)
+                {
+                    var value = getMethod.Invoke(source, null);
+                    var parameters = new object[] { value };
+                    setMethod.Invoke(target, parameters);
+                }
+            }
+        }
+
+        public static void CopyToAnyType(this object source, object target)
+        {
+            var sourceType = source.GetType();
+            var targetType = target.GetType();
+            var sourceProperties = sourceType.GetProperties();
+            var targetProperties = targetType.GetProperties();
+            foreach (var sourceProperty in sourceProperties)
+            {
+                foreach (var targetProperty in targetProperties)
+                {
+                    if (targetProperty.Name != sourceProperty.Name)
+                    {
+                        continue;
+                    }
+                    var getMethod = sourceProperty.GetGetMethod();
+                    var setMethod = targetProperty.GetSetMethod();
+                    if (getMethod != null && setMethod != null)
+                    {
+                        var value = getMethod.Invoke(source, null);
+                        var parameters = new object[] { value };
+                        setMethod.Invoke(target, parameters);
+                    }
+                }
+            }
         }
     }
 }

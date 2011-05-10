@@ -24,13 +24,14 @@ namespace Dietphone.ViewModels
         private Finder finder;
         private Navigator navigator;
         private Product model;
+        private Product modelSource;
 
         public ProductEditingViewModel(Factories factories, Navigator navigator)
         {
             this.factories = factories;
             this.finder = factories.Finder;
             this.navigator = navigator;
-            FindModel();
+            FindAndCopyModel();
             if (model == null)
             {
                 navigator.GoToMain();
@@ -101,6 +102,7 @@ namespace Dietphone.ViewModels
 
         public void SaveAndReturn()
         {
+            model.CopyToSameType(modelSource);
             navigator.GoToMain();
         }
 
@@ -109,10 +111,16 @@ namespace Dietphone.ViewModels
             navigator.GoToMain();
         }
 
-        private void FindModel()
+        private void FindAndCopyModel()
         {
             var id = navigator.GetPassedProductId();
-            model = finder.FindProductById(id);
+            modelSource = finder.FindProductById(id);
+            if (modelSource != null)
+            {
+                model = new Product();
+                modelSource.CopyToSameType(model);
+                model.Owner = factories;
+            }
         }
 
         private void CreateProductViewModel()
