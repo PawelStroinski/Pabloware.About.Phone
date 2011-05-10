@@ -41,11 +41,15 @@ namespace Dietphone.Views
                 Title = "DODAJ KATEGORIĘ",
                 Description = "Nazwa"
             };
-            input.Confirmed += delegate { viewModel.AddAndSetCategory(input.Text); };
             input.Show();
+            input.Confirmed += delegate
+            {
+                viewModel.AddAndSetCategory(input.Text);
+                Categories.ForceRefresh(ProgressBar);
+            };
         }
 
-        private void RenameCategory_Click(object sender, RoutedEventArgs e)
+        private void EditCategory_Click(object sender, RoutedEventArgs e)
         {
             Categories.IsExpanded = false;
             var input = new XnaInputBox(this)
@@ -54,12 +58,42 @@ namespace Dietphone.Views
                 Description = "Nazwa",
                 Text = viewModel.CategoryName
             };
+            input.Show();
             input.Confirmed += delegate
             {
                 viewModel.CategoryName = input.Text;
                 Categories.ForceRefresh(ProgressBar);
             };
-            input.Show();
+        }
+
+        private void DeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.CanDeleteCategory())
+            {
+                DeleteCategory();
+            }
+            else
+            {
+                MessageBox.Show("Do tej kategorii należą inne produkty. " +
+                    "Zmień ich kategorię i spróbuj ponownie.",
+                    "Nie można usunąć", MessageBoxButton.OK);
+            }
+        }
+
+        private void DeleteCategory()
+        {
+            if (MessageBox.Show(
+                String.Format("Czy na pewno chcesz trwale usunąć tę kategorię?\r\n\r\n{0}",
+                viewModel.CategoryName),
+                "Usunąć kategorię?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                Categories.IsExpanded = false;
+                Dispatcher.BeginInvoke(() =>
+                {
+                    viewModel.DeleteCategory();
+                    Categories.ForceRefresh(ProgressBar);
+                });
+            }
         }
     }
 }

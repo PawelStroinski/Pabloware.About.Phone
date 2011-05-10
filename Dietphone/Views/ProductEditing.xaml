@@ -57,7 +57,8 @@
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
                         <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="AddCategory_Click"/>
-                        <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="RenameCategory_Click"/>
+                        <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="EditCategory_Click"/>
+                        <c4f:RoundButton ImageSource="/icons/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
                     </StackPanel>
                 </telerikInput:RadListPicker.PopupHeader>
             </telerikInput:RadListPicker>
