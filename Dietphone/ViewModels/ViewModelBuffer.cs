@@ -25,22 +25,19 @@ namespace Dietphone.ViewModels
 
         public void MakeBuffer()
         {
-            if (IsBuffered)
+            if (!IsBuffered)
             {
-                throw new InvalidOperationException("Buffer can be made only once.");
+                IsBuffered = true;
+                buffer = Model.GetCopy();
             }
-            IsBuffered = true;
-            buffer = new TModel();
-            Model.CopyToSameType(buffer);
         }
 
         public void FlushBuffer()
         {
-            if (!IsBuffered)
+            if (IsBuffered)
             {
-                throw new InvalidOperationException("Buffer was not made.");
+                Model.CopyFrom(buffer);
             }
-            buffer.CopyToSameType(Model);
         }
     }
 }

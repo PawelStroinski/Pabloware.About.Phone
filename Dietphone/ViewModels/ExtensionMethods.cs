@@ -1,4 +1,4 @@
-﻿// Metody CopyTo* inspirowane metodą CopyTo z http://stackoverflow.com/questions/78536/cloning-objects-in-c
+﻿// Metoda CopyFromAny inspirowana metodą CopyTo z http://stackoverflow.com/questions/78536/cloning-objects-in-c
 using System;
 using System.Net;
 using System.Windows;
@@ -62,9 +62,27 @@ namespace Dietphone.ViewModels
             });
         }
 
-        public static void CopyToSameType<T>(this T source, T target) where T : class
+        public static List<T> GetItemsCopy<T>(this List<T> source) where T : class, new()
         {
-            var type = source.GetType();
+            var target = new List<T>();
+            foreach (var sourceItem in source)
+            {
+                var targetItem = sourceItem.GetCopy();
+                target.Add(targetItem);
+            }
+            return target;
+        }
+
+        public static T GetCopy<T>(this T source) where T : class, new()
+        {
+            var target = new T();
+            target.CopyFrom(source);
+            return target;
+        }
+
+        public static void CopyFrom<T>(this T target, T source) where T : class
+        {
+            var type = target.GetType();
             var properties = type.GetProperties();
             foreach (var property in properties)
             {
@@ -79,12 +97,12 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public static void CopyToAnyType(this object source, object target)
+        public static void CopyFromAny(this object target, object source)
         {
-            var sourceType = source.GetType();
             var targetType = target.GetType();
-            var sourceProperties = sourceType.GetProperties();
+            var sourceType = source.GetType();
             var targetProperties = targetType.GetProperties();
+            var sourceProperties = sourceType.GetProperties();
             foreach (var sourceProperty in sourceProperties)
             {
                 foreach (var targetProperty in targetProperties)
@@ -93,9 +111,9 @@ namespace Dietphone.ViewModels
                     {
                         continue;
                     }
-                    var getMethod = sourceProperty.GetGetMethod();
                     var setMethod = targetProperty.GetSetMethod();
-                    if (getMethod != null && setMethod != null)
+                    var getMethod = sourceProperty.GetGetMethod();
+                    if (setMethod != null && getMethod != null)
                     {
                         var value = getMethod.Invoke(source, null);
                         var parameters = new object[] { value };
@@ -103,18 +121,6 @@ namespace Dietphone.ViewModels
                     }
                 }
             }
-        }
-
-        public static List<T> GetCopiedItems<T>(this List<T> source) where T : class, new()
-        {
-            var target = new List<T>();
-            foreach (var sourceItem in source)
-            {
-                var targetItem = new T();
-                sourceItem.CopyToSameType(targetItem);
-                target.Add(targetItem);
-            }
-            return target;
         }
     }
 }

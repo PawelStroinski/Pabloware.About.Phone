@@ -121,7 +121,7 @@ namespace Dietphone.ViewModels
 
         public void SaveAndReturn()
         {
-            modelCopy.CopyToSameType(modelSource);
+            modelSource.CopyFrom(modelCopy);
             SaveCategories();
             navigator.GoBack();
         }
@@ -137,8 +137,7 @@ namespace Dietphone.ViewModels
             modelSource = finder.FindProductById(id);
             if (modelSource != null)
             {
-                modelCopy = new Product();
-                modelSource.CopyToSameType(modelCopy);
+                modelCopy = modelSource.GetCopy();
                 modelCopy.Owner = factories;
             }
         }
