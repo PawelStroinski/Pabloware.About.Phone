@@ -122,7 +122,7 @@ namespace Dietphone.ViewModels
         public void SaveAndReturn()
         {
             modelCopy.CopyToSameType(modelSource);
-            SaveAddingAndDeletingCategories();
+            SaveCategories();
             navigator.GoBack();
         }
 
@@ -155,18 +155,26 @@ namespace Dietphone.ViewModels
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
             Categories = loader.GetCategoriesReloaded();
             Product.Categories = Categories;
+            foreach (var category in Categories)
+            {
+                category.MakeBuffer();
+            }
         }
 
-        private void SaveAddingAndDeletingCategories()
+        private void SaveCategories()
         {
-            var models = factories.Categories;
-            foreach (var viewModel in addedCategories)
+            foreach (var category in Categories)
             {
-                models.Add(viewModel.Category);
+                category.FlushBuffer();
             }
-            foreach (var viewModel in deletedCategories)
+            var models = factories.Categories;
+            foreach (var category in addedCategories)
             {
-                models.Remove(viewModel.Category);
+                models.Add(category.Model);
+            }
+            foreach (var category in deletedCategories)
+            {
+                models.Remove(category.Model);
             }
         }
 

@@ -118,6 +118,7 @@
     <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductEditingViewModel.cs" />
     <Compile Include="Tools\XnaInputBox.cs" />
+    <Compile Include="ViewModels\ViewModelBuffer.cs" />
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>

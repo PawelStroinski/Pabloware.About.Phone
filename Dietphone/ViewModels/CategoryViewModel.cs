@@ -12,20 +12,18 @@ using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class CategoryViewModel : ViewModelBase, IComparable
+    public class CategoryViewModel : ViewModelBuffer<Category>, IComparable
     {
-        public Category Category { get; private set; }
-
-        public CategoryViewModel(Category category)
+        public CategoryViewModel(Category model)
         {
-            Category = category;
+            Model = model;
         }
 
         public Guid Id
         {
             get
             {
-                return Category.Id;
+                return Model.Id;
             }
         }
 
@@ -33,11 +31,11 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return Category.Name;
+                return BufferOrModel.Name;
             }
             set
             {
-                Category.Name = value;
+                BufferOrModel.Name = value;
                 OnPropertyChanged("Name");
             }
         }
@@ -51,8 +49,7 @@ namespace Dietphone.ViewModels
             }
             else
             {
-                var anotherCategory = another.Category;
-                return string.Compare(Category.Name, anotherCategory.Name);
+                return string.Compare(Name, another.Name);
             }
         }
 
