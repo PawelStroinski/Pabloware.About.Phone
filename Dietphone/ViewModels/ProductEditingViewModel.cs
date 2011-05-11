@@ -76,7 +76,21 @@ namespace Dietphone.ViewModels
         {
             var categoryId = modelCopy.CategoryId;
             var productsInCategory = finder.FindProductsByCategory(categoryId);
-            return productsInCategory.Count <= 1 && Categories.Count > 1;
+            bool otherProductsInCategory;
+            if (productsInCategory.Count == 0)
+            {
+                otherProductsInCategory = false;
+            }
+            else
+                if (productsInCategory.Count == 1)
+                {
+                    otherProductsInCategory = productsInCategory[0] != modelSource;
+                }
+                else
+                {
+                    otherProductsInCategory = true;
+                }
+            return !otherProductsInCategory && Categories.Count > 1;
         }
 
         public void DeleteCategory()
