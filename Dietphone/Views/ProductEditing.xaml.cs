@@ -27,7 +27,7 @@ namespace Dietphone.Views
         public ProductEditing()
         {
             InitializeComponent();
-            SaveIcon = GetIcon(0);
+            SaveIcon = this.GetIcon(0);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -125,11 +125,6 @@ namespace Dietphone.Views
         {
             e.Ignore = (MessageBox.Show(e.Reason, "Czy na pewno chcesz zapisać ten produkt?",
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
-        }
-
-        private ApplicationBarIconButton GetIcon(int whichIcon)
-        {
-            return ApplicationBar.Buttons[whichIcon] as ApplicationBarIconButton;
         }
 
         private void Categories_ItemClick(object sender, SelectorItemClickEventArgs e)

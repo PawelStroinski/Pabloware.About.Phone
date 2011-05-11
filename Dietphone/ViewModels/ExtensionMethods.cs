@@ -13,6 +13,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Microsoft.Phone.Controls;
 using System.Collections.Generic;
+using Microsoft.Phone.Shell;
 
 namespace Dietphone.ViewModels
 {
@@ -121,6 +122,13 @@ namespace Dietphone.ViewModels
                     }
                 }
             }
+        }
+
+        public static ApplicationBarIconButton GetIcon(this PhoneApplicationPage page, int whichIcon)
+        {
+            var appBar = page.ApplicationBar;
+            var icons = appBar.Buttons;
+            return icons[whichIcon] as ApplicationBarIconButton;
         }
     }
 }
