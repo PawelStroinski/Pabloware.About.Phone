@@ -16,6 +16,7 @@ using Dietphone.Tools;
 using Telerik.Windows.Controls;
 using System.ComponentModel;
 using Microsoft.Phone.Shell;
+using Telerik.Windows.Controls.Primitives;
 
 namespace Dietphone.Views
 {
@@ -26,6 +27,7 @@ namespace Dietphone.Views
         public ProductEditing()
         {
             InitializeComponent();
+            SaveIcon = GetIcon(0);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -91,6 +93,7 @@ namespace Dietphone.Views
                 viewModel.CategoryName),
                 "Usunąć kategorię?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
+                SaveIcon.IsEnabled = false;
                 Categories.IsExpanded = false;
                 Dispatcher.BeginInvoke(() =>
                 {
@@ -115,10 +118,7 @@ namespace Dietphone.Views
 
         private void viewModel_GotDirty(object sender, EventArgs e)
         {
-            Dispatcher.BeginInvoke(() =>
-            {
-                GetButton(ButtonTypes.Save).IsEnabled = true;
-            });
+            SaveIcon.IsEnabled = true;
         }
 
         private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
@@ -127,15 +127,15 @@ namespace Dietphone.Views
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
         }
 
-        private ApplicationBarIconButton GetButton(ButtonTypes whichButton)
+        private ApplicationBarIconButton GetIcon(int whichIcon)
         {
-            return ApplicationBar.Buttons[(int)whichButton] as ApplicationBarIconButton;
+            return ApplicationBar.Buttons[whichIcon] as ApplicationBarIconButton;
         }
-    }
 
-    public enum ButtonTypes
-    {
-        Save = 0,
-        Cancel = 1
+        private void Categories_ItemClick(object sender, SelectorItemClickEventArgs e)
+        {
+            Vibration vibration = new VibrationImpl();
+            vibration.VibrateOnButtonPress();
+        }
     }
 }

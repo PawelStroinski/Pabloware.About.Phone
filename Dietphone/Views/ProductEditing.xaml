@@ -52,7 +52,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
-            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories">
+            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories" ItemClick="Categories_ItemClick">
                 <telerikInput:RadListPicker.PopupHeader>
                     <StackPanel Orientation="Horizontal" >
                         <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
@@ -68,7 +68,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="SaveIcon_Click" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="SaveIcon_Click" x:Name="SaveIcon" />
             <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png" Text="anuluj" Click="CancelIcon_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
