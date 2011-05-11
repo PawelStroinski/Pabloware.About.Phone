@@ -123,6 +123,7 @@ namespace Dietphone.ViewModels
         {
             modelCopy.CopyToSameType(modelSource);
             SaveAddingAndDeletingCategories();
+            SaveEditingCategories();
             navigator.GoBack();
         }
 
@@ -153,7 +154,7 @@ namespace Dietphone.ViewModels
         private void LoadCategories()
         {
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
-            Categories = loader.GetCategoriesReloaded();
+            Categories = loader.LoadCategoryCopies();
             Product.Categories = Categories;
         }
 
@@ -166,7 +167,25 @@ namespace Dietphone.ViewModels
             }
             foreach (var viewModel in deletedCategories)
             {
-                models.Remove(viewModel.Category);
+                var possiblyCopy = viewModel.Category;
+                var sourceCategory = finder.FindCategoryById(possiblyCopy.Id);
+                if (sourceCategory != null)
+                {
+                    models.Remove(sourceCategory);
+                }
+            }
+        }
+
+        private void SaveEditingCategories()
+        {
+            foreach (var viewModel in Categories)
+            {
+                var possiblyCopy = viewModel.Category;
+                var sourceCategory = finder.FindCategoryById(possiblyCopy.Id);
+                if (sourceCategory != null && possiblyCopy != sourceCategory)
+                {
+                    possiblyCopy.CopyToSameType(sourceCategory);
+                }
             }
         }
 

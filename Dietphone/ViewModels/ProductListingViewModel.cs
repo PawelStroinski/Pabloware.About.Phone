@@ -173,6 +173,7 @@ namespace Dietphone.ViewModels
             private Factories factories;
             private MaxNutritivesInCategories maxNutritives;
             private bool isLoading;
+            private List<Category> categoryModels;
 
             public CategoriesAndProductsLoader(ProductListingViewModel viewModel)
             {
@@ -204,8 +205,14 @@ namespace Dietphone.ViewModels
                 worker.RunWorkerAsync();
             }
 
-            public ObservableCollection<CategoryViewModel> GetCategoriesReloaded()
+            public ObservableCollection<CategoryViewModel> LoadCategoryCopies()
             {
+                var models = factories.Categories;
+                categoryModels = models.GetCopiedItems();
+                foreach (var model in categoryModels)
+                {
+                    model.Owner = factories;
+                }
                 categories.Clear();
                 LoadCategories();
                 return categories;
@@ -213,6 +220,7 @@ namespace Dietphone.ViewModels
 
             private void DoWork()
             {
+                categoryModels = factories.Categories;
                 LoadCategories();
                 LoadProducts();
             }
@@ -228,9 +236,8 @@ namespace Dietphone.ViewModels
 
             private void LoadCategories()
             {
-                var models = factories.Categories;
                 var unsortedViewModels = new List<CategoryViewModel>();
-                foreach (var model in models)
+                foreach (var model in categoryModels)
                 {
                     var viewModel = new CategoryViewModel(model);
                     unsortedViewModels.Add(viewModel);
