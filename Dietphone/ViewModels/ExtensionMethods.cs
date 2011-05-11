@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Microsoft.Phone.Controls;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -102,6 +103,18 @@ namespace Dietphone.ViewModels
                     }
                 }
             }
+        }
+
+        public static List<T> GetCopiedItems<T>(this List<T> source) where T : class, new()
+        {
+            var target = new List<T>();
+            foreach (var sourceItem in source)
+            {
+                var targetItem = new T();
+                sourceItem.CopyToSameType(targetItem);
+                target.Add(targetItem);
+            }
+            return target;
         }
     }
 }

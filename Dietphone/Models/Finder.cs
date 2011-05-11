@@ -8,6 +8,7 @@ namespace Dietphone.Models
     public interface Finder
     {
         Product FindProductById(Guid productId);
+        Category FindCategoryById(Guid categoryId);
         List<Product> FindProductsByCategory(Guid categoryId);
     }
 
@@ -25,6 +26,14 @@ namespace Dietphone.Models
             var result = from product in factories.Products
                          where product.Id == productId
                          select product;
+            return result.FirstOrDefault();
+        }
+
+        public Category FindCategoryById(Guid categoryId)
+        {
+            var result = from category in factories.Categories
+                         where category.Id == categoryId
+                         select category;
             return result.FirstOrDefault();
         }
 
