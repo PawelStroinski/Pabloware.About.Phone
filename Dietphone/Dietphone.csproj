@@ -114,6 +114,7 @@
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Finder.cs" />
     <Compile Include="Models\Storage.cs" />
+    <Compile Include="Tools\FallbackParserExtensions.cs" />
     <Compile Include="Tools\MyStopwatch.cs" />
     <Compile Include="Tools\Vibration.cs" />
     <Compile Include="ViewModels\Navigator.cs" />

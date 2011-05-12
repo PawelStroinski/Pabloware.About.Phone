@@ -130,5 +130,29 @@ namespace Dietphone.Tools
             var icons = appBar.Buttons;
             return icons[whichIcon] as ApplicationBarIconButton;
         }
+
+        public static string ToStringOrEmpty(this float value)
+        {
+            if (value == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                return value.ToString();
+            }
+        }
+
+        public static string ToStringOrEmpty(this short value)
+        {
+            if (value == 0)
+            {
+                return String.Empty;
+            }
+            else
+            {
+                return value.ToString();
+            }
+        }
     }
 }

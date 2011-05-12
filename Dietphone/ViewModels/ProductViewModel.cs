@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using Dietphone.Models;
 using System.Collections.ObjectModel;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
@@ -64,15 +65,17 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public float ServingSizeValue
+        public string ServingSizeValue
         {
             get
             {
-                return Product.ServingSizeValue;
+                var result = Product.ServingSizeValue;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.ServingSizeValue = value;
+                var old = Product.ServingSizeValue;
+                Product.ServingSizeValue = old.TryGetValueOf(value);
                 OnPropertyChanged("ServingSizeValue");
             }
         }
@@ -103,136 +106,156 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public short EnergyPer100g
+        public string EnergyPer100g
         {
             get
             {
-                return Product.EnergyPer100g;
+                var result = Product.EnergyPer100g;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.EnergyPer100g = value;
+                var old = Product.EnergyPer100g;
+                Product.EnergyPer100g = old.TryGetValueOf(value);
                 OnPropertyChanged("EnergyPer100g");
             }
         }
 
-        public short EnergyPerServing
+        public string EnergyPerServing
         {
             get
             {
-                return Product.EnergyPerServing;
+                var result = Product.EnergyPerServing;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.EnergyPerServing = value;
+                var old = Product.EnergyPerServing;
+                Product.EnergyPerServing = old.TryGetValueOf(value);
                 OnPropertyChanged("EnergyPerServing");
             }
         }
 
-        public float ProteinPer100g
+        public string ProteinPer100g
         {
             get
             {
-                return Product.ProteinPer100g;
+                var result = Product.ProteinPer100g;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.ProteinPer100g = value;
+                var old = Product.ProteinPer100g;
+                Product.ProteinPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
                 OnPropertyChanged("ProteinPer100g");
             }
         }
 
-        public float ProteinPerServing
+        public string ProteinPerServing
         {
             get
             {
-                return Product.ProteinPerServing;
+                var result = Product.ProteinPerServing;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.ProteinPerServing = value;
+                var old = Product.ProteinPerServing;
+                Product.ProteinPerServing = old.TryGetValueOf(value);
                 OnPropertyChanged("ProteinPerServing");
             }
         }
 
-        public float FatPer100g
+        public string FatPer100g
         {
             get
             {
-                return Product.FatPer100g;
+                var result = Product.FatPer100g;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.FatPer100g = value;
+                var old = Product.FatPer100g;
+                Product.FatPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
                 OnPropertyChanged("FatPer100g");
             }
         }
 
-        public float FatPerServing
+        public string FatPerServing
         {
             get
             {
-                return Product.FatPerServing;
+                var result = Product.FatPerServing;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.FatPerServing = value;
+                var old = Product.FatPerServing;
+                Product.FatPerServing = old.TryGetValueOf(value);
                 OnPropertyChanged("FatPerServing");
             }
         }
 
-        public float CarbsTotalPer100g
+        public string CarbsTotalPer100g
         {
             get
             {
-                return Product.CarbsTotalPer100g;
+                var result = Product.CarbsTotalPer100g;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.CarbsTotalPer100g = value;
+                var old = Product.CarbsTotalPer100g;
+                Product.CarbsTotalPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
                 OnPropertyChanged("CarbsTotalPer100g");
             }
         }
 
-        public float CarbsTotalPerServing
+        public string CarbsTotalPerServing
         {
             get
             {
-                return Product.CarbsTotalPerServing;
+                var result = Product.CarbsTotalPerServing;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.CarbsTotalPerServing = value;
+                var old = Product.CarbsTotalPerServing;
+                Product.CarbsTotalPerServing = old.TryGetValueOf(value);
                 OnPropertyChanged("CarbsTotalPerServing");
             }
         }
 
-        public float FiberPer100g
+        public string FiberPer100g
         {
             get
             {
-                return Product.FiberPer100g;
+                var result = Product.FiberPer100g;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.FiberPer100g = value;
+                var old = Product.FiberPer100g;
+                Product.FiberPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
                 OnPropertyChanged("FiberPer100g");
             }
         }
 
-        public float FiberPerServing
+        public string FiberPerServing
         {
             get
             {
-                return Product.FiberPerServing;
+                var result = Product.FiberPerServing;
+                return result.ToStringOrEmpty();
             }
             set
             {
-                Product.FiberPerServing = value;
+                var old = Product.FiberPerServing;
+                Product.FiberPerServing = old.TryGetValueOf(value);
                 OnPropertyChanged("FiberPerServing");
             }
         }
