@@ -15,7 +15,7 @@ using Microsoft.Phone.Controls;
 using System.Collections.Generic;
 using Microsoft.Phone.Shell;
 
-namespace Dietphone.ViewModels
+namespace Dietphone.Tools
 {
     public static class ExtensionMethods
     {

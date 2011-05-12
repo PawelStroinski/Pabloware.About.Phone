@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using System.Windows.Navigation;
+using Dietphone.Tools;
 
 namespace Dietphone.Views
 {

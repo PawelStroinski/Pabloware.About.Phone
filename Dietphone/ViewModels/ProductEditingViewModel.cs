@@ -12,6 +12,7 @@ using Dietphone.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Generic;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {

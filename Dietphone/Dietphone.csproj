@@ -130,7 +130,7 @@
     <Compile Include="ViewModels\ProductListingViewModel.cs" />
     <Compile Include="ViewModels\SubViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\ExtensionMethods.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="ViewModels\MealListItemsViewModel.cs" />
     <Compile Include="ViewModels\MealListItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Telerik.Windows.Data;
 using System.Threading;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {

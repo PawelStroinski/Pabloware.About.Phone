@@ -13,6 +13,7 @@ using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
 using System.Diagnostics;
 using Telerik.Windows.Data;
+using Dietphone.Tools;
 
 namespace Dietphone.Views
 {
