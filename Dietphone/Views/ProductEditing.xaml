@@ -10,7 +10,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
     xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
@@ -68,8 +68,11 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="SaveIcon_Click" x:Name="SaveIcon" />
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png" Text="anuluj" Click="CancelIcon_Click" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="Save_Click" x:Name="Save" />
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png" Text="anuluj" Click="Cancel_Click" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="usuń" Click="Delete_Click"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

@@ -27,7 +27,7 @@ namespace Dietphone.Views
         public ProductEditing()
         {
             InitializeComponent();
-            SaveIcon = this.GetIcon(0);
+            Save = this.GetIcon(0);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -93,7 +93,7 @@ namespace Dietphone.Views
                 viewModel.CategoryName),
                 "Usunąć kategorię?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                SaveIcon.IsEnabled = false;
+                Save.IsEnabled = false;
                 Categories.IsExpanded = false;
                 Dispatcher.BeginInvoke(() =>
                 {
@@ -103,7 +103,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void SaveIcon_Click(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             if (viewModel.CanSave())
             {
@@ -111,14 +111,25 @@ namespace Dietphone.Views
             }
         }
 
-        private void CancelIcon_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
             viewModel.CancelAndReturn();
         }
 
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                String.Format("Czy na pewno chcesz trwale usunąć ten produkt?\r\n\r\n{0}",
+                viewModel.Product.Name),
+                "Usunąć produkt?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                viewModel.DeleteAndReturn();
+            }
+        }
+
         private void viewModel_GotDirty(object sender, EventArgs e)
         {
-            SaveIcon.IsEnabled = true;
+            Save.IsEnabled = true;
         }
 
         private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)

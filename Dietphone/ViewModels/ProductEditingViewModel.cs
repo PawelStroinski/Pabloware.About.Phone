@@ -131,6 +131,13 @@ namespace Dietphone.ViewModels
             navigator.GoBack();
         }
 
+        public void DeleteAndReturn()
+        {
+            var models = factories.Products;
+            models.Remove(modelSource);
+            navigator.GoBack();
+        }
+
         private void FindAndCopyModel()
         {
             var id = navigator.GetPassedProductId();
