@@ -13,6 +13,8 @@ namespace Dietphone.ViewModels
     {
         public Product Product { get; private set; }
         public Collection<CategoryViewModel> Categories { private get; set; }
+        private bool autoCalculatingEnergyPer100g;
+        private bool autoCalculatingEnergyPerServing;
         private readonly MaxNutritivesInCategories maxNutritives;
         private const byte RECT_WIDTH = 25;
 
@@ -20,6 +22,8 @@ namespace Dietphone.ViewModels
         {
             Product = product;
             this.maxNutritives = maxNutritives;
+            autoCalculatingEnergyPer100g = Product.EnergyPer100g == 0;
+            autoCalculatingEnergyPerServing = Product.EnergyPerServing == 0;
         }
 
         public Guid Id
@@ -117,6 +121,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.EnergyPer100g;
                 Product.EnergyPer100g = old.TryGetValueOf(value);
+                autoCalculatingEnergyPer100g = false;
                 OnPropertyChanged("EnergyPer100g");
             }
         }
@@ -132,6 +137,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.EnergyPerServing;
                 Product.EnergyPerServing = old.TryGetValueOf(value);
+                autoCalculatingEnergyPerServing = false;
                 OnPropertyChanged("EnergyPerServing");
             }
         }
@@ -148,6 +154,7 @@ namespace Dietphone.ViewModels
                 var old = Product.ProteinPer100g;
                 Product.ProteinPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
+                AutoCalculateEnergyPer100g();
                 OnPropertyChanged("ProteinPer100g");
             }
         }
@@ -163,6 +170,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.ProteinPerServing;
                 Product.ProteinPerServing = old.TryGetValueOf(value);
+                AutoCalculateEnergyPerServing();
                 OnPropertyChanged("ProteinPerServing");
             }
         }
@@ -179,6 +187,7 @@ namespace Dietphone.ViewModels
                 var old = Product.FatPer100g;
                 Product.FatPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
+                AutoCalculateEnergyPer100g();
                 OnPropertyChanged("FatPer100g");
             }
         }
@@ -194,6 +203,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.FatPerServing;
                 Product.FatPerServing = old.TryGetValueOf(value);
+                AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FatPerServing");
             }
         }
@@ -210,6 +220,7 @@ namespace Dietphone.ViewModels
                 var old = Product.CarbsTotalPer100g;
                 Product.CarbsTotalPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
+                AutoCalculateEnergyPer100g();
                 OnPropertyChanged("CarbsTotalPer100g");
             }
         }
@@ -225,6 +236,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.CarbsTotalPerServing;
                 Product.CarbsTotalPerServing = old.TryGetValueOf(value);
+                AutoCalculateEnergyPerServing();
                 OnPropertyChanged("CarbsTotalPerServing");
             }
         }
@@ -241,6 +253,7 @@ namespace Dietphone.ViewModels
                 var old = Product.FiberPer100g;
                 Product.FiberPer100g = old.TryGetValueOf(value);
                 InvalidateMaxNutritives();
+                AutoCalculateEnergyPer100g();
                 OnPropertyChanged("FiberPer100g");
             }
         }
@@ -256,6 +269,7 @@ namespace Dietphone.ViewModels
             {
                 var old = Product.FiberPerServing;
                 Product.FiberPerServing = old.TryGetValueOf(value);
+                AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FiberPerServing");
             }
         }
@@ -328,6 +342,26 @@ namespace Dietphone.ViewModels
             OnPropertyChanged("WidthOfEmptyCuRect");
             OnPropertyChanged("WidthOfFilledFpuRect");
             OnPropertyChanged("WidthOfEmptyFpuRect");
+        }
+
+        private void AutoCalculateEnergyPer100g()
+        {
+            if (autoCalculatingEnergyPer100g)
+            {
+                var result = Product.CalculatedEnergyPer100g;
+                EnergyPer100g = result.ToString();
+                autoCalculatingEnergyPer100g = true;
+            }
+        }
+
+        private void AutoCalculateEnergyPerServing()
+        {
+            if (autoCalculatingEnergyPerServing)
+            {
+                var result = Product.CalculatedEnergyPerServing;
+                EnergyPerServing = result.ToString();
+                autoCalculatingEnergyPerServing = true;
+            }
         }
     }
 
