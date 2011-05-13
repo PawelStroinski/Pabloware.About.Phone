@@ -16,6 +16,7 @@
     xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
     xmlns:c4f="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
@@ -37,32 +38,30 @@
         </Style>
     </phone:PhoneApplicationPage.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="DIETPHONE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="produkt" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
-            <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories" ItemClick="Categories_ItemClick">
-                <telerikInput:RadListPicker.PopupHeader>
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
-                        <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="AddCategory_Click"/>
-                        <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="EditCategory_Click"/>
-                        <c4f:RoundButton ImageSource="/icons/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
-                    </StackPanel>
-                </telerikInput:RadListPicker.PopupHeader>
-            </telerikInput:RadListPicker>
-        </Grid>
+    <Grid Background="Transparent">
+        <controls:Pivot Title="PRODUKT">
+            <controls:PivotItem Header="info">
+                <StackPanel Margin="12,0">
+                    <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Margin="0,0,0,4"/>
+                    <telerikInput:RadListPicker Header="Kategoria" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories" ItemClick="Categories_ItemClick">
+                        <telerikInput:RadListPicker.PopupHeader>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
+                                <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="AddCategory_Click"/>
+                                <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="EditCategory_Click"/>
+                                <c4f:RoundButton ImageSource="/icons/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
+                            </StackPanel>
+                        </telerikInput:RadListPicker.PopupHeader>
+                    </telerikInput:RadListPicker>
+                </StackPanel>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="wart. w 100g">
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="wart. w porcji">
+            </controls:PivotItem>
+        </controls:Pivot>
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" Name="ProgressBar"/>
     </Grid>
 
