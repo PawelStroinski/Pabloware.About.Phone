@@ -222,6 +222,7 @@ namespace Dietphone.ViewModels
                 InvalidateMaxNutritives();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("CarbsTotalPer100g");
+                OnPropertyChanged("DigestibleCarbsPer100g");
             }
         }
 
@@ -255,6 +256,7 @@ namespace Dietphone.ViewModels
                 InvalidateMaxNutritives();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("FiberPer100g");
+                OnPropertyChanged("DigestibleCarbsPer100g");
             }
         }
 
@@ -271,6 +273,15 @@ namespace Dietphone.ViewModels
                 Product.FiberPerServing = old.TryGetValueOf(value);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FiberPerServing");
+            }
+        }
+
+        public string DigestibleCarbsPer100g
+        {
+            get
+            {
+                var result = Product.DigestibleCarbsPer100g;
+                return result.ToStringOrEmpty();
             }
         }
 

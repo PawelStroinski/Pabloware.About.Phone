@@ -67,7 +67,6 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Wartość odżywcza w 100 g" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
@@ -86,7 +85,11 @@
                         <TextBlock Text="Błonnik (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FiberPer100g, Mode=TwoWay}"/>
                     </StackPanel>
-                    <StackPanel Margin="12,0,12,-11" Orientation="Vertical" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+                    <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="3">
+                        <TextBlock Text="Węglowodany przyswajalne (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPer100g}" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="3">
                         <TextBlock Text="Wartość energetyczna (kcal)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.EnergyPer100g, Mode=TwoWay}"/>
                     </StackPanel>
