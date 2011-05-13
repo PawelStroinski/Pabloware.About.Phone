@@ -50,11 +50,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Grid.Row="0"/>
             <telerikInput:RadListPicker Header="Kategoria" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories" ItemClick="Categories_ItemClick">
                 <telerikInput:RadListPicker.PopupHeader>
-                    <StackPanel Orientation="Horizontal" >
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
                         <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="AddCategory_Click"/>
                         <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="EditCategory_Click"/>
@@ -62,6 +64,13 @@
                     </StackPanel>
                 </telerikInput:RadListPicker.PopupHeader>
             </telerikInput:RadListPicker>
+
+            <TextBlock Text="Wartości odżywcze w 100 g" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="9,21,0,21" Grid.Row="2"/>
+            <StackPanel Orientation="Vertical" Grid.Row="3">
+                <TextBlock Text="Energia (kcal)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                <TextBox Height="72" InputScope="TelephoneNumber"/>
+            </StackPanel>
+
         </Grid>
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" Name="ProgressBar"/>
     </Grid>
