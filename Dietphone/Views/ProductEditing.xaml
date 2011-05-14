@@ -98,13 +98,13 @@
                     <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="Pełny kwadrat oznacza maksimum w kategorii." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,7,24,9" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
                     <StackPanel Orientation="Horizontal" Margin="24,0,18,0" Grid.Column="0" Grid.Row="5">
                         <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledCuRect}" Height="50" VerticalAlignment="Center" />
-                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyCuRect}" Height="50" VerticalAlignment="Center" Margin="0 0 8 0" />
-                        <TextBlock Text="{Binding Product.CuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0,0,0"/>
+                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyCuRect}" Height="50" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Product.CuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="18,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="18,0,24,0" Grid.Column="1" Grid.Row="5">
                         <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledFpuRect}" Height="50" VerticalAlignment="Center" />
-                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyFpuRect}" Height="50" VerticalAlignment="Center" Margin="0 0 8 0" />
-                        <TextBlock Text="{Binding Product.FpuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0,0,0"/>
+                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyFpuRect}" Height="50" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Product.FpuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="18,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>
