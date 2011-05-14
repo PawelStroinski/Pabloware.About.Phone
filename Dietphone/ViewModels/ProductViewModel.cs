@@ -87,15 +87,18 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public Unit ServingSizeUnit
+        public string ServingSizeUnit
         {
             get
             {
-                return Product.ServingSizeUnit;
+                var result = Product.ServingSizeUnit;
+                return result.GetAbbreviation();
             }
             set
             {
-                Product.ServingSizeUnit = value;
+                var oldValue = Product.ServingSizeUnit;
+                var newValue = oldValue.TryGetValueOfAbbreviation(value);
+                Product.ServingSizeUnit = newValue;
                 OnPropertyChanged("ServingSizeUnit");
             }
         }

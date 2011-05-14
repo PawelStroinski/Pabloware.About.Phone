@@ -61,6 +61,14 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public List<string> AllServingSizeUnits
+        {
+            get
+            {
+                return UnitAbbreviations.GetAll();
+            }
+        }
+
         public void AddAndSetCategory(string name)
         {
             var tempModel = factories.CreateCategory();

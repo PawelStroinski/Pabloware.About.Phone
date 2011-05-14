@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using Dietphone.Tools;
 
 namespace Dietphone.Models
 {
@@ -223,6 +224,46 @@ namespace Dietphone.Models
             var calculated = Math.Round(nutritivePer100g * multiplier);
             var diff = Math.Abs(nutritivePerServing - calculated);
             return (diff <= NUTRITIVE_PROP_TOLERANCE);
+        }
+    }
+
+    public static class UnitAbbreviations
+    {
+        public static List<string> GetAll()
+        {
+            var abbreviations = new List<string>();
+            var units = MyEnum.GetValues<Unit>();
+            foreach (var unit in units)
+            {
+                abbreviations.Add(unit.GetAbbreviation());
+            }
+            return abbreviations;
+        }
+
+        public static Unit TryGetValueOfAbbreviation(this Unit caller, string abbreviation)
+        {
+            var units = MyEnum.GetValues<Unit>();
+            foreach (var unit in units)
+            {
+                if (abbreviation == unit.GetAbbreviation())
+                {
+                    return unit;
+                }
+            }
+            return caller;
+        }
+
+        public static string GetAbbreviation(this Unit unit)
+        {
+            switch (unit)
+            {
+                case Unit.Gram:
+                    return "g";
+                case Unit.Mililiter:
+                    return "ml";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

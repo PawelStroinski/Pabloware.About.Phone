@@ -115,6 +115,7 @@
     <Compile Include="Models\Finder.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Tools\Constrains.cs" />
+    <Compile Include="Tools\MyEnum.cs" />
     <Compile Include="Tools\FallbackParserExtensions.cs" />
     <Compile Include="Tools\MyStopwatch.cs" />
     <Compile Include="Tools\Vibration.cs" />
