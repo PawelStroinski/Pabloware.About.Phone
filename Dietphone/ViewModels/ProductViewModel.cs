@@ -250,6 +250,7 @@ namespace Dietphone.ViewModels
                 Product.CarbsTotalPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("CarbsTotalPerServing");
+                OnPropertyChanged("DigestibleCarbsPerServing");
             }
         }
 
@@ -286,6 +287,7 @@ namespace Dietphone.ViewModels
                 Product.FiberPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FiberPerServing");
+                OnPropertyChanged("DigestibleCarbsPerServing");
             }
         }
 
@@ -294,6 +296,15 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = Product.DigestibleCarbsPer100g;
+                return result.ToStringOrEmpty();
+            }
+        }
+
+        public string DigestibleCarbsPerServing
+        {
+            get
+            {
+                var result = Product.DigestibleCarbsPerServing;
                 return result.ToStringOrEmpty();
             }
         }

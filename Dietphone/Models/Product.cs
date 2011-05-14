@@ -50,7 +50,12 @@ namespace Dietphone.Models
         {
             get
             {
-                return CarbsTotalPerServing - FiberPerServing;
+                var digestible = CarbsTotalPerServing - FiberPerServing;
+                if (digestible < 0)
+                {
+                    digestible = 0;
+                }
+                return digestible;
             }
         }
 
