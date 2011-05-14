@@ -23,10 +23,8 @@ namespace Dietphone.Models
 
         public Product FindProductById(Guid productId)
         {
-            var result = from product in factories.Products
-                         where product.Id == productId
-                         select product;
-            return result.FirstOrDefault();
+            var products = factories.Products;
+            return products.FindById(productId);
         }
 
         public Category FindCategoryById(Guid categoryId)
@@ -43,6 +41,17 @@ namespace Dietphone.Models
                          where product.CategoryId == categoryId
                          select product;
             return result.ToList();
+        }
+    }
+
+    public static class FinderExtensions
+    {
+        public static Product FindById(this List<Product> products, Guid productId)
+        {
+            var result = from product in products
+                         where product.Id == productId
+                         select product;
+            return result.FirstOrDefault();
         }
     }
 }

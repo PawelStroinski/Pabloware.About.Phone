@@ -16,6 +16,8 @@ namespace Dietphone.ViewModels
         private bool autoCalculatingEnergyPer100g;
         private bool autoCalculatingEnergyPerServing;
         private readonly MaxNutritivesInCategories maxNutritives;
+        private static readonly Constrains max100g = new Constrains { Max = 100 };
+        private static readonly Constrains big = new Constrains { Max = 10000 };
         private const byte RECT_WIDTH = 25;
 
         public ProductViewModel(Product product, MaxNutritivesInCategories maxNutritives)
@@ -78,8 +80,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.ServingSizeValue;
-                Product.ServingSizeValue = old.TryGetValueOf(value);
+                var oldValue = Product.ServingSizeValue;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.ServingSizeValue = big.Constraint(newValue);
                 OnPropertyChanged("ServingSizeValue");
             }
         }
@@ -119,8 +122,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.EnergyPer100g;
-                Product.EnergyPer100g = old.TryGetValueOf(value);
+                var oldValue = Product.EnergyPer100g;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.EnergyPer100g = big.Constraint(newValue);
                 autoCalculatingEnergyPer100g = false;
                 OnPropertyChanged("EnergyPer100g");
             }
@@ -135,8 +139,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.EnergyPerServing;
-                Product.EnergyPerServing = old.TryGetValueOf(value);
+                var oldValue = Product.EnergyPerServing;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.EnergyPerServing = big.Constraint(newValue);
                 autoCalculatingEnergyPerServing = false;
                 OnPropertyChanged("EnergyPerServing");
             }
@@ -151,9 +156,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.ProteinPer100g;
-                Product.ProteinPer100g = old.TryGetValueOf(value);
-                InvalidateMaxNutritives();
+                var oldValue = Product.ProteinPer100g;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.ProteinPer100g = max100g.Constraint(newValue);
+                InvalidateMaxNutritivesAndUnits();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("ProteinPer100g");
             }
@@ -168,8 +174,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.ProteinPerServing;
-                Product.ProteinPerServing = old.TryGetValueOf(value);
+                var oldValue = Product.ProteinPerServing;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.ProteinPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("ProteinPerServing");
             }
@@ -184,9 +191,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.FatPer100g;
-                Product.FatPer100g = old.TryGetValueOf(value);
-                InvalidateMaxNutritives();
+                var oldValue = Product.FatPer100g;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.FatPer100g = max100g.Constraint(newValue);
+                InvalidateMaxNutritivesAndUnits();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("FatPer100g");
             }
@@ -201,8 +209,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.FatPerServing;
-                Product.FatPerServing = old.TryGetValueOf(value);
+                var oldValue = Product.FatPerServing;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.FatPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FatPerServing");
             }
@@ -217,9 +226,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.CarbsTotalPer100g;
-                Product.CarbsTotalPer100g = old.TryGetValueOf(value);
-                InvalidateMaxNutritives();
+                var oldValue = Product.CarbsTotalPer100g;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.CarbsTotalPer100g = max100g.Constraint(newValue);
+                InvalidateMaxNutritivesAndUnits();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("CarbsTotalPer100g");
                 OnPropertyChanged("DigestibleCarbsPer100g");
@@ -235,8 +245,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.CarbsTotalPerServing;
-                Product.CarbsTotalPerServing = old.TryGetValueOf(value);
+                var oldValue = Product.CarbsTotalPerServing;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.CarbsTotalPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("CarbsTotalPerServing");
             }
@@ -251,9 +262,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.FiberPer100g;
-                Product.FiberPer100g = old.TryGetValueOf(value);
-                InvalidateMaxNutritives();
+                var oldValue = Product.FiberPer100g;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.FiberPer100g = max100g.Constraint(newValue);
+                InvalidateMaxNutritivesAndUnits();
                 AutoCalculateEnergyPer100g();
                 OnPropertyChanged("FiberPer100g");
                 OnPropertyChanged("DigestibleCarbsPer100g");
@@ -269,8 +281,9 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                var old = Product.FiberPerServing;
-                Product.FiberPerServing = old.TryGetValueOf(value);
+                var oldValue = Product.FiberPerServing;
+                var newValue = oldValue.TryGetValueOf(value);
+                Product.FiberPerServing = big.Constraint(newValue);
                 AutoCalculateEnergyPerServing();
                 OnPropertyChanged("FiberPerServing");
             }
@@ -282,6 +295,24 @@ namespace Dietphone.ViewModels
             {
                 var result = Product.DigestibleCarbsPer100g;
                 return result.ToStringOrEmpty();
+            }
+        }
+
+        public string CuPer100g
+        {
+            get
+            {
+                var result = Product.CuPer100g;
+                return string.Format("{0} WW", result);
+            }
+        }
+
+        public string FpuPer100g
+        {
+            get
+            {
+                var result = Product.FpuPer100g;
+                return string.Format("{0} WBT", result);
             }
         }
 
@@ -319,6 +350,38 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public byte DoubledWidthOfFilledCuRect
+        {
+            get
+            {
+                return (byte)(WidthOfFilledCuRect * 2);
+            }
+        }
+
+        public byte DoubledWidthOfEmptyCuRect
+        {
+            get
+            {
+                return (byte)(WidthOfEmptyCuRect * 2);
+            }
+        }
+
+        public byte DoubledWidthOfFilledFpuRect
+        {
+            get
+            {
+                return (byte)(WidthOfFilledFpuRect * 2);
+            }
+        }
+
+        public byte DoubledWidthOfEmptyFpuRect
+        {
+            get
+            {
+                return (byte)(WidthOfEmptyFpuRect * 2);
+            }
+        }
+
         private byte GetWidthOfFilledRect(float value, float maxValue)
         {
             if (maxValue == 0)
@@ -342,17 +405,23 @@ namespace Dietphone.ViewModels
             var oldCategory = Product.CategoryId;
             Product.CategoryId = value.Id;
             maxNutritives.ResetCategory(oldCategory);
-            InvalidateMaxNutritives();
+            InvalidateMaxNutritivesAndUnits();
             OnPropertyChanged("Category");
         }
 
-        private void InvalidateMaxNutritives()
+        private void InvalidateMaxNutritivesAndUnits()
         {
             maxNutritives.ResetCategory(Product.CategoryId);
             OnPropertyChanged("WidthOfFilledCuRect");
             OnPropertyChanged("WidthOfEmptyCuRect");
             OnPropertyChanged("WidthOfFilledFpuRect");
             OnPropertyChanged("WidthOfEmptyFpuRect");
+            OnPropertyChanged("DoubledWidthOfFilledCuRect");
+            OnPropertyChanged("DoubledWidthOfEmptyCuRect");
+            OnPropertyChanged("DoubledWidthOfFilledFpuRect");
+            OnPropertyChanged("DoubledWidthOfEmptyFpuRect");
+            OnPropertyChanged("CuPer100g");
+            OnPropertyChanged("FpuPer100g");
         }
 
         private void AutoCalculateEnergyPer100g()
@@ -379,11 +448,20 @@ namespace Dietphone.ViewModels
     public class MaxNutritivesInCategories
     {
         private Finder finder;
+        private Product replacement;
         private Dictionary<Guid, Nutritives> nutritives = new Dictionary<Guid, Nutritives>();
+        private Guid categoryId;
+        private List<Product> productsInCategory;
 
         public MaxNutritivesInCategories(Finder finder)
         {
             this.finder = finder;
+        }
+
+        public MaxNutritivesInCategories(Finder finder, Product replacement)
+        {
+            this.finder = finder;
+            this.replacement = replacement;
         }
 
         public void Reset()
@@ -408,20 +486,48 @@ namespace Dietphone.ViewModels
             }
             else
             {
-                result = CalculateCategory(categoryId);
+                this.categoryId = categoryId;
+                result = CalculateCategory();
                 nutritives.Add(categoryId, result);
                 return result;
             }
         }
 
-        private Nutritives CalculateCategory(Guid categoryId)
+        private Nutritives CalculateCategory()
         {
-            var productsInCategory = finder.FindProductsByCategory(categoryId);
+            productsInCategory = finder.FindProductsByCategory(categoryId);
+            ReplaceWithReplacement();
             var cus = from product in productsInCategory
                       select product.CuPer100g;
             var fpus = from product in productsInCategory
                        select product.FpuPer100g;
             return new Nutritives() { CuPer100g = cus.Max(), FpuPer100g = fpus.Max() };
+        }
+
+        private void ReplaceWithReplacement()
+        {
+            if (replacement != null)
+            {
+                DeleteReplaced();
+                AddReplacement();
+            }
+        }
+
+        private void DeleteReplaced()
+        {
+            var replaced = productsInCategory.FindById(replacement.Id);
+            if (replaced != null)
+            {
+                productsInCategory.Remove(replaced);
+            }
+        }
+
+        private void AddReplacement()
+        {
+            if (replacement.CategoryId == categoryId)
+            {
+                productsInCategory.Add(replacement);
+            }
         }
     }
 

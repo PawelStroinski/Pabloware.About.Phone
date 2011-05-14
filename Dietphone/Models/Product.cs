@@ -37,7 +37,12 @@ namespace Dietphone.Models
         {
             get
             {
-                return CarbsTotalPer100g - FiberPer100g;
+                var digestible = CarbsTotalPer100g - FiberPer100g;
+                if (digestible < 0)
+                {
+                    digestible = 0;
+                }
+                return digestible;
             }
         }
 

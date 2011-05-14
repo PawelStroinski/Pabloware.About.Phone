@@ -152,7 +152,7 @@ namespace Dietphone.ViewModels
 
         private void CreateProductViewModel()
         {
-            var maxNutritives = new MaxNutritivesInCategories(finder);
+            var maxNutritives = new MaxNutritivesInCategories(finder, modelCopy);
             Product = new ProductViewModel(modelCopy, maxNutritives);
             Product.PropertyChanged += delegate { OnGotDirty(); };
         }

@@ -67,6 +67,8 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Wartość odżywcza w 100 g" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
@@ -86,12 +88,23 @@
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FiberPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="3">
-                        <TextBlock Text="Węglowodany przyswajalne (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
-                        <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPer100g}" IsEnabled="False"/>
-                    </StackPanel>
-                    <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="3">
                         <TextBlock Text="Wartość energetyczna (kcal)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.EnergyPer100g, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="3">
+                        <TextBlock Text="Węglowodany przyswajalne (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPer100g}" IsReadOnly="True"/>
+                    </StackPanel>
+                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="Pełny kwadrat oznacza maksimum w kategorii." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,7,24,9" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <StackPanel Orientation="Horizontal" Margin="24,0,18,0" Grid.Column="0" Grid.Row="5">
+                        <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledCuRect}" Height="50" VerticalAlignment="Center" />
+                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyCuRect}" Height="50" VerticalAlignment="Center" Margin="0 0 8 0" />
+                        <TextBlock Text="{Binding Product.CuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="18,0,24,0" Grid.Column="1" Grid.Row="5">
+                        <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledFpuRect}" Height="50" VerticalAlignment="Center" />
+                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyFpuRect}" Height="50" VerticalAlignment="Center" Margin="0 0 8 0" />
+                        <TextBlock Text="{Binding Product.FpuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>
