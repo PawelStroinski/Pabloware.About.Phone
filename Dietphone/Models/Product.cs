@@ -7,12 +7,6 @@ using Dietphone.Tools;
 
 namespace Dietphone.Models
 {
-    public enum Unit
-    {
-        Gram,
-        Mililiter
-    };
-
     public class Product : Entity
     {
         public Guid Id { get; set; }
@@ -265,5 +259,11 @@ namespace Dietphone.Models
                     return string.Empty;
             }
         }
+    }
+
+    public enum Unit
+    {
+        Gram,
+        Mililiter
     }
 }

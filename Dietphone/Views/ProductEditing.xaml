@@ -39,7 +39,7 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="PRODUKT" SelectedIndex="2">
+        <controls:Pivot Title="PRODUKT">
             <!--ogólne-->
             <controls:PivotItem Header="ogólne">
                 <StackPanel Margin="12,0">
