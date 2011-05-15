@@ -54,6 +54,10 @@ namespace Dietphone.ViewModels
         {
         }
 
+        public virtual void Add()
+        {
+        }
+
         protected virtual void OnSearchChanged()
         {
         }
@@ -100,6 +104,14 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void Add()
+        {
+            if (subViewModel != null)
+            {
+                subViewModel.Add();
+            }
+        }
+
         protected virtual void OnSubViewModelChanged()
         {
             subViewModel.Search = mainViewModel.Search;
@@ -118,7 +130,7 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void OnNavigatorChanged()
+        protected void OnNavigatorChanged()
         {
             if (subViewModel != null)
             {

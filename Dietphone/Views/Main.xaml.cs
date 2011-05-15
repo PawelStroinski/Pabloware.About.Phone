@@ -55,6 +55,11 @@ namespace Dietphone.Views
             }
         }
 
+        private void Add_Click(object sender, EventArgs e)
+        {
+            subConnector.Add();
+        }
+
         private void SearchIcon_Click(object sender, EventArgs e)
         {
             if (searchShowed)

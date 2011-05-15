@@ -28,6 +28,7 @@ namespace Dietphone.Views
         {
             InitializeComponent();
             Save = this.GetIcon(0);
+            Loaded += new RoutedEventHandler(ProductEditing_Loaded);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -37,6 +38,15 @@ namespace Dietphone.Views
             DataContext = viewModel;
             viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
             viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
+        }
+
+        private void ProductEditing_Loaded(object sender, RoutedEventArgs e)
+        {
+            var product = viewModel.Product;
+            if (string.IsNullOrEmpty(product.Name))
+            {
+                NameBox.Focus();
+            }
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -122,9 +132,10 @@ namespace Dietphone.Views
 
         private void Delete_Click(object sender, EventArgs e)
         {
+            var product = viewModel.Product;
             if (MessageBox.Show(
                 String.Format("Czy na pewno chcesz trwale usunąć ten produkt?\r\n\r\n{0}",
-                viewModel.Product.Name),
+                product.Name),
                 "Usunąć produkt?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 viewModel.DeleteAndReturn();

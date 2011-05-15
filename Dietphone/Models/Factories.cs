@@ -47,6 +47,8 @@ namespace Dietphone.Models
         {
             var product = productFactory.CreateEntity();
             product.Id = Guid.NewGuid();
+            var defaultCategory = Finder.FindCategoryFirstAlphabetically();
+            product.CategoryId = defaultCategory.Id;
             return product;
         }
 

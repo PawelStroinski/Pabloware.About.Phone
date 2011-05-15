@@ -109,7 +109,7 @@ namespace Dietphone.Models
             String result = "";
             foreach (var text in validation)
             {
-                if (text != "")
+                if (!string.IsNullOrEmpty(text))
                     result += text + " ";
             }
             return result;
@@ -157,7 +157,7 @@ namespace Dietphone.Models
 
         private string ValidateServingPresence()
         {
-            var descriptionPresent = ServingSizeDescription != "";
+            var descriptionPresent = !string.IsNullOrEmpty(ServingSizeDescription);
             var sizePresent = ServingSizeValue != 0;
             if (descriptionPresent & !sizePresent)
             {

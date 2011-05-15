@@ -66,6 +66,12 @@ namespace Dietphone.ViewModels
             loader.AfterLoad += delegate { OnAfterRefresh(); };
         }
 
+        public override void Add()
+        {
+            var product = factories.CreateProduct();
+            Navigator.GoToProductEditing(product.Id);
+        }
+
         public void UpdateGroupDescriptors()
         {
             GroupDescriptors.Clear();
@@ -106,7 +112,7 @@ namespace Dietphone.ViewModels
         private void UpdateFilterDescriptors()
         {
             FilterDescriptors.Clear();
-            if (search != "")
+            if (!string.IsNullOrEmpty(search))
             {
                 var filterByName = new GenericFilterDescriptor<ProductViewModel>(product => product.Name.ContainsIgnoringCase(search));
                 FilterDescriptors.Add(filterByName);
@@ -125,23 +131,7 @@ namespace Dietphone.ViewModels
             return result.FirstOrDefault();
         }
 
-        private void OnBeginDataUpdate()
-        {
-            if (BeginDataUpdate != null)
-            {
-                BeginDataUpdate(this, EventArgs.Empty);
-            }
-        }
-
-        private void OnEndDataUpdate()
-        {
-            if (EndDataUpdate != null)
-            {
-                EndDataUpdate(this, EventArgs.Empty);
-            }
-        }
-
-        private void OnSelectedProductChanged()
+        protected void OnSelectedProductChanged()
         {
             if (SelectedProduct != null)
             {
@@ -149,7 +139,23 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void OnBeforeRefresh()
+        protected void OnBeginDataUpdate()
+        {
+            if (BeginDataUpdate != null)
+            {
+                BeginDataUpdate(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnEndDataUpdate()
+        {
+            if (EndDataUpdate != null)
+            {
+                EndDataUpdate(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnBeforeRefresh()
         {
             if (BeforeRefresh != null)
             {
@@ -157,7 +163,7 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void OnAfterRefresh()
+        protected void OnAfterRefresh()
         {
             if (AfterRefresh != null)
             {
@@ -265,7 +271,7 @@ namespace Dietphone.ViewModels
                 viewModel.OnPropertyChanged("Products");
             }
 
-            private void OnAfterLoad()
+            protected void OnAfterLoad()
             {
                 if (AfterLoad != null)
                 {

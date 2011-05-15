@@ -10,6 +10,7 @@ namespace Dietphone.Models
         Product FindProductById(Guid productId);
         Category FindCategoryById(Guid categoryId);
         List<Product> FindProductsByCategory(Guid categoryId);
+        Category FindCategoryFirstAlphabetically();
     }
 
     public class FinderImpl : Finder
@@ -41,6 +42,13 @@ namespace Dietphone.Models
                          where product.CategoryId == categoryId
                          select product;
             return result.ToList();
+        }
+
+        public Category FindCategoryFirstAlphabetically()
+        {
+            var categories = factories.Categories;
+            var sortedCategories = categories.OrderBy(category => category.Name);
+            return sortedCategories.FirstOrDefault();
         }
     }
 

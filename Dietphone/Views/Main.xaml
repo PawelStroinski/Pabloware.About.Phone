@@ -91,7 +91,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.add.rest.png" Text="dodaj"/>
+            <shell:ApplicationBarIconButton IconUri="/icons/appbar.add.rest.png" Text="dodaj" Click="Add_Click"/>
             <shell:ApplicationBarIconButton IconUri="/icons/appbar.feature.search.rest.png" Text="szukaj" Click="SearchIcon_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

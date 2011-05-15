@@ -43,7 +43,7 @@ namespace Dietphone.Tools
             }
         }
 
-        private void OnConfirmed()
+        protected void OnConfirmed()
         {
             if (Confirmed != null)
             {
@@ -53,7 +53,7 @@ namespace Dietphone.Tools
             }
         }
 
-        private void OnCancelled()
+        protected void OnCancelled()
         {
             if (Cancelled != null)
             {
