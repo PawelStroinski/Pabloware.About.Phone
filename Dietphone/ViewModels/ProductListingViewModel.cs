@@ -23,13 +23,13 @@ namespace Dietphone.ViewModels
         public event EventHandler BeforeRefresh;
         public event EventHandler AfterRefresh;
         private Factories factories;
-        private MaxNutritivesInCategories maxNutritives;
+        private MaxCuAndFpuInCategories maxCuAndFpu;
         private ProductViewModel selectedProduct;
 
         public ProductListingViewModel(Factories factories)
         {
             this.factories = factories;
-            maxNutritives = new MaxNutritivesInCategories(factories.Finder);
+            maxCuAndFpu = new MaxCuAndFpuInCategories(factories.Finder);
         }
 
         public ProductViewModel SelectedProduct
@@ -60,7 +60,7 @@ namespace Dietphone.ViewModels
         public override void Refresh()
         {
             OnBeforeRefresh();
-            maxNutritives.Reset();
+            maxCuAndFpu.Reset();
             var loader = new CategoriesAndProductsLoader(this);
             loader.LoadAsync();
             loader.AfterLoad += delegate { OnAfterRefresh(); };
@@ -178,14 +178,14 @@ namespace Dietphone.ViewModels
             private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
             private ProductListingViewModel viewModel;
             private Factories factories;
-            private MaxNutritivesInCategories maxNutritives;
+            private MaxCuAndFpuInCategories maxCuAndFpu;
             private bool isLoading;
 
             public CategoriesAndProductsLoader(ProductListingViewModel viewModel)
             {
                 this.viewModel = viewModel;
                 factories = viewModel.factories;
-                maxNutritives = viewModel.maxNutritives;
+                maxCuAndFpu = viewModel.maxCuAndFpu;
             }
 
             public CategoriesAndProductsLoader(Factories factories)
@@ -254,7 +254,7 @@ namespace Dietphone.ViewModels
                 var models = factories.Products;
                 foreach (var model in models)
                 {
-                    var viewModel = new ProductViewModel(model, maxNutritives);
+                    var viewModel = new ProductViewModel(model, maxCuAndFpu);
                     products.Add(viewModel);
                 }
             }
