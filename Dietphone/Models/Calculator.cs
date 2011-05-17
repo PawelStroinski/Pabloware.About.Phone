@@ -21,7 +21,9 @@ namespace Dietphone.Models
         {
             get
             {
-                return (short)Math.Round(Protein.Value * 4 + Fat.Value * 9 + DigestibleCarbs.Value * 4);
+                var energy = Protein.Value * 4 + Fat.Value * 9 + DigestibleCarbs.Value * 4;
+                var roundedEnergy = Math.Round(energy);
+                return (short)roundedEnergy;
             }
         }
 
