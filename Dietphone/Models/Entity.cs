@@ -26,5 +26,13 @@ namespace Dietphone.Models
                 owner = value;
             }
         }
+
+        protected Finder Finder
+        {
+            get
+            {
+                return Owner.Finder;
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace Dietphone.Models
         public float FiberPer100g { get; set; }
         public float FiberPerServing { get; set; }
         private const byte ENERGY_DIFF_TOLERANCE = 5;
-        private const byte NUTRITIVE_PROP_TOLERANCE = 1;
+        private const byte NUTRIENT_PROP_TOLERANCE = 1;
 
         public float DigestibleCarbsPer100g
         {
@@ -58,7 +58,13 @@ namespace Dietphone.Models
         {
             get
             {
-                return (short)Math.Round(ProteinPer100g * 4 + FatPer100g * 9 + DigestibleCarbsPer100g * 4);
+                var calculator = new Calculator()
+                {
+                    Protein = ProteinPer100g,
+                    Fat = FatPer100g,
+                    DigestibleCarbs = DigestibleCarbsPer100g
+                };
+                return calculator.Energy;
             }
         }
 
@@ -66,7 +72,13 @@ namespace Dietphone.Models
         {
             get
             {
-                return (short)Math.Round(ProteinPerServing * 4 + FatPerServing * 9 + DigestibleCarbsPerServing * 4);
+                var calculator = new Calculator()
+                {
+                    Protein = ProteinPerServing,
+                    Fat = FatPerServing,
+                    DigestibleCarbs = DigestibleCarbsPerServing
+                };
+                return calculator.Energy;
             }
         }
 
@@ -74,9 +86,11 @@ namespace Dietphone.Models
         {
             get
             {
-                var cu = DigestibleCarbsPer100g / 10.0;
-                var roundedCu = Math.Round(cu, 1);
-                return (float)roundedCu;
+                var calculator = new Calculator()
+                {
+                    DigestibleCarbs = DigestibleCarbsPer100g
+                };
+                return calculator.Cu;
             }
         }
 
@@ -84,10 +98,12 @@ namespace Dietphone.Models
         {
             get
             {
-                var fpuEnergy = ProteinPer100g * 4 + FatPer100g * 9;
-                var fpu = fpuEnergy / 100.0;
-                var roundedFpu = Math.Round(fpu, 1);
-                return (float)roundedFpu;
+                var calculator = new Calculator()
+                {
+                    Protein = ProteinPer100g,
+                    Fat = FatPer100g
+                };
+                return calculator.Fpu;
             }
         }
 
@@ -102,24 +118,38 @@ namespace Dietphone.Models
             }
         }
 
-        public string Validate()
+        public bool AnyNutrientsPer100gPresent
         {
-            string[] validation = { ValidateNutritivePer100gPresence(), ValidateEnergyPer100g(), ValidateEnergyPerServing(), 
-                                      ValidateFiber(), ValidateServingPresence(), ValidateServingNutritives() };
-            String result = "";
-            foreach (var text in validation)
+            get
             {
-                if (!string.IsNullOrEmpty(text))
-                    result += text + " ";
+                return EnergyPer100g != 0 || ProteinPer100g != 0 || FatPer100g != 0 ||
+                    CarbsTotalPer100g != 0 || FiberPer100g != 0;
             }
-            return result;
         }
 
-        private string ValidateNutritivePer100gPresence()
+        public bool AnyNutrientsPerServingPresent
         {
-            if (EnergyPer100g == 0 & ProteinPer100g == 0 & FatPer100g == 0 & CarbsTotalPer100g == 0 & FiberPer100g == 0)
+            get
+            {
+                return EnergyPerServing != 0 || ProteinPerServing != 0 || FatPerServing != 0 ||
+                    CarbsTotalPerServing != 0 || FiberPerServing != 0;
+            }
+        }
+
+        public string Validate()
+        {
+            string[] validation = { ValidateNutrientsPer100gPresence(), ValidateEnergyPer100g(), ValidateEnergyPerServing(), 
+                                      ValidateFiber(), ValidateServingPresence(), ValidateServingNutrients() };
+            return validation.ContactOptionalSentences();
+        }
+
+        private string ValidateNutrientsPer100gPresence()
+        {
+            if (!AnyNutrientsPer100gPresent)
+            {
                 return "Nie podano żadnych wartości odżywczych w 100 g.";
-            return "";
+            }
+            return string.Empty;
         }
 
         private string ValidateEnergyPer100g()
@@ -131,7 +161,7 @@ namespace Dietphone.Models
             {
                 return String.Format("W 100 g produktu prawdopodobnie powinno być {0} kcal (+/-{1} kcal) a jest {2} kcal.", calculated, ENERGY_DIFF_TOLERANCE, typed);
             }
-            return "";
+            return string.Empty;
         }
 
         private string ValidateEnergyPerServing()
@@ -143,7 +173,7 @@ namespace Dietphone.Models
             {
                 return String.Format("W porcji produktu prawdopodobnie powinno być {0} kcal (+/-{1} kcal) a jest {2} kcal.", calculated, ENERGY_DIFF_TOLERANCE, typed);
             }
-            return "";
+            return string.Empty;
         }
 
         private string ValidateFiber()
@@ -152,7 +182,7 @@ namespace Dietphone.Models
             {
                 return "Nie może być więcej błonnika niż węglowodanów ogółem.";
             }
-            return "";
+            return string.Empty;
         }
 
         private string ValidateServingPresence()
@@ -167,57 +197,54 @@ namespace Dietphone.Models
             {
                 return "Podano miarę porcji ale nie podano jej opisu.";
             }
-            var nutritivePresent = EnergyPerServing != 0 || ProteinPerServing != 0 || FatPerServing != 0 || CarbsTotalPerServing != 0 || FiberPerServing != 0;
             var sizeInGrams = ServingSizeUnit == Unit.Gram;
-            if (descriptionPresent & !sizeInGrams & !nutritivePresent)
+            if (descriptionPresent & !sizeInGrams & !AnyNutrientsPerServingPresent)
             {
                 return "Podano porcję w innej jednostce niż gramy ale nie podano jej wartości odżywczych.";
             }
-            if (nutritivePresent & !descriptionPresent)
+            if (AnyNutrientsPerServingPresent & !descriptionPresent)
             {
                 return "Podano wartości odżywcze porcji ale nie podano jej opisu.";
             }
-            return "";
+            return string.Empty;
         }
 
-        private string ValidateServingNutritives()
+        private string ValidateServingNutrients()
         {
-            var nutritivePer100gPresent = EnergyPer100g != 0 || ProteinPer100g != 0 || FatPer100g != 0 || CarbsTotalPer100g != 0 || FiberPer100g != 0;
-            var nutritivePerServingPresent = EnergyPerServing != 0 || ProteinPerServing != 0 || FatPerServing != 0 || CarbsTotalPerServing != 0 || FiberPerServing != 0;
             var sizePresent = ServingSizeValue != 0;
             var supportedUnits = ServingSizeUnit == Unit.Gram || ServingSizeUnit == Unit.Mililiter;
-            if (nutritivePer100gPresent & nutritivePerServingPresent & sizePresent & supportedUnits)
+            if (AnyNutrientsPer100gPresent & AnyNutrientsPerServingPresent & sizePresent & supportedUnits)
             {
-                if (!IsServingNutritiveProportional(EnergyPer100g, EnergyPerServing))
+                if (!IsServingNutrientProportional(EnergyPer100g, EnergyPerServing))
                 {
                     return "Ilość kalorii w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
                 }
-                if (!IsServingNutritiveProportional(ProteinPer100g, ProteinPerServing))
+                if (!IsServingNutrientProportional(ProteinPer100g, ProteinPerServing))
                 {
                     return "Ilość białka w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
                 }
-                if (!IsServingNutritiveProportional(FatPer100g, FatPerServing))
+                if (!IsServingNutrientProportional(FatPer100g, FatPerServing))
                 {
                     return "Ilość tłuszczu w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
                 }
-                if (!IsServingNutritiveProportional(CarbsTotalPer100g, CarbsTotalPerServing))
+                if (!IsServingNutrientProportional(CarbsTotalPer100g, CarbsTotalPerServing))
                 {
                     return "Ilość węglowodanów ogółem w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
                 }
-                if (!IsServingNutritiveProportional(FiberPer100g, FiberPerServing))
+                if (!IsServingNutrientProportional(FiberPer100g, FiberPerServing))
                 {
                     return "Ilość błonnika pokarmowego w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
                 }
             }
-            return "";
+            return string.Empty;
         }
 
-        private bool IsServingNutritiveProportional(float nutritivePer100g, float nutritivePerServing)
+        private bool IsServingNutrientProportional(float nutrientPer100g, float nutrientPerServing)
         {
             var multiplier = ServingSizeValue / 100;
-            var calculated = Math.Round(nutritivePer100g * multiplier);
-            var diff = Math.Abs(nutritivePerServing - calculated);
-            return (diff <= NUTRITIVE_PROP_TOLERANCE);
+            var calculated = Math.Round(nutrientPer100g * multiplier);
+            var diff = Math.Abs(nutrientPerServing - calculated);
+            return (diff <= NUTRIENT_PROP_TOLERANCE);
         }
     }
 

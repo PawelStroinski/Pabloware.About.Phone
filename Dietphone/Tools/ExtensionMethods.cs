@@ -154,5 +154,18 @@ namespace Dietphone.Tools
                 return value.ToString();
             }
         }
+
+        public static string ContactOptionalSentences(this string[] optionalSentences)
+        {
+            String result = string.Empty;
+            foreach (var optionalSentence in optionalSentences)
+            {
+                if (!string.IsNullOrEmpty(optionalSentence))
+                {
+                    result += optionalSentence + " ";
+                }
+            }
+            return result;
+        }
     }
 }

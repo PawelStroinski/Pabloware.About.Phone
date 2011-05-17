@@ -26,15 +26,15 @@ namespace Dietphone.ViewModels
 
         public void LoadMeal(Meal meal)
         {
-            var roundedCu = Math.Round(meal.CU, 1);
-            var roundedFpu = Math.Round(meal.FPU, 1);
+            var roundedCu = Math.Round(meal.Cu, 1);
+            var roundedFpu = Math.Round(meal.Fpu, 1);
             this.CalendarDate = meal.Date.ToString("dd.MM.yyyy");
             this.DayOfWeek = meal.Date.ToString("ddd");
             this.Time = meal.Date.ToString("HH:mm");
             this.CU = roundedCu.ToString() + " WW";
             this.FPU = roundedFpu.ToString() + " WBT";
             this.Energy = meal.Energy.ToString("0 kcal");
-            this.Description = meal.Description;
+            this.Description = "meal.Name";
             this.Summary = MakeSummary(meal);
         }
 

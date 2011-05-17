@@ -113,6 +113,9 @@
     <Compile Include="Models\Factory.cs" />
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Finder.cs" />
+    <Compile Include="Models\MealName.cs" />
+    <Compile Include="Models\MealItem.cs" />
+    <Compile Include="Models\Calculator.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Tools\Constrains.cs" />
     <Compile Include="Tools\MyEnum.cs" />

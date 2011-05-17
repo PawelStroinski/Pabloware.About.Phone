@@ -38,28 +38,28 @@ namespace Dietphone.ViewModels
         {
             Meal testModel = new Meal();
             int hour = 0;
-            string desc = "";
+            //string desc = "";
             switch (logicalIndex % 3)
             {
                 case 2:
-                    desc = "Śniadanie";
+                    //desc = "Śniadanie";
                     hour = 8;
                     break;
                 case 1:
-                    desc = "Obiad";
+                    //desc = "Obiad";
                     hour = 14;
                     break;
                 case 0:
-                    desc = "Kolacja";
+                    //desc = "Kolacja";
                     hour = 19;
                     break;
             }
-            testModel.Description = desc;
+            //testModel.Name = desc;
             testModel.Date = new DateTime(2011, 03, 28 - (logicalIndex / 3), hour, 0, 0);
             var r = new Random();
-            testModel.CU = r.Next(1, 5);
-            testModel.FPU = r.Next(1, 5);
-            testModel.Energy = (short)r.Next(100, 500);
+            //testModel.Cu = r.Next(1, 5);
+            //testModel.Fpu = r.Next(1, 5);
+            //testModel.Energy = (short)r.Next(100, 500);
             return testModel;
         }
     }

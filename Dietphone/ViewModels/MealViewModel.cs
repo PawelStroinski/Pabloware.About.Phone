@@ -48,13 +48,13 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return meal.CU;
+                return meal.Cu;
             }
             set
             {
-                if (value != meal.CU)
+                if (value != meal.Cu)
                 {
-                    meal.CU = value;
+                    //meal.Cu = value;
                     OnPropertyChanged("CU");
                 }
             }
@@ -64,13 +64,13 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return meal.FPU;
+                return meal.Fpu;
             }
             set
             {
-                if (value != meal.FPU)
+                if (value != meal.Fpu)
                 {
-                    meal.FPU = value;
+                    //meal.Fpu = value;
                     OnPropertyChanged("FPU");
                 }
             }
@@ -86,7 +86,7 @@ namespace Dietphone.ViewModels
             {
                 if (value != meal.Energy)
                 {
-                    meal.Energy = value;
+                    //meal.Energy = value;
                     OnPropertyChanged("Energy");
                 }
             }
@@ -96,13 +96,13 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return meal.Description;
+                return "meal.Name";
             }
             set
             {
-                if (value != meal.Description)
+                if (value != "meal.Name")
                 {
-                    meal.Description = value;
+                    //meal.Name = value;
                     OnPropertyChanged("Description");
                 }
             }

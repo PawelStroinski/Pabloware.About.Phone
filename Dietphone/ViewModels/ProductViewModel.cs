@@ -510,15 +510,17 @@ namespace Dietphone.ViewModels
         private CuAndFpu CalculateCategory()
         {
             productsInCategory = finder.FindProductsByCategory(categoryId);
-            ReplaceWithReplacement();
-            var cus = from product in productsInCategory
-                      select product.CuPer100g;
-            var fpus = from product in productsInCategory
-                       select product.FpuPer100g;
-            return new CuAndFpu() { CuPer100g = cus.Max(), FpuPer100g = fpus.Max() };
+            ReplaceProductWithReplacement();
+            var maxCuPer100g = productsInCategory.Max(product => product.CuPer100g);
+            var maxFpuPer100g = productsInCategory.Max(product => product.FpuPer100g);
+            return new CuAndFpu()
+            {
+                CuPer100g = maxCuPer100g,
+                FpuPer100g = maxFpuPer100g
+            };
         }
 
-        private void ReplaceWithReplacement()
+        private void ReplaceProductWithReplacement()
         {
             if (replacement != null)
             {
