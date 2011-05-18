@@ -138,7 +138,7 @@ namespace Dietphone.Views
                 product.Name),
                 "Usunąć produkt?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                viewModel.DeleteAndReturn();
+                viewModel.DeleteAndSaveAndReturn();
             }
         }
 

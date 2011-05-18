@@ -140,10 +140,11 @@ namespace Dietphone.ViewModels
             navigator.GoBack();
         }
 
-        public void DeleteAndReturn()
+        public void DeleteAndSaveAndReturn()
         {
             var models = factories.Products;
             models.Remove(modelSource);
+            SaveCategories();
             navigator.GoBack();
         }
 
