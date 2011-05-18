@@ -28,7 +28,7 @@ namespace Dietphone.BinarySerializers
             writer.WriteObfuscated(product.Name);
             writer.Write(product.CategoryId);
             writer.Write(product.ServingSizeValue);
-            writer.Write((byte)(product.ServingSizeUnit));
+            writer.Write((byte)product.ServingSizeUnit);
             writer.WriteObfuscated(product.ServingSizeDescription);
             writer.Write(product.EnergyPer100g);
             writer.Write(product.EnergyPerServing);

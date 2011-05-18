@@ -123,11 +123,15 @@ namespace Dietphone.BinarySerializers
         private static string QuicklyReversibleObfuscate(string input)
         {
             if (string.IsNullOrEmpty(input))
+            {
                 return string.Empty;
+            }
             char[] charArray = new char[input.Length];
             int len = input.Length - 1;
             for (int i = 0; i <= len; i++)
+            {
                 charArray[i] = (char)(input[len - i] ^ OBFUSCATE_KEY);
+            }
             return new string(charArray);
         }
     }

@@ -1,19 +1,6 @@
 ﻿// Metoda CopyFromAny inspirowana metodą CopyTo z http://stackoverflow.com/questions/78536/cloning-objects-in-c
 using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Telerik.Windows.Controls;
-using Telerik.Windows.Data;
-using Microsoft.Phone.Controls;
 using System.Collections.Generic;
-using Microsoft.Phone.Shell;
 
 namespace Dietphone.Tools
 {
@@ -27,40 +14,6 @@ namespace Dietphone.Tools
         public static bool EqualsIgnoringCase(this string source, string toCheck)
         {
             return source.Equals(toCheck, StringComparison.OrdinalIgnoreCase);
-        }
-
-        public static bool IsFocused(this Control control)
-        {
-            return FocusManager.GetFocusedElement() == control;
-        }
-
-        public static void UniversalGroupPickerItemTap(this RadJumpList list, GroupPickerItemTapEventArgs e)
-        {
-            var groups = list.Groups;
-            foreach (var group in groups)
-            {
-                if (object.Equals(e.DataItem, group.Key))
-                {
-                    e.DataItemToNavigate = group;
-                    return;
-                }
-            }
-        }
-
-        public static void ForceRefresh(this RadListPicker picker, PerformanceProgressBar progressBar)
-        {
-            progressBar.IsIndeterminate = true;
-            picker.Dispatcher.BeginInvoke(() =>
-            {
-                picker.IsEnabled = false;
-                var items = picker.ItemsSource;
-                var item = picker.SelectedItem;
-                picker.ItemsSource = null;
-                picker.ItemsSource = items;
-                picker.SelectedItem = item;
-                picker.IsEnabled = true;
-                progressBar.IsIndeterminate = false;
-            });
         }
 
         public static List<T> GetItemsCopy<T>(this List<T> source) where T : class, new()
@@ -122,13 +75,6 @@ namespace Dietphone.Tools
                     }
                 }
             }
-        }
-
-        public static ApplicationBarIconButton GetIcon(this PhoneApplicationPage page, int whichIcon)
-        {
-            var appBar = page.ApplicationBar;
-            var icons = appBar.Buttons;
-            return icons[whichIcon] as ApplicationBarIconButton;
         }
 
         public static string ToStringOrEmpty(this float value)

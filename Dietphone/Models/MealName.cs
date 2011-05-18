@@ -1,19 +1,7 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-
-namespace Dietphone.Models
+﻿namespace Dietphone.Models
 {
-    public class MealName : Entity
+    public sealed class MealName : EntityWithId
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

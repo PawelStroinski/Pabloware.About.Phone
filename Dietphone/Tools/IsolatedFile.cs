@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Dietphone.Tools
 {
-    public class IsolatedFile
+    public sealed class IsolatedFile
     {
         private string relativeFilePath;
         private static IsolatedStorageFile isolatedStorage = null;

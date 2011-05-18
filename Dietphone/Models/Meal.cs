@@ -1,29 +1,15 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Dietphone.Models
 {
-    public class Meal : Entity
+    public sealed class Meal : EntityWithId
     {
-        public Guid Id { get; set; }
-        public Guid MealNameId { get; set; }
         public DateTime Date { get; set; }
+        public Guid NameId { get; set; }
+        public string Note { get; set; }
         public List<MealItem> Items { get; set; }
-
-        public Meal()
-        {
-            Items = new List<MealItem>();
-        }
 
         public float Cu
         {
@@ -59,6 +45,14 @@ namespace Dietphone.Models
             {
                 var energySum = Items.Sum(item => item.Energy);
                 return (short)energySum;
+            }
+        }
+
+        public MealName Name
+        {
+            get
+            {
+                return Finder.FindMealNameById(NameId);
             }
         }
 

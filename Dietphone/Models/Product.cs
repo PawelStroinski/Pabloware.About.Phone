@@ -7,9 +7,8 @@ using Dietphone.Tools;
 
 namespace Dietphone.Models
 {
-    public class Product : Entity
+    public sealed class Product : EntityWithId
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
         public float ServingSizeValue { get; set; }
@@ -111,10 +110,7 @@ namespace Dietphone.Models
         {
             get
             {
-                var result = from category in Owner.Categories
-                             where category.Id == CategoryId
-                             select category;
-                return result.FirstOrDefault();
+                return Finder.FindCategoryById(CategoryId);
             }
         }
 

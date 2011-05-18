@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Dietphone.Tools;
 
 namespace Dietphone.Models
@@ -305,13 +296,13 @@ namespace Dietphone.Models
             {
                 var unit = Unit.GetAbbreviation();
                 return string.Format("Brak informacji o wartościach odżywczych na jednostkę {0}. "
-                    + "Wybierz inną jednostkę.", unit);
+                                     + "Wybierz inną jednostkę.", unit);
             }
             return string.Empty;
         }
     }
 
-    public class MealItem : MealItemWithValidation
+    public sealed class MealItem : MealItemWithValidation
     {
     }
 }

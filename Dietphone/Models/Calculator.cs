@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace Dietphone.Models
 {
-    public class Calculator
+    public sealed class Calculator
     {
         public float? Protein { get; set; }
         public float? Fat { get; set; }

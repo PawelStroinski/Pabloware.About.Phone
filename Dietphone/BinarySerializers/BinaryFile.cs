@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Windows;
 using System.IO;
 using System.Collections.Generic;
-using Dietphone.Tools;
 
 namespace Dietphone.BinarySerializers
 {
     public abstract class BinaryFile<T> : BinarySerializer<T> where T : new()
     {
+        public BinaryStreamProvider StreamProvider { protected get; set; }
         protected abstract string FileName { get; }
         protected abstract byte WritingVersion { get; }
         protected Byte ReadingVersion { get; private set; }
-        public string FirstRunDirectory { get; set; }
 
         public abstract void WriteItem(BinaryWriter writer, T item);
 
@@ -19,7 +17,7 @@ namespace Dietphone.BinarySerializers
 
         protected List<T> ReadFile()
         {
-            using (var input = GetInputStream())
+            using (var input = StreamProvider.GetInputStream(FileName))
             {
                 using (var reader = new BinaryReader(input))
                 {
@@ -31,7 +29,7 @@ namespace Dietphone.BinarySerializers
 
         protected void WriteFile(List<T> items)
         {
-            using (var output = GetOutputStream())
+            using (var output = StreamProvider.GetOutputStream(FileName))
             {
                 using (var writer = new BinaryWriter(output))
                 {
@@ -39,27 +37,6 @@ namespace Dietphone.BinarySerializers
                     writer.WriteList<T>(items, this);
                 }
             }
-        }
-
-        protected Stream GetInputStream()
-        {
-            var file = new IsolatedFile(FileName);
-            if (file.Exists)
-            {
-                return file.GetReadingStream();
-            }
-            else
-            {
-                var relativePath = Path.Combine(FirstRunDirectory, FileName);
-                var resource = Application.GetResourceStream(new Uri(relativePath, UriKind.Relative));
-                return resource.Stream;
-            }
-        }
-
-        protected Stream GetOutputStream()
-        {
-            var file = new IsolatedFile(FileName);
-            return file.GetWritingStream();
         }
     }
 }

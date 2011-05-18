@@ -37,6 +37,7 @@ namespace Dietphone.ViewModels
         private Meal TestModel(int logicalIndex)
         {
             Meal testModel = new Meal();
+            testModel.Items = new System.Collections.Generic.List<MealItem>();
             int hour = 0;
             //string desc = "";
             switch (logicalIndex % 3)
@@ -56,7 +57,7 @@ namespace Dietphone.ViewModels
             }
             //testModel.Name = desc;
             testModel.Date = new DateTime(2011, 03, 28 - (logicalIndex / 3), hour, 0, 0);
-            var r = new Random();
+            //var r = new Random();
             //testModel.Cu = r.Next(1, 5);
             //testModel.Fpu = r.Next(1, 5);
             //testModel.Energy = (short)r.Next(100, 500);

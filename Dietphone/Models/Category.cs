@@ -5,9 +5,8 @@ using System.Windows;
 
 namespace Dietphone.Models
 {
-    public class Category : Entity
+    public sealed class Category : EntityWithId
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

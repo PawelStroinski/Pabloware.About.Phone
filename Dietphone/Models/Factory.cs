@@ -3,7 +3,7 @@ using System;
 
 namespace Dietphone.Models
 {
-    public class Factory<T> where T : Entity, new()
+    public sealed class Factory<T> where T : Entity, new()
     {
         private List<T> entities;
         private readonly Factories owner;
@@ -57,7 +57,7 @@ namespace Dietphone.Models
         }
     }
 
-    public class FactoryCreator
+    public sealed class FactoryCreator
     {
         private readonly Factories owner;
         private readonly StorageCreator storageCreator;

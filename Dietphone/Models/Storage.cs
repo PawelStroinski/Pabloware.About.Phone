@@ -14,7 +14,7 @@ namespace Dietphone.Models
         Storage<T> CreateStorage<T>() where T : Entity, new();
     }
 
-    public class StorageBuilder<TBaseStorageForEntity> where TBaseStorageForEntity : class
+    public sealed class StorageBuilder<TBaseStorageForEntity> where TBaseStorageForEntity : class
     {
         private TBaseStorageForEntity rightStorageForEntity;
 
