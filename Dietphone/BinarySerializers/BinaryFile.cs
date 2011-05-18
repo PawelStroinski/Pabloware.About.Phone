@@ -2,6 +2,7 @@
 using System.Windows;
 using System.IO;
 using System.Collections.Generic;
+using Dietphone.Tools;
 
 namespace Dietphone.BinarySerializers
 {
@@ -28,11 +29,37 @@ namespace Dietphone.BinarySerializers
             }
         }
 
+        protected void WriteFile(List<T> items)
+        {
+            using (var output = GetOutputStream())
+            {
+                using (var writer = new BinaryWriter(output))
+                {
+                    writer.Write(WritingVersion);
+                    writer.WriteList<T>(items, this);
+                }
+            }
+        }
+
         protected Stream GetInputStream()
         {
-            var relativePath = FirstRunDirectory + FileName;
-            var resource = Application.GetResourceStream(new Uri(relativePath, UriKind.Relative));
-            return resource.Stream;
+            var file = new IsolatedFile(FileName);
+            if (file.Exists)
+            {
+                return file.GetReadingStream();
+            }
+            else
+            {
+                var relativePath = Path.Combine(FirstRunDirectory, FileName);
+                var resource = Application.GetResourceStream(new Uri(relativePath, UriKind.Relative));
+                return resource.Stream;
+            }
+        }
+
+        protected Stream GetOutputStream()
+        {
+            var file = new IsolatedFile(FileName);
+            return file.GetWritingStream();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Dietphone.Models
 
         Product CreateProduct();
         Category CreateCategory();
+        void Save();
     }
 
     public class FactoriesImpl : Factories
@@ -57,6 +58,12 @@ namespace Dietphone.Models
             var category = categoryFactory.CreateEntity();
             category.Id = Guid.NewGuid();
             return category;
+        }
+
+        public void Save()
+        {
+            productFactory.Save();
+            categoryFactory.Save();
         }
 
         private void CreateFactories()

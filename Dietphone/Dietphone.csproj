@@ -118,6 +118,7 @@
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Tools\Constrains.cs" />
+    <Compile Include="Tools\IsolatedFile.cs" />
     <Compile Include="Tools\MyEnum.cs" />
     <Compile Include="Tools\FallbackParserExtensions.cs" />
     <Compile Include="Tools\MyStopwatch.cs" />

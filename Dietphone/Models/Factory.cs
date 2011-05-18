@@ -40,6 +40,14 @@ namespace Dietphone.Models
             return entity;
         }
 
+        public void Save()
+        {
+            if (entities != null)
+            {
+                storage.Save(Entities);
+            }
+        }
+
         private void AssignOwner()
         {
             foreach (var entity in entities)

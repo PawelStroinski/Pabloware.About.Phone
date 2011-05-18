@@ -12,6 +12,11 @@ namespace Dietphone.BinarySerializers
         {
             return ReadFile();
         }
+
+        public void Save(List<T> entities)
+        {
+            WriteFile(entities);
+        }
     }
 
     public class BinaryStorageCreator : StorageCreator
@@ -28,7 +33,7 @@ namespace Dietphone.BinarySerializers
 
         protected void ConfigureBinaryFile<T>(BinaryFile<T> storage) where T : new()
         {
-            storage.FirstRunDirectory = "firstrun/";
+            storage.FirstRunDirectory = "firstrun";
         }
     }
 }

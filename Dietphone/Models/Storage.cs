@@ -6,6 +6,7 @@ namespace Dietphone.Models
     public interface Storage<T> where T : Entity, new()
     {
         List<T> Load();
+        void Save(List<T> entities);
     }
 
     public interface StorageCreator

@@ -59,7 +59,7 @@ namespace Dietphone.BinarySerializers
 
         public static void WriteObfuscated(this BinaryWriter writer, string value)
         {
-            writer.Write(QuicklyReversibleObfuscate(value) ?? string.Empty);
+            writer.Write(QuicklyReversibleObfuscate(value));
         }
 
         public static void Write(this BinaryWriter writer, Guid value)
@@ -122,7 +122,7 @@ namespace Dietphone.BinarySerializers
 
         private static string QuicklyReversibleObfuscate(string input)
         {
-            if (input == string.Empty)
+            if (string.IsNullOrEmpty(input))
                 return string.Empty;
             char[] charArray = new char[input.Length];
             int len = input.Length - 1;
