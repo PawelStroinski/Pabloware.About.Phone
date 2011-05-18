@@ -35,11 +35,6 @@ namespace Dietphone.Views
             subConnector = new SubViewModelConnector(ViewModel);
         }
 
-        private void Main_Loaded(object sender, RoutedEventArgs e)
-        {
-            MealListItems.DataSource = ViewModel.Meals;
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);

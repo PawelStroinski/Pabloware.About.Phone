@@ -24,20 +24,7 @@ namespace Dietphone.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private MealListItemsViewModel meals;
         private string search = "";
-
-        public MealListItemsViewModel Meals
-        {
-            get
-            {
-                if (meals == null)
-                {
-                    meals = new MealListItemsViewModel(80);
-                }
-                return meals;
-            }
-        }
 
         public string Search
         {

@@ -142,10 +142,7 @@
     <Compile Include="ViewModels\SubViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="Tools\ExtensionMethods.cs" />
-    <Compile Include="ViewModels\MealListItemsViewModel.cs" />
-    <Compile Include="ViewModels\MealListItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MealViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\UpdateOnTextChangedBehavior.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
