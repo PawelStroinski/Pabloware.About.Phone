@@ -127,6 +127,9 @@
     <Compile Include="Tools\MyStopwatch.cs" />
     <Compile Include="Tools\UIExtensionMethods.cs" />
     <Compile Include="Tools\Vibration.cs" />
+    <Compile Include="ViewModels\MealItemViewModel.cs" />
+    <Compile Include="ViewModels\MealNameViewModel.cs" />
+    <Compile Include="ViewModels\MealViewModel.cs" />
     <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductEditingViewModel.cs" />
     <Compile Include="Tools\XnaInputBox.cs" />

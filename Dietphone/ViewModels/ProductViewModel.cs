@@ -60,7 +60,7 @@ namespace Dietphone.ViewModels
                 {
                     throw new InvalidOperationException("Set Categories first.");
                 }
-                return GetCategory();
+                return FindCategory();
             }
             set
             {
@@ -406,7 +406,7 @@ namespace Dietphone.ViewModels
             return roundedWidth;
         }
 
-        private CategoryViewModel GetCategory()
+        private CategoryViewModel FindCategory()
         {
             var result = from viewModel in Categories
                          where viewModel.Id == Product.CategoryId

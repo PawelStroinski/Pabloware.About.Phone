@@ -71,7 +71,8 @@ namespace Dietphone.Models
             var meal = mealFactory.CreateEntity();
             meal.Id = Guid.NewGuid();
             meal.Date = DateTime.Now;
-            meal.Items = new List<MealItem>();
+            var items = new List<MealItem>();
+            meal.InitializeItems(items);
             return meal;
         }
 

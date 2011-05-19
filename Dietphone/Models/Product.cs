@@ -106,14 +106,6 @@ namespace Dietphone.Models
             }
         }
 
-        public Category Category
-        {
-            get
-            {
-                return Finder.FindCategoryById(CategoryId);
-            }
-        }
-
         public bool AnyNutrientsPer100gPresent
         {
             get

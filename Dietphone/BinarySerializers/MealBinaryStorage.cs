@@ -44,7 +44,8 @@ namespace Dietphone.BinarySerializers
             meal.Date = reader.ReadDateTime();
             meal.NameId = reader.ReadGuid();
             meal.Note = reader.ReadString();
-            meal.Items = reader.ReadList(itemSerializer);
+            var items = reader.ReadList(itemSerializer);
+            meal.InitializeItems(items);
         }
 
         private sealed class MealItemBinarySerializer : BinarySerializer<MealItem>

@@ -3,11 +3,11 @@ using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class CategoryViewModel : ViewModelBuffer<Category>, IComparable
+    public class MealNameViewModel : ViewModelBuffer<MealName>
     {
-        public CategoryViewModel(Category model)
+        public MealNameViewModel(MealName mealName)
         {
-            Model = model;
+            Model = mealName;
         }
 
         public Guid Id
@@ -28,19 +28,6 @@ namespace Dietphone.ViewModels
             {
                 BufferOrModel.Name = value;
                 OnPropertyChanged("Name");
-            }
-        }
-
-        public int CompareTo(object obj)
-        {
-            var another = obj as CategoryViewModel;
-            if (another == null)
-            {
-                throw new ArgumentException("Object is not CategoryViewModel");
-            }
-            else
-            {
-                return string.Compare(Name, another.Name);
             }
         }
 

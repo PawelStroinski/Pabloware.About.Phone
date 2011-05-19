@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace Dietphone.BinarySerializers
 {
@@ -16,7 +17,7 @@ namespace Dietphone.BinarySerializers
     {
         private const int OBFUSCATE_KEY = 73;
 
-        public static void WriteList<T>(this BinaryWriter writer, List<T> list, BinarySerializer<T> serializer)
+        public static void WriteList<T>(this BinaryWriter writer, ICollection<T> list, BinarySerializer<T> serializer)
         {
             writer.Write(list.Count);
             foreach (T item in list)

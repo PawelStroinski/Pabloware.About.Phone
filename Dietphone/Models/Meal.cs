@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Dietphone.Models
 {
@@ -9,7 +10,28 @@ namespace Dietphone.Models
         public DateTime Date { get; set; }
         public Guid NameId { get; set; }
         public string Note { get; set; }
-        public List<MealItem> Items { get; set; }
+        private List<MealItem> items;
+
+        public ReadOnlyCollection<MealItem> Items
+        {
+            get
+            {
+                if (items == null)
+                {
+                    throw new InvalidOperationException("Call InitializeItems first.");
+                }
+                return items.AsReadOnly();
+            }
+        }
+
+        public short Energy
+        {
+            get
+            {
+                var energySum = Items.Sum(item => item.Energy);
+                return (short)energySum;
+            }
+        }
 
         public float Cu
         {
@@ -39,21 +61,28 @@ namespace Dietphone.Models
             }
         }
 
-        public short Energy
+        public void InitializeItems(List<MealItem> newItems)
         {
-            get
+            var alreadyInitialized = items != null;
+            if (alreadyInitialized)
             {
-                var energySum = Items.Sum(item => item.Energy);
-                return (short)energySum;
+                throw new InvalidOperationException("Items can only be initialized once.");
             }
+            items = newItems;
+            AssignOwner();
         }
 
-        public MealName Name
+        public MealItem AddItem()
         {
-            get
-            {
-                return Finder.FindMealNameById(NameId);
-            }
+            var item = new MealItem();
+            item.Owner = Owner;
+            items.Add(item);
+            return item;
+        }
+
+        public void DeleteItem(MealItem item)
+        {
+            items.Remove(item);
         }
 
         public string Validate()
@@ -76,6 +105,14 @@ namespace Dietphone.Models
                 }
             }
             return validation;
+        }
+
+        private void AssignOwner()
+        {
+            foreach (var item in items)
+            {
+                item.Owner = Owner;
+            }
         }
     }
 }
