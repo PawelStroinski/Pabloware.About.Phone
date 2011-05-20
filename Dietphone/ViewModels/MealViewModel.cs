@@ -11,7 +11,7 @@ namespace Dietphone.ViewModels
     public class MealViewModel : ViewModelBase
     {
         public Meal Meal { get; private set; }
-        public Collection<MealNameViewModel> MealNames { private get; set; }
+        private IEnumerable<MealNameViewModel> mealNames;
         private ObservableCollection<MealItemViewModel> items;
         private bool isNameCached;
         private bool isProductsHeadCached;
@@ -22,9 +22,10 @@ namespace Dietphone.ViewModels
         private readonly object itemsLock = new object();
         private const byte TAKE_PRODUCTS_TO_HEAD = 3;
 
-        public MealViewModel(Meal meal)
+        public MealViewModel(Meal meal, IEnumerable<MealNameViewModel> mealNames)
         {
             Meal = meal;
+            this.mealNames = mealNames;
         }
 
         public Guid Id
@@ -35,25 +36,26 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public DateTime DateTime
+        {
+            get
+            {
+                return Meal.DateTime;
+            }
+            set
+            {
+                Meal.DateTime = value;
+                OnPropertyChanged("DateTime");
+                OnPropertyChanged("Date");
+                OnPropertyChanged("Time");
+            }
+        }
+
         public DateTime Date
         {
             get
             {
-                return Meal.Date;
-            }
-            set
-            {
-                Meal.Date = value;
-                OnPropertyChanged("Date");
-                OnPropertyChanged("DateText");
-            }
-        }
-
-        public DateTime DateOnly
-        {
-            get
-            {
-                return Date.Date;
+                return DateTime.Date;
             }
         }
 
@@ -61,7 +63,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return Date.ToShortTimeString();
+                return DateTime.ToShortTimeString();
             }
         }
 
@@ -72,10 +74,6 @@ namespace Dietphone.ViewModels
                 if (isNameCached)
                 {
                     return nameCache;
-                }
-                if (MealNames == null)
-                {
-                    throw new InvalidOperationException("Set MealNames first.");
                 }
                 nameCache = FindName();
                 isNameCached = true;
@@ -260,7 +258,7 @@ namespace Dietphone.ViewModels
             {
                 return null;
             }
-            var result = from viewModel in MealNames
+            var result = from viewModel in mealNames
                          where viewModel.Id == Meal.NameId
                          select viewModel;
             return result.FirstOrDefault();
@@ -288,7 +286,7 @@ namespace Dietphone.ViewModels
                       select item.ProductName;
             var nonEmpty = all.Where(name => !string.IsNullOrEmpty(name));
             var firstFew = nonEmpty.Take(TAKE_PRODUCTS_TO_HEAD);
-            // Linq z Take() ewaluuje tylko tyle elementów listy ile trzeba
+            // Linq z Take() ewaluuje tylko tyle elementów listy ile potrzeba
             return string.Join(" | ", firstFew.ToArray());
         }
 

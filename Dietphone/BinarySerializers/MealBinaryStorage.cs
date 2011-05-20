@@ -32,7 +32,7 @@ namespace Dietphone.BinarySerializers
         public override void WriteItem(BinaryWriter writer, Meal meal)
         {
             writer.Write(meal.Id);
-            writer.Write(meal.Date);
+            writer.Write(meal.DateTime);
             writer.Write(meal.NameId);
             writer.WriteString(meal.Note);
             writer.WriteList(meal.Items, itemSerializer);
@@ -41,7 +41,7 @@ namespace Dietphone.BinarySerializers
         public override void ReadItem(BinaryReader reader, Meal meal)
         {
             meal.Id = reader.ReadGuid();
-            meal.Date = reader.ReadDateTime();
+            meal.DateTime = reader.ReadDateTime();
             meal.NameId = reader.ReadGuid();
             meal.Note = reader.ReadString();
             var items = reader.ReadList(itemSerializer);

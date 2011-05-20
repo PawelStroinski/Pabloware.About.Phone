@@ -1,12 +1,9 @@
 ﻿using Dietphone.Models;
-using Dietphone.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using Telerik.Windows.Data;
-using System.Threading;
 using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
@@ -20,8 +17,6 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler DescriptorsUpdating;
         public event EventHandler DescriptorsUpdated;
-        public event EventHandler Refreshing;
-        public event EventHandler Refreshed;
         private Factories factories;
         private MaxCuAndFpuInCategories maxCuAndFpu;
         private ProductViewModel selectedProduct;
@@ -155,31 +150,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnRefreshing()
+        public class CategoriesAndProductsLoader : LoaderBase
         {
-            if (Refreshing != null)
-            {
-                Refreshing(this, EventArgs.Empty);
-            }
-        }
-
-        protected void OnRefreshed()
-        {
-            if (Refreshed != null)
-            {
-                Refreshed(this, EventArgs.Empty);
-            }
-        }
-
-        public class CategoriesAndProductsLoader
-        {
-            public event EventHandler Loaded;
-            private ObservableCollection<CategoryViewModel> categories = new ObservableCollection<CategoryViewModel>();
-            private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
-            private ProductListingViewModel viewModel;
-            private Factories factories;
+            private ObservableCollection<CategoryViewModel> categories;
+            private ObservableCollection<ProductViewModel> products;
             private MaxCuAndFpuInCategories maxCuAndFpu;
-            private bool isLoading;
 
             public CategoriesAndProductsLoader(ProductListingViewModel viewModel)
             {
@@ -193,44 +168,23 @@ namespace Dietphone.ViewModels
                 this.factories = factories;
             }
 
-            public void LoadAsync()
-            {
-                if (viewModel == null)
-                {
-                    throw new InvalidOperationException("Use other constructor for this operation.");
-                }
-                if (isLoading)
-                {
-                    return;
-                }
-                var worker = new BackgroundWorker();
-                worker.DoWork += delegate { DoWork(); };
-                worker.RunWorkerCompleted += delegate { WorkCompleted(); };
-                viewModel.IsBusy = true;
-                isLoading = true;
-                worker.RunWorkerAsync();
-            }
-
             public ObservableCollection<CategoryViewModel> GetCategoriesReloaded()
             {
-                categories.Clear();
                 LoadCategories();
                 return categories;
             }
 
-            private void DoWork()
+            protected override void DoWork()
             {
                 LoadCategories();
                 LoadProducts();
             }
 
-            private void WorkCompleted()
+            protected override void WorkCompleted()
             {
                 AssignCategories();
                 AssignProducts();
-                viewModel.IsBusy = false;
-                isLoading = false;
-                OnLoaded();
+                base.WorkCompleted();
             }
 
             private void LoadCategories()
@@ -243,6 +197,7 @@ namespace Dietphone.ViewModels
                     unsortedViewModels.Add(viewModel);
                 }
                 var sortedViewModels = unsortedViewModels.OrderBy(category => category.Name);
+                categories = new ObservableCollection<CategoryViewModel>();
                 foreach (var viewModel in sortedViewModels)
                 {
                     categories.Add(viewModel);
@@ -252,6 +207,7 @@ namespace Dietphone.ViewModels
             private void LoadProducts()
             {
                 var models = factories.Products;
+                products = new ObservableCollection<ProductViewModel>();
                 foreach (var model in models)
                 {
                     var viewModel = new ProductViewModel(model, maxCuAndFpu);
@@ -261,22 +217,19 @@ namespace Dietphone.ViewModels
 
             private void AssignCategories()
             {
-                viewModel.Categories = categories;
-                viewModel.OnPropertyChanged("Categories");
+                GetViewModel().Categories = categories;
+                GetViewModel().OnPropertyChanged("Categories");
             }
 
             private void AssignProducts()
             {
-                viewModel.Products = products;
-                viewModel.OnPropertyChanged("Products");
+                GetViewModel().Products = products;
+                GetViewModel().OnPropertyChanged("Products");
             }
 
-            protected void OnLoaded()
+            private ProductListingViewModel GetViewModel()
             {
-                if (Loaded != null)
-                {
-                    Loaded(this, EventArgs.Empty);
-                }
+                return viewModel as ProductListingViewModel;
             }
         }
     }

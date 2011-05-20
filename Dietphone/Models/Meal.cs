@@ -7,7 +7,7 @@ namespace Dietphone.Models
 {
     public sealed class Meal : EntityWithId
     {
-        public DateTime Date { get; set; }
+        public DateTime DateTime { get; set; }
         public Guid NameId { get; set; }
         public string Note { get; set; }
         private List<MealItem> items;

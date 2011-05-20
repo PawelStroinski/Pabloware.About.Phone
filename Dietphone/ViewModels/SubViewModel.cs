@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using System.ComponentModel;
 using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
-    public class SubViewModel : ViewModelBase
+    public abstract class SubViewModel : ViewModelBase
     {
         public Navigator Navigator { protected get; set; }
+        public event EventHandler Refreshing;
+        public event EventHandler Refreshed;
         protected string search = "";
         private bool isBusy;
 
@@ -46,20 +39,30 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public virtual void Load()
-        {
-        }
+        public abstract void Load();
 
-        public virtual void Refresh()
-        {
-        }
+        public abstract void Refresh();
 
         public virtual void Add()
         {
         }
 
-        protected virtual void OnSearchChanged()
+        protected abstract void OnSearchChanged();
+
+        protected void OnRefreshing()
         {
+            if (Refreshing != null)
+            {
+                Refreshing(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnRefreshed()
+        {
+            if (Refreshed != null)
+            {
+                Refreshed(this, EventArgs.Empty);
+            }
         }
     }
 
