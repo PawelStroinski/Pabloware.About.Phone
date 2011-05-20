@@ -18,10 +18,10 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> GroupDescriptors { private get; set; }
         public ObservableCollection<DataDescriptor> SortDescriptors { private get; set; }
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
-        public event EventHandler BeginDataUpdate;
-        public event EventHandler EndDataUpdate;
-        public event EventHandler BeforeRefresh;
-        public event EventHandler AfterRefresh;
+        public event EventHandler DescriptorsUpdating;
+        public event EventHandler DescriptorsUpdated;
+        public event EventHandler Refreshing;
+        public event EventHandler Refreshed;
         private Factories factories;
         private MaxCuAndFpuInCategories maxCuAndFpu;
         private ProductViewModel selectedProduct;
@@ -59,11 +59,11 @@ namespace Dietphone.ViewModels
 
         public override void Refresh()
         {
-            OnBeforeRefresh();
+            OnRefreshing();
             maxCuAndFpu.Reset();
             var loader = new CategoriesAndProductsLoader(this);
             loader.LoadAsync();
-            loader.AfterLoad += delegate { OnAfterRefresh(); };
+            loader.Loaded += delegate { OnRefreshed(); };
         }
 
         public override void Add()
@@ -104,9 +104,9 @@ namespace Dietphone.ViewModels
 
         protected override void OnSearchChanged()
         {
-            OnBeginDataUpdate();
+            OnDescriptorsUpdating();
             UpdateFilterDescriptors();
-            OnEndDataUpdate();
+            OnDescriptorsUpdated();
         }
 
         private void UpdateFilterDescriptors()
@@ -139,41 +139,41 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnBeginDataUpdate()
+        protected void OnDescriptorsUpdating()
         {
-            if (BeginDataUpdate != null)
+            if (DescriptorsUpdating != null)
             {
-                BeginDataUpdate(this, EventArgs.Empty);
+                DescriptorsUpdating(this, EventArgs.Empty);
             }
         }
 
-        protected void OnEndDataUpdate()
+        protected void OnDescriptorsUpdated()
         {
-            if (EndDataUpdate != null)
+            if (DescriptorsUpdated != null)
             {
-                EndDataUpdate(this, EventArgs.Empty);
+                DescriptorsUpdated(this, EventArgs.Empty);
             }
         }
 
-        protected void OnBeforeRefresh()
+        protected void OnRefreshing()
         {
-            if (BeforeRefresh != null)
+            if (Refreshing != null)
             {
-                BeforeRefresh(this, EventArgs.Empty);
+                Refreshing(this, EventArgs.Empty);
             }
         }
 
-        protected void OnAfterRefresh()
+        protected void OnRefreshed()
         {
-            if (AfterRefresh != null)
+            if (Refreshed != null)
             {
-                AfterRefresh(this, EventArgs.Empty);
+                Refreshed(this, EventArgs.Empty);
             }
         }
 
         public class CategoriesAndProductsLoader
         {
-            public event EventHandler AfterLoad;
+            public event EventHandler Loaded;
             private ObservableCollection<CategoryViewModel> categories = new ObservableCollection<CategoryViewModel>();
             private ObservableCollection<ProductViewModel> products = new ObservableCollection<ProductViewModel>();
             private ProductListingViewModel viewModel;
@@ -230,7 +230,7 @@ namespace Dietphone.ViewModels
                 AssignProducts();
                 viewModel.IsBusy = false;
                 isLoading = false;
-                OnAfterLoad();
+                OnLoaded();
             }
 
             private void LoadCategories()
@@ -271,11 +271,11 @@ namespace Dietphone.ViewModels
                 viewModel.OnPropertyChanged("Products");
             }
 
-            protected void OnAfterLoad()
+            protected void OnLoaded()
             {
-                if (AfterLoad != null)
+                if (Loaded != null)
                 {
-                    AfterLoad(this, EventArgs.Empty);
+                    Loaded(this, EventArgs.Empty);
                 }
             }
         }

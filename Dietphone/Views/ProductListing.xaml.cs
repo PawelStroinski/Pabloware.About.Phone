@@ -34,23 +34,23 @@ namespace Dietphone.Views
             ViewModel.FilterDescriptors = List.FilterDescriptors;
             ViewModel.UpdateGroupDescriptors();
             ViewModel.UpdateSortDescriptors();
-            ViewModel.BeginDataUpdate += new EventHandler(ViewModel_BeginDataUpdate);
-            ViewModel.EndDataUpdate += new EventHandler(ViewModel_EndDataUpdate);
-            ViewModel.BeforeRefresh += new EventHandler(ViewModel_BeforeRefresh);
-            ViewModel.AfterRefresh += new EventHandler(ViewModel_AfterRefresh);
+            ViewModel.DescriptorsUpdating += new EventHandler(ViewModel_DescriptorsUpdating);
+            ViewModel.DescriptorsUpdated += new EventHandler(ViewModel_DescriptorsUpdated);
+            ViewModel.Refreshing += new EventHandler(ViewModel_Refreshing);
+            ViewModel.Refreshed += new EventHandler(ViewModel_Refreshed);
         }
 
-        private void ViewModel_BeginDataUpdate(object sender, EventArgs e)
+        private void ViewModel_DescriptorsUpdating(object sender, EventArgs e)
         {
             List.BeginDataUpdate();
         }
 
-        private void ViewModel_EndDataUpdate(object sender, EventArgs e)
+        private void ViewModel_DescriptorsUpdated(object sender, EventArgs e)
         {
             List.EndDataUpdate();
         }
 
-        private void ViewModel_BeforeRefresh(object sender, EventArgs e)
+        private void ViewModel_Refreshing(object sender, EventArgs e)
         {
             topItemId = Guid.Empty;
             var topItemSource = List.TopVisibleItem;
@@ -77,7 +77,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void ViewModel_AfterRefresh(object sender, EventArgs e)
+        private void ViewModel_Refreshed(object sender, EventArgs e)
         {
             object topItem = null;
             if (topItemIsCategory)
