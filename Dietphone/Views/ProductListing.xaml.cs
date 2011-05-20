@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
-using System.Diagnostics;
 using Telerik.Windows.Data;
 using Dietphone.Tools;
 
@@ -21,8 +12,8 @@ namespace Dietphone.Views
     {
         public ProductListingViewModel ViewModel { get; private set; }
         public event EventHandler CategoriesPoppedUp;
+        private bool isTopItemCategory;
         private Guid topItemId;
-        private bool topItemIsCategory;
 
         public ProductListing()
         {
@@ -61,7 +52,7 @@ namespace Dietphone.Views
                 {
                     var product = topItem as ProductViewModel;
                     topItemId = product.Id;
-                    topItemIsCategory = false;
+                    isTopItemCategory = false;
                 }
                 else
                     if (topItem is DataGroup)
@@ -71,7 +62,7 @@ namespace Dietphone.Views
                         {
                             var category = dataGroup.Key as CategoryViewModel;
                             topItemId = category.Id;
-                            topItemIsCategory = true;
+                            isTopItemCategory = true;
                         }
                     }
             }
@@ -80,7 +71,7 @@ namespace Dietphone.Views
         private void ViewModel_Refreshed(object sender, EventArgs e)
         {
             object topItem = null;
-            if (topItemIsCategory)
+            if (isTopItemCategory)
             {
                 var category = ViewModel.FindCategory(topItemId);
                 var group = from dataGroup in List.Groups
@@ -104,6 +95,11 @@ namespace Dietphone.Views
         }
 
         private void List_GroupHeaderItemTap(object sender, Telerik.Windows.Controls.GroupHeaderItemTapEventArgs e)
+        {
+            OnCategoriesPoppedUp();
+        }
+
+        protected void OnCategoriesPoppedUp()
         {
             if (CategoriesPoppedUp != null)
             {

@@ -44,10 +44,15 @@ namespace Dietphone.Views
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Pivot.SelectedItem == Products)
+            if (Pivot.SelectedItem == Meals)
             {
-                subConnector.SubViewModel = ProductListing.ViewModel;
+                subConnector.SubViewModel = MealListing.ViewModel;
             }
+            else
+                if (Pivot.SelectedItem == Products)
+                {
+                    subConnector.SubViewModel = ProductListing.ViewModel;
+                }
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -89,7 +94,17 @@ namespace Dietphone.Views
             HideSearch();
         }
 
+        private void MealListing_DatesPoppedUp(object sender, EventArgs e)
+        {
+            HideSearch();
+        }
+
         private void ProductListing_MouseEnter(object sender, MouseEventArgs e)
+        {
+            HideSearchSip();
+        }
+
+        private void MealListing_MouseEnter(object sender, MouseEventArgs e)
         {
             HideSearchSip();
         }
