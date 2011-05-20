@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Linq;
 using Dietphone.Models;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Linq;
+using Dietphone.Tools;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -10,7 +13,14 @@ namespace Dietphone.ViewModels
         public Meal Meal { get; private set; }
         public Collection<MealNameViewModel> MealNames { private get; set; }
         private ObservableCollection<MealItemViewModel> items;
+        private bool isNameCached;
+        private bool isProductsHeadCached;
+        private bool isProductsTailCached;
+        private MealNameViewModel nameCache;
+        private string productsHeadCache;
+        private IEnumerable<string> productsTailCache;
         private readonly object itemsLock = new object();
+        private const byte TAKE_PRODUCTS_TO_HEAD = 3;
 
         public MealViewModel(Meal meal)
         {
@@ -39,14 +49,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string DateText
-        {
-            get
-            {
-                return string.Format("{0} {1}", Date.ToShortDateString(), Date.ToShortTimeString());
-            }
-        }
-
         public DateTime DateOnly
         {
             get
@@ -55,15 +57,29 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public string Time
+        {
+            get
+            {
+                return Date.ToShortTimeString();
+            }
+        }
+
         public MealNameViewModel Name
         {
             get
             {
+                if (isNameCached)
+                {
+                    return nameCache;
+                }
                 if (MealNames == null)
                 {
                     throw new InvalidOperationException("Set MealNames first.");
                 }
-                return FindName();
+                nameCache = FindName();
+                isNameCached = true;
+                return nameCache;
             }
             set
             {
@@ -75,23 +91,36 @@ namespace Dietphone.ViewModels
                 {
                     Meal.NameId = value.Id;
                 }
+                isNameCached = false;
                 OnPropertyChanged("Name");
             }
         }
 
-        public string NameText
+        public string ProductsHead
         {
             get
             {
-                var name = Name;
-                if (name == null)
+                if (isProductsHeadCached)
                 {
-                    return string.Empty;
+                    return productsHeadCache;
                 }
-                else
+                productsHeadCache = MakeProductsHead();
+                isProductsHeadCached = true;
+                return productsHeadCache;
+            }
+        }
+
+        public IEnumerable<string> ProductsTail
+        {
+            get
+            {
+                if (isProductsTailCached)
                 {
-                    return name.Name;
+                    return productsTailCache;
                 }
+                productsTailCache = MakeProductsTail();
+                isProductsTailCached = true;
+                return productsTailCache;
             }
         }
 
@@ -121,7 +150,7 @@ namespace Dietphone.ViewModels
                     {
                         items = new ObservableCollection<MealItemViewModel>();
                         LoadItems();
-                        items.CollectionChanged += delegate { OnNutrientsChanged(); };
+                        items.CollectionChanged += delegate { OnItemsChanged(); };
                     }
                     return items;
                 }
@@ -155,6 +184,36 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public Visibility VisibleWhenHasName
+        {
+            get
+            {
+                if (Name == null)
+                {
+                    return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
+            }
+        }
+
+        public Visibility VisibleWhenHasNoName
+        {
+            get
+            {
+                if (Name == null)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
+            }
+        }
+
         public MealItemViewModel AddItem()
         {
             var itemModel = Meal.AddItem();
@@ -169,8 +228,38 @@ namespace Dietphone.ViewModels
             Items.Remove(itemViewModel);
         }
 
+        public bool FilterIn(string filter)
+        {
+            var name = Name;
+            if (name != null)
+            {
+                var nameValue = name.Name;
+                if (nameValue.ContainsIgnoringCase(filter))
+                {
+                    return true;
+                }
+            }
+            if (ProductsHead.ContainsIgnoringCase(filter))
+            {
+                return true;
+            }
+            var tail = ProductsTail;
+            foreach (var product in tail)
+            {
+                if (product.ContainsIgnoringCase(filter))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private MealNameViewModel FindName()
         {
+            if (Meal.NameId == Guid.Empty)
+            {
+                return null;
+            }
             var result = from viewModel in MealNames
                          where viewModel.Id == Meal.NameId
                          select viewModel;
@@ -189,12 +278,37 @@ namespace Dietphone.ViewModels
         private MealItemViewModel CreateItemViewModel(MealItem itemModel)
         {
             var itemViewModel = new MealItemViewModel(itemModel);
-            itemViewModel.NutrientsChanged += delegate { OnNutrientsChanged(); };
+            itemViewModel.ItemChanged += delegate { OnItemsChanged(); };
             return itemViewModel;
         }
 
-        protected void OnNutrientsChanged()
+        private string MakeProductsHead()
         {
+            var all = from item in Items
+                      select item.ProductName;
+            var nonEmpty = all.Where(name => !string.IsNullOrEmpty(name));
+            var firstFew = nonEmpty.Take(TAKE_PRODUCTS_TO_HEAD);
+            // Linq z Take() ewaluuje tylko tyle elementów listy ile trzeba
+            return string.Join(" | ", firstFew.ToArray());
+        }
+
+        private IEnumerable<string> MakeProductsTail()
+        {
+            var result = new List<string>();
+            var items = Items;
+            // Nie zamieniaj na Linq bo Skip() bo w przeciwieństwie do Take() ewaluuje całą listę
+            for (int i = TAKE_PRODUCTS_TO_HEAD; i < items.Count; i++)
+            {
+                var name = items[i].ProductName;
+                result.Add(name);
+            }
+            return result;
+        }
+
+        protected void OnItemsChanged()
+        {
+            isProductsHeadCached = false;
+            isProductsTailCached = false;
             OnPropertyChanged("Energy");
             OnPropertyChanged("Cu");
             OnPropertyChanged("Fpu");

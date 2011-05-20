@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Dietphone.Views.MealListing"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:telerikDataControls="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+
+    <Grid>
+        <telerikDataControls:RadJumpList IsAsyncBalanceEnabled="True" Name="List" x:FieldModifier="private" ItemsSource="{Binding Meals}" SelectedItem="{Binding SelectedMeal, Mode=TwoWay}" GroupPickerItemTap="List_GroupPickerItemTap" GroupHeaderItemTap="List_GroupHeaderItemTap">
+            <telerikDataControls:RadJumpList.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="4">
+                        <Grid Visibility="{Binding VisibleWhenHasName}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Time}" VerticalAlignment="Center" Grid.Column="0"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="1"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding ProductsHead}" VerticalAlignment="Center" Grid.Column="2"/>
+                        </Grid>
+                        <Grid Visibility="{Binding VisibleWhenHasNoName}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="8*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Time}" VerticalAlignment="Center" Grid.Column="0"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding ProductsHead}" VerticalAlignment="Center" Grid.Column="1"/>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </telerikDataControls:RadJumpList.ItemTemplate>
+            <telerikDataControls:RadJumpList.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Border Background="{StaticResource PhoneAccentBrush}" Width="480" Height="50" HorizontalAlignment="Left" Margin="4" BorderThickness="0">
+                        <TextBlock FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding Key}" Margin="4" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    </Border>
+                </DataTemplate>
+            </telerikDataControls:RadJumpList.GroupHeaderTemplate>
+            <telerikDataControls:RadJumpList.GroupPickerItemTemplate>
+                <DataTemplate>
+                    <Border Background="{StaticResource PhoneAccentBrush}" Width="226" Height="40" HorizontalAlignment="Left" Margin="4">
+                        <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding}" Margin="6" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    </Border>
+                </DataTemplate>
+            </telerikDataControls:RadJumpList.GroupPickerItemTemplate>
+            <telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+                <ItemsPanelTemplate>
+                    <telerikPrimitives:RadWrapPanel Margin="8 30 0 0" ItemWidth="236" ItemHeight="50"/>
+                </ItemsPanelTemplate>
+            </telerikDataControls:RadJumpList.GroupPickerItemsPanel>
+        </telerikDataControls:RadJumpList>
+        <toolkit:PerformanceProgressBar VerticalAlignment="Top" IsIndeterminate="{Binding IsBusy}"/>
+    </Grid>
+
+</UserControl>

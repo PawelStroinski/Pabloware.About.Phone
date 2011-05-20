@@ -268,7 +268,7 @@ namespace Dietphone.Models
         public string Validate()
         {
             string[] validation = { ValidateProduct(), ValidateValue(), ValidateUnit() };
-            return validation.ContactOptionalSentences();
+            return validation.JoinOptionalSentences();
         }
 
         private string ValidateProduct()

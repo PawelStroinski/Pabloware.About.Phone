@@ -7,7 +7,7 @@ namespace Dietphone.ViewModels
     public class MealItemViewModel : ViewModelBase
     {
         public MealItem MealItem { get; private set; }
-        public event EventHandler NutrientsChanged;
+        public event EventHandler ItemChanged;
         private static readonly Constrains big = new Constrains { Max = 10000 };
 
         public MealItemViewModel(MealItem mealItem)
@@ -25,7 +25,7 @@ namespace Dietphone.ViewModels
             {
                 MealItem.ProductId = value;
                 OnPropertyChanged("ProductName");
-                OnNutrientsChanged();
+                OnItemChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace Dietphone.ViewModels
                 var newValue = oldValue.TryGetValueOf(value);
                 MealItem.Value = big.Constraint(newValue);
                 OnPropertyChanged("Value");
-                OnNutrientsChanged();
+                OnItemChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace Dietphone.ViewModels
                 var newValue = oldValue.TryGetValueOfAbbreviation(value);
                 MealItem.Unit = newValue;
                 OnPropertyChanged("Unit");
-                OnNutrientsChanged();
+                OnItemChanged();
             }
         }
 
@@ -99,14 +99,14 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnNutrientsChanged()
+        protected void OnItemChanged()
         {
             OnPropertyChanged("Energy");
             OnPropertyChanged("Cu");
             OnPropertyChanged("Fpu");
-            if (NutrientsChanged != null)
+            if (ItemChanged != null)
             {
-                NutrientsChanged(this, EventArgs.Empty);
+                ItemChanged(this, EventArgs.Empty);
             }
         }
     }

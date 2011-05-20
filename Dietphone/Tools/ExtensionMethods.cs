@@ -1,6 +1,7 @@
 ﻿// Metoda CopyFromAny inspirowana metodą CopyTo z http://stackoverflow.com/questions/78536/cloning-objects-in-c
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dietphone.Tools
 {
@@ -101,17 +102,11 @@ namespace Dietphone.Tools
             }
         }
 
-        public static string ContactOptionalSentences(this string[] optionalSentences)
+        public static string JoinOptionalSentences(this IEnumerable<string> optionalSentences)
         {
-            String result = string.Empty;
-            foreach (var optionalSentence in optionalSentences)
-            {
-                if (!string.IsNullOrEmpty(optionalSentence))
-                {
-                    result += optionalSentence + " ";
-                }
-            }
-            return result;
+            var sentences = optionalSentences.
+                Where(optionalSentence => !string.IsNullOrEmpty(optionalSentence));
+            return string.Join(" ", sentences.ToArray());
         }
     }
 }

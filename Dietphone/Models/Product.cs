@@ -128,7 +128,7 @@ namespace Dietphone.Models
         {
             string[] validation = { ValidateNutrientsPer100gPresence(), ValidateEnergyPer100g(), ValidateEnergyPerServing(), 
                                       ValidateFiber(), ValidateServingPresence(), ValidateServingNutrients() };
-            return validation.ContactOptionalSentences();
+            return validation.JoinOptionalSentences();
         }
 
         private string ValidateNutrientsPer100gPresence()
