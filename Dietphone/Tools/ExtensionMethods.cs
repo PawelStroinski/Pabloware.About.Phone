@@ -108,5 +108,15 @@ namespace Dietphone.Tools
                 Where(optionalSentence => !string.IsNullOrEmpty(optionalSentence));
             return string.Join(" ", sentences.ToArray());
         }
+
+        public static bool IsToday(this DateTime time)
+        {
+            return DateTime.Today == time.Date;
+        }
+
+        public static bool IsYesterday(this DateTime time)
+        {
+            return DateTime.Today - time.Date == TimeSpan.FromDays(1);
+        }
     }
 }
