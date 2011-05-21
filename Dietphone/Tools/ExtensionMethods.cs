@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 namespace Dietphone.Tools
 {
@@ -117,6 +118,35 @@ namespace Dietphone.Tools
         public static bool IsYesterday(this DateTime time)
         {
             return DateTime.Today - time.Date == TimeSpan.FromDays(1);
+        }
+
+        public static bool IsPolish(this CultureInfo culture)
+        {
+            return culture.TwoLetterISOLanguageName == "pl";
+        }
+
+        public static void SetNullStringPropertiesToEmpty(this object target)
+        {
+            var type = target.GetType();
+            var properties = type.GetProperties();
+            var emptyString = new object[] { string.Empty };
+            var stringType = typeof(string);
+            foreach (var property in properties)
+            {
+                if (property.PropertyType == stringType)
+                {
+                    var getMethod = property.GetGetMethod();
+                    var setMethod = property.GetSetMethod();
+                    if (getMethod != null && setMethod != null)
+                    {
+                        var value = getMethod.Invoke(target, null);
+                        if (value == null)
+                        {
+                            setMethod.Invoke(target, emptyString);
+                        }
+                    }
+                }
+            }
         }
     }
 }

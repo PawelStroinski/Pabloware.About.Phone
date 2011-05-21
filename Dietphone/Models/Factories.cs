@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using Dietphone.Tools;
 
 namespace Dietphone.Models
 {
@@ -73,6 +74,7 @@ namespace Dietphone.Models
             meal.DateTime = DateTime.Now;
             var items = new List<MealItem>();
             meal.InitializeItems(items);
+            meal.SetNullStringPropertiesToEmpty();
             return meal;
         }
 
@@ -80,6 +82,7 @@ namespace Dietphone.Models
         {
             var mealName = mealNameFactory.CreateEntity();
             mealName.Id = Guid.NewGuid();
+            mealName.SetNullStringPropertiesToEmpty();
             return mealName;
         }
 
@@ -89,6 +92,7 @@ namespace Dietphone.Models
             product.Id = Guid.NewGuid();
             var defaultCategory = Finder.FindCategoryFirstAlphabetically();
             product.CategoryId = defaultCategory.Id;
+            product.SetNullStringPropertiesToEmpty();
             return product;
         }
 
@@ -96,6 +100,7 @@ namespace Dietphone.Models
         {
             var category = categoryFactory.CreateEntity();
             category.Id = Guid.NewGuid();
+            category.SetNullStringPropertiesToEmpty();
             return category;
         }
 
