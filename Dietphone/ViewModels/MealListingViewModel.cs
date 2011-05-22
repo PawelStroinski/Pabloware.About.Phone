@@ -9,6 +9,7 @@ namespace Dietphone.ViewModels
     public class MealListingViewModel : SubViewModel
     {
         public ObservableCollection<MealViewModel> Meals { get; private set; }
+        public ObservableCollection<DateViewModel> Dates { get; private set; }
         public ObservableCollection<DataDescriptor> GroupDescriptors { private get; set; }
         public ObservableCollection<DataDescriptor> SortDescriptors { private get; set; }
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
@@ -40,10 +41,11 @@ namespace Dietphone.ViewModels
 
         public override void Load()
         {
-            if (Meals == null)
+            if (Dates == null && Meals == null)
             {
                 var loader = new MealNamesAndMealsLoader(this);
                 loader.LoadAsync();
+                loader.Loaded += delegate { OnLoaded(); };
             }
         }
 
@@ -64,7 +66,7 @@ namespace Dietphone.ViewModels
         public void UpdateGroupDescriptors()
         {
             GroupDescriptors.Clear();
-            var groupByDate = new GenericGroupDescriptor<MealViewModel, DateTime>(meal => meal.Date);
+            var groupByDate = new GenericGroupDescriptor<MealViewModel, DateViewModel>(meal => meal.Date);
             GroupDescriptors.Add(groupByDate);
         }
 
@@ -80,6 +82,14 @@ namespace Dietphone.ViewModels
             var result = from meal in Meals
                          where meal.Id == mealId
                          select meal;
+            return result.FirstOrDefault();
+        }
+
+        public DateViewModel FindDate(DateTime value)
+        {
+            var result = from date in Dates
+                         where date.Date == value
+                         select date;
             return result.FirstOrDefault();
         }
 
@@ -129,6 +139,8 @@ namespace Dietphone.ViewModels
             public bool SortMealNames { get; set; }
             private ObservableCollection<MealNameViewModel> mealNames;
             private ObservableCollection<MealViewModel> meals;
+            private ObservableCollection<DateViewModel> dates;
+            private const byte DATES_MAX_COUNT = 14 * 3;
 
             public MealNamesAndMealsLoader(MealListingViewModel viewModel)
             {
@@ -151,10 +163,12 @@ namespace Dietphone.ViewModels
             {
                 LoadMealNames();
                 LoadMeals();
+                MakeDates();
             }
 
             protected override void WorkCompleted()
             {
+                AssignDates();
                 AssignMeals();
                 base.WorkCompleted();
             }
@@ -189,8 +203,48 @@ namespace Dietphone.ViewModels
                 meals = new ObservableCollection<MealViewModel>();
                 foreach (var model in models)
                 {
-                    var viewModel = new MealViewModel(model, mealNames);
+                    var viewModel = new MealViewModel(model)
+                    {
+                        MealNames = mealNames
+                    };
                     meals.Add(viewModel);
+                }
+            }
+
+            private void MakeDates()
+            {
+                var mealDatesDescending = from meal in meals
+                                          group meal by meal.DateOnly into date
+                                          orderby date.Key descending
+                                          select date;
+                var newerCount = DATES_MAX_COUNT;
+                if (mealDatesDescending.Count() > newerCount)
+                {
+                    newerCount--;
+                }
+                var older = from date in mealDatesDescending.Skip(newerCount)
+                            from meal in date
+                            select meal;
+                var newer = mealDatesDescending.Take(newerCount).
+                    Reverse();
+                dates = new ObservableCollection<DateViewModel>();
+                if (older.Count() > 0)
+                {
+                    var groupOfOlder = DateViewModel.CreateGroupOfOlder();
+                    dates.Add(groupOfOlder);
+                    foreach (var meal in older)
+                    {
+                        meal.Date = groupOfOlder;
+                    }
+                }
+                foreach (var date in newer)
+                {
+                    var normalDate = DateViewModel.CreateNormalDate(date.Key);
+                    dates.Add(normalDate);
+                    foreach (var meal in date)
+                    {
+                        meal.Date = normalDate;
+                    }
                 }
             }
 
@@ -198,6 +252,12 @@ namespace Dietphone.ViewModels
             {
                 GetViewModel().Meals = meals;
                 GetViewModel().OnPropertyChanged("Meals");
+            }
+
+            private void AssignDates()
+            {
+                GetViewModel().Dates = dates;
+                GetViewModel().OnPropertyChanged("Dates");
             }
 
             private MealListingViewModel GetViewModel()

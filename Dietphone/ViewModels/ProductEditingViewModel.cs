@@ -42,8 +42,8 @@ namespace Dietphone.ViewModels
             }
             else
             {
-                CreateProductViewModel();
                 LoadCategories();
+                CreateProductViewModel();
             }
         }
 
@@ -162,7 +162,11 @@ namespace Dietphone.ViewModels
         private void CreateProductViewModel()
         {
             var maxCuAndFpu = new MaxCuAndFpuInCategories(finder, modelCopy);
-            Product = new ProductViewModel(modelCopy, maxCuAndFpu);
+            Product = new ProductViewModel(modelCopy)
+            {
+                Categories = Categories,
+                MaxCuAndFpu = maxCuAndFpu
+            };
             Product.PropertyChanged += delegate { OnGotDirty(); };
         }
 
@@ -170,7 +174,6 @@ namespace Dietphone.ViewModels
         {
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
             Categories = loader.GetCategoriesReloaded();
-            Product.Categories = Categories;
             foreach (var category in Categories)
             {
                 category.MakeBuffer();

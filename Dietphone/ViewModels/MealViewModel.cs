@@ -11,7 +11,8 @@ namespace Dietphone.ViewModels
     public class MealViewModel : ViewModelBase
     {
         public Meal Meal { get; private set; }
-        private IEnumerable<MealNameViewModel> mealNames;
+        public IEnumerable<MealNameViewModel> MealNames { private get; set; }
+        public DateViewModel Date { get; set; }
         private ObservableCollection<MealItemViewModel> items;
         private bool isNameCached;
         private bool isProductsHeadCached;
@@ -22,10 +23,9 @@ namespace Dietphone.ViewModels
         private readonly object itemsLock = new object();
         private const byte TAKE_PRODUCTS_TO_HEAD = 3;
 
-        public MealViewModel(Meal meal, IEnumerable<MealNameViewModel> mealNames)
+        public MealViewModel(Meal meal)
         {
             Meal = meal;
-            this.mealNames = mealNames;
         }
 
         public Guid Id
@@ -46,16 +46,26 @@ namespace Dietphone.ViewModels
             {
                 Meal.DateTime = value;
                 OnPropertyChanged("DateTime");
-                OnPropertyChanged("Date");
+                OnPropertyChanged("DateOnly");
+                OnPropertyChanged("DateAndTime");
                 OnPropertyChanged("Time");
             }
         }
 
-        public DateTime Date
+        public DateTime DateOnly
         {
             get
             {
                 return DateTime.Date;
+            }
+        }
+
+        public string DateAndTime
+        {
+            get
+            {
+                var date = DateTime.ToShortDateInAlternativeFormat();
+                return string.Format("{0} {1}", date, Time);
             }
         }
 
@@ -91,6 +101,8 @@ namespace Dietphone.ViewModels
                 }
                 isNameCached = false;
                 OnPropertyChanged("Name");
+                OnPropertyChanged("VisibleWhenIsNewerAndHasName");
+                OnPropertyChanged("VisibleWhenIsNewerAndHasNoName");
             }
         }
 
@@ -182,33 +194,27 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public Visibility VisibleWhenHasName
+        public Visibility VisibleWhenIsNewerAndHasName
         {
             get
             {
-                if (Name == null)
-                {
-                    return Visibility.Collapsed;
-                }
-                else
-                {
-                    return Visibility.Visible;
-                }
+                return (IsNewer && HasName).ToVisibility();
             }
         }
 
-        public Visibility VisibleWhenHasNoName
+        public Visibility VisibleWhenIsNewerAndHasNoName
         {
             get
             {
-                if (Name == null)
-                {
-                    return Visibility.Visible;
-                }
-                else
-                {
-                    return Visibility.Collapsed;
-                }
+                return (IsNewer && !HasName).ToVisibility();
+            }
+        }
+
+        public Visibility VisibleWhenIsOlder
+        {
+            get
+            {
+                return (!IsNewer).ToVisibility();
             }
         }
 
@@ -231,8 +237,8 @@ namespace Dietphone.ViewModels
             var name = Name;
             if (name != null)
             {
-                var nameValue = name.Name;
-                if (nameValue.ContainsIgnoringCase(filter))
+                var nameName = name.Name;
+                if (nameName.ContainsIgnoringCase(filter))
                 {
                     return true;
                 }
@@ -249,7 +255,34 @@ namespace Dietphone.ViewModels
                     return true;
                 }
             }
+            if (Note.ContainsIgnoringCase(filter))
+            {
+                return true;
+            }
             return false;
+        }
+
+        private bool IsNewer
+        {
+            get
+            {
+                if (Date == null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return !Date.IsGroupOfOlder;
+                }
+            }
+        }
+
+        private bool HasName
+        {
+            get
+            {
+                return Name != null;
+            }
         }
 
         private MealNameViewModel FindName()
@@ -258,7 +291,7 @@ namespace Dietphone.ViewModels
             {
                 return null;
             }
-            var result = from viewModel in mealNames
+            var result = from viewModel in MealNames
                          where viewModel.Id == Meal.NameId
                          select viewModel;
             return result.FirstOrDefault();

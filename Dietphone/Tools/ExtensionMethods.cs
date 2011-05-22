@@ -110,6 +110,17 @@ namespace Dietphone.Tools
             return string.Join(" ", sentences.ToArray());
         }
 
+        public static string ToShortDateInAlternativeFormat(this DateTime date)
+        {
+            var culture = CultureInfo.CurrentCulture;
+            if (culture.IsPolish())
+            {
+                var alternativeFormat = "dd.MM.yyyy";
+                return date.ToString(alternativeFormat);
+            }
+            return date.ToShortDateString();
+        }
+
         public static bool IsToday(this DateTime time)
         {
             return DateTime.Today == time.Date;

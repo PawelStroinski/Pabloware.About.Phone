@@ -15,7 +15,7 @@ namespace Dietphone.Views
         private bool isTopItemMeal;
         private bool isTopItemDate;
         private Guid topItemMealId;
-        private DateTime? topItemDate;
+        private DateTime topItemDate;
 
         public MealListing()
         {
@@ -29,6 +29,7 @@ namespace Dietphone.Views
             ViewModel.UpdateSortDescriptors();
             ViewModel.DescriptorsUpdating += new EventHandler(ViewModel_DescriptorsUpdating);
             ViewModel.DescriptorsUpdated += new EventHandler(ViewModel_DescriptorsUpdated);
+            ViewModel.Loaded += new EventHandler(ViewModel_Loaded);
             ViewModel.Refreshing += new EventHandler(ViewModel_Refreshing);
             ViewModel.Refreshed += new EventHandler(ViewModel_Refreshed);
         }
@@ -41,6 +42,11 @@ namespace Dietphone.Views
         private void ViewModel_DescriptorsUpdated(object sender, EventArgs e)
         {
             List.EndDataUpdate();
+        }
+
+        private void ViewModel_Loaded(object sender, EventArgs e)
+        {
+            List.ScrollToLastGroup();
         }
 
         private void ViewModel_Refreshing(object sender, EventArgs e)
@@ -61,11 +67,11 @@ namespace Dietphone.Views
                     if (topItem is DataGroup)
                     {
                         var dataGroup = topItem as DataGroup;
-                        if (dataGroup.Key is DateTime?)
+                        if (dataGroup.Key is DateViewModel)
                         {
-                            var date = dataGroup.Key as DateTime?;
-                            topItemDate = date;
-                            isTopItemDate = date != null;
+                            var date = dataGroup.Key as DateViewModel;
+                            topItemDate = date.Date;
+                            isTopItemDate = true;
                         }
                     }
             }
@@ -81,8 +87,9 @@ namespace Dietphone.Views
             else
                 if (isTopItemDate)
                 {
+                    var date = ViewModel.FindDate(topItemDate);
                     var group = from dataGroup in List.Groups
-                                where dataGroup.Key as DateTime? == topItemDate
+                                where dataGroup.Key == date
                                 select dataGroup;
                     topItem = group.FirstOrDefault();
                 }

@@ -3,6 +3,8 @@ using System.Windows.Input;
 using Telerik.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Linq;
+using System.Windows;
 
 namespace Dietphone.Tools
 {
@@ -22,6 +24,19 @@ namespace Dietphone.Tools
                 {
                     e.DataItemToNavigate = group;
                     return;
+                }
+            }
+        }
+
+        public static void ScrollToLastGroup(this RadJumpList list)
+        {
+            var groups = list.Groups;
+            if (groups != null)
+            {
+                var last = groups.LastOrDefault();
+                if (last != null)
+                {
+                    list.BringIntoView(last);
                 }
             }
         }
@@ -47,6 +62,18 @@ namespace Dietphone.Tools
             var appBar = page.ApplicationBar;
             var icons = appBar.Buttons;
             return icons[whichIcon] as ApplicationBarIconButton;
+        }
+
+        public static Visibility ToVisibility(this bool visible)
+        {
+            if (visible)
+            {
+                return Visibility.Visible;
+            }
+            else
+            {
+                return Visibility.Collapsed;
+            }
         }
     }
 }

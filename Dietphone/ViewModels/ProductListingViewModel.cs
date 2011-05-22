@@ -70,7 +70,7 @@ namespace Dietphone.ViewModels
         public void UpdateGroupDescriptors()
         {
             GroupDescriptors.Clear();
-            var groupByCategory = new GenericGroupDescriptor<ProductViewModel, CategoryViewModel>(FindCategoryFromProduct);
+            var groupByCategory = new GenericGroupDescriptor<ProductViewModel, CategoryViewModel>(product => product.Category);
             GroupDescriptors.Add(groupByCategory);
         }
 
@@ -112,18 +112,6 @@ namespace Dietphone.ViewModels
                 var filterByName = new GenericFilterDescriptor<ProductViewModel>(product => product.Name.ContainsIgnoringCase(search));
                 FilterDescriptors.Add(filterByName);
             }
-        }
-
-        private CategoryViewModel FindCategoryFromProduct(ProductViewModel product)
-        {
-            if (product == null)
-            {
-                throw new NullReferenceException("product");
-            }
-            var result = from category in Categories
-                         where category.Id == product.Product.CategoryId
-                         select category;
-            return result.FirstOrDefault();
         }
 
         protected void OnSelectedProductChanged()
@@ -210,7 +198,11 @@ namespace Dietphone.ViewModels
                 products = new ObservableCollection<ProductViewModel>();
                 foreach (var model in models)
                 {
-                    var viewModel = new ProductViewModel(model, maxCuAndFpu);
+                    var viewModel = new ProductViewModel(model)
+                    {
+                        Categories = categories,
+                        MaxCuAndFpu = maxCuAndFpu
+                    };
                     products.Add(viewModel);
                 }
             }

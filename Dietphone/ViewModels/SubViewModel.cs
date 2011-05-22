@@ -7,6 +7,7 @@ namespace Dietphone.ViewModels
     public abstract class SubViewModel : ViewModelBase
     {
         public Navigator Navigator { protected get; set; }
+        public event EventHandler Loaded;
         public event EventHandler Refreshing;
         public event EventHandler Refreshed;
         protected string search = "";
@@ -48,6 +49,14 @@ namespace Dietphone.ViewModels
         }
 
         protected abstract void OnSearchChanged();
+
+        protected void OnLoaded()
+        {
+            if (Loaded != null)
+            {
+                Loaded(this, EventArgs.Empty);
+            }
+        }
 
         protected void OnRefreshing()
         {

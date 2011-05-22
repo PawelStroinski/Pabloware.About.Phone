@@ -12,18 +12,17 @@ namespace Dietphone.ViewModels
     public class ProductViewModel : ViewModelBase
     {
         public Product Product { get; private set; }
-        public Collection<CategoryViewModel> Categories { private get; set; }
+        public IEnumerable<CategoryViewModel> Categories { private get; set; }
+        public MaxCuAndFpuInCategories MaxCuAndFpu { private get; set; }
         private bool autoCalculatingEnergyPer100g;
         private bool autoCalculatingEnergyPerServing;
-        private readonly MaxCuAndFpuInCategories maxCuAndFpu;
         private static readonly Constrains max100g = new Constrains { Max = 100 };
         private static readonly Constrains big = new Constrains { Max = 10000 };
         private const byte RECT_WIDTH = 25;
 
-        public ProductViewModel(Product product, MaxCuAndFpuInCategories maxCuAndFpu)
+        public ProductViewModel(Product product)
         {
             Product = product;
-            this.maxCuAndFpu = maxCuAndFpu;
             autoCalculatingEnergyPer100g = Product.EnergyPer100g == 0;
             autoCalculatingEnergyPerServing = Product.EnergyPerServing == 0;
         }
@@ -56,10 +55,6 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                if (Categories == null)
-                {
-                    throw new InvalidOperationException("Set Categories first.");
-                }
                 return FindCategory();
             }
             set
@@ -334,7 +329,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var maxInCategory = maxCuAndFpu.Get(Product.CategoryId);
+                var maxInCategory = MaxCuAndFpu.Get(Product.CategoryId);
                 return GetWidthOfFilledRect(Product.CuPer100g, maxInCategory.CuPer100g);
             }
         }
@@ -351,7 +346,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var maxInCategory = maxCuAndFpu.Get(Product.CategoryId);
+                var maxInCategory = MaxCuAndFpu.Get(Product.CategoryId);
                 return GetWidthOfFilledRect(Product.FpuPer100g, maxInCategory.FpuPer100g);
             }
         }
@@ -418,14 +413,14 @@ namespace Dietphone.ViewModels
         {
             var oldCategory = Product.CategoryId;
             Product.CategoryId = value.Id;
-            maxCuAndFpu.ResetCategory(oldCategory);
+            MaxCuAndFpu.ResetCategory(oldCategory);
             InvalidateCuAndFpu();
             OnPropertyChanged("Category");
         }
 
         private void InvalidateCuAndFpu()
         {
-            maxCuAndFpu.ResetCategory(Product.CategoryId);
+            MaxCuAndFpu.ResetCategory(Product.CategoryId);
             OnPropertyChanged("WidthOfFilledCuRect");
             OnPropertyChanged("WidthOfEmptyCuRect");
             OnPropertyChanged("WidthOfFilledFpuRect");
