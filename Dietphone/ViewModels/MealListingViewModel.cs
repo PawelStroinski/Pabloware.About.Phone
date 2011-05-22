@@ -12,7 +12,6 @@ namespace Dietphone.ViewModels
         public ObservableCollection<MealViewModel> Meals { get; private set; }
         public ObservableCollection<DateViewModel> Dates { get; private set; }
         public ObservableCollection<DataDescriptor> GroupDescriptors { private get; set; }
-        public ObservableCollection<DataDescriptor> SortDescriptors { private get; set; }
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler DescriptorsUpdating;
         public event EventHandler DescriptorsUpdated;
