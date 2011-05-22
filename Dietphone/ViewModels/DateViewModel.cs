@@ -39,7 +39,8 @@ namespace Dietphone.ViewModels
             }
             else
             {
-                return DateTime.Compare(Date, another.Date);
+                var ascending = DateTime.Compare(Date, another.Date);
+                return -ascending;
             }
         }
 

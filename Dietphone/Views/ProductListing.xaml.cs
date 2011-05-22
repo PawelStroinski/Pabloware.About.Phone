@@ -25,20 +25,10 @@ namespace Dietphone.Views
             ViewModel.FilterDescriptors = List.FilterDescriptors;
             ViewModel.UpdateGroupDescriptors();
             ViewModel.UpdateSortDescriptors();
-            ViewModel.DescriptorsUpdating += new EventHandler(ViewModel_DescriptorsUpdating);
-            ViewModel.DescriptorsUpdated += new EventHandler(ViewModel_DescriptorsUpdated);
+            ViewModel.DescriptorsUpdating += delegate { List.BeginDataUpdate(); };
+            ViewModel.DescriptorsUpdated += delegate { List.EndDataUpdate(); };
             ViewModel.Refreshing += new EventHandler(ViewModel_Refreshing);
             ViewModel.Refreshed += new EventHandler(ViewModel_Refreshed);
-        }
-
-        private void ViewModel_DescriptorsUpdating(object sender, EventArgs e)
-        {
-            List.BeginDataUpdate();
-        }
-
-        private void ViewModel_DescriptorsUpdated(object sender, EventArgs e)
-        {
-            List.EndDataUpdate();
         }
 
         private void ViewModel_Refreshing(object sender, EventArgs e)

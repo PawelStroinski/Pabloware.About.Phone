@@ -25,6 +25,17 @@ namespace Dietphone.Tools
         public static void Stop()
         {
             watch.Stop();
+            try
+            {
+                Show();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public static void Show()
+        {
             var elapsed = watch.ElapsedMilliseconds;
             if (elapsed != 0)
             {

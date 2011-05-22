@@ -49,6 +49,7 @@ namespace Dietphone.ViewModels
             {
                 var loader = new CategoriesAndProductsLoader(this);
                 loader.LoadAsync();
+                loader.Loaded += delegate { OnLoaded(); };
             }
         }
 

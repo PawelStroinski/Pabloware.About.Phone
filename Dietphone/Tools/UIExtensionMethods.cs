@@ -28,19 +28,6 @@ namespace Dietphone.Tools
             }
         }
 
-        public static void ScrollToLastGroup(this RadJumpList list)
-        {
-            var groups = list.Groups;
-            if (groups != null)
-            {
-                var last = groups.LastOrDefault();
-                if (last != null)
-                {
-                    list.BringIntoView(last);
-                }
-            }
-        }
-
         public static void ForceRefresh(this RadListPicker picker, PerformanceProgressBar progressBar)
         {
             progressBar.IsIndeterminate = true;

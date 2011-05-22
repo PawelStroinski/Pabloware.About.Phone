@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Telerik.Windows.Data;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -70,13 +71,6 @@ namespace Dietphone.ViewModels
             GroupDescriptors.Add(groupByDate);
         }
 
-        public void UpdateSortDescriptors()
-        {
-            SortDescriptors.Clear();
-            var sortByDateTime = new GenericSortDescriptor<MealViewModel, DateTime>(meal => meal.DateTime);
-            SortDescriptors.Add(sortByDateTime);
-        }
-
         public MealViewModel FindMeal(Guid mealId)
         {
             var result = from meal in Meals
@@ -138,7 +132,8 @@ namespace Dietphone.ViewModels
         {
             public bool SortMealNames { get; set; }
             private ObservableCollection<MealNameViewModel> mealNames;
-            private ObservableCollection<MealViewModel> meals;
+            private List<MealViewModel> unsortedMeals;
+            private ObservableCollection<MealViewModel> sortedMeals;
             private ObservableCollection<DateViewModel> dates;
             private const byte DATES_MAX_COUNT = 14 * 3;
 
@@ -162,14 +157,14 @@ namespace Dietphone.ViewModels
             protected override void DoWork()
             {
                 LoadMealNames();
-                LoadMeals();
-                MakeDates();
+                LoadUnsortedMeals();
+                MakeDatesAndSortMeals();
             }
 
             protected override void WorkCompleted()
             {
                 AssignDates();
-                AssignMeals();
+                AssignSortedMeals();
                 base.WorkCompleted();
             }
 
@@ -197,23 +192,23 @@ namespace Dietphone.ViewModels
                 }
             }
 
-            private void LoadMeals()
+            private void LoadUnsortedMeals()
             {
                 var models = factories.Meals;
-                meals = new ObservableCollection<MealViewModel>();
+                unsortedMeals = new List<MealViewModel>();
                 foreach (var model in models)
                 {
                     var viewModel = new MealViewModel(model)
                     {
                         MealNames = mealNames
                     };
-                    meals.Add(viewModel);
+                    unsortedMeals.Add(viewModel);
                 }
             }
 
-            private void MakeDates()
+            private void MakeDatesAndSortMeals()
             {
-                var mealDatesDescending = from meal in meals
+                var mealDatesDescending = from meal in unsortedMeals
                                           group meal by meal.DateOnly into date
                                           orderby date.Key descending
                                           select date;
@@ -222,12 +217,24 @@ namespace Dietphone.ViewModels
                 {
                     newerCount--;
                 }
+                var newer = mealDatesDescending.Take(newerCount);
                 var older = from date in mealDatesDescending.Skip(newerCount)
                             from meal in date
+                            orderby meal.DateTime descending
                             select meal;
-                var newer = mealDatesDescending.Take(newerCount).
-                    Reverse();
                 dates = new ObservableCollection<DateViewModel>();
+                sortedMeals = new ObservableCollection<MealViewModel>();
+                foreach (var date in newer)
+                {
+                    var normalDate = DateViewModel.CreateNormalDate(date.Key);
+                    dates.Add(normalDate);
+                    var dateAscending = date.OrderBy(meal => meal.DateTime);
+                    foreach (var meal in dateAscending)
+                    {
+                        meal.Date = normalDate;
+                        sortedMeals.Add(meal);
+                    }
+                }
                 if (older.Count() > 0)
                 {
                     var groupOfOlder = DateViewModel.CreateGroupOfOlder();
@@ -235,22 +242,14 @@ namespace Dietphone.ViewModels
                     foreach (var meal in older)
                     {
                         meal.Date = groupOfOlder;
-                    }
-                }
-                foreach (var date in newer)
-                {
-                    var normalDate = DateViewModel.CreateNormalDate(date.Key);
-                    dates.Add(normalDate);
-                    foreach (var meal in date)
-                    {
-                        meal.Date = normalDate;
+                        sortedMeals.Add(meal);
                     }
                 }
             }
 
-            private void AssignMeals()
+            private void AssignSortedMeals()
             {
-                GetViewModel().Meals = meals;
+                GetViewModel().Meals = sortedMeals;
                 GetViewModel().OnPropertyChanged("Meals");
             }
 
