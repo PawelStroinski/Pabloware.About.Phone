@@ -106,7 +106,7 @@ namespace Dietphone.BinarySerializers
         public static DateTime ReadDateTime(this BinaryReader reader)
         {
             var int64 = reader.ReadInt64();
-            return new DateTime(int64);
+            return new DateTime(int64, DateTimeKind.Utc);
         }
 
         public static String ReadObfuscated(this BinaryReader reader)

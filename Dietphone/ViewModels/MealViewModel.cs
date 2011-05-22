@@ -40,11 +40,13 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return Meal.DateTime;
+                var universal = Meal.DateTime;
+                return universal.ToLocalTime();
             }
             set
             {
-                Meal.DateTime = value;
+                var universal = value.ToUniversalTime();
+                Meal.DateTime = universal;
                 OnPropertyChanged("DateTime");
                 OnPropertyChanged("DateOnly");
                 OnPropertyChanged("DateAndTime");
