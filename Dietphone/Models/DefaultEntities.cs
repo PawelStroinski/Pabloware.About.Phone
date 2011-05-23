@@ -2,13 +2,13 @@
 
 namespace Dietphone.Models
 {
-    public interface DefaultsFactory
+    public interface DefaultEntities
     {
         MealName MealName { get; }
         Product Product { get; }
     }
 
-    public sealed class DefaultsFactoryImpl : DefaultsFactory
+    public sealed class DefaultEntitiesImpl : DefaultEntities
     {
         private MealName mealName;
         private Product product;
@@ -16,7 +16,7 @@ namespace Dietphone.Models
         private readonly object mealNameLock = new object();
         private readonly object productLock = new object();
 
-        public DefaultsFactoryImpl(Factories owner)
+        public DefaultEntitiesImpl(Factories owner)
         {
             this.owner = owner;
         }

@@ -35,11 +35,11 @@ namespace Dietphone.Models
             }
         }
 
-        protected DefaultsFactory DefaultsFactory
+        protected DefaultEntities DefaultEntities
         {
             get
             {
-                return Owner.DefaultsFactory;
+                return Owner.DefaultEntities;
             }
         }
     }

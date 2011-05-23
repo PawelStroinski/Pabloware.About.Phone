@@ -112,7 +112,7 @@
     <Compile Include="BinarySerializers\MealBinaryStorage.cs" />
     <Compile Include="BinarySerializers\MealNameBinaryStorage.cs" />
     <Compile Include="BinarySerializers\ProductBinaryStorage.cs" />
-    <Compile Include="Models\DefaultsFactory.cs" />
+    <Compile Include="Models\DefaultEntities.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Factory.cs" />
     <Compile Include="Models\Factories.cs" />

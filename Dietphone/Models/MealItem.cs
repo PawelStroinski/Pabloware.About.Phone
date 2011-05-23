@@ -41,7 +41,7 @@ namespace Dietphone.Models
                 }
                 if (foundProduct == null)
                 {
-                    return DefaultsFactory.Product;
+                    return DefaultEntities.Product;
                 }
                 else
                 {
@@ -257,7 +257,7 @@ namespace Dietphone.Models
 
         private string ValidateProduct()
         {
-            if (Product == DefaultsFactory.Product)
+            if (Product == DefaultEntities.Product)
             {
                 return "Produkt nie istnieje.";
             }
@@ -275,7 +275,7 @@ namespace Dietphone.Models
 
         private string ValidateUnit()
         {
-            var canValidate = Product != DefaultsFactory.Product;
+            var canValidate = Product != DefaultEntities.Product;
             if (canValidate && !AnyNutrientsPerUnitPresent)
             {
                 var unit = Unit.GetAbbreviation();

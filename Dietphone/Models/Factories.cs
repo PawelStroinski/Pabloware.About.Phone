@@ -7,7 +7,7 @@ namespace Dietphone.Models
     public interface Factories
     {
         Finder Finder { get; }
-        DefaultsFactory DefaultsFactory { get; }
+        DefaultEntities DefaultEntities { get; }
         List<Meal> Meals { get; }
         List<MealName> MealNames { get; }
         List<Product> Products { get; }
@@ -23,7 +23,7 @@ namespace Dietphone.Models
     public sealed class FactoriesImpl : Factories
     {
         public Finder Finder { get; private set; }
-        public DefaultsFactory DefaultsFactory { get; private set; }
+        public DefaultEntities DefaultEntities { get; private set; }
         private Factory<Meal> mealFactory;
         private Factory<MealName> mealNameFactory;
         private Factory<Product> productFactory;
@@ -35,7 +35,7 @@ namespace Dietphone.Models
             factoryCreator = new FactoryCreator(this, storageCreator);
             CreateFactories();
             Finder = new FinderImpl(this);
-            DefaultsFactory = new DefaultsFactoryImpl(this);
+            DefaultEntities = new DefaultEntitiesImpl(this);
         }
 
         public List<Meal> Meals
