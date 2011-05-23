@@ -53,7 +53,17 @@ namespace Dietphone.ViewModels
             addedMealNames.Add(viewModel);
         }
 
-        public void DeleteName()
+        public bool CanRenameMealName()
+        {
+            return Meal.Name != defaultMealName;
+        }
+
+        public bool CanDeleteMealName()
+        {
+            return Meal.Name != defaultMealName;
+        }
+
+        public void DeleteMealName()
         {
             var toDelete = Meal.Name;
             Meal.Name = MealNames.GetNextItemToSelectWhenDeleteSelected(toDelete);
@@ -104,9 +114,9 @@ namespace Dietphone.ViewModels
         {
             var loader = new MealListingViewModel.MealNamesAndMealsLoader(factories, true);
             MealNames = loader.MealNames;
-            foreach (var name in MealNames)
+            foreach (var mealName in MealNames)
             {
-                name.MakeBuffer();
+                mealName.MakeBuffer();
             }
             defaultMealName = loader.DefaultMealName;
             MealNames.Insert(0, defaultMealName);
@@ -124,18 +134,18 @@ namespace Dietphone.ViewModels
 
         private void SaveMealNames()
         {
-            foreach (var name in MealNames)
+            foreach (var mealName in MealNames)
             {
-                name.FlushBuffer();
+                mealName.FlushBuffer();
             }
             var models = factories.MealNames;
-            foreach (var name in addedMealNames)
+            foreach (var mealName in addedMealNames)
             {
-                models.Add(name.Model);
+                models.Add(mealName.Model);
             }
-            foreach (var name in deletedMealNames)
+            foreach (var mealName in deletedMealNames)
             {
-                models.Remove(name.Model);
+                models.Remove(mealName.Model);
             }
         }
     }
