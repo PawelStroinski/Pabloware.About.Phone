@@ -159,5 +159,34 @@ namespace Dietphone.Tools
                 }
             }
         }
+
+        public static T GetNextItemToSelectWhenDeleteSelected<T>(this IList<T> items, T selected)
+        {
+            if (items.Count < 2)
+            {
+                throw new InvalidOperationException("List must have at least two items.");
+            }
+            if (!items.Contains(selected))
+            {
+                throw new InvalidOperationException("Selected item not found.");
+            }
+            return items.GetNextItemToSelectWhenDeleteSelectedCore(selected);
+        }
+
+        private static T GetNextItemToSelectWhenDeleteSelectedCore<T>(this IList<T> items, T selected)
+        {
+            var indexOfSelected = items.IndexOf(selected);
+            var indexOfLastItem = items.Count - 1;
+            int indexOfNextSelected;
+            if (indexOfSelected == indexOfLastItem)
+            {
+                indexOfNextSelected = indexOfLastItem - 1;
+            }
+            else
+            {
+                indexOfNextSelected = indexOfSelected + 1;
+            }
+            return items[indexOfNextSelected];
+        }
     }
 }

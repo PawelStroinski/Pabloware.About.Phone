@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Dietphone.Tools;
 
 namespace Dietphone.Models
 {
@@ -69,6 +70,13 @@ namespace Dietphone.Models
                 throw new InvalidOperationException("Items can only be initialized once.");
             }
             items = newItems;
+            AssignOwner();
+        }
+
+        public void CopyItemsFrom(Meal source)
+        {
+            var sourceItems = source.items;
+            items = sourceItems.GetItemsCopy();
             AssignOwner();
         }
 

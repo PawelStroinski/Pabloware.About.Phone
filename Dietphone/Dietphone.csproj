@@ -128,7 +128,9 @@
     <Compile Include="Tools\UIExtensionMethods.cs" />
     <Compile Include="Tools\Vibration.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
+    <Compile Include="ViewModels\EditingViewModelBase.cs" />
     <Compile Include="ViewModels\LoaderBase.cs" />
+    <Compile Include="ViewModels\MealEditingViewModel.cs" />
     <Compile Include="ViewModels\MealListingViewModel.cs" />
     <Compile Include="ViewModels\MealItemViewModel.cs" />
     <Compile Include="ViewModels\MealNameViewModel.cs" />
@@ -152,6 +154,9 @@
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\UpdateOnTextChangedBehavior.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\MealEditing.xaml.cs">
+      <DependentUpon>MealEditing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MealListing.xaml.cs">
       <DependentUpon>MealListing.xaml</DependentUpon>
     </Compile>
@@ -168,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Views\Main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MealEditing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
