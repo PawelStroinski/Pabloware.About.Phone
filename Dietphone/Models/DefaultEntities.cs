@@ -33,7 +33,7 @@ namespace Dietphone.Models
                         var mealNames = owner.MealNames;
                         mealNames.Remove(mealName);
                         mealName.Id = Guid.Empty;
-                        mealName.Name = "bez nazwy";
+                        mealName.Name = "Bez nazwy";
                     }
                     return mealName;
                 }

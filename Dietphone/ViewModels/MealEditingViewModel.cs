@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Dietphone.Tools;
 using System;
+using System.Globalization;
 
 namespace Dietphone.ViewModels
 {
@@ -46,6 +47,15 @@ namespace Dietphone.ViewModels
             get
             {
                 return UnitAbbreviations.GetAll();
+            }
+        }
+
+        public string DateFormat
+        {
+            get
+            {
+                var culture = CultureInfo.CurrentCulture;
+                return culture.GetShortDateAlternativeFormat();
             }
         }
 

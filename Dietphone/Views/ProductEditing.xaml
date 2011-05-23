@@ -48,9 +48,9 @@
                         <telerikInput:RadListPicker.PopupHeader>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
-                                <c4f:RoundButton ImageSource="/icons/appbar.add.rest.png" Click="AddCategory_Click"/>
-                                <c4f:RoundButton ImageSource="/icons/appbar.edit.rest.png" Click="EditCategory_Click"/>
-                                <c4f:RoundButton ImageSource="/icons/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddCategory_Click"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.edit.rest.png" Click="EditCategory_Click"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
                             </StackPanel>
                         </telerikInput:RadListPicker.PopupHeader>
                     </telerikInput:RadListPicker>
@@ -179,8 +179,8 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="Save_Click" x:Name="Save" />
-            <shell:ApplicationBarIconButton IconUri="/icons/appbar.cancel.rest.png" Text="anuluj" Click="Cancel_Click" />
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="Save_Click" x:Name="Save" />
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.cancel.rest.png" Text="anuluj" Click="Cancel_Click" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="usuń" Click="Delete_Click"/>
             </shell:ApplicationBar.MenuItems>

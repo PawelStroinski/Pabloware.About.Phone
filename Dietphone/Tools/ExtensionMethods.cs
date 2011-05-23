@@ -113,12 +113,8 @@ namespace Dietphone.Tools
         public static string ToShortDateInAlternativeFormat(this DateTime date)
         {
             var culture = CultureInfo.CurrentCulture;
-            if (culture.IsPolish())
-            {
-                var alternativeFormat = "dd.MM.yyyy";
-                return date.ToString(alternativeFormat);
-            }
-            return date.ToShortDateString();
+            var format = culture.GetShortDateAlternativeFormat();
+            return date.ToString(format);
         }
 
         public static bool IsToday(this DateTime time)
@@ -129,6 +125,16 @@ namespace Dietphone.Tools
         public static bool IsYesterday(this DateTime time)
         {
             return DateTime.Today - time.Date == TimeSpan.FromDays(1);
+        }
+
+        public static string GetShortDateAlternativeFormat(this CultureInfo culture)
+        {
+            if (culture.IsPolish())
+            {
+                return "dd.MM.yyyy";
+            }
+            var defaultFormat = culture.DateTimeFormat;
+            return defaultFormat.ShortDatePattern;
         }
 
         public static bool IsPolish(this CultureInfo culture)
