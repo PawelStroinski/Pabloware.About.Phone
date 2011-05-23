@@ -33,6 +33,14 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public string IdentifiableName
+        {
+            get
+            {
+                return string.Format("{0}, {1}", NameOfMealName, Meal.DateAndTime);
+            }
+        }
+
         public List<string> AllServingSizeUnits
         {
             get
