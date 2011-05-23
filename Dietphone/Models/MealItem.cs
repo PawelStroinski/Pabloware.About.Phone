@@ -10,7 +10,6 @@ namespace Dietphone.Models
         private Guid productId;
         private Product foundProduct;
         private bool searchedForProduct;
-        private Product emptyProduct;
 
         public Guid ProductId
         {
@@ -42,7 +41,7 @@ namespace Dietphone.Models
                 }
                 if (foundProduct == null)
                 {
-                    return EmptyProduct;
+                    return DefaultsFactory.Product;
                 }
                 else
                 {
@@ -62,21 +61,6 @@ namespace Dietphone.Models
                 {
                     searchedForProduct = false;
                 }
-            }
-        }
-
-        private Product EmptyProduct
-        {
-            get
-            {
-                if (emptyProduct == null)
-                {
-                    emptyProduct = Owner.CreateProduct();
-                    var products = Owner.Products;
-                    products.Remove(emptyProduct);
-                    emptyProduct.Id = Guid.Empty;
-                }
-                return emptyProduct;
             }
         }
     }
@@ -273,7 +257,7 @@ namespace Dietphone.Models
 
         private string ValidateProduct()
         {
-            if (Product.Id == Guid.Empty)
+            if (Product == DefaultsFactory.Product)
             {
                 return "Produkt nie istnieje.";
             }
@@ -291,7 +275,7 @@ namespace Dietphone.Models
 
         private string ValidateUnit()
         {
-            var canValidate = Product.Id != Guid.Empty;
+            var canValidate = Product != DefaultsFactory.Product;
             if (canValidate && !AnyNutrientsPerUnitPresent)
             {
                 var unit = Unit.GetAbbreviation();

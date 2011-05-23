@@ -34,6 +34,14 @@ namespace Dietphone.Models
                 return Owner.Finder;
             }
         }
+
+        protected DefaultsFactory DefaultsFactory
+        {
+            get
+            {
+                return Owner.DefaultsFactory;
+            }
+        }
     }
 
     public class EntityWithId : Entity

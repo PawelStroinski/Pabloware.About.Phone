@@ -17,7 +17,7 @@ namespace Dietphone.Models
 
     public sealed class FinderImpl : Finder
     {
-        private Factories factories;
+        private readonly Factories factories;
 
         public FinderImpl(Factories factories)
         {
