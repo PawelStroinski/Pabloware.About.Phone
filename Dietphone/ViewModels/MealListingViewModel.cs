@@ -129,11 +129,12 @@ namespace Dietphone.ViewModels
 
         public class MealNamesAndMealsLoader : LoaderBase
         {
-            public bool SortMealNames { get; set; }
             private ObservableCollection<MealNameViewModel> mealNames;
             private List<MealViewModel> unsortedMeals;
             private ObservableCollection<MealViewModel> sortedMeals;
             private ObservableCollection<DateViewModel> dates;
+            private MealNameViewModel defaultMealName;
+            private readonly bool sortMealNames;
             private const byte DATES_MAX_COUNT = 14 * 3;
 
             public MealNamesAndMealsLoader(MealListingViewModel viewModel)
@@ -142,20 +143,40 @@ namespace Dietphone.ViewModels
                 factories = viewModel.factories;
             }
 
-            public MealNamesAndMealsLoader(Factories factories)
+            public MealNamesAndMealsLoader(Factories factories, bool sortMealNames)
             {
                 this.factories = factories;
+                this.sortMealNames = sortMealNames;
             }
 
-            public ObservableCollection<MealNameViewModel> GetMealNamesReloaded()
+            public ObservableCollection<MealNameViewModel> MealNames
             {
-                LoadMealNames();
-                return mealNames;
+                get
+                {
+                    if (mealNames == null)
+                    {
+                        LoadMealNames();
+                    }
+                    return mealNames;
+                }
+            }
+
+            public MealNameViewModel DefaultMealName
+            {
+                get
+                {
+                    if (defaultMealName == null)
+                    {
+                        MakeDefaultMealName();
+                    }
+                    return defaultMealName;
+                }
             }
 
             protected override void DoWork()
             {
                 LoadMealNames();
+                MakeDefaultMealName();
                 LoadUnsortedMeals();
                 MakeDatesAndSortMeals();
             }
@@ -176,7 +197,7 @@ namespace Dietphone.ViewModels
                     var viewModel = new MealNameViewModel(model);
                     unsortedViewModels.Add(viewModel);
                 }
-                if (SortMealNames)
+                if (sortMealNames)
                 {
                     var sortedViewModels = unsortedViewModels.OrderBy(mealName => mealName.Name);
                     mealNames = new ObservableCollection<MealNameViewModel>();
@@ -191,6 +212,13 @@ namespace Dietphone.ViewModels
                 }
             }
 
+            private void MakeDefaultMealName()
+            {
+                var defaultEntities = factories.DefaultEntities;
+                var model = defaultEntities.MealName;
+                defaultMealName = new MealNameViewModel(model);
+            }
+
             private void LoadUnsortedMeals()
             {
                 var models = factories.Meals;
@@ -199,7 +227,8 @@ namespace Dietphone.ViewModels
                 {
                     var viewModel = new MealViewModel(model)
                     {
-                        MealNames = mealNames
+                        MealNames = mealNames,
+                        DefaultMealName = defaultMealName
                     };
                     unsortedMeals.Add(viewModel);
                 }

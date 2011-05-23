@@ -12,6 +12,7 @@ namespace Dietphone.ViewModels
     {
         public Meal Meal { get; private set; }
         public IEnumerable<MealNameViewModel> MealNames { private get; set; }
+        public MealNameViewModel DefaultMealName { private get; set; }
         public DateViewModel Date { get; set; }
         private ObservableCollection<MealItemViewModel> items;
         private bool isNameCached;
@@ -93,14 +94,7 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                if (value == null)
-                {
-                    Meal.NameId = Guid.Empty;
-                }
-                else
-                {
-                    Meal.NameId = value.Id;
-                }
+                Meal.NameId = value.Id;
                 isNameCached = false;
                 OnPropertyChanged("Name");
                 OnPropertyChanged("VisibleWhenIsNewerAndHasName");
@@ -237,10 +231,10 @@ namespace Dietphone.ViewModels
         public bool FilterIn(string filter)
         {
             var name = Name;
-            if (name != null)
+            if (name != DefaultMealName)
             {
-                var nameName = name.Name;
-                if (nameName.ContainsIgnoringCase(filter))
+                var nameOfName = name.Name;
+                if (nameOfName.ContainsIgnoringCase(filter))
                 {
                     return true;
                 }
@@ -283,7 +277,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return Name != null;
+                return Name != DefaultMealName;
             }
         }
 
@@ -291,11 +285,12 @@ namespace Dietphone.ViewModels
         {
             if (Meal.NameId == Guid.Empty)
             {
-                return null;
+                return DefaultMealName;
             }
             var result = from viewModel in MealNames
                          where viewModel.Id == Meal.NameId
                          select viewModel;
+            result = result.DefaultIfEmpty(DefaultMealName);
             return result.FirstOrDefault();
         }
 

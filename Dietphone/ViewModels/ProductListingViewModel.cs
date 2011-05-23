@@ -157,10 +157,16 @@ namespace Dietphone.ViewModels
                 this.factories = factories;
             }
 
-            public ObservableCollection<CategoryViewModel> GetCategoriesReloaded()
+            public ObservableCollection<CategoryViewModel> Categories
             {
-                LoadCategories();
-                return categories;
+                get
+                {
+                    if (categories == null)
+                    {
+                        LoadCategories();
+                    }
+                    return categories;
+                }
             }
 
             protected override void DoWork()

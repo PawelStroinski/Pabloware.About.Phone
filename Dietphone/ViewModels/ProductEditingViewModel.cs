@@ -120,7 +120,7 @@ namespace Dietphone.ViewModels
         private void LoadCategories()
         {
             var loader = new ProductListingViewModel.CategoriesAndProductsLoader(factories);
-            Categories = loader.GetCategoriesReloaded();
+            Categories = loader.Categories;
             foreach (var category in Categories)
             {
                 category.MakeBuffer();

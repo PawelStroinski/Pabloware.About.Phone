@@ -8,17 +8,18 @@ namespace Dietphone.ViewModels
 {
     public class MealEditingViewModel : EditingViewModelBase<Meal>
     {
-        public ObservableCollection<MealNameViewModel> Names { get; private set; }
+        public ObservableCollection<MealNameViewModel> MealNames { get; private set; }
         public MealViewModel Meal { get; private set; }
-        private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
-        private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
+        private List<MealNameViewModel> addedMealNames = new List<MealNameViewModel>();
+        private List<MealNameViewModel> deletedMealNames = new List<MealNameViewModel>();
+        private MealNameViewModel defaultMealName;
 
         public MealEditingViewModel(Factories factories, Navigator navigator)
             : base(factories, navigator)
         {
         }
 
-        public string NameName
+        public string NameOfMealName
         {
             get
             {
@@ -40,31 +41,31 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void AddAndSetName(string name)
+        public void AddAndSetMealName(string name)
         {
             var tempModel = factories.CreateMealName();
             var models = factories.MealNames;
             models.Remove(tempModel);
             var viewModel = new MealNameViewModel(tempModel);
             viewModel.Name = name;
-            Names.Add(viewModel);
+            MealNames.Add(viewModel);
             Meal.Name = viewModel;
-            addedNames.Add(viewModel);
+            addedMealNames.Add(viewModel);
         }
 
         public void DeleteName()
         {
             var toDelete = Meal.Name;
-            Meal.Name = Names.GetNextItemToSelectWhenDeleteSelected(toDelete);
-            Names.Remove(toDelete);
-            deletedNames.Add(toDelete);
+            Meal.Name = MealNames.GetNextItemToSelectWhenDeleteSelected(toDelete);
+            MealNames.Remove(toDelete);
+            deletedMealNames.Add(toDelete);
         }
 
         public void SaveAndReturn()
         {
             modelSource.CopyFrom(modelCopy);
             modelSource.CopyItemsFrom(modelCopy);
-            SaveNames();
+            SaveMealNames();
             navigator.GoBack();
         }
 
@@ -72,7 +73,7 @@ namespace Dietphone.ViewModels
         {
             var models = factories.Meals;
             models.Remove(modelSource);
-            SaveNames();
+            SaveMealNames();
             navigator.GoBack();
         }
 
@@ -90,7 +91,7 @@ namespace Dietphone.ViewModels
 
         protected override void MakeViewModel()
         {
-            LoadNames();
+            LoadMealNames();
             CreateMealViewModel();
         }
 
@@ -99,38 +100,40 @@ namespace Dietphone.ViewModels
             return modelCopy.Validate();
         }
 
-        private void LoadNames()
+        private void LoadMealNames()
         {
-            var loader = new MealListingViewModel.MealNamesAndMealsLoader(factories);
-            loader.SortMealNames = true;
-            Names = loader.GetMealNamesReloaded();
-            foreach (var name in Names)
+            var loader = new MealListingViewModel.MealNamesAndMealsLoader(factories, true);
+            MealNames = loader.MealNames;
+            foreach (var name in MealNames)
             {
                 name.MakeBuffer();
             }
+            defaultMealName = loader.DefaultMealName;
+            MealNames.Insert(0, defaultMealName);
         }
 
         private void CreateMealViewModel()
         {
             Meal = new MealViewModel(modelCopy)
             {
-                MealNames = Names
+                MealNames = MealNames,
+                DefaultMealName = defaultMealName
             };
             Meal.PropertyChanged += delegate { OnGotDirty(); };
         }
 
-        private void SaveNames()
+        private void SaveMealNames()
         {
-            foreach (var name in Names)
+            foreach (var name in MealNames)
             {
                 name.FlushBuffer();
             }
             var models = factories.MealNames;
-            foreach (var name in addedNames)
+            foreach (var name in addedMealNames)
             {
                 models.Add(name.Model);
             }
-            foreach (var name in deletedNames)
+            foreach (var name in deletedMealNames)
             {
                 models.Remove(name.Model);
             }
