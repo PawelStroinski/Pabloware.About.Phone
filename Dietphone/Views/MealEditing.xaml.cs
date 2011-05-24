@@ -41,5 +41,20 @@ namespace Dietphone.Views
         {
 
         }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

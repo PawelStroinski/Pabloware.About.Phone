@@ -107,7 +107,7 @@ namespace Dietphone.Models
                 if (!string.IsNullOrEmpty(itemValidation))
                 {
                     var itemNumber = Items.IndexOf(item) + 1;
-                    var itemFormatted = string.Format("Element nr {0} zawiera następujące błędy. {1}\r\n",
+                    var itemFormatted = string.Format("Składnik nr {0} zawiera następujące błędy. {1}\r\n",
                         itemNumber, itemValidation);
                     validation += itemFormatted;
                 }
