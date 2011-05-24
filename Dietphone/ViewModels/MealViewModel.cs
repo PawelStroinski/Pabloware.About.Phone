@@ -168,7 +168,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = Meal.Energy;
-                return string.Format("{0} KCAL", result);
+                return string.Format("{0} kcal", result);
             }
         }
 

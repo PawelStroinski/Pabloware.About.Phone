@@ -20,10 +20,22 @@
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="POSIŁEK">
+        <controls:Pivot Title="POSIŁEK / 0 kcal">
             <!--składniki-->
             <controls:PivotItem Header="składniki">
-                <Grid/>
+                <Grid Margin="21,0,10,21">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="0 WW" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                    <TextBlock Text="0 WBT" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Column="1" TextAlignment="Center" />
+                    <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddItem_Click" Grid.Column="2" Margin="-10 -2 0 0"/>
+                </Grid>
             </controls:PivotItem>
 
             <!--ogólne-->
@@ -77,9 +89,6 @@
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
-        <!--Wartość energetyczna-->
-        <!--{Binding Meal.Energy}-->
-        <TextBlock Text="123 KCAL" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="NoWrap" Margin="0,14,24,0" Width="200" HorizontalAlignment="Right" TextAlignment="Right"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

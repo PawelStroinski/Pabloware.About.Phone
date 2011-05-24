@@ -56,5 +56,10 @@ namespace Dietphone.Views
         {
 
         }
+
+        private void AddItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
