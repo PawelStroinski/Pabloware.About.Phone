@@ -79,7 +79,7 @@
         </controls:Pivot>
         <!--Wartość energetyczna-->
         <!--{Binding Meal.Energy}-->
-        <TextBlock Text="123 kcal" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="NoWrap" Margin="0,14,25,0" Width="200" HorizontalAlignment="Right" TextAlignment="Right"/>
+        <TextBlock Text="123 KCAL" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="NoWrap" Margin="0,14,24,0" Width="200" HorizontalAlignment="Right" TextAlignment="Right"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
