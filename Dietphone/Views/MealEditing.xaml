@@ -24,13 +24,50 @@
             <!--ogólne-->
             <controls:PivotItem Header="ogólne">
                 <StackPanel>
-                    <StackPanel Margin="12,0,12,13" Orientation="Vertical">
+                    <Grid Margin="12,0,12,13">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="72"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Data-->
                         <TextBlock Text="Data" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5" />
-                        <telerikInput:RadDatePicker Height="72" Value="{Binding Meal.DateTime, Mode=TwoWay}"  DisplayValueFormat="{Binding DateFormat}" SelectorFormat="{Binding DateFormat}"/>
-                    </StackPanel>
+                        <telerikInput:RadDatePicker Height="72" Value="{Binding Meal.DateTime, Mode=TwoWay}"  DisplayValueFormat="{Binding DateFormat}" SelectorFormat="{Binding DateFormat}" Grid.Row="1" Margin="0 0 12 0"/>
+                        <!--Godzina-->
+                        <TextBlock Text="Godzina" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5" Grid.Column="1"/>
+                        <telerikInput:RadTimePicker Height="72" Value="{Binding Meal.DateTime, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" Margin="0 0 12 0"/>
+                        <!--Kłódka-->
+                        <ToggleButton Height="72" Width="72" VerticalAlignment="Top" Style="{StaticResource ToggleButtonWithIconStyle}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" IsChecked="{Binding IsDateTimeUnlocked, Mode=TwoWay}"/>
+                    </Grid>
+                    <!--Nazwa-->
+                    <telerikInput:RadListPicker Header="Nazwa" ItemsSource="{Binding MealNames}" SelectedItem="{Binding Meal.Name, Mode=TwoWay}" Margin="24 3 24 25" Name="MealNames2" InlineModeThreshold="0">
+                        <telerikInput:RadListPicker.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="-3 -2 0 0"/>
+                            </DataTemplate>
+                        </telerikInput:RadListPicker.ItemTemplate>
+                        <telerikInput:RadListPicker.PopupHeader>
+                            <StackPanel Orientation="Horizontal" Margin="0, -17, 0, 0">
+                                <TextBlock Text="NAZWA" Margin="-1, 10, 1, 0" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Width="180"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddMealName_Click"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.edit.rest.png" Click="EditMealName_Click"/>
+                                <c4f:RoundButton ImageSource="/images/appbar.delete.rest.png" Click="DeleteMealName_Click"/>
+                            </StackPanel>
+                        </telerikInput:RadListPicker.PopupHeader>
+                        <telerikInput:RadListPicker.PopupItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Margin="13, 8, 0, 18"/>
+                            </DataTemplate>
+                        </telerikInput:RadListPicker.PopupItemTemplate>
+                    </telerikInput:RadListPicker>
+                    <!--Notatka-->
                     <StackPanel Margin="12,0,12,13" Orientation="Vertical">
-                        <TextBlock Text="Godzina" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5" />
-                        <telerikInput:RadTimePicker Height="72" Value="{Binding Meal.DateTime, Mode=TwoWay}"/>
+                        <TextBlock Text="Notatka" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBox Height="72" InputScope="Text" Text="{Binding Meal.Note, Mode=TwoWay}"/>
                     </StackPanel>
                 </StackPanel>
             </controls:PivotItem>

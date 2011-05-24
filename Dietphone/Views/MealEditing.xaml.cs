@@ -15,9 +15,31 @@ namespace Dietphone.Views
 {
     public partial class MealEditing : PhoneApplicationPage
     {
+        public List<string> MealNames { get; set; }
         public MealEditing()
         {
             InitializeComponent();
+            MealNames = new List<string>();
+            MealNames.Add("Bez nazwy");
+            MealNames.Add("Śniadanie");
+            MealNames.Add("Obiad");
+            MealNames.Add("Kolacja");
+            DataContext = this;
+        }
+
+        private void AddMealName_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EditMealName_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteMealName_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
