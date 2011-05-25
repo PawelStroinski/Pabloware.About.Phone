@@ -1,6 +1,7 @@
 ﻿using System;
 using Dietphone.Models;
 using Dietphone.Tools;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -50,7 +51,7 @@ namespace Dietphone.ViewModels
                 var oldValue = MealItem.Value;
                 var newValue = oldValue.TryGetValueOf(value);
                 MealItem.Value = big.Constraint(newValue);
-                OnPropertyChanged("Value");
+                OnValueOrUnitChanged();
                 OnItemChanged();
             }
         }
@@ -69,14 +70,23 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = MealItem.Unit;
-                return result.GetAbbreviation();
+                return result.GetAbbreviationOrServingDesc(MealItem.Product);
+            }
+        }
+
+        public string UnitDetalis
+        {
+            get
+            {
+                var result = MealItem.Unit;
+                return result.GetAbbreviationOrServingDetalis(MealItem.Product);
             }
             set
             {
                 var oldValue = MealItem.Unit;
-                var newValue = oldValue.TryGetValueOfAbbreviation(value);
+                var newValue = oldValue.TryGetValueOfAbbreviationOrServingDetalis(value, MealItem.Product);
                 MealItem.Unit = newValue;
-                OnPropertyChanged("Unit");
+                OnValueOrUnitChanged();
                 OnItemChanged();
             }
         }
@@ -106,6 +116,32 @@ namespace Dietphone.ViewModels
                 var result = MealItem.Fpu;
                 return string.Format("{0} WBT", result);
             }
+        }
+
+        public List<string> AllUsableUnitsDetalis
+        {
+            get
+            {
+                return UnitAbbreviations.GetAbbreviationsOrServingDetalisFiltered(IsUnitUsable, MealItem.Product);
+            }
+        }
+
+        private bool IsUnitUsable(Models.Unit unit)
+        {
+            var unitUsability = new UnitUsability()
+            {
+                Product = MealItem.Product,
+                Unit = unit
+            };
+            return unitUsability.AnyNutrientsPerUnitPresent;
+        }
+
+        protected void OnValueOrUnitChanged()
+        {
+            OnPropertyChanged("Value");
+            OnPropertyChanged("ValueWithUnit");
+            OnPropertyChanged("Unit");
+            OnPropertyChanged("UnitDetalis");
         }
 
         protected void OnItemChanged()

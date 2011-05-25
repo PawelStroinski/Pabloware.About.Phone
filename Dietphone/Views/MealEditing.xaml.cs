@@ -42,6 +42,7 @@ namespace Dietphone.Views
             mealItem.Owner = App.Factories;
             mealItem.ProductId = App.Factories.Products[100].Id;
             mealItem.Value = 100;
+            mealItem.Unit = Unit.ServingSize;
             Items.Add(new MealItemViewModel(mealItem));
 
             DataContext = this;

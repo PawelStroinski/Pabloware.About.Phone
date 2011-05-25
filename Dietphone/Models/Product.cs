@@ -247,18 +247,44 @@ namespace Dietphone.Models
 
     public static class UnitAbbreviations
     {
-        public static List<string> GetAllButServingSize()
+        public static List<string> GetAbbreviationsFiltered(Func<Unit, bool> filterIn)
         {
             var abbreviations = new List<string>();
             var units = MyEnum.GetValues<Unit>();
             foreach (var unit in units)
             {
-                if (unit != Unit.ServingSize)
+                if (filterIn(unit))
                 {
                     abbreviations.Add(unit.GetAbbreviation());
                 }
             }
             return abbreviations;
+        }
+
+        public static List<string> GetAbbreviationsOrServingDetalisFiltered(Func<Unit, bool> filterIn,
+            Product servingInfo)
+        {
+            var abbreviations = new List<string>();
+            var units = MyEnum.GetValues<Unit>();
+            foreach (var unit in units)
+            {
+                if (filterIn(unit))
+                {
+                    abbreviations.Add(unit.GetAbbreviationOrServingDetalis(servingInfo));
+                }
+            }
+            return abbreviations;
+        }
+
+        public static Unit TryGetValueOfAbbreviationOrServingDetalis(this Unit caller, string abbreviation,
+            Product servingInfo)
+        {
+            var servingDetalis = Unit.ServingSize.GetAbbreviationOrServingDetalis(servingInfo);
+            if (abbreviation == servingDetalis)
+            {
+                return Unit.ServingSize;
+            }
+            return caller.TryGetValueOfAbbreviation(abbreviation);
         }
 
         public static Unit TryGetValueOfAbbreviation(this Unit caller, string abbreviation)
@@ -272,6 +298,29 @@ namespace Dietphone.Models
                 }
             }
             return caller;
+        }
+
+        public static string GetAbbreviationOrServingDetalis(this Unit unit, Product servingInfo)
+        {
+            if (unit == Unit.ServingSize)
+            {
+                var desc = GetAbbreviationOrServingDesc(unit, servingInfo);
+                var value = servingInfo.ServingSizeValue;
+                var valueUnit = servingInfo.ServingSizeUnit;
+                return string.Format("{0} ({1} {2})", desc, value, valueUnit.GetAbbreviation());
+            }
+            return unit.GetAbbreviation();
+        }
+
+        public static string GetAbbreviationOrServingDesc(this Unit unit, Product servingInfo)
+        {
+            var desc = servingInfo.ServingSizeDescription;
+            var descPresent = !string.IsNullOrEmpty(desc);
+            if (unit == Unit.ServingSize && descPresent)
+            {
+                return desc;
+            }
+            return unit.GetAbbreviation();
         }
 
         public static string GetAbbreviation(this Unit unit)

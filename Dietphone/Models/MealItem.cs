@@ -69,24 +69,16 @@ namespace Dietphone.Models
     {
         private const float BASE_PER_100G = 100;
 
-        public bool AnyNutrientsPerUnitPresent
-        {
-            get
-            {
-                return AreNutrientsPer100gUsable || AreNutrientsPerServingUsable;
-            }
-        }
-
         protected float EnergyPerUnit
         {
             get
             {
-                if (AreNutrientsPer100gUsable)
+                if (UnitUsability.AreNutrientsPer100gUsable)
                 {
                     return Product.EnergyPer100g / BASE_PER_100G;
                 }
                 else
-                    if (AreNutrientsPerServingUsable)
+                    if (UnitUsability.AreNutrientsPerServingUsable)
                     {
                         return Product.EnergyPerServing / BasePerServing;
                     }
@@ -101,12 +93,12 @@ namespace Dietphone.Models
         {
             get
             {
-                if (AreNutrientsPer100gUsable)
+                if (UnitUsability.AreNutrientsPer100gUsable)
                 {
                     return Product.ProteinPer100g / BASE_PER_100G;
                 }
                 else
-                    if (AreNutrientsPerServingUsable)
+                    if (UnitUsability.AreNutrientsPerServingUsable)
                     {
                         return Product.ProteinPerServing / BasePerServing;
                     }
@@ -121,12 +113,12 @@ namespace Dietphone.Models
         {
             get
             {
-                if (AreNutrientsPer100gUsable)
+                if (UnitUsability.AreNutrientsPer100gUsable)
                 {
                     return Product.FatPer100g / BASE_PER_100G;
                 }
                 else
-                    if (AreNutrientsPerServingUsable)
+                    if (UnitUsability.AreNutrientsPerServingUsable)
                     {
                         return Product.FatPerServing / BasePerServing;
                     }
@@ -141,12 +133,12 @@ namespace Dietphone.Models
         {
             get
             {
-                if (AreNutrientsPer100gUsable)
+                if (UnitUsability.AreNutrientsPer100gUsable)
                 {
                     return Product.DigestibleCarbsPer100g / BASE_PER_100G;
                 }
                 else
-                    if (AreNutrientsPerServingUsable)
+                    if (UnitUsability.AreNutrientsPerServingUsable)
                     {
                         return Product.DigestibleCarbsPerServing / BasePerServing;
                     }
@@ -157,22 +149,15 @@ namespace Dietphone.Models
             }
         }
 
-        private bool AreNutrientsPer100gUsable
+        protected UnitUsability UnitUsability
         {
             get
             {
-                var unitsMatches = Unit == Unit.Gram;
-                return unitsMatches && Product.AnyNutrientsPer100gPresent;
-            }
-        }
-
-        private bool AreNutrientsPerServingUsable
-        {
-            get
-            {
-                var unitsMatches = Unit == Product.ServingSizeUnit || Unit == Unit.ServingSize;
-                var sizePresent = Product.ServingSizeValue != 0;
-                return unitsMatches && sizePresent && Product.AnyNutrientsPerServingPresent;
+                return new UnitUsability()
+                {
+                    Product = Product,
+                    Unit = Unit
+                };
             }
         }
 
@@ -283,9 +268,9 @@ namespace Dietphone.Models
         private string ValidateUnit()
         {
             var canValidate = Product != DefaultEntities.Product;
-            if (canValidate && !AnyNutrientsPerUnitPresent)
+            if (canValidate && !UnitUsability.AnyNutrientsPerUnitPresent)
             {
-                var unit = Unit.GetAbbreviation();
+                var unit = Unit.GetAbbreviationOrServingDesc(Product);
                 return string.Format("Brak informacji o wartościach odżywczych na jednostkę {0}. "
                                      + "Wybierz inną jednostkę.", unit);
             }
@@ -295,5 +280,38 @@ namespace Dietphone.Models
 
     public sealed class MealItem : MealItemWithValidation
     {
+    }
+
+    public sealed class UnitUsability
+    {
+        public Product Product { get; set; }
+        public Unit Unit { get; set; }
+
+        public bool AnyNutrientsPerUnitPresent
+        {
+            get
+            {
+                return AreNutrientsPer100gUsable || AreNutrientsPerServingUsable;
+            }
+        }
+
+        public bool AreNutrientsPer100gUsable
+        {
+            get
+            {
+                var unitsMatches = Unit == Unit.Gram;
+                return unitsMatches && Product.AnyNutrientsPer100gPresent;
+            }
+        }
+
+        public bool AreNutrientsPerServingUsable
+        {
+            get
+            {
+                var unitsMatches = Unit == Product.ServingSizeUnit || Unit == Unit.ServingSize;
+                var sizePresent = Product.ServingSizeValue != 0;
+                return unitsMatches && sizePresent && Product.AnyNutrientsPerServingPresent;
+            }
+        }
     }
 }
