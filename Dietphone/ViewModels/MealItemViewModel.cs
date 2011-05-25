@@ -55,6 +55,15 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public string ValueWithUnit
+        {
+            get
+            {
+                var value = MealItem.Value;
+                return string.Format("{0} {1}", value, Unit);
+            }
+        }
+
         public string Unit
         {
             get

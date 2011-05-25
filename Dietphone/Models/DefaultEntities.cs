@@ -52,6 +52,7 @@ namespace Dietphone.Models
                         var products = owner.Products;
                         products.Remove(product);
                         product.Id = Guid.Empty;
+                        product.Name = "Brak produktu";
                     }
                     return product;
                 }
