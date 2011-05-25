@@ -70,7 +70,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = MealItem.Unit;
-                return result.GetAbbreviationOrServingDesc(MealItem.Product);
+                return result.GetAbbreviationOrServingSizeDesc(MealItem.Product);
             }
         }
 
@@ -79,12 +79,12 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = MealItem.Unit;
-                return result.GetAbbreviationOrServingDetalis(MealItem.Product);
+                return result.GetAbbreviationOrServingSizeDetalis(MealItem.Product);
             }
             set
             {
                 var oldValue = MealItem.Unit;
-                var newValue = oldValue.TryGetValueOfAbbreviationOrServingDetalis(value, MealItem.Product);
+                var newValue = oldValue.TryGetValueOfAbbreviationOrServingSizeDetalis(value, MealItem.Product);
                 MealItem.Unit = newValue;
                 OnValueOrUnitChanged();
                 OnItemChanged();
@@ -122,7 +122,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return UnitAbbreviations.GetAbbreviationsOrServingDetalisFiltered(IsUnitUsable, MealItem.Product);
+                return UnitAbbreviations.GetAbbreviationsOrServingSizeDetalisFiltered(IsUnitUsable, MealItem.Product);
             }
         }
 

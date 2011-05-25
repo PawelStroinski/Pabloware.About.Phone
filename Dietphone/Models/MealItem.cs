@@ -270,7 +270,7 @@ namespace Dietphone.Models
             var canValidate = Product != DefaultEntities.Product;
             if (canValidate && !UnitUsability.AnyNutrientsPerUnitPresent)
             {
-                var unit = Unit.GetAbbreviationOrServingDesc(Product);
+                var unit = Unit.GetAbbreviationOrServingSizeDesc(Product);
                 return string.Format("Brak informacji o wartościach odżywczych na jednostkę {0}. "
                                      + "Wybierz inną jednostkę.", unit);
             }

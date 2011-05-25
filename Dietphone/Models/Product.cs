@@ -261,8 +261,8 @@ namespace Dietphone.Models
             return abbreviations;
         }
 
-        public static List<string> GetAbbreviationsOrServingDetalisFiltered(Func<Unit, bool> filterIn,
-            Product servingInfo)
+        public static List<string> GetAbbreviationsOrServingSizeDetalisFiltered(Func<Unit, bool> filterIn,
+            Product servingSizeInfo)
         {
             var abbreviations = new List<string>();
             var units = MyEnum.GetValues<Unit>();
@@ -270,17 +270,18 @@ namespace Dietphone.Models
             {
                 if (filterIn(unit))
                 {
-                    abbreviations.Add(unit.GetAbbreviationOrServingDetalis(servingInfo));
+                    abbreviations.Add(unit.GetAbbreviationOrServingSizeDetalis(servingSizeInfo));
                 }
             }
             return abbreviations;
         }
 
-        public static Unit TryGetValueOfAbbreviationOrServingDetalis(this Unit caller, string abbreviation,
-            Product servingInfo)
+        public static Unit TryGetValueOfAbbreviationOrServingSizeDetalis(this Unit caller, string abbreviation,
+            Product servingSizeInfo)
         {
-            var servingDetalis = Unit.ServingSize.GetAbbreviationOrServingDetalis(servingInfo);
-            if (abbreviation == servingDetalis)
+            var servingSizeDetalisOfServingSize = Unit.ServingSize.
+                GetAbbreviationOrServingSizeDetalis(servingSizeInfo);
+            if (abbreviation == servingSizeDetalisOfServingSize)
             {
                 return Unit.ServingSize;
             }
@@ -300,21 +301,21 @@ namespace Dietphone.Models
             return caller;
         }
 
-        public static string GetAbbreviationOrServingDetalis(this Unit unit, Product servingInfo)
+        public static string GetAbbreviationOrServingSizeDetalis(this Unit unit, Product servingSizeInfo)
         {
             if (unit == Unit.ServingSize)
             {
-                var desc = GetAbbreviationOrServingDesc(unit, servingInfo);
-                var value = servingInfo.ServingSizeValue;
-                var valueUnit = servingInfo.ServingSizeUnit;
+                var desc = GetAbbreviationOrServingSizeDesc(unit, servingSizeInfo);
+                var value = servingSizeInfo.ServingSizeValue;
+                var valueUnit = servingSizeInfo.ServingSizeUnit;
                 return string.Format("{0} ({1} {2})", desc, value, valueUnit.GetAbbreviation());
             }
             return unit.GetAbbreviation();
         }
 
-        public static string GetAbbreviationOrServingDesc(this Unit unit, Product servingInfo)
+        public static string GetAbbreviationOrServingSizeDesc(this Unit unit, Product servingSizeInfo)
         {
-            var desc = servingInfo.ServingSizeDescription;
+            var desc = servingSizeInfo.ServingSizeDescription;
             var descPresent = !string.IsNullOrEmpty(desc);
             if (unit == Unit.ServingSize && descPresent)
             {
