@@ -170,7 +170,7 @@ namespace Dietphone.Models
         {
             get
             {
-                var unitsMatches = Unit == Product.ServingSizeUnit;
+                var unitsMatches = Unit == Product.ServingSizeUnit || Unit == Unit.ServingSize;
                 var sizePresent = Product.ServingSizeValue != 0;
                 return unitsMatches && sizePresent && Product.AnyNutrientsPerServingPresent;
             }
@@ -180,7 +180,14 @@ namespace Dietphone.Models
         {
             get
             {
-                return Product.ServingSizeValue;
+                if (Unit == Unit.ServingSize)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return Product.ServingSizeValue;
+                }
             }
         }
     }

@@ -35,7 +35,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return UnitAbbreviations.GetAll();
+                return UnitAbbreviations.GetAllButServingSize();
             }
         }
 

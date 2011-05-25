@@ -127,7 +127,7 @@ namespace Dietphone.Models
         public string Validate()
         {
             string[] validation = { ValidateNutrientsPer100gPresence(), ValidateEnergyPer100g(), ValidateEnergyPerServing(), 
-                                      ValidateFiber(), ValidateServingPresence(), ValidateServingNutrients() };
+                                      ValidateFiber(), ValidateServingPresence(), ValidateServingSizeUnit(), ValidateServingNutrients() };
             return validation.JoinOptionalSentences();
         }
 
@@ -183,7 +183,7 @@ namespace Dietphone.Models
             }
             if (sizePresent & !descriptionPresent)
             {
-                return "Podano miarę porcji ale nie podano jej opisu.";
+                return "Podano rozmiar porcji ale nie podano jej opisu.";
             }
             var sizeInGrams = ServingSizeUnit == Unit.Gram;
             if (descriptionPresent & !sizeInGrams & !AnyNutrientsPerServingPresent)
@@ -193,6 +193,15 @@ namespace Dietphone.Models
             if (AnyNutrientsPerServingPresent & !descriptionPresent)
             {
                 return "Podano wartości odżywcze porcji ale nie podano jej opisu.";
+            }
+            return string.Empty;
+        }
+
+        private string ValidateServingSizeUnit()
+        {
+            if (ServingSizeUnit == Unit.ServingSize)
+            {
+                return "Jednostką w której podany jest rozmiar porcji nie może być porcja.";
             }
             return string.Empty;
         }
@@ -238,13 +247,16 @@ namespace Dietphone.Models
 
     public static class UnitAbbreviations
     {
-        public static List<string> GetAll()
+        public static List<string> GetAllButServingSize()
         {
             var abbreviations = new List<string>();
             var units = MyEnum.GetValues<Unit>();
             foreach (var unit in units)
             {
-                abbreviations.Add(unit.GetAbbreviation());
+                if (unit != Unit.ServingSize)
+                {
+                    abbreviations.Add(unit.GetAbbreviation());
+                }
             }
             return abbreviations;
         }
@@ -270,6 +282,8 @@ namespace Dietphone.Models
                     return "g";
                 case Unit.Mililiter:
                     return "ml";
+                case Unit.ServingSize:
+                    return "porcja";
                 default:
                     return string.Empty;
             }
@@ -279,6 +293,7 @@ namespace Dietphone.Models
     public enum Unit
     {
         Gram,
-        Mililiter
+        Mililiter,
+        ServingSize
     }
 }
