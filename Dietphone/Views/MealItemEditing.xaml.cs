@@ -14,14 +14,14 @@ namespace Dietphone.Views
 {
     public partial class MealItemEditing : UserControl
     {
-        public List<string> AvailableUnitsAndServingSize { get; set; }
+        public List<string> AllUsableUnits { get; set; }
         public MealItemEditing()
         {
             InitializeComponent();
-            AvailableUnitsAndServingSize = new List<string>();
-            AvailableUnitsAndServingSize.Add("Bez nazwy");
-            AvailableUnitsAndServingSize.Add("ml");
-            AvailableUnitsAndServingSize.Add("szklanka");
+            AllUsableUnits = new List<string>();
+            AllUsableUnits.Add("g");
+            AllUsableUnits.Add("ml");
+            AllUsableUnits.Add("szklanka");
 
             DataContext = this;
         }

@@ -70,31 +70,31 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontWeight="SemiBold"/>
+                <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
 
-                <Grid Grid.Row="1" Margin="14, 26, 24, 26">
+                <Grid Grid.Row="1" Margin="14, 26, 14, 26">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.ServingSizeValue, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 -3 0"/>
-                    <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="9 3 12 0" VerticalAlignment="Top" SelectedItem="{Binding MealItem.Unit, Mode=TwoWay}" ItemsSource="{Binding AvailableUnitsAndServingSize}" Style="{StaticResource OsListPickerStyle}"/>
+                    <!--Ilość-->
+                    <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0"/>
+                    <!--Jednostka-->
+                    <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding Unit, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnits}" Style="{StaticResource OsListPickerStyle}"/>
                 </Grid>
 
+                <StackPanel Grid.Row="2" Margin="14, 26, 14, 26">
+                    <!--Produkt-->
+                    <TextBlock Text="{Binding ProductName}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                    <!--WW-->
+                    <TextBlock Text="{Binding Cu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                    <!--WBT-->
+                    <TextBlock Text="{Binding Fpu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                    <!--kcal-->
+                    <TextBlock Text="{Binding Energy}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                </StackPanel>
 
-                <!--<telerikPrimitives:RadWrapPanel x:Name="FormatPanel" Grid.Row="1" Margin="14, 26, 24, 26">
-                    <ToggleButton x:Name="boldBtn" Style="{StaticResource FormatButtonStyle}">
-                        <TextBlock Text="B" FontWeight="Bold"/>
-                    </ToggleButton>
-                    <ToggleButton x:Name="italicBtn" Style="{StaticResource FormatButtonStyle}">
-                        <TextBlock Text="I" FontStyle="Italic" FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
-                    </ToggleButton>
-                    <ToggleButton x:Name="underlineBtn" Style="{StaticResource FormatButtonStyle}">
-                        <TextBlock Text="U" TextDecorations="Underline" FontFamily="{StaticResource PhoneFontFamilySemiLight}"/>
-                    </ToggleButton>
-                </telerikPrimitives:RadWrapPanel>-->
-
-                <TextBlock Text="HIGHLIGHT" Foreground="{StaticResource PhoneSubtleBrush}" Grid.Row="2" Margin="24, 26, 24, 26"
+                <!--<TextBlock Text="HIGHLIGHT" Foreground="{StaticResource PhoneSubtleBrush}" Grid.Row="2" Margin="24, 26, 24, 26"
                                FontWeight="SemiBold"/>
                 <telerikPrimitives:RadWrapPanel x:Name="HighlightPanel" Grid.Row="3" Margin="14, 26, 24, 26">
                     <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Yellow"/>
@@ -108,7 +108,7 @@
                     <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Orange"/>
                     <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Lime"/>
                     <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Red"/>
-                </telerikPrimitives:RadWrapPanel>
+                </telerikPrimitives:RadWrapPanel>-->
             </Grid>
         </telerikPrimitives:RadPickerBox.PopupContent>
     </telerikPrimitives:RadPickerBox>
