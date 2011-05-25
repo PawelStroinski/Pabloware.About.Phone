@@ -86,7 +86,7 @@ namespace Dietphone.Views
         {
             if (Items2.SelectedItem != null)
             {
-                MessageBox.Show("");
+                MealItemEditing.Picker.IsPopupOpen = true;
             }
             Items2.SelectedItem = null;
         }

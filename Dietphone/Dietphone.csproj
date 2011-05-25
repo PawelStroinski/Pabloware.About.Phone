@@ -167,6 +167,9 @@
     <Compile Include="Views\ProductListing.xaml.cs">
       <DependentUpon>ProductListing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MealItemEditing.xaml.cs">
+      <DependentUpon>MealItemEditing.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductListing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MealItemEditing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

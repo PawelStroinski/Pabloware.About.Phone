@@ -138,13 +138,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.ServingSizeValue, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 -3 0"/>
-                            <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="9 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding AllServingSizeUnits}">
-                                <telerikInput:RadListPicker.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" Margin="0 -3 0 1"/>
-                                    </DataTemplate>
-                                </telerikInput:RadListPicker.ItemTemplate>
-                            </telerikInput:RadListPicker>
+                            <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="9 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding AllServingSizeUnits}" Style="{StaticResource OsListPickerStyle}"/>
                         </Grid>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="2">

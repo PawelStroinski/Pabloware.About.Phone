@@ -268,7 +268,7 @@ namespace Dietphone.Models
         {
             if (Value == 0)
             {
-                return "Nie podano ilości produktu.";
+                return "Nie podano ilości składnika.";
             }
             return string.Empty;
         }
