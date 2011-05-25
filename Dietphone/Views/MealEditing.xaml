@@ -55,10 +55,15 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
+                                    <!--Produkt-->
                                     <TextBlock Text="{Binding ProductName}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,3,0,0" FontFamily="{StaticResource PhoneFontFamilyLight}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="43" Grid.ColumnSpan="4" />
+                                    <!--g-->
                                     <TextBlock Text="{Binding ValueWithUnit}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13" Grid.Row="1"/>
+                                    <!--WW-->
                                     <TextBlock Text="{Binding Cu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13" Grid.Row="1" Grid.Column="1"/>
+                                    <!--WBT-->
                                     <TextBlock Text="{Binding Fpu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13" Grid.Row="1" Grid.Column="2"/>
+                                    <!--kcal-->
                                     <TextBlock Text="{Binding Energy}" Opacity="0.65" HorizontalAlignment="Right" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13" Grid.Row="1" Grid.Column="3"/>
                                 </Grid>
                             </DataTemplate>
