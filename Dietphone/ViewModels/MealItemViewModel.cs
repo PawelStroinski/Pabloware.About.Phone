@@ -26,6 +26,8 @@ namespace Dietphone.ViewModels
             {
                 MealItem.ProductId = value;
                 OnPropertyChanged("ProductName");
+                OnPropertyChanged("AllUsableUnitsWithDetalis");
+                OnPropertyChanged("HasManyUsableUnits");
                 OnItemChanged();
             }
         }
@@ -51,7 +53,6 @@ namespace Dietphone.ViewModels
                 var oldValue = MealItem.Value;
                 var newValue = oldValue.TryGetValueOf(value);
                 MealItem.Value = big.Constraint(newValue);
-                OnValueOrUnitChanged();
                 OnItemChanged();
             }
         }
@@ -74,7 +75,8 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string UnitDetalis
+        // Uwaga: zmiana UnitWithDetalis może zmienić Value za pomocą SetOneServingIfIsZeroServings().
+        public string UnitWithDetalis
         {
             get
             {
@@ -86,7 +88,7 @@ namespace Dietphone.ViewModels
                 var oldValue = MealItem.Unit;
                 var newValue = oldValue.TryGetValueOfAbbreviationOrServingSizeDetalis(value, MealItem.Product);
                 MealItem.Unit = newValue;
-                OnValueOrUnitChanged();
+                SetOneServingIfIsZeroServings();
                 OnItemChanged();
             }
         }
@@ -118,7 +120,15 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public List<string> AllUsableUnitsDetalis
+        public bool HasManyUsableUnits
+        {
+            get
+            {
+                return AllUsableUnitsWithDetalis.Count > 1;
+            }
+        }
+
+        public List<string> AllUsableUnitsWithDetalis
         {
             get
             {
@@ -136,16 +146,20 @@ namespace Dietphone.ViewModels
             return unitUsability.AnyNutrientsPerUnitPresent;
         }
 
-        protected void OnValueOrUnitChanged()
+        private void SetOneServingIfIsZeroServings()
         {
-            OnPropertyChanged("Value");
-            OnPropertyChanged("ValueWithUnit");
-            OnPropertyChanged("Unit");
-            OnPropertyChanged("UnitDetalis");
+            if (MealItem.Unit == Models.Unit.ServingSize && MealItem.Value == 0)
+            {
+                MealItem.Value = 1;
+            }
         }
 
         protected void OnItemChanged()
         {
+            OnPropertyChanged("Value");
+            OnPropertyChanged("ValueWithUnit");
+            OnPropertyChanged("Unit");
+            OnPropertyChanged("UnitWithDetalis");
             OnPropertyChanged("Energy");
             OnPropertyChanged("Cu");
             OnPropertyChanged("Fpu");

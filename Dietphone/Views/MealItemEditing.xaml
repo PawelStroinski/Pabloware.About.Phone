@@ -5,113 +5,55 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:viewModels="clr-namespace:Dietphone.ViewModels"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
+    d:DesignHeight="480" d:DesignWidth="480"
+    IsTabStop="True">
 
-    <UserControl.Resources>
-        <Style x:Key="ColorButtonStyle" TargetType="ToggleButton">
-            <Setter Property="Width" Value="96"/>
-            <Setter Property="Height" Value="96"/>
-            <Setter Property="Padding" Value="12"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border x:Name="border" 
-                                Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Margin="{TemplateBinding Padding}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Unchecked" />
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="BorderThickness">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="6" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="FormatButtonStyle" TargetType="ToggleButton">
-            <Setter Property="Width" Value="96"/>
-            <Setter Property="Height" Value="96"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="BorderBrush" Value="{StaticResource PhoneSubtleBrush}"/>
-            <Setter Property="BorderThickness" Value="2"/>
-        </Style>
-        <Style x:Key="HeaderStyle" TargetType="ContentControl">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="12,0,0,-2"/>
-            <Setter Property="Foreground" Value="{StaticResource PhoneSubtleBrush}"/>
-        </Style>
-        <telerikPrimitives:ApplicationBarInfo x:Key="PickerAppBar" ButtonClick="ApplicationBarInfo_ButtonClick">
-            <telerikPrimitives:ApplicationBarButton x:Name="PART_OKButton" Text="OK" IconUri="/Images/DateTimePickerOK.png"/>
-            <telerikPrimitives:ApplicationBarButton x:Name="PART_CancelButton" Text="Cancel" IconUri="/Images/DateTimePickerCancel.png"/>
-        </telerikPrimitives:ApplicationBarInfo>
-    </UserControl.Resources>
-
-    <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" HeaderStyle="{StaticResource HeaderStyle}" ApplicationBarInfo="{StaticResource PickerAppBar}">
-        <telerikPrimitives:RadPickerBox.PopupContent>
-            <Grid Background="{StaticResource PhoneChromeBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-
-                <Grid Grid.Row="1" Margin="14, 26, 14, 26">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <!--Ilość-->
-                    <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0"/>
-                    <!--Jednostka-->
-                    <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding Unit, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnits}" Style="{StaticResource OsListPickerStyle}"/>
-                </Grid>
-
-                <StackPanel Grid.Row="2" Margin="14, 26, 14, 26">
-                    <!--Produkt-->
-                    <TextBlock Text="{Binding ProductName}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                    <!--WW-->
-                    <TextBlock Text="{Binding Cu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                    <!--WBT-->
-                    <TextBlock Text="{Binding Fpu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                    <!--kcal-->
-                    <TextBlock Text="{Binding Energy}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                </StackPanel>
-
-                <!--<TextBlock Text="HIGHLIGHT" Foreground="{StaticResource PhoneSubtleBrush}" Grid.Row="2" Margin="24, 26, 24, 26"
-                               FontWeight="SemiBold"/>
-                <telerikPrimitives:RadWrapPanel x:Name="HighlightPanel" Grid.Row="3" Margin="14, 26, 24, 26">
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Yellow"/>
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Green"/>
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Red"/>
-                </telerikPrimitives:RadWrapPanel>
-
-                <TextBlock Text="FONT COLOR" Foreground="{StaticResource PhoneSubtleBrush}" Grid.Row="4" Margin="24, 26, 24, 26"
-                               FontWeight="SemiBold"/>
-                <telerikPrimitives:RadWrapPanel x:Name="FontColorPanel" Grid.Row="5" Margin="14, 26, 24, 26">
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Orange"/>
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Lime"/>
-                    <ToggleButton Style="{StaticResource ColorButtonStyle}" Background="Red"/>
-                </telerikPrimitives:RadWrapPanel>-->
+    <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" PopupOpened="Picker_PopupOpened">
+        <telerikPrimitives:RadPickerBox.ApplicationBarInfo>
+            <telerikPrimitives:ApplicationBarInfo ButtonClick="ApplicationBarInfo_ButtonClick">
+                <telerikPrimitives:ApplicationBarButton x:Name="Ok" Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
+                <telerikPrimitives:ApplicationBarButton x:Name="Cancel" Text="anuluj" IconUri="/images/appbar.cancel.rest.png"/>
+                <telerikPrimitives:ApplicationBarButton x:Name="Delete" Text="usuń" IconUri="/images/appbar.delete.rest.png"/>
+            </telerikPrimitives:ApplicationBarInfo>
+        </telerikPrimitives:RadPickerBox.ApplicationBarInfo>
+        <Grid Background="{StaticResource PhoneChromeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Grid Grid.Row="1" Margin="14, 26, 14, 26">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--Ilość-->
+                <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0" x:Name="Value">
+                    <i:Interaction.Behaviors>
+                        <viewModels:UpdateOnTextChangedBehavior/>
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <!--Jednostka-->
+                <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding UnitWithDetalis, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnitsWithDetalis}" IsEnabled="{Binding HasManyUsableUnits}" Style="{StaticResource OsListPickerStyle}" x:Name="Unit" IsEnabledChanged="Unit_IsEnabledChanged"/>
             </Grid>
-        </telerikPrimitives:RadPickerBox.PopupContent>
+            <StackPanel Grid.Row="2" Margin="26, 26, 14, 26">
+                <!--Produkt-->
+                <TextBlock Text="{Binding ProductName}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                <!--WW-->
+                <TextBlock Text="{Binding Cu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                <!--WBT-->
+                <TextBlock Text="{Binding Fpu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                <!--kcal-->
+                <TextBlock Text="{Binding Energy}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+            </StackPanel>
+        </Grid>
     </telerikPrimitives:RadPickerBox>
-
 
 </UserControl>

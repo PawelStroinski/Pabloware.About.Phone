@@ -308,7 +308,7 @@ namespace Dietphone.Models
                 var desc = GetAbbreviationOrServingSizeDesc(unit, servingSizeInfo);
                 var value = servingSizeInfo.ServingSizeValue;
                 var valueUnit = servingSizeInfo.ServingSizeUnit;
-                return string.Format("{0} ({1} {2})", desc, value, valueUnit.GetAbbreviation());
+                return string.Format("{0} {1} {2}", desc, value, valueUnit.GetAbbreviation());
             }
             return unit.GetAbbreviation();
         }
