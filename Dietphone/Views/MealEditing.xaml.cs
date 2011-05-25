@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 using Dietphone.Models;
+using Telerik.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace Dietphone.Views
 {
@@ -22,6 +24,8 @@ namespace Dietphone.Views
         public MealEditing()
         {
             InitializeComponent();
+            InteractionEffectManager.AllowedTypes.Add(typeof(RadDataBoundListBoxItem));
+
             MealNames = new List<string>();
             MealNames.Add("Bez nazwy");
             MealNames.Add("Śniadanie");
@@ -76,6 +80,15 @@ namespace Dietphone.Views
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Items2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Items2.SelectedItem != null)
+            {
+                MessageBox.Show("");
+            }
+            Items2.SelectedItem = null;
         }
     }
 }

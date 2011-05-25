@@ -41,7 +41,7 @@
                     <!--+-->
                     <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddItem_Click" Grid.Column="2" Margin="-10 -2 0 0"/>
                     <!--[]-->
-                    <telerikPrimitives:RadDataBoundListBox Name="Items2" ItemsSource="{Binding Items}" Margin="-21,20,2,0" Grid.Row="1" Grid.ColumnSpan="3">
+                    <telerikPrimitives:RadDataBoundListBox Name="Items2" ItemsSource="{Binding Items}" Margin="-21,20,2,0" Grid.Row="1" Grid.ColumnSpan="3" SelectionChanged="Items2_SelectionChanged">
                         <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="12,8,0,6">
