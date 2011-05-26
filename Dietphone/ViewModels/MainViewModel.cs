@@ -8,10 +8,12 @@ namespace Dietphone.ViewModels
         public ProductListingViewModel ProductListingViewModel { private get; set; }
         public MealItemEditingViewModel MealItemEditingViewModel { private get; set; }
         public event EventHandler ShowProductsOnly;
+        public event EventHandler<AddingEnteredMealItemEventArgs> AddingEnteredMealItem;
         private string search = string.Empty;
         private Navigator navigator;
         private MealItemViewModel mealItem;
         private readonly Factories factories;
+        private bool addEnteredMealItem;
 
         public MainViewModel(Factories factories)
         {
@@ -43,6 +45,18 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void AddEnteredMealItem()
+        {
+            if (addEnteredMealItem)
+            {
+                var args = new AddingEnteredMealItemEventArgs()
+                {
+                    MealItem = mealItem
+                };
+                OnAddingEnteredMealItem(args);
+            }
+        }
+
         protected void OnNavigatorChanged()
         {
             Guid mealId = navigator.GetMealIdToAddMealItemTo();
@@ -64,7 +78,7 @@ namespace Dietphone.ViewModels
                     MealItemEditingViewModel.MealItem = mealItem;
                     MealItemEditingViewModel.Confirming += delegate
                     {
-                        mealViewModel.AddDeletedItem(mealItem);
+                        addEnteredMealItem = true;
                         navigator.GoBack();
                     };
                 }
@@ -87,5 +101,18 @@ namespace Dietphone.ViewModels
                 ShowProductsOnly(this, EventArgs.Empty);
             }
         }
+
+        protected void OnAddingEnteredMealItem(AddingEnteredMealItemEventArgs args)
+        {
+            if (AddingEnteredMealItem != null)
+            {
+                AddingEnteredMealItem(this, args);
+            }
+        }
+    }
+
+    public class AddingEnteredMealItemEventArgs : EventArgs
+    {
+        public MealItemViewModel MealItem { get; set; }
     }
 }

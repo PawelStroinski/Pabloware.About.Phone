@@ -39,6 +39,16 @@ namespace Dietphone.Views
             ViewModel.Navigator = navigator;
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            if (e.Content is MealEditing)
+            {
+                var mealEditingViewModel = (e.Content as MealEditing).ViewModel;
+                ViewModel.AddingEnteredMealItem += mealEditingViewModel.AddingEnteredMealItem;
+                ViewModel.AddEnteredMealItem();
+            }
+        }
+
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Pivot.SelectedItem == Meals)

@@ -166,6 +166,11 @@ namespace Dietphone.ViewModels
             navigator.GoToMainToAddMealItemToMeal(Meal.Id);
         }
 
+        public void AddingEnteredMealItem(object sender, AddingEnteredMealItemEventArgs e)
+        {
+            Meal.AddExistingItem(e.MealItem);
+        }
+
         protected override void FindAndCopyModel()
         {
             var id = navigator.GetMealIdToEdit();

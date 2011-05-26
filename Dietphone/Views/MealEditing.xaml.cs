@@ -21,7 +21,7 @@ namespace Dietphone.Views
 {
     public partial class MealEditing : PhoneApplicationPage
     {
-        private MealEditingViewModel viewModel;
+        public MealEditingViewModel ViewModel { get; private set; }
 
         public MealEditing()
         {
@@ -32,12 +32,15 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-            viewModel = new MealEditingViewModel(App.Factories, navigator);
-            DataContext = viewModel;
-            viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
-            viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
-            viewModel.MealItemEditingViewModel = MealItemEditing.ViewModel;
+            if (ViewModel == null)
+            {
+                var navigator = new NavigatorImpl(NavigationService, NavigationContext);
+                ViewModel = new MealEditingViewModel(App.Factories, navigator);
+                DataContext = ViewModel;
+                ViewModel.GotDirty += new EventHandler(viewModel_GotDirty);
+                ViewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
+                ViewModel.MealItemEditingViewModel = MealItemEditing.ViewModel;
+            }
         }
 
         private void AddMealName_Click(object sender, RoutedEventArgs e)
@@ -51,20 +54,20 @@ namespace Dietphone.Views
             input.Show();
             input.Confirmed += delegate
             {
-                viewModel.AddAndSetMealName(input.Text);
+                ViewModel.AddAndSetMealName(input.Text);
                 MealName.ForceRefresh(ProgressBar);
             };
         }
 
         private void EditMealName_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.CanRenameMealName())
+            if (ViewModel.CanRenameMealName())
             {
                 RenameMealName();
             }
             else
             {
-                MessageBox.Show(viewModel.NameOfMealName, "Nie można edytować tej nazwy.",
+                MessageBox.Show(ViewModel.NameOfMealName, "Nie można edytować tej nazwy.",
                     MessageBoxButton.OK);
             }
         }
@@ -76,25 +79,25 @@ namespace Dietphone.Views
             {
                 Title = "EDYTUJ NAZWĘ",
                 Description = "Nazwa",
-                Text = viewModel.NameOfMealName
+                Text = ViewModel.NameOfMealName
             };
             input.Show();
             input.Confirmed += delegate
             {
-                viewModel.NameOfMealName = input.Text;
+                ViewModel.NameOfMealName = input.Text;
                 MealName.ForceRefresh(ProgressBar);
             };
         }
 
         private void DeleteMealName_Click(object sender, RoutedEventArgs e)
         {
-            if (viewModel.CanDeleteMealName())
+            if (ViewModel.CanDeleteMealName())
             {
                 DeleteMealName();
             }
             else
             {
-                MessageBox.Show(viewModel.NameOfMealName, "Nie można usunąć tej nazwy.",
+                MessageBox.Show(ViewModel.NameOfMealName, "Nie można usunąć tej nazwy.",
                     MessageBoxButton.OK);
             }
         }
@@ -103,14 +106,14 @@ namespace Dietphone.Views
         {
             if (MessageBox.Show(
                 String.Format("Czy na pewno chcesz trwale usunąć tę nazwę?\r\n\r\n{0}",
-                viewModel.NameOfMealName),
+                ViewModel.NameOfMealName),
                 "Usunąć nazwę?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 Save.IsEnabled = false;
                 MealName.QuicklyCollapse();
                 Dispatcher.BeginInvoke(() =>
                 {
-                    viewModel.DeleteMealName();
+                    ViewModel.DeleteMealName();
                     MealName.ForceRefresh(ProgressBar);
                 });
             }
@@ -121,26 +124,26 @@ namespace Dietphone.Views
             Focus();
             Dispatcher.BeginInvoke(() =>
             {
-                if (viewModel.CanSave())
+                if (ViewModel.CanSave())
                 {
-                    viewModel.UpdateTimeAndSaveAndReturn();
+                    ViewModel.UpdateTimeAndSaveAndReturn();
                 }
             });
         }
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            viewModel.CancelAndReturn();
+            ViewModel.CancelAndReturn();
         }
 
         private void Delete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(
                 String.Format("Czy na pewno chcesz trwale usunąć ten posiłek?\r\n\r\n{0}",
-                viewModel.IdentifiableName),
+                ViewModel.IdentifiableName),
                 "Usunąć posiłek?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                viewModel.DeleteAndSaveAndReturn();
+                ViewModel.DeleteAndSaveAndReturn();
             }
         }
 
@@ -157,7 +160,7 @@ namespace Dietphone.Views
 
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.AddItem();
+            ViewModel.AddItem();
         }
     }
 }

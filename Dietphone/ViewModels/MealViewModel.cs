@@ -224,9 +224,9 @@ namespace Dietphone.ViewModels
             return itemViewModel;
         }
 
-        public void AddDeletedItem(MealItemViewModel item)
+        public void AddExistingItem(MealItemViewModel item)
         {
-            Meal.AddDeletedItem(item.MealItem);
+            Meal.AddExistingItem(item.MealItem);
             Items.Add(item);
         }
 

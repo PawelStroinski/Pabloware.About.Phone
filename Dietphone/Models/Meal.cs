@@ -87,7 +87,7 @@ namespace Dietphone.Models
             return item;
         }
 
-        public void AddDeletedItem(MealItem item)
+        public void AddExistingItem(MealItem item)
         {
             items.Add(item);
         }
