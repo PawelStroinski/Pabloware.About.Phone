@@ -44,8 +44,11 @@ namespace Dietphone.Views
             if (e.Content is MealEditing)
             {
                 var mealEditingViewModel = (e.Content as MealEditing).ViewModel;
-                ViewModel.AddingEnteredMealItem += mealEditingViewModel.AddingEnteredMealItem;
-                ViewModel.AddEnteredMealItem();
+                if (mealEditingViewModel != null)
+                {
+                    ViewModel.AddingEnteredMealItem += mealEditingViewModel.AddingEnteredMealItem;
+                    ViewModel.AddEnteredMealItem();
+                }
             }
         }
 
@@ -170,6 +173,11 @@ namespace Dietphone.Views
             {
                 Focus();
             }
+        }
+
+        private void About_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("© 26 maja 2011 Paweł Stroiński\r\npol84@live.com", "Dietphone", MessageBoxButton.OK);
         }
     }
 }

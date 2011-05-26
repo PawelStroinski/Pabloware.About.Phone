@@ -25,7 +25,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Foreground="{StaticResource PhoneAccentBrush}" Text="{Binding Time}" VerticalAlignment="Center" Grid.Column="0"/>
                             <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="1"/>
-                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding ProductsHead}" VerticalAlignment="Center" Grid.Column="2"/>
+                            <TextBlock FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyLight}" Text="{Binding ProductsHead}" VerticalAlignment="Center" Margin="18 0 0 0" Grid.Column="2"/>
                         </Grid>
                         <Grid Visibility="{Binding VisibleWhenIsNewerAndHasNoName}">
                             <Grid.ColumnDefinitions>
