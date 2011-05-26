@@ -44,7 +44,7 @@
             <controls:PivotItem Header="ogólne">
                 <StackPanel Margin="12,0">
                     <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Margin="0,0,0,4" InputScope="Text" Name="NameBox"/>
-                    <telerikInput:RadListPicker Header="Kategoria" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Categories" ItemClick="Categories_ItemClick" InlineModeThreshold="0">
+                    <telerikInput:RadListPicker Header="Kategoria" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Category" ItemClick="Categories_ItemClick" InlineModeThreshold="0">
                         <telerikInput:RadListPicker.PopupHeader>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>

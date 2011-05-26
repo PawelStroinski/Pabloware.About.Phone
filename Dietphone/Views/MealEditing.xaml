@@ -22,7 +22,7 @@
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="POSIŁEK / 0 kcal">
+        <controls:Pivot Title="{Binding TitleWithEnergy}">
             <!--składniki-->
             <controls:PivotItem Header="składniki">
                 <Grid Margin="21,0,10,0">
@@ -36,13 +36,13 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <!--WW-->
-                    <TextBlock Text="0 WW" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                    <TextBlock Text="{Binding Meal.Cu}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}"/>
                     <!--WBT-->
-                    <TextBlock Text="0 WBT" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Column="1" TextAlignment="Center" />
+                    <TextBlock Text="{Binding Meal.Fpu}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Column="1" TextAlignment="Center" />
                     <!--+-->
                     <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddItem_Click" Grid.Column="2" Margin="-10 -2 0 0"/>
                     <!--[]-->
-                    <telerikPrimitives:RadDataBoundListBox Name="Items2" ItemsSource="{Binding Items}" Margin="-21,20,2,0" Grid.Row="1" Grid.ColumnSpan="3" SelectionChanged="Items2_SelectionChanged">
+                    <telerikPrimitives:RadDataBoundListBox Name="Items" ItemsSource="{Binding Items}" Margin="-21,20,2,0" Grid.Row="1" Grid.ColumnSpan="3" SelectionChanged="Items_SelectionChanged">
                         <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="12,8,0,6">
@@ -95,10 +95,10 @@
                         <TextBlock Text="Godzina" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5" Grid.Column="1"/>
                         <telerikInput:RadTimePicker Height="72" Value="{Binding Meal.DateTime, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" Margin="0 0 12 0"/>
                         <!--Kłódka-->
-                        <ToggleButton Height="72" Width="72" VerticalAlignment="Top" Style="{StaticResource ToggleButtonWithIconStyle}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" IsChecked="{Binding IsDateTimeUnlocked, Mode=TwoWay}"/>
+                        <ToggleButton Height="72" Width="72" VerticalAlignment="Top" Style="{StaticResource ToggleButtonWithIconStyle}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" IsChecked="{Binding NotIsLockedDateTime, Mode=TwoWay}"/>
                     </Grid>
                     <!--Nazwa-->
-                    <telerikInput:RadListPicker Header="Nazwa" ItemsSource="{Binding MealNames}" SelectedItem="{Binding Meal.Name, Mode=TwoWay}" Margin="24 3 24 25" Name="MealNames2" InlineModeThreshold="0" Style="{StaticResource OsListPickerStyle}">
+                    <telerikInput:RadListPicker Header="Nazwa" ItemsSource="{Binding MealNames}" SelectedItem="{Binding Meal.Name, Mode=TwoWay}" Margin="24 3 24 25" Name="MealName" InlineModeThreshold="0" Style="{StaticResource OsListPickerStyle}">
                         <telerikInput:RadListPicker.PopupHeader>
                             <StackPanel Orientation="Horizontal" Margin="0, -17, 0, 0">
                                 <TextBlock Text="NAZWA" Margin="-1, 10, 1, 0" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Width="180"/>
@@ -116,6 +116,7 @@
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
+        <toolkit:PerformanceProgressBar VerticalAlignment="Top" Name="ProgressBar"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

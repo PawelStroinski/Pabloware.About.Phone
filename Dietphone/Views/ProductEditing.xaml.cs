@@ -51,7 +51,7 @@ namespace Dietphone.Views
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            Categories.IsExpanded = false;
+            Category.IsExpanded = false;
             var input = new XnaInputBox(this)
             {
                 Title = "DODAJ KATEGORIĘ",
@@ -61,13 +61,13 @@ namespace Dietphone.Views
             input.Confirmed += delegate
             {
                 viewModel.AddAndSetCategory(input.Text);
-                Categories.ForceRefresh(ProgressBar);
+                Category.ForceRefresh(ProgressBar);
             };
         }
 
         private void EditCategory_Click(object sender, RoutedEventArgs e)
         {
-            Categories.IsExpanded = false;
+            Category.IsExpanded = false;
             var input = new XnaInputBox(this)
             {
                 Title = "EDYTUJ KATEGORIĘ",
@@ -78,7 +78,7 @@ namespace Dietphone.Views
             input.Confirmed += delegate
             {
                 viewModel.CategoryName = input.Text;
-                Categories.ForceRefresh(ProgressBar);
+                Category.ForceRefresh(ProgressBar);
             };
         }
 
@@ -104,11 +104,11 @@ namespace Dietphone.Views
                 "Usunąć kategorię?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 Save.IsEnabled = false;
-                Categories.IsExpanded = false;
+                Category.IsExpanded = false;
                 Dispatcher.BeginInvoke(() =>
                 {
                     viewModel.DeleteCategory();
-                    Categories.ForceRefresh(ProgressBar);
+                    Category.ForceRefresh(ProgressBar);
                 });
             }
         }

@@ -44,6 +44,14 @@ namespace Dietphone.Tools
             });
         }
 
+        public static void QuicklyCollapse(this RadListPicker picker)
+        {
+            var isAnimationEnabled = picker.IsAnimationEnabled;
+            picker.IsAnimationEnabled = false;
+            picker.IsExpanded = false;
+            picker.IsAnimationEnabled = isAnimationEnabled;
+        }
+
         public static ApplicationBarIconButton GetIcon(this PhoneApplicationPage page, int whichIcon)
         {
             var appBar = page.ApplicationBar;

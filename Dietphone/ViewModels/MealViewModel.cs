@@ -47,11 +47,14 @@ namespace Dietphone.ViewModels
             set
             {
                 var universal = value.ToUniversalTime();
-                Meal.DateTime = universal;
-                OnPropertyChanged("DateTime");
-                OnPropertyChanged("DateOnly");
-                OnPropertyChanged("DateAndTime");
-                OnPropertyChanged("Time");
+                if (Meal.DateTime != universal)
+                {
+                    Meal.DateTime = universal;
+                    OnPropertyChanged("DateTime");
+                    OnPropertyChanged("DateOnly");
+                    OnPropertyChanged("DateAndTime");
+                    OnPropertyChanged("Time");
+                }
             }
         }
 
@@ -94,11 +97,10 @@ namespace Dietphone.ViewModels
             }
             set
             {
-                Meal.NameId = value.Id;
-                isNameCached = false;
-                OnPropertyChanged("Name");
-                OnPropertyChanged("VisibleWhenIsNewerAndHasName");
-                OnPropertyChanged("VisibleWhenIsNewerAndHasNoName");
+                if (value != null)
+                {
+                    SetName(value);
+                }
             }
         }
 
@@ -292,6 +294,15 @@ namespace Dietphone.ViewModels
                          select viewModel;
             result = result.DefaultIfEmpty(DefaultMealName);
             return result.FirstOrDefault();
+        }
+
+        private void SetName(MealNameViewModel value)
+        {
+            Meal.NameId = value.Id;
+            isNameCached = false;
+            OnPropertyChanged("Name");
+            OnPropertyChanged("VisibleWhenIsNewerAndHasName");
+            OnPropertyChanged("VisibleWhenIsNewerAndHasNoName");
         }
 
         private void LoadItems()

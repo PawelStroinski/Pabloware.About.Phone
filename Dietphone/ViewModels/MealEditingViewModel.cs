@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Dietphone.Tools;
 using System;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace Dietphone.ViewModels
 {
@@ -14,10 +15,22 @@ namespace Dietphone.ViewModels
         private List<MealNameViewModel> addedMealNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedMealNames = new List<MealNameViewModel>();
         private MealNameViewModel defaultMealName;
+        private bool isLockedDateTime;
+        private bool updatingLockedDateTime;
+        private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
 
         public MealEditingViewModel(Factories factories, Navigator navigator)
             : base(factories, navigator)
         {
+            LockRecentDateTime();
+        }
+
+        public string Title
+        {
+            get
+            {
+                return string.Format("POSIŁEK / {0}", Meal.Energy);
+            }
         }
 
         public string NameOfMealName
@@ -51,6 +64,24 @@ namespace Dietphone.ViewModels
             }
         }
 
+        // Uwaga: zmiana NotIsLockedDateTime może zmienić Meal.DateTime za pomocą UpdateLockedDateTime().
+        public bool NotIsLockedDateTime
+        {
+            get
+            {
+                return !isLockedDateTime;
+            }
+            set
+            {
+                if (!isLockedDateTime != value)
+                {
+                    isLockedDateTime = !value;
+                    UpdateLockedDateTime();
+                    OnPropertyChanged("NotIsLockedDateTime");
+                }
+            }
+        }
+
         public void AddAndSetMealName(string name)
         {
             var tempModel = factories.CreateMealName();
@@ -81,8 +112,9 @@ namespace Dietphone.ViewModels
             deletedMealNames.Add(toDelete);
         }
 
-        public void SaveAndReturn()
+        public void UpdateTimeAndSaveAndReturn()
         {
+            UpdateLockedDateTime();
             modelSource.CopyFrom(modelCopy);
             modelSource.CopyItemsFrom(modelCopy);
             SaveMealNames();
@@ -139,7 +171,20 @@ namespace Dietphone.ViewModels
                 MealNames = MealNames,
                 DefaultMealName = defaultMealName
             };
-            Meal.PropertyChanged += delegate { OnGotDirty(); };
+            Meal.PropertyChanged += Meal_PropertyChanged;
+        }
+
+        private void Meal_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnGotDirty();
+            if (e.PropertyName == "Energy")
+            {
+                OnPropertyChanged("Title");
+            }
+            if (e.PropertyName == "DateTime" && !updatingLockedDateTime)
+            {
+                NotIsLockedDateTime = true;
+            }
         }
 
         private void SaveMealNames()
@@ -156,6 +201,22 @@ namespace Dietphone.ViewModels
             foreach (var mealName in deletedMealNames)
             {
                 models.Remove(mealName.Model);
+            }
+        }
+
+        private void LockRecentDateTime()
+        {
+            var difference = (DateTime.Now - Meal.DateTime).Duration();
+            isLockedDateTime = difference <= TimeSpan.FromMinutes(LOCKED_DATE_TIME_RECENT_MINUTES);
+        }
+
+        private void UpdateLockedDateTime()
+        {
+            if (isLockedDateTime)
+            {
+                updatingLockedDateTime = true;
+                Meal.DateTime = DateTime.Now;
+                updatingLockedDateTime = false;
             }
         }
     }
