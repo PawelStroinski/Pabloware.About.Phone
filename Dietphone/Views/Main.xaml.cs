@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.ComponentModel;
 using Dietphone.ViewModels;
-using System.Diagnostics;
-using Telerik.Windows.Controls;
-using Telerik.Windows.Data;
 using System.Windows.Navigation;
 using Dietphone.Tools;
+using System.Windows;
 
 namespace Dietphone.Views
 {
@@ -30,7 +21,12 @@ namespace Dietphone.Views
         public Main()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel();
+            ViewModel = new MainViewModel(App.Factories)
+            {
+                ProductListingViewModel = ProductListing.ViewModel,
+                MealItemEditingViewModel = MealItemEditing.ViewModel
+            };
+            ViewModel.ShowProductsOnly += new EventHandler(ViewModel_ShowProductsOnly);
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
         }
@@ -40,6 +36,7 @@ namespace Dietphone.Views
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             subConnector.Navigator = navigator;
             subConnector.Refresh();
+            ViewModel.Navigator = navigator;
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -58,6 +55,11 @@ namespace Dietphone.Views
         private void Add_Click(object sender, EventArgs e)
         {
             subConnector.Add();
+        }
+
+        private void ViewModel_ShowProductsOnly(object sender, EventArgs e)
+        {
+            Pivot.Items.Remove(Meals);
         }
 
         private void SearchIcon_Click(object sender, EventArgs e)

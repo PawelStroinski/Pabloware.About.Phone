@@ -1,30 +1,22 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using Dietphone.ViewModels;
 using Dietphone.Models;
-using Microsoft.Phone.Controls;
-using Telerik.Windows.Data;
-using System.Linq;
-using Telerik.Windows.Controls;
-using System.Windows.Media.Animation;
 
 namespace Dietphone.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private string search = "";
+        public ProductListingViewModel ProductListingViewModel { private get; set; }
+        public MealItemEditingViewModel MealItemEditingViewModel { private get; set; }
+        public event EventHandler ShowProductsOnly;
+        private string search = string.Empty;
+        private Navigator navigator;
+        private MealItemViewModel mealItem;
+        private readonly Factories factories;
+
+        public MainViewModel(Factories factories)
+        {
+            this.factories = factories;
+        }
 
         public string Search
         {
@@ -39,6 +31,60 @@ namespace Dietphone.ViewModels
                     search = value;
                     OnPropertyChanged("Search");
                 }
+            }
+        }
+
+        public Navigator Navigator
+        {
+            set
+            {
+                navigator = value;
+                OnNavigatorChanged();
+            }
+        }
+
+        protected void OnNavigatorChanged()
+        {
+            Guid mealId = navigator.GetMealIdToAddMealItemTo();
+            if (mealId != Guid.Empty)
+            {
+                var finder = factories.Finder;
+                var meal = finder.FindMealById(mealId);
+                if (meal == null)
+                {
+                    navigator.GoToMain();
+                }
+                else
+                {
+                    var mealViewModel = new MealViewModel(meal);
+                    mealItem = mealViewModel.AddItem();
+                    mealViewModel.DeleteItem(mealItem);
+                    OnShowProductsOnly();
+                    ProductListingViewModel.SelectedProductChanged += ProductListingViewModel_SelectedProductChanged;
+                    MealItemEditingViewModel.MealItem = mealItem;
+                    MealItemEditingViewModel.Confirming += delegate
+                    {
+                        mealViewModel.AddDeletedItem(mealItem);
+                        navigator.GoBack();
+                    };
+                }
+            }
+        }
+
+        private void ProductListingViewModel_SelectedProductChanged(object sender, SelectedProductChangedEventArgs e)
+        {
+            e.Handled = true;
+            mealItem.Value = string.Empty;
+            mealItem.ProductId = ProductListingViewModel.SelectedProduct.Id;
+            MealItemEditingViewModel.Show();
+            ProductListingViewModel.SelectedProduct = null;
+        }
+
+        protected void OnShowProductsOnly()
+        {
+            if (ShowProductsOnly != null)
+            {
+                ShowProductsOnly(this, EventArgs.Empty);
             }
         }
     }

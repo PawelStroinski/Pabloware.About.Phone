@@ -10,8 +10,10 @@ namespace Dietphone.ViewModels
         void GoToMealEditing(Guid mealId);
         void GoToProductEditing(Guid productId);
         void GoToMain();
-        Guid GetPassedMealId();
-        Guid GetPassedProductId();
+        void GoToMainToAddMealItemToMeal(Guid mealId);
+        Guid GetMealIdToEdit();
+        Guid GetMealIdToAddMealItemTo();
+        Guid GetProductIdToEdit();
     }
 
     public class NavigatorImpl : Navigator
@@ -21,8 +23,9 @@ namespace Dietphone.ViewModels
         private Guid idValue;
         private readonly NavigationService service;
         private readonly IDictionary<string, string> passedQueryString;
-        private const string MEAL_ID = "MealId";
-        private const string PRODUCT_ID = "ProductId";
+        private const string MEAL_ID_TO_EDIT = "MealIdToEdit";
+        private const string MEAL_ID_TO_ADD_MEAL_ITEM_TO = "MealIdToAddMealItemTo";
+        private const string PRODUCT_ID_TO_EDIT = "ProductIdToEdit";
 
         public NavigatorImpl(NavigationService service, NavigationContext context)
         {
@@ -40,7 +43,7 @@ namespace Dietphone.ViewModels
 
         public void GoToMealEditing(Guid mealId)
         {
-            idName = MEAL_ID;
+            idName = MEAL_ID_TO_EDIT;
             idValue = mealId;
             path = "/Views/MealEditing.xaml";
             NavigateWithId();
@@ -48,7 +51,7 @@ namespace Dietphone.ViewModels
 
         public void GoToProductEditing(Guid productId)
         {
-            idName = PRODUCT_ID;
+            idName = PRODUCT_ID_TO_EDIT;
             idValue = productId;
             path = "/Views/ProductEditing.xaml";
             NavigateWithId();
@@ -60,19 +63,33 @@ namespace Dietphone.ViewModels
             Navigate();
         }
 
-        public Guid GetPassedMealId()
+        public void GoToMainToAddMealItemToMeal(Guid mealId)
         {
-            idName = MEAL_ID;
-            return GetPassedId();
+            idName = MEAL_ID_TO_ADD_MEAL_ITEM_TO;
+            idValue = mealId;
+            path = "/Views/Main.xaml";
+            NavigateWithId();
         }
 
-        public Guid GetPassedProductId()
+        public Guid GetMealIdToEdit()
         {
-            idName = PRODUCT_ID;
-            return GetPassedId();
+            idName = MEAL_ID_TO_EDIT;
+            return GetId();
         }
 
-        private Guid GetPassedId()
+        public Guid GetMealIdToAddMealItemTo()
+        {
+            idName = MEAL_ID_TO_ADD_MEAL_ITEM_TO;
+            return GetId();
+        }
+
+        public Guid GetProductIdToEdit()
+        {
+            idName = PRODUCT_ID_TO_EDIT;
+            return GetId();
+        }
+
+        private Guid GetId()
         {
             if (passedQueryString.ContainsKey(idName))
             {

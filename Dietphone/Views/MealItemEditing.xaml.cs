@@ -1,39 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Dietphone.Models;
 using Dietphone.ViewModels;
-using Telerik.Windows.Controls;
-using System.Threading;
 using Dietphone.Tools;
 
 namespace Dietphone.Views
 {
     public partial class MealItemEditing : UserControl
     {
-        public MealItemViewModel ViewModel { get; set; }
+        public MealItemEditingViewModel ViewModel { get; private set; }
+
         public MealItemEditing()
         {
             InitializeComponent();
-            var mealItem = new MealItem();
-            mealItem.Owner = App.Factories;
-            mealItem.ProductId = App.Factories.Products[0].Id;
-            mealItem.Value = 50;
-            ViewModel = new MealItemViewModel(mealItem);
-            DataContext = ViewModel;
-        }
-
-        private void ApplicationBarInfo_ButtonClick(object sender, ApplicationBarButtonClickEventArgs e)
-        {
-
+            Delete = Picker.ApplicationBarInfo.Buttons[2];
+            ViewModel = new MealItemEditingViewModel();
+            ViewModel.Showing += delegate
+            {
+                DataContext = ViewModel.MealItem;
+                Delete.IsEnabled = ViewModel.CanDelete;
+                Picker.IsPopupOpen = true;
+            };
         }
 
         private void Unit_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -62,6 +49,19 @@ namespace Dietphone.Views
 
         private void Ok_Click(object sender, EventArgs e)
         {
+            ViewModel.Confirm();
+            Close();
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            ViewModel.Cancel();
+            Close();
+        }
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            ViewModel.Delete();
             Close();
         }
 

@@ -97,7 +97,7 @@ namespace Dietphone.ViewModels
 
         protected override void FindAndCopyModel()
         {
-            var id = navigator.GetPassedProductId();
+            var id = navigator.GetProductIdToEdit();
             modelSource = finder.FindProductById(id);
             if (modelSource != null)
             {

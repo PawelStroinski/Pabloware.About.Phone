@@ -224,6 +224,12 @@ namespace Dietphone.ViewModels
             return itemViewModel;
         }
 
+        public void AddDeletedItem(MealItemViewModel item)
+        {
+            Meal.AddDeletedItem(item.MealItem);
+            Items.Add(item);
+        }
+
         public void DeleteItem(MealItemViewModel itemViewModel)
         {
             Meal.DeleteItem(itemViewModel.MealItem);

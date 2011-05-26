@@ -17,6 +17,9 @@ namespace Dietphone.ViewModels
         private MealNameViewModel defaultMealName;
         private bool isLockedDateTime;
         private bool updatingLockedDateTime;
+        private MealItemEditingViewModel mealItemEditingViewModel;
+        private MealItemViewModel selectedItem;
+        private MealItem selectedItemCopyToRestore;
         private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
 
         public MealEditingViewModel(Factories factories, Navigator navigator)
@@ -25,7 +28,36 @@ namespace Dietphone.ViewModels
             LockRecentDateTime();
         }
 
-        public string Title
+        public MealItemEditingViewModel MealItemEditingViewModel
+        {
+            private get
+            {
+                return mealItemEditingViewModel;
+            }
+            set
+            {
+                mealItemEditingViewModel = value;
+                OnMealItemEditingViewModelChanged();
+            }
+        }
+
+        public MealItemViewModel SelectedItem
+        {
+            get
+            {
+                return selectedItem;
+            }
+            set
+            {
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    OnSelectedItemChanged();
+                }
+            }
+        }
+
+        public string TitleWithEnergy
         {
             get
             {
@@ -129,9 +161,14 @@ namespace Dietphone.ViewModels
             navigator.GoBack();
         }
 
+        public void AddItem()
+        {
+            navigator.GoToMainToAddMealItemToMeal(Meal.Id);
+        }
+
         protected override void FindAndCopyModel()
         {
-            var id = navigator.GetPassedMealId();
+            var id = navigator.GetMealIdToEdit();
             modelSource = finder.FindMealById(id);
             if (modelSource != null)
             {
@@ -150,6 +187,38 @@ namespace Dietphone.ViewModels
         protected override string Validate()
         {
             return modelCopy.Validate();
+        }
+
+        protected void OnMealItemEditingViewModelChanged()
+        {
+            MealItemEditingViewModel.Cancelling += MealItemEditingViewModel_Cancelling;
+            MealItemEditingViewModel.Deleting += MealItemEditingViewModel_Deleting;
+            MealItemEditingViewModel.CanDelete = true;
+        }
+
+        protected void OnSelectedItemChanged()
+        {
+            if (SelectedItem != null)
+            {
+                selectedItemCopyToRestore = SelectedItem.MealItem.GetCopy();
+                MealItemEditingViewModel.MealItem = SelectedItem;
+                MealItemEditingViewModel.Show();
+                SelectedItem = null;
+            }
+            OnPropertyChanged("SelectedItem");
+        }
+
+        private void MealItemEditingViewModel_Cancelling(object sender, EventArgs e)
+        {
+            var item = MealItemEditingViewModel.MealItem;
+            item.MealItem.CopyFrom(selectedItemCopyToRestore);
+            item.Refresh();
+        }
+
+        private void MealItemEditingViewModel_Deleting(object sender, EventArgs e)
+        {
+            var item = MealItemEditingViewModel.MealItem;
+            Meal.DeleteItem(item);
         }
 
         private void LoadMealNames()
@@ -179,7 +248,7 @@ namespace Dietphone.ViewModels
             OnGotDirty();
             if (e.PropertyName == "Energy")
             {
-                OnPropertyChanged("Title");
+                OnPropertyChanged("TitleWithEnergy");
             }
             if (e.PropertyName == "DateTime" && !updatingLockedDateTime)
             {

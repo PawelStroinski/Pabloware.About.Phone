@@ -136,6 +136,11 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void Refresh()
+        {
+            OnItemChanged();
+        }
+
         private bool IsUnitUsable(Models.Unit unit)
         {
             var unitUsability = new UnitUsability()

@@ -16,10 +16,10 @@
 
     <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" PopupOpened="Picker_PopupOpened">
         <telerikPrimitives:RadPickerBox.ApplicationBarInfo>
-            <telerikPrimitives:ApplicationBarInfo ButtonClick="ApplicationBarInfo_ButtonClick">
-                <telerikPrimitives:ApplicationBarButton x:Name="Ok" Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
-                <telerikPrimitives:ApplicationBarButton x:Name="Cancel" Text="anuluj" IconUri="/images/appbar.cancel.rest.png"/>
-                <telerikPrimitives:ApplicationBarButton x:Name="Delete" Text="usuń" IconUri="/images/appbar.delete.rest.png"/>
+            <telerikPrimitives:ApplicationBarInfo>
+                <telerikPrimitives:ApplicationBarButton Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
+                <telerikPrimitives:ApplicationBarButton Text="anuluj" IconUri="/images/appbar.cancel.rest.png" Click="Cancel_Click"/>
+                <telerikPrimitives:ApplicationBarButton Text="usuń" IconUri="/images/appbar.delete.rest.png" Click="Delete_Click" x:Name="Delete"/>
             </telerikPrimitives:ApplicationBarInfo>
         </telerikPrimitives:RadPickerBox.ApplicationBarInfo>
         <Grid Background="{StaticResource PhoneChromeBrush}">

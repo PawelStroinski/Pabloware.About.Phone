@@ -17,9 +17,10 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler DescriptorsUpdating;
         public event EventHandler DescriptorsUpdated;
-        private Factories factories;
-        private MaxCuAndFpuInCategories maxCuAndFpu;
+        public event EventHandler<SelectedProductChangedEventArgs> SelectedProductChanged;
         private ProductViewModel selectedProduct;
+        private readonly Factories factories;
+        private readonly MaxCuAndFpuInCategories maxCuAndFpu;
 
         public ProductListingViewModel(Factories factories)
         {
@@ -119,7 +120,22 @@ namespace Dietphone.ViewModels
         {
             if (SelectedProduct != null)
             {
-                Navigator.GoToProductEditing(SelectedProduct.Id);
+                var args = new SelectedProductChangedEventArgs();
+                OnSelectedProductChanged(args);
+                var handle = !args.Handled;
+                if (handle)
+                {
+                    Navigator.GoToProductEditing(SelectedProduct.Id);
+                }
+            }
+            OnPropertyChanged("SelectedProduct");
+        }
+
+        protected void OnSelectedProductChanged(SelectedProductChangedEventArgs args)
+        {
+            if (SelectedProductChanged != null)
+            {
+                SelectedProductChanged(this, args);
             }
         }
 
@@ -231,5 +247,10 @@ namespace Dietphone.ViewModels
                 return viewModel as ProductListingViewModel;
             }
         }
+    }
+
+    public class SelectedProductChangedEventArgs : EventArgs
+    {
+        public bool Handled { get; set; }
     }
 }

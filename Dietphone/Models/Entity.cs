@@ -24,6 +24,7 @@ namespace Dietphone.Models
                     throw new NullReferenceException("Owner");
                 }
                 owner = value;
+                OnOwnerAssigned();
             }
         }
 
@@ -41,6 +42,10 @@ namespace Dietphone.Models
             {
                 return Owner.DefaultEntities;
             }
+        }
+
+        protected virtual void OnOwnerAssigned()
+        {
         }
     }
 

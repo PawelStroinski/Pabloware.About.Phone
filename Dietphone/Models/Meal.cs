@@ -70,7 +70,6 @@ namespace Dietphone.Models
                 throw new InvalidOperationException("Items can only be initialized once.");
             }
             items = newItems;
-            AssignOwner();
         }
 
         public void CopyItemsFrom(Meal source)
@@ -88,6 +87,11 @@ namespace Dietphone.Models
             return item;
         }
 
+        public void AddDeletedItem(MealItem item)
+        {
+            items.Add(item);
+        }
+
         public void DeleteItem(MealItem item)
         {
             items.Remove(item);
@@ -96,6 +100,14 @@ namespace Dietphone.Models
         public string Validate()
         {
             return ValidateItems();
+        }
+
+        protected override void OnOwnerAssigned()
+        {
+            if (items != null)
+            {
+                AssignOwner();
+            }
         }
 
         private string ValidateItems()

@@ -37,6 +37,7 @@ namespace Dietphone.Views
             DataContext = viewModel;
             viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
             viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
+            viewModel.MealItemEditingViewModel = MealItemEditing.ViewModel;
         }
 
         private void AddMealName_Click(object sender, RoutedEventArgs e)
@@ -154,19 +155,9 @@ namespace Dietphone.Views
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
         }
 
-
         private void AddItem_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Items_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Items.SelectedItem != null)
-            {
-                MealItemEditing.Picker.IsPopupOpen = true;
-            }
-            Items.SelectedItem = null;
+            viewModel.AddItem();
         }
     }
 }

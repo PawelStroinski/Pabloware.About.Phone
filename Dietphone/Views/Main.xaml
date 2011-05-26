@@ -27,7 +27,7 @@
         </Storyboard>
     </phone:PhoneApplicationPage.Resources>
 
-    <Grid Background="Transparent">
+    <Grid Background="Transparent" x:Name="LayoutRoot" x:FieldModifier="private">
         <controls:Pivot Title="DIETPHONE" x:Name="Pivot" x:FieldModifier="private" SelectionChanged="Pivot_SelectionChanged">
             <controls:PivotItem Header="posiłki" x:Name="Meals" x:FieldModifier="private">
                 <views:MealListing HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="535" Margin="-12 0 -12 0" x:Name="MealListing" x:FieldModifier="private" DatesPoppedUp="MealListing_DatesPoppedUp" MouseEnter="MealListing_MouseEnter" />
@@ -47,6 +47,8 @@
                 </i:Interaction.Behaviors>
             </watermark:WatermarkTextBox>
         </Border>
+        <!--MealItemEditing-->
+        <views:MealItemEditing x:Name="MealItemEditing"/>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

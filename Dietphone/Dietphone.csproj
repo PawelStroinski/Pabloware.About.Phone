@@ -132,6 +132,7 @@
     <Compile Include="ViewModels\EditingViewModelBase.cs" />
     <Compile Include="ViewModels\LoaderBase.cs" />
     <Compile Include="ViewModels\MealEditingViewModel.cs" />
+    <Compile Include="ViewModels\MealItemEditingViewModel.cs" />
     <Compile Include="ViewModels\MealListingViewModel.cs" />
     <Compile Include="ViewModels\MealItemViewModel.cs" />
     <Compile Include="ViewModels\MealNameViewModel.cs" />
