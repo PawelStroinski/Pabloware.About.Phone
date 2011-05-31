@@ -5,7 +5,6 @@ using System.Windows;
 using System.Linq;
 using Dietphone.Tools;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 
 namespace Dietphone.ViewModels
 {

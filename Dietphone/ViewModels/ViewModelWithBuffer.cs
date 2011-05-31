@@ -1,5 +1,4 @@
-﻿using System;
-using Dietphone.Tools;
+﻿using Dietphone.Tools;
 using Dietphone.Models;
 
 namespace Dietphone.ViewModels

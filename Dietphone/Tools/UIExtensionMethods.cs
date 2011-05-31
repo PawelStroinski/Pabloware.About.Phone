@@ -3,7 +3,6 @@ using System.Windows.Input;
 using Telerik.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using System.Linq;
 using System.Windows;
 
 namespace Dietphone.Tools
