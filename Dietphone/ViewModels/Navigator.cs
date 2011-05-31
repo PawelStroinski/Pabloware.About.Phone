@@ -10,10 +10,10 @@ namespace Dietphone.ViewModels
         void GoToMealEditing(Guid mealId);
         void GoToProductEditing(Guid productId);
         void GoToMain();
-        void GoToMainToAddMealItemToMeal(Guid mealId);
+        void GoToMainToAddMealItem();
         Guid GetMealIdToEdit();
-        Guid GetMealIdToAddMealItemTo();
         Guid GetProductIdToEdit();
+        bool ShouldAddMealItem();
     }
 
     public class NavigatorImpl : Navigator
@@ -21,11 +21,12 @@ namespace Dietphone.ViewModels
         private string path;
         private string idName;
         private Guid idValue;
+        private string action;
         private readonly NavigationService service;
         private readonly IDictionary<string, string> passedQueryString;
         private const string MEAL_ID_TO_EDIT = "MealIdToEdit";
-        private const string MEAL_ID_TO_ADD_MEAL_ITEM_TO = "MealIdToAddMealItemTo";
         private const string PRODUCT_ID_TO_EDIT = "ProductIdToEdit";
+        private const string ADD_MEAL_ITEM = "AddMealItem";
 
         public NavigatorImpl(NavigationService service, NavigationContext context)
         {
@@ -63,12 +64,11 @@ namespace Dietphone.ViewModels
             Navigate();
         }
 
-        public void GoToMainToAddMealItemToMeal(Guid mealId)
+        public void GoToMainToAddMealItem()
         {
-            idName = MEAL_ID_TO_ADD_MEAL_ITEM_TO;
-            idValue = mealId;
+            action = ADD_MEAL_ITEM;
             path = "/Views/Main.xaml";
-            NavigateWithId();
+            NavigateWithAction();
         }
 
         public Guid GetMealIdToEdit()
@@ -77,16 +77,16 @@ namespace Dietphone.ViewModels
             return GetId();
         }
 
-        public Guid GetMealIdToAddMealItemTo()
-        {
-            idName = MEAL_ID_TO_ADD_MEAL_ITEM_TO;
-            return GetId();
-        }
-
         public Guid GetProductIdToEdit()
         {
             idName = PRODUCT_ID_TO_EDIT;
             return GetId();
+        }
+
+        public bool ShouldAddMealItem()
+        {
+            action = ADD_MEAL_ITEM;
+            return GetAction();
         }
 
         private Guid GetId()
@@ -98,6 +98,18 @@ namespace Dietphone.ViewModels
             else
             {
                 return Guid.Empty;
+            }
+        }
+
+        private bool GetAction()
+        {
+            if (passedQueryString.ContainsKey(action))
+            {
+                return bool.Parse(passedQueryString[action]);
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -113,6 +125,14 @@ namespace Dietphone.ViewModels
             var destination = new UriBuilder();
             destination.Path = path;
             destination.Query = String.Format("{0}={1}", idName, idValue);
+            Navigate(destination);
+        }
+
+        private void NavigateWithAction()
+        {
+            var destination = new UriBuilder();
+            destination.Path = path;
+            destination.Query = String.Format("{0}={1}", action, true);
             Navigate(destination);
         }
 

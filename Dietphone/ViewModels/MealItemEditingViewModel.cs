@@ -1,65 +1,67 @@
 ﻿using System;
+using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
     public class MealItemEditingViewModel : ViewModelBase
     {
-        public MealItemViewModel MealItem { get; set; }
+        public MealItemViewModel MealItem { get; private set; }
         public bool CanDelete { get; set; }
-        public event EventHandler Showing;
-        public event EventHandler Confirming;
-        public event EventHandler Cancelling;
-        public event EventHandler Deleting;
+        public event EventHandler NeedToShow;
+        public event EventHandler Confirmed;
+        public event EventHandler Cancelled;
+        public event EventHandler NeedToDelete;
 
-        public void Show()
+        public void Show(MealItemViewModel mealItem)
         {
-            OnShowing();
+            MealItem = mealItem;
+            OnNeedToShow();
         }
 
         public void Confirm()
         {
-            OnConfirming();
+            OnConfirmed();
         }
 
         public void Cancel()
         {
-            OnCancelling();
+            OnCancelled();
         }
 
         public void Delete()
         {
-            OnDeleting();
+            OnNeedToDelete();
         }
 
-        protected void OnShowing()
+        protected void OnNeedToShow()
         {
-            if (Showing != null)
+            if (NeedToShow != null)
             {
-                Showing(this, EventArgs.Empty);
+                NeedToShow(this, EventArgs.Empty);
             }
         }
 
-        protected void OnConfirming()
+        protected void OnConfirmed()
         {
-            if (Confirming != null)
+            if (Confirmed != null)
             {
-                Confirming(this, EventArgs.Empty);
+                Confirmed(this, EventArgs.Empty);
             }
         }
 
-        protected void OnCancelling()
+        protected void OnCancelled()
         {
-            if (Cancelling != null)
+            if (Cancelled != null)
             {
-                Cancelling(this, EventArgs.Empty);
+                Cancelled(this, EventArgs.Empty);
             }
         }
 
-        protected void OnDeleting()
+        protected void OnNeedToDelete()
         {
-            if (Deleting != null)
+            if (NeedToDelete != null)
             {
-                Deleting(this, EventArgs.Empty);
+                NeedToDelete(this, EventArgs.Empty);
             }
         }
     }

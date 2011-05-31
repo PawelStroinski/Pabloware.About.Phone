@@ -5,15 +5,16 @@ using System.Windows;
 using System.Linq;
 using Dietphone.Tools;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Dietphone.ViewModels
 {
     public class MealViewModel : ViewModelBase
     {
         public Meal Meal { get; private set; }
-        public IEnumerable<MealNameViewModel> MealNames { private get; set; }
-        public MealNameViewModel DefaultMealName { private get; set; }
         public DateViewModel Date { get; set; }
+        public IEnumerable<MealNameViewModel> Names { private get; set; }
+        public MealNameViewModel DefaultName { private get; set; }
         private ObservableCollection<MealItemViewModel> items;
         private bool isNameCached;
         private bool isProductsHeadCached;
@@ -22,11 +23,13 @@ namespace Dietphone.ViewModels
         private string productsHeadCache;
         private IEnumerable<string> productsTailCache;
         private readonly object itemsLock = new object();
+        private readonly Factories factories;
         private const byte TAKE_PRODUCTS_TO_HEAD = 3;
 
-        public MealViewModel(Meal meal)
+        public MealViewModel(Meal meal, Factories factories)
         {
             Meal = meal;
+            this.factories = factories;
         }
 
         public Guid Id
@@ -158,7 +161,7 @@ namespace Dietphone.ViewModels
                     {
                         items = new ObservableCollection<MealItemViewModel>();
                         LoadItems();
-                        items.CollectionChanged += delegate { OnItemsChanged(); };
+                        items.CollectionChanged += OnItemsChanged;
                     }
                     return items;
                 }
@@ -224,22 +227,18 @@ namespace Dietphone.ViewModels
             return itemViewModel;
         }
 
-        public void AddExistingItem(MealItemViewModel item)
-        {
-            Meal.AddExistingItem(item.MealItem);
-            Items.Add(item);
-        }
-
         public void DeleteItem(MealItemViewModel itemViewModel)
         {
-            Meal.DeleteItem(itemViewModel.MealItem);
+            ReleaseItemViewModel(itemViewModel);
+            var itemModel = itemViewModel.Model;
+            Meal.DeleteItem(itemModel);
             Items.Remove(itemViewModel);
         }
 
         public bool FilterIn(string filter)
         {
             var name = Name;
-            if (name != DefaultMealName)
+            if (name != DefaultName)
             {
                 var nameOfName = name.Name;
                 if (nameOfName.ContainsIgnoringCase(filter))
@@ -285,7 +284,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return Name != DefaultMealName;
+                return Name != DefaultName;
             }
         }
 
@@ -293,12 +292,12 @@ namespace Dietphone.ViewModels
         {
             if (Meal.NameId == Guid.Empty)
             {
-                return DefaultMealName;
+                return DefaultName;
             }
-            var result = from viewModel in MealNames
+            var result = from viewModel in Names
                          where viewModel.Id == Meal.NameId
                          select viewModel;
-            result = result.DefaultIfEmpty(DefaultMealName);
+            result = result.DefaultIfEmpty(DefaultName);
             return result.FirstOrDefault();
         }
 
@@ -322,9 +321,14 @@ namespace Dietphone.ViewModels
 
         private MealItemViewModel CreateItemViewModel(MealItem itemModel)
         {
-            var itemViewModel = new MealItemViewModel(itemModel);
-            itemViewModel.ItemChanged += delegate { OnItemsChanged(); };
+            var itemViewModel = new MealItemViewModel(itemModel, factories);
+            itemViewModel.ItemChanged += OnItemsChanged;
             return itemViewModel;
+        }
+
+        private void ReleaseItemViewModel(MealItemViewModel itemViewModel)
+        {
+            itemViewModel.ItemChanged -= OnItemsChanged;
         }
 
         private string MakeProductsHead()
@@ -350,7 +354,7 @@ namespace Dietphone.ViewModels
             return result;
         }
 
-        protected void OnItemsChanged()
+        protected void OnItemsChanged(object sender, EventArgs e)
         {
             isProductsHeadCached = false;
             isProductsTailCached = false;

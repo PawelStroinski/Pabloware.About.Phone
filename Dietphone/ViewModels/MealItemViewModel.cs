@@ -5,26 +5,25 @@ using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
-    public class MealItemViewModel : ViewModelBase
+    public class MealItemViewModel : ViewModelWithBuffer<MealItem>
     {
-        public MealItem MealItem { get; private set; }
         public event EventHandler ItemChanged;
         private static readonly Constrains big = new Constrains { Max = 10000 };
 
-        public MealItemViewModel(MealItem mealItem)
+        public MealItemViewModel(MealItem model, Factories factories)
+            : base(model, factories)
         {
-            MealItem = mealItem;
         }
 
         public Guid ProductId
         {
             get
             {
-                return MealItem.ProductId;
+                return BufferOrModel.ProductId;
             }
             set
             {
-                MealItem.ProductId = value;
+                BufferOrModel.ProductId = value;
                 OnPropertyChanged("ProductName");
                 OnPropertyChanged("AllUsableUnitsWithDetalis");
                 OnPropertyChanged("HasManyUsableUnits");
@@ -36,7 +35,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var product = MealItem.Product;
+                var product = BufferOrModel.Product;
                 return product.Name;
             }
         }
@@ -45,14 +44,14 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Value;
+                var result = BufferOrModel.Value;
                 return result.ToStringOrEmpty();
             }
             set
             {
-                var oldValue = MealItem.Value;
+                var oldValue = BufferOrModel.Value;
                 var newValue = oldValue.TryGetValueOf(value);
-                MealItem.Value = big.Constraint(newValue);
+                BufferOrModel.Value = big.Constraint(newValue);
                 OnItemChanged();
             }
         }
@@ -61,7 +60,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var value = MealItem.Value;
+                var value = BufferOrModel.Value;
                 return string.Format("{0} {1}", value, Unit);
             }
         }
@@ -70,8 +69,8 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Unit;
-                return result.GetAbbreviationOrServingSizeDesc(MealItem.Product);
+                var result = BufferOrModel.Unit;
+                return result.GetAbbreviationOrServingSizeDesc(BufferOrModel.Product);
             }
         }
 
@@ -80,14 +79,14 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Unit;
-                return result.GetAbbreviationOrServingSizeDetalis(MealItem.Product);
+                var result = BufferOrModel.Unit;
+                return result.GetAbbreviationOrServingSizeDetalis(BufferOrModel.Product);
             }
             set
             {
-                var oldValue = MealItem.Unit;
-                var newValue = oldValue.TryGetValueOfAbbreviationOrServingSizeDetalis(value, MealItem.Product);
-                MealItem.Unit = newValue;
+                var oldValue = BufferOrModel.Unit;
+                var newValue = oldValue.TryGetValueOfAbbreviationOrServingSizeDetalis(value, BufferOrModel.Product);
+                BufferOrModel.Unit = newValue;
                 SetOneServingIfIsZeroServings();
                 OnItemChanged();
             }
@@ -97,7 +96,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Energy;
+                var result = BufferOrModel.Energy;
                 return string.Format("{0} kcal", result);
             }
         }
@@ -106,7 +105,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Cu;
+                var result = BufferOrModel.Cu;
                 return string.Format("{0} WW", result);
             }
         }
@@ -115,7 +114,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var result = MealItem.Fpu;
+                var result = BufferOrModel.Fpu;
                 return string.Format("{0} WBT", result);
             }
         }
@@ -132,11 +131,17 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return UnitAbbreviations.GetAbbreviationsOrServingSizeDetalisFiltered(IsUnitUsable, MealItem.Product);
+                return UnitAbbreviations.GetAbbreviationsOrServingSizeDetalisFiltered(IsUnitUsable, BufferOrModel.Product);
             }
         }
 
-        public void Refresh()
+        public void CopyFromModel(MealItem model)
+        {
+            BufferOrModel.CopyFrom(model);
+            OnItemChanged();
+        }
+
+        public void Invalidate()
         {
             OnItemChanged();
         }
@@ -145,7 +150,7 @@ namespace Dietphone.ViewModels
         {
             var unitUsability = new UnitUsability()
             {
-                Product = MealItem.Product,
+                Product = BufferOrModel.Product,
                 Unit = unit
             };
             return unitUsability.AnyNutrientsPerUnitPresent;
@@ -153,9 +158,9 @@ namespace Dietphone.ViewModels
 
         private void SetOneServingIfIsZeroServings()
         {
-            if (MealItem.Unit == Models.Unit.ServingSize && MealItem.Value == 0)
+            if (BufferOrModel.Unit == Models.Unit.ServingSize && BufferOrModel.Value == 0)
             {
-                MealItem.Value = 1;
+                BufferOrModel.Value = 1;
             }
         }
 

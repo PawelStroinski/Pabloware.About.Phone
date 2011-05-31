@@ -10,16 +10,15 @@ namespace Dietphone.ViewModels
 {
     public class MealEditingViewModel : EditingViewModelBase<Meal>
     {
-        public ObservableCollection<MealNameViewModel> MealNames { get; private set; }
+        public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
-        private List<MealNameViewModel> addedMealNames = new List<MealNameViewModel>();
-        private List<MealNameViewModel> deletedMealNames = new List<MealNameViewModel>();
-        private MealNameViewModel defaultMealName;
+        private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
+        private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
+        private MealNameViewModel defaultName;
         private bool isLockedDateTime;
         private bool updatingLockedDateTime;
-        private MealItemEditingViewModel mealItemEditingViewModel;
-        private MealItemViewModel selectedItem;
-        private MealItem selectedItemCopyToRestore;
+        private MealItemEditingViewModel itemEditing;
+        private MealItemViewModel editItem;
         private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
 
         public MealEditingViewModel(Factories factories, Navigator navigator)
@@ -28,31 +27,18 @@ namespace Dietphone.ViewModels
             LockRecentDateTime();
         }
 
-        public MealItemEditingViewModel MealItemEditingViewModel
+        public MealItemEditingViewModel ItemEditing
         {
             private get
             {
-                return mealItemEditingViewModel;
+                return itemEditing;
             }
             set
             {
-                mealItemEditingViewModel = value;
-                OnMealItemEditingViewModelChanged();
-            }
-        }
-
-        public MealItemViewModel SelectedItem
-        {
-            get
-            {
-                return selectedItem;
-            }
-            set
-            {
-                if (selectedItem != value)
+                if (itemEditing != value)
                 {
-                    selectedItem = value;
-                    OnSelectedItemChanged();
+                    itemEditing = value;
+                    OnItemEditingChanged();
                 }
             }
         }
@@ -65,7 +51,7 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string NameOfMealName
+        public string NameOfName
         {
             get
             {
@@ -83,7 +69,7 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return string.Format("{0}, {1}", NameOfMealName, Meal.DateAndTime);
+                return string.Format("{0}, {1}", NameOfName, Meal.DateAndTime);
             }
         }
 
@@ -114,34 +100,34 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void AddAndSetMealName(string name)
+        public void AddAndSetName(string name)
         {
             var tempModel = factories.CreateMealName();
             var models = factories.MealNames;
             models.Remove(tempModel);
-            var viewModel = new MealNameViewModel(tempModel);
+            var viewModel = new MealNameViewModel(tempModel, factories);
             viewModel.Name = name;
-            MealNames.Add(viewModel);
+            Names.Add(viewModel);
             Meal.Name = viewModel;
-            addedMealNames.Add(viewModel);
+            addedNames.Add(viewModel);
         }
 
-        public bool CanRenameMealName()
+        public bool CanEditName()
         {
-            return Meal.Name != defaultMealName;
+            return Meal.Name != defaultName;
         }
 
-        public bool CanDeleteMealName()
+        public bool CanDeleteName()
         {
-            return Meal.Name != defaultMealName;
+            return Meal.Name != defaultName;
         }
 
-        public void DeleteMealName()
+        public void DeleteName()
         {
             var toDelete = Meal.Name;
-            Meal.Name = MealNames.GetNextItemToSelectWhenDeleteSelected(toDelete);
-            MealNames.Remove(toDelete);
-            deletedMealNames.Add(toDelete);
+            Meal.Name = Names.GetNextItemToSelectWhenDeleteSelected(toDelete);
+            Names.Remove(toDelete);
+            deletedNames.Add(toDelete);
         }
 
         public void UpdateTimeAndSaveAndReturn()
@@ -149,7 +135,7 @@ namespace Dietphone.ViewModels
             UpdateLockedDateTime();
             modelSource.CopyFrom(modelCopy);
             modelSource.CopyItemsFrom(modelCopy);
-            SaveMealNames();
+            SaveNames();
             navigator.GoBack();
         }
 
@@ -157,18 +143,23 @@ namespace Dietphone.ViewModels
         {
             var models = factories.Meals;
             models.Remove(modelSource);
-            SaveMealNames();
+            SaveNames();
             navigator.GoBack();
         }
 
         public void AddItem()
         {
-            navigator.GoToMainToAddMealItemToMeal(Meal.Id);
+            navigator.GoToMainToAddMealItem();
         }
 
-        public void AddingEnteredMealItem(object sender, AddingEnteredMealItemEventArgs e)
+        public void EditItem(MealItemViewModel itemViewModel)
         {
-            Meal.AddExistingItem(e.MealItem);
+            if (itemViewModel != null)
+            {
+                editItem = itemViewModel;
+                editItem.MakeBuffer();
+                ItemEditing.Show(editItem);
+            }
         }
 
         protected override void FindAndCopyModel()
@@ -185,7 +176,7 @@ namespace Dietphone.ViewModels
 
         protected override void MakeViewModel()
         {
-            LoadMealNames();
+            LoadNames();
             CreateMealViewModel();
         }
 
@@ -194,56 +185,43 @@ namespace Dietphone.ViewModels
             return modelCopy.Validate();
         }
 
-        protected void OnMealItemEditingViewModelChanged()
+        protected void OnItemEditingChanged()
         {
-            MealItemEditingViewModel.Cancelling += MealItemEditingViewModel_Cancelling;
-            MealItemEditingViewModel.Deleting += MealItemEditingViewModel_Deleting;
-            MealItemEditingViewModel.CanDelete = true;
-        }
-
-        protected void OnSelectedItemChanged()
-        {
-            if (SelectedItem != null)
+            ItemEditing.Confirmed += delegate
             {
-                selectedItemCopyToRestore = SelectedItem.MealItem.GetCopy();
-                MealItemEditingViewModel.MealItem = SelectedItem;
-                MealItemEditingViewModel.Show();
-                SelectedItem = null;
-            }
-            OnPropertyChanged("SelectedItem");
+                editItem.FlushBuffer();
+                editItem.Invalidate();
+            };
+            ItemEditing.Cancelled += delegate
+            {
+                editItem.ClearBuffer();
+                editItem.Invalidate();
+            };
+            ItemEditing.NeedToDelete += delegate
+            {
+                Meal.DeleteItem(editItem);
+            };
+            ItemEditing.CanDelete = true;
         }
 
-        private void MealItemEditingViewModel_Cancelling(object sender, EventArgs e)
+        private void LoadNames()
         {
-            var item = MealItemEditingViewModel.MealItem;
-            item.MealItem.CopyFrom(selectedItemCopyToRestore);
-            item.Refresh();
-        }
-
-        private void MealItemEditingViewModel_Deleting(object sender, EventArgs e)
-        {
-            var item = MealItemEditingViewModel.MealItem;
-            Meal.DeleteItem(item);
-        }
-
-        private void LoadMealNames()
-        {
-            var loader = new MealListingViewModel.MealNamesAndMealsLoader(factories, true);
-            MealNames = loader.MealNames;
-            foreach (var mealName in MealNames)
+            var loader = new MealListingViewModel.NamesAndMealsLoader(factories, true);
+            Names = loader.Names;
+            foreach (var mealName in Names)
             {
                 mealName.MakeBuffer();
             }
-            defaultMealName = loader.DefaultMealName;
-            MealNames.Insert(0, defaultMealName);
+            defaultName = loader.DefaultName;
+            Names.Insert(0, defaultName);
         }
 
         private void CreateMealViewModel()
         {
-            Meal = new MealViewModel(modelCopy)
+            Meal = new MealViewModel(modelCopy, factories)
             {
-                MealNames = MealNames,
-                DefaultMealName = defaultMealName
+                Names = Names,
+                DefaultName = defaultName
             };
             Meal.PropertyChanged += Meal_PropertyChanged;
         }
@@ -261,20 +239,20 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void SaveMealNames()
+        private void SaveNames()
         {
-            foreach (var mealName in MealNames)
+            foreach (var viewModel in Names)
             {
-                mealName.FlushBuffer();
+                viewModel.FlushBuffer();
             }
             var models = factories.MealNames;
-            foreach (var mealName in addedMealNames)
+            foreach (var viewModel in addedNames)
             {
-                models.Add(mealName.Model);
+                models.Add(viewModel.Model);
             }
-            foreach (var mealName in deletedMealNames)
+            foreach (var viewModel in deletedNames)
             {
-                models.Remove(mealName.Model);
+                models.Remove(viewModel.Model);
             }
         }
 

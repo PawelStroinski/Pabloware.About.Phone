@@ -3,11 +3,11 @@ using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class MealNameViewModel : ViewModelBuffer<MealName>
+    public class MealNameViewModel : ViewModelWithBuffer<MealName>
     {
-        public MealNameViewModel(MealName mealName)
+        public MealNameViewModel(MealName model, Factories factories)
+            : base(model, factories)
         {
-            Model = mealName;
         }
 
         public Guid Id

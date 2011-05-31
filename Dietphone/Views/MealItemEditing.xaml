@@ -14,7 +14,7 @@
     d:DesignHeight="480" d:DesignWidth="480"
     IsTabStop="True">
 
-    <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" PopupOpened="Picker_PopupOpened">
+    <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" PopupOpened="Picker_PopupOpened" PopupClosing="Picker_PopupClosing">
         <telerikPrimitives:RadPickerBox.ApplicationBarInfo>
             <telerikPrimitives:ApplicationBarInfo>
                 <telerikPrimitives:ApplicationBarButton Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>

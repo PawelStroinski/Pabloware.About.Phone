@@ -5,15 +5,15 @@ namespace Dietphone.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public ProductListingViewModel ProductListingViewModel { private get; set; }
-        public MealItemEditingViewModel MealItemEditingViewModel { private get; set; }
+        public ProductListingViewModel ProductListing { private get; set; }
+        public MealItemEditingViewModel MealItemEditing { private get; set; }
+        public MealEditingViewModel MealEditing { private get; set; }
         public event EventHandler ShowProductsOnly;
-        public event EventHandler<AddingEnteredMealItemEventArgs> AddingEnteredMealItem;
         private string search = string.Empty;
         private Navigator navigator;
-        private MealItemViewModel mealItem;
+        private MealItem tempMealItem;
+        private bool addMealItem;
         private readonly Factories factories;
-        private bool addEnteredMealItem;
 
         public MainViewModel(Factories factories)
         {
@@ -45,53 +45,48 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void AddEnteredMealItem()
+        public void ReturningToMealEditing()
         {
-            if (addEnteredMealItem)
+            if (addMealItem)
             {
-                var args = new AddingEnteredMealItemEventArgs()
-                {
-                    MealItem = mealItem
-                };
-                OnAddingEnteredMealItem(args);
+                var meal = MealEditing.Meal;
+                var item = meal.AddItem();
+                item.CopyFromModel(tempMealItem);
             }
         }
 
         protected void OnNavigatorChanged()
         {
-            Guid mealId = navigator.GetMealIdToAddMealItemTo();
-            if (mealId != Guid.Empty)
+            if (navigator.ShouldAddMealItem())
             {
-                var finder = factories.Finder;
-                var meal = finder.FindMealById(mealId);
-                if (meal == null)
-                {
-                    navigator.GoToMain();
-                }
-                else
-                {
-                    var mealViewModel = new MealViewModel(meal);
-                    mealItem = mealViewModel.AddItem();
-                    mealViewModel.DeleteItem(mealItem);
-                    OnShowProductsOnly();
-                    ProductListingViewModel.SelectedProductChanged += ProductListingViewModel_SelectedProductChanged;
-                    MealItemEditingViewModel.MealItem = mealItem;
-                    MealItemEditingViewModel.Confirming += delegate
-                    {
-                        addEnteredMealItem = true;
-                        navigator.GoBack();
-                    };
-                }
+                AddMealItem();
             }
         }
 
-        private void ProductListingViewModel_SelectedProductChanged(object sender, SelectedProductChangedEventArgs e)
+        private void AddMealItem()
         {
+            ProductListing.SelectedProductChanged += ProductListing_SelectedProductChanged;
+            MealItemEditing.Confirmed += delegate
+            {
+                addMealItem = true;
+                navigator.GoBack();
+            };
+            OnShowProductsOnly();
+        }
+
+        private void ProductListing_SelectedProductChanged(object sender, SelectedProductChangedEventArgs e)
+        {
+            AddMealItemWithProduct(ProductListing.SelectedProduct);
             e.Handled = true;
-            mealItem.Value = string.Empty;
-            mealItem.ProductId = ProductListingViewModel.SelectedProduct.Id;
-            MealItemEditingViewModel.Show();
-            ProductListingViewModel.SelectedProduct = null;
+            ProductListing.SelectedProduct = null;
+        }
+
+        private void AddMealItemWithProduct(ProductViewModel product)
+        {
+            tempMealItem = factories.CreateMealItem();
+            tempMealItem.ProductId = product.Id;
+            var tempViewModel = new MealItemViewModel(tempMealItem, factories);
+            MealItemEditing.Show(tempViewModel);
         }
 
         protected void OnShowProductsOnly()
@@ -101,18 +96,5 @@ namespace Dietphone.ViewModels
                 ShowProductsOnly(this, EventArgs.Empty);
             }
         }
-
-        protected void OnAddingEnteredMealItem(AddingEnteredMealItemEventArgs args)
-        {
-            if (AddingEnteredMealItem != null)
-            {
-                AddingEnteredMealItem(this, args);
-            }
-        }
-    }
-
-    public class AddingEnteredMealItemEventArgs : EventArgs
-    {
-        public MealItemViewModel MealItem { get; set; }
     }
 }

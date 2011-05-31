@@ -7,7 +7,6 @@ using System.ComponentModel;
 using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
-using System.Windows;
 
 namespace Dietphone.Views
 {
@@ -23,8 +22,8 @@ namespace Dietphone.Views
             InitializeComponent();
             ViewModel = new MainViewModel(App.Factories)
             {
-                ProductListingViewModel = ProductListing.ViewModel,
-                MealItemEditingViewModel = MealItemEditing.ViewModel
+                ProductListing = ProductListing.ViewModel,
+                MealItemEditing = MealItemEditing.ViewModel
             };
             ViewModel.ShowProductsOnly += new EventHandler(ViewModel_ShowProductsOnly);
             DataContext = ViewModel;
@@ -43,11 +42,11 @@ namespace Dietphone.Views
         {
             if (e.Content is MealEditing)
             {
-                var mealEditingViewModel = (e.Content as MealEditing).ViewModel;
-                if (mealEditingViewModel != null)
+                var viewModel = (e.Content as MealEditing).ViewModel;
+                if (viewModel != null)
                 {
-                    ViewModel.AddingEnteredMealItem += mealEditingViewModel.AddingEnteredMealItem;
-                    ViewModel.AddEnteredMealItem();
+                    ViewModel.MealEditing = viewModel;
+                    ViewModel.ReturningToMealEditing();
                 }
             }
         }
@@ -73,6 +72,12 @@ namespace Dietphone.Views
         private void ViewModel_ShowProductsOnly(object sender, EventArgs e)
         {
             Pivot.Items.Remove(Meals);
+        }
+
+        private void About_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("© 26 maja 2011 Paweł Stroiński\r\npol84@live.com",
+                "Dietphone", MessageBoxButton.OK);
         }
 
         private void SearchIcon_Click(object sender, EventArgs e)
@@ -173,11 +178,6 @@ namespace Dietphone.Views
             {
                 Focus();
             }
-        }
-
-        private void About_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("© 26 maja 2011 Paweł Stroiński\r\npol84@live.com", "Dietphone", MessageBoxButton.OK);
         }
     }
 }

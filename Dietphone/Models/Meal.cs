@@ -81,15 +81,9 @@ namespace Dietphone.Models
 
         public MealItem AddItem()
         {
-            var item = new MealItem();
-            item.Owner = Owner;
+            var item = Owner.CreateMealItem();
             items.Add(item);
             return item;
-        }
-
-        public void AddExistingItem(MealItem item)
-        {
-            items.Add(item);
         }
 
         public void DeleteItem(MealItem item)

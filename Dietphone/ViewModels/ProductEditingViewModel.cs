@@ -44,7 +44,7 @@ namespace Dietphone.ViewModels
             var tempModel = factories.CreateCategory();
             var models = factories.Categories;
             models.Remove(tempModel);
-            var viewModel = new CategoryViewModel(tempModel);
+            var viewModel = new CategoryViewModel(tempModel, factories);
             viewModel.Name = name;
             Categories.Add(viewModel);
             Product.Category = viewModel;

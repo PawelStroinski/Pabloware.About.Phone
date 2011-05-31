@@ -15,6 +15,7 @@ namespace Dietphone.Models
 
         Meal CreateMeal();
         MealName CreateMealName();
+        MealItem CreateMealItem();
         Product CreateProduct();
         Category CreateCategory();
         void Save();
@@ -87,6 +88,13 @@ namespace Dietphone.Models
             mealName.Id = Guid.NewGuid();
             mealName.SetNullStringPropertiesToEmpty();
             return mealName;
+        }
+
+        public MealItem CreateMealItem()
+        {
+            var mealItem = new MealItem();
+            mealItem.Owner = this;
+            return mealItem;
         }
 
         public Product CreateProduct()

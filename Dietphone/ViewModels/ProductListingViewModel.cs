@@ -204,7 +204,7 @@ namespace Dietphone.ViewModels
                 var unsortedViewModels = new List<CategoryViewModel>();
                 foreach (var model in models)
                 {
-                    var viewModel = new CategoryViewModel(model);
+                    var viewModel = new CategoryViewModel(model, factories);
                     unsortedViewModels.Add(viewModel);
                 }
                 var sortedViewModels = unsortedViewModels.OrderBy(category => category.Name);

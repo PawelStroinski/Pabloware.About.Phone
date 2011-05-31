@@ -3,11 +3,11 @@ using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class CategoryViewModel : ViewModelBuffer<Category>, IComparable
+    public class CategoryViewModel : ViewModelWithBuffer<Category>, IComparable
     {
-        public CategoryViewModel(Category model)
+        public CategoryViewModel(Category model, Factories factories)
+            : base(model, factories)
         {
-            Model = model;
         }
 
         public Guid Id

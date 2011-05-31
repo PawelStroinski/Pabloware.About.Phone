@@ -3,23 +3,26 @@ using System.Windows;
 using System.Windows.Controls;
 using Dietphone.ViewModels;
 using Dietphone.Tools;
+using System.ComponentModel;
 
 namespace Dietphone.Views
 {
     public partial class MealItemEditing : UserControl
     {
         public MealItemEditingViewModel ViewModel { get; private set; }
+        private bool controlledClosing;
 
         public MealItemEditing()
         {
             InitializeComponent();
             Delete = Picker.ApplicationBarInfo.Buttons[2];
             ViewModel = new MealItemEditingViewModel();
-            ViewModel.Showing += delegate
+            ViewModel.NeedToShow += delegate
             {
                 DataContext = ViewModel.MealItem;
                 Delete.IsEnabled = ViewModel.CanDelete;
                 Picker.IsPopupOpen = true;
+                controlledClosing = false;
             };
         }
 
@@ -67,6 +70,7 @@ namespace Dietphone.Views
 
         private void Close()
         {
+            controlledClosing = true;
             if (Value.IsFocused())
             {
                 Focus();
@@ -78,6 +82,14 @@ namespace Dietphone.Views
             else
             {
                 Picker.IsPopupOpen = false;
+            }
+        }
+
+        private void Picker_PopupClosing(object sender, CancelEventArgs e)
+        {
+            if (!controlledClosing)
+            {
+                ViewModel.Cancel();
             }
         }
     }

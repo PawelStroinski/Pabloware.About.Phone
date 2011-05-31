@@ -1,13 +1,21 @@
 ﻿using System;
 using Dietphone.Tools;
+using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class ViewModelBuffer<TModel> : ViewModelBase where TModel : class, new()
+    public class ViewModelWithBuffer<TModel> : ViewModelBase where TModel : Entity, new()
     {
-        public TModel Model { get; protected set; }
+        public TModel Model { get; private set; }
         protected bool IsBuffered { get; private set; }
+        protected readonly Factories factories;
         private TModel buffer;
+
+        public ViewModelWithBuffer(TModel model, Factories factories)
+        {
+            Model = model;
+            this.factories = factories;
+        }
 
         protected TModel BufferOrModel
         {
@@ -30,6 +38,7 @@ namespace Dietphone.ViewModels
             {
                 IsBuffered = true;
                 buffer = Model.GetCopy();
+                buffer.Owner = factories;
             }
         }
 
@@ -39,6 +48,11 @@ namespace Dietphone.ViewModels
             {
                 Model.CopyFrom(buffer);
             }
+        }
+
+        public void ClearBuffer()
+        {
+            IsBuffered = false;
         }
     }
 }
