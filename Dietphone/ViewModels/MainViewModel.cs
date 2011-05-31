@@ -49,9 +49,7 @@ namespace Dietphone.ViewModels
         {
             if (addMealItem)
             {
-                var meal = MealEditing.Meal;
-                var item = meal.AddItem();
-                item.CopyFromModel(tempMealItem);
+                MealEditing.AddCopyOfItem(tempMealItem);
             }
         }
 

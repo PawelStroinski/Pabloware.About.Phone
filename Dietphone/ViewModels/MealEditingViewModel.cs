@@ -152,6 +152,12 @@ namespace Dietphone.ViewModels
             navigator.GoToMainToAddMealItem();
         }
 
+        public void AddCopyOfItem(MealItem source)
+        {
+            var item = Meal.AddItem();
+            item.CopyFromModel(source);
+        }
+
         public void EditItem(MealItemViewModel itemViewModel)
         {
             if (itemViewModel != null)

@@ -70,8 +70,8 @@
                             </DataTemplate>
                         </telerikPrimitives:RadDataBoundListBox.ItemTemplate>
                     </telerikPrimitives:RadDataBoundListBox>
-                    <!--MealItemEditing-->
-                    <views:MealItemEditing x:Name="MealItemEditing"/>
+                    <!--ItemEditing-->
+                    <views:MealItemEditing x:Name="ItemEditing"/>
                 </Grid>
             </controls:PivotItem>
 
@@ -98,7 +98,7 @@
                         <ToggleButton Height="72" Width="72" VerticalAlignment="Top" Style="{StaticResource ToggleButtonWithIconStyle}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" IsChecked="{Binding NotIsLockedDateTime, Mode=TwoWay}"/>
                     </Grid>
                     <!--Nazwa-->
-                    <telerikInput:RadListPicker Header="Nazwa" ItemsSource="{Binding MealNames}" SelectedItem="{Binding Meal.Name, Mode=TwoWay}" Margin="24 3 24 25" Name="MealName" InlineModeThreshold="0" Style="{StaticResource OsListPickerStyle}">
+                    <telerikInput:RadListPicker Header="Nazwa" ItemsSource="{Binding Names}" SelectedItem="{Binding Meal.Name, Mode=TwoWay}" Margin="24 3 24 25" Name="MealName" InlineModeThreshold="0" Style="{StaticResource OsListPickerStyle}">
                         <telerikInput:RadListPicker.PopupHeader>
                             <StackPanel Orientation="Horizontal" Margin="0, -17, 0, 0">
                                 <TextBlock Text="NAZWA" Margin="-1, 10, 1, 0" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" Width="180"/>

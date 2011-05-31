@@ -122,8 +122,8 @@ namespace Dietphone.ViewModels
             {
                 var args = new SelectedProductChangedEventArgs();
                 OnSelectedProductChanged(args);
-                var handle = !args.Handled;
-                if (handle)
+                var handleOnMyOwn = !args.Handled;
+                if (handleOnMyOwn)
                 {
                     Navigator.GoToProductEditing(SelectedProduct.Id);
                 }

@@ -39,7 +39,7 @@ namespace Dietphone.Views
                 DataContext = ViewModel;
                 ViewModel.GotDirty += new EventHandler(viewModel_GotDirty);
                 ViewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
-                ViewModel.ItemEditing = MealItemEditing.ViewModel;
+                ViewModel.ItemEditing = ItemEditing.ViewModel;
             }
         }
 

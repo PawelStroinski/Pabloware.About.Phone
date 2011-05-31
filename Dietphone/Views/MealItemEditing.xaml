@@ -14,12 +14,12 @@
     d:DesignHeight="480" d:DesignWidth="480"
     IsTabStop="True">
 
-    <telerikPrimitives:RadPickerBox x:Name="Picker" Height="0" Width="0" PopupOpened="Picker_PopupOpened" PopupClosing="Picker_PopupClosing">
+    <telerikPrimitives:RadPickerBox x:Name="Picker" x:FieldModifier="private" Height="0" Width="0" PopupOpened="Picker_PopupOpened" PopupClosing="Picker_PopupClosing">
         <telerikPrimitives:RadPickerBox.ApplicationBarInfo>
             <telerikPrimitives:ApplicationBarInfo>
                 <telerikPrimitives:ApplicationBarButton Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
                 <telerikPrimitives:ApplicationBarButton Text="anuluj" IconUri="/images/appbar.cancel.rest.png" Click="Cancel_Click"/>
-                <telerikPrimitives:ApplicationBarButton Text="usuń" IconUri="/images/appbar.delete.rest.png" Click="Delete_Click" x:Name="Delete"/>
+                <telerikPrimitives:ApplicationBarButton Text="usuń" IconUri="/images/appbar.delete.rest.png" Click="Delete_Click" x:Name="Delete" x:FieldModifier="private"/>
             </telerikPrimitives:ApplicationBarInfo>
         </telerikPrimitives:RadPickerBox.ApplicationBarInfo>
         <Grid Background="{StaticResource PhoneChromeBrush}">
@@ -35,13 +35,13 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <!--Ilość-->
-                <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0" x:Name="Value">
+                <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0" x:Name="Value" x:FieldModifier="private">
                     <i:Interaction.Behaviors>
                         <viewModels:UpdateOnTextChangedBehavior/>
                     </i:Interaction.Behaviors>
                 </TextBox>
                 <!--Jednostka-->
-                <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding UnitWithDetalis, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnitsWithDetalis}" IsEnabled="{Binding HasManyUsableUnits}" Style="{StaticResource OsListPickerStyle}" x:Name="Unit" IsEnabledChanged="Unit_IsEnabledChanged"/>
+                <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding UnitWithDetalis, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnitsWithDetalis}" IsEnabled="{Binding HasManyUsableUnits}" Style="{StaticResource OsListPickerStyle}" x:Name="Unit" x:FieldModifier="private" IsEnabledChanged="Unit_IsEnabledChanged"/>
             </Grid>
             <StackPanel Grid.Row="2" Margin="26, 26, 14, 26">
                 <!--Produkt-->
