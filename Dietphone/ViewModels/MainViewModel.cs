@@ -74,9 +74,13 @@ namespace Dietphone.ViewModels
 
         private void ProductListing_SelectedProductChanged(object sender, SelectedProductChangedEventArgs e)
         {
-            AddMealItemWithProduct(ProductListing.SelectedProduct);
-            e.Handled = true;
-            ProductListing.SelectedProduct = null;
+            var product = ProductListing.SelectedProduct;
+            if (product != null)
+            {
+                AddMealItemWithProduct(product);
+                e.Handled = true;
+                ProductListing.SelectedProduct = null;
+            }
         }
 
         private void AddMealItemWithProduct(ProductViewModel product)

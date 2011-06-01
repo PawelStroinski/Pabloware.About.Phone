@@ -118,15 +118,13 @@ namespace Dietphone.ViewModels
 
         protected void OnSelectedProductChanged()
         {
-            if (SelectedProduct != null)
+            var args = new SelectedProductChangedEventArgs();
+            OnSelectedProductChanged(args);
+            var handleOnMyOwn = !args.Handled;
+            var assigned = SelectedProduct != null;
+            if (handleOnMyOwn && assigned)
             {
-                var args = new SelectedProductChangedEventArgs();
-                OnSelectedProductChanged(args);
-                var handleOnMyOwn = !args.Handled;
-                if (handleOnMyOwn)
-                {
-                    Navigator.GoToProductEditing(SelectedProduct.Id);
-                }
+                Navigator.GoToProductEditing(SelectedProduct.Id);
             }
             OnPropertyChanged("SelectedProduct");
         }
