@@ -17,8 +17,7 @@ namespace Dietphone.ViewModels
         public ObservableCollection<DataDescriptor> FilterDescriptors { private get; set; }
         public event EventHandler DescriptorsUpdating;
         public event EventHandler DescriptorsUpdated;
-        public event EventHandler<SelectedProductChangedEventArgs> SelectedProductChanged;
-        private ProductViewModel selectedProduct;
+        public event EventHandler<ChoosedEventArgs> Choosed;
         private readonly Factories factories;
         private readonly MaxCuAndFpuInCategories maxCuAndFpu;
 
@@ -26,22 +25,6 @@ namespace Dietphone.ViewModels
         {
             this.factories = factories;
             maxCuAndFpu = new MaxCuAndFpuInCategories(factories.Finder);
-        }
-
-        public ProductViewModel SelectedProduct
-        {
-            get
-            {
-                return selectedProduct;
-            }
-            set
-            {
-                if (selectedProduct != value)
-                {
-                    selectedProduct = value;
-                    OnSelectedProductChanged();
-                }
-            }
         }
 
         public override void Load()
@@ -61,6 +44,19 @@ namespace Dietphone.ViewModels
             var loader = new CategoriesAndProductsLoader(this);
             loader.LoadAsync();
             loader.Loaded += delegate { OnRefreshed(); };
+        }
+
+        public void Choose(ProductViewModel product)
+        {
+            var e = new ChoosedEventArgs()
+            {
+                Product = product
+            };
+            OnChoosed(e);
+            if (!e.Handled)
+            {
+                Navigator.GoToProductEditing(product.Id);
+            }
         }
 
         public override void Add()
@@ -116,24 +112,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnSelectedProductChanged()
+        protected void OnChoosed(ChoosedEventArgs e)
         {
-            var args = new SelectedProductChangedEventArgs();
-            OnSelectedProductChanged(args);
-            var handleOnMyOwn = !args.Handled;
-            var assigned = SelectedProduct != null;
-            if (handleOnMyOwn && assigned)
+            if (Choosed != null)
             {
-                Navigator.GoToProductEditing(SelectedProduct.Id);
-            }
-            OnPropertyChanged("SelectedProduct");
-        }
-
-        protected void OnSelectedProductChanged(SelectedProductChangedEventArgs args)
-        {
-            if (SelectedProductChanged != null)
-            {
-                SelectedProductChanged(this, args);
+                Choosed(this, e);
             }
         }
 
@@ -247,8 +230,9 @@ namespace Dietphone.ViewModels
         }
     }
 
-    public class SelectedProductChangedEventArgs : EventArgs
+    public class ChoosedEventArgs : EventArgs
     {
+        public ProductViewModel Product { get; set; }
         public bool Handled { get; set; }
     }
 }

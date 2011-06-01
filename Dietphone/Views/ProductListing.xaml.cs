@@ -79,6 +79,19 @@ namespace Dietphone.Views
             }
         }
 
+        private void List_ItemTap(object sender, ListBoxItemTapEventArgs e)
+        {
+            var product = List.SelectedItem as ProductViewModel;
+            if (product != null)
+            {
+                ViewModel.Choose(product);
+            }
+            Dispatcher.BeginInvoke(() =>
+            {
+                List.SelectedItem = null;
+            });
+        }
+
         private void List_GroupPickerItemTap(object sender, Telerik.Windows.Controls.GroupPickerItemTapEventArgs e)
         {
             (sender as RadJumpList).UniversalGroupPickerItemTap(e);

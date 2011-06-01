@@ -63,24 +63,23 @@ namespace Dietphone.ViewModels
 
         private void AddMealItem()
         {
-            ProductListing.SelectedProductChanged += ProductListing_SelectedProductChanged;
-            MealItemEditing.Confirmed += delegate
-            {
-                addMealItem = true;
-                navigator.GoBack();
-            };
+            ProductListing.Choosed -= ProductListing_Choosed;
+            ProductListing.Choosed += ProductListing_Choosed;
+            MealItemEditing.Confirmed -= MealItemEditing_Confirmed;
+            MealItemEditing.Confirmed += MealItemEditing_Confirmed;
             OnShowProductsOnly();
         }
 
-        private void ProductListing_SelectedProductChanged(object sender, SelectedProductChangedEventArgs e)
+        private void ProductListing_Choosed(object sender, ChoosedEventArgs e)
         {
-            var product = ProductListing.SelectedProduct;
-            if (product != null)
-            {
-                AddMealItemWithProduct(product);
-                e.Handled = true;
-                ProductListing.SelectedProduct = null;
-            }
+            AddMealItemWithProduct(e.Product);
+            e.Handled = true;
+        }
+
+        private void MealItemEditing_Confirmed(object sender, EventArgs e)
+        {
+            addMealItem = true;
+            navigator.GoBack();
         }
 
         private void AddMealItemWithProduct(ProductViewModel product)

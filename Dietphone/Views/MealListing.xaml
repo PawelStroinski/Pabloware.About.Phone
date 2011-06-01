@@ -13,7 +13,7 @@
     d:DesignHeight="480" d:DesignWidth="480">
 
     <Grid>
-        <telerikDataControls:RadJumpList IsAsyncBalanceEnabled="True" Name="List" x:FieldModifier="private" ItemsSource="{Binding Meals}" GroupPickerItemsSource="{Binding Dates}" SelectedItem="{Binding SelectedMeal, Mode=TwoWay}" GroupPickerItemTap="List_GroupPickerItemTap" GroupHeaderItemTap="List_GroupHeaderItemTap">
+        <telerikDataControls:RadJumpList IsAsyncBalanceEnabled="True" Name="List" x:FieldModifier="private" ItemsSource="{Binding Meals}" GroupPickerItemsSource="{Binding Dates}" ItemTap="List_ItemTap" GroupPickerItemTap="List_GroupPickerItemTap" GroupHeaderItemTap="List_GroupHeaderItemTap">
             <telerikDataControls:RadJumpList.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="4">

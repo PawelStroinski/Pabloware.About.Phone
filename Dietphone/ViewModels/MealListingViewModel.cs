@@ -16,27 +16,10 @@ namespace Dietphone.ViewModels
         public event EventHandler DescriptorsUpdating;
         public event EventHandler DescriptorsUpdated;
         private Factories factories;
-        private MealViewModel selectedMeal;
 
         public MealListingViewModel(Factories factories)
         {
             this.factories = factories;
-        }
-
-        public MealViewModel SelectedMeal
-        {
-            get
-            {
-                return selectedMeal;
-            }
-            set
-            {
-                if (selectedMeal != value)
-                {
-                    selectedMeal = value;
-                    OnSelectedMealChanged();
-                }
-            }
         }
 
         public override void Load()
@@ -55,6 +38,11 @@ namespace Dietphone.ViewModels
             var loader = new NamesAndMealsLoader(this);
             loader.LoadAsync();
             loader.Loaded += delegate { OnRefreshed(); };
+        }
+
+        public void Choose(MealViewModel meal)
+        {
+            Navigator.GoToMealEditing(meal.Id);
         }
 
         public override void Add()
@@ -100,14 +88,6 @@ namespace Dietphone.ViewModels
             {
                 var filterIn = new GenericFilterDescriptor<MealViewModel>(meal => meal.FilterIn(search));
                 FilterDescriptors.Add(filterIn);
-            }
-        }
-
-        protected void OnSelectedMealChanged()
-        {
-            if (SelectedMeal != null)
-            {
-                Navigator.GoToMealEditing(SelectedMeal.Id);
             }
         }
 
