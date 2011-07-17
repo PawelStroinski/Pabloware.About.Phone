@@ -86,7 +86,7 @@ namespace Dietphone
 
         private static void CreateFactories()
         {
-            StorageCreator binary = new BinaryStorageCreator();
+            StorageCreator binary = new PhoneBinaryStorageCreator();
             factories = new FactoriesImpl(binary);
         }
 

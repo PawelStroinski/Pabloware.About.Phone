@@ -107,10 +107,13 @@
     <Compile Include="BinarySerializers\BinaryFile.cs" />
     <Compile Include="BinarySerializers\BinarySerializer.cs" />
     <Compile Include="BinarySerializers\BinaryStorage.cs" />
+    <Compile Include="BinarySerializers\BinaryStorageCreator.cs" />
     <Compile Include="BinarySerializers\BinaryStreamProvider.cs" />
     <Compile Include="BinarySerializers\CategoryBinaryStorage.cs" />
     <Compile Include="BinarySerializers\MealBinaryStorage.cs" />
     <Compile Include="BinarySerializers\MealNameBinaryStorage.cs" />
+    <Compile Include="BinarySerializers\PhoneBinaryStorageCreator.cs" />
+    <Compile Include="BinarySerializers\PhoneBinaryStreamProvider.cs" />
     <Compile Include="BinarySerializers\ProductBinaryStorage.cs" />
     <Compile Include="Models\DefaultEntities.cs" />
     <Compile Include="Models\Entity.cs" />
