@@ -15,42 +15,44 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <!--Pivot Control-->
         <controls:Pivot Title="{Binding AppNameUppercased}" SelectedIndex="1">
+            <!--o aplikacji-->
             <controls:PivotItem Header="o aplikacji">
-                <StackPanel>
-                    <TextBlock Text="{Binding AppName}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" Margin="21,0,0,21"/>
-                    <TextBlock Text="od Pabloware" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
-                    <TextBlock Text="www.pabloware.com/dietphone" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,9" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Www_MouseLeftButtonUp" />
-                    <TextBlock Text="Sugestie: dietphone@pabloware.com" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,50" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Feedback_MouseLeftButtonUp" />
-                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding AppVersion}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,0,24,6"/>
-                </StackPanel>
-            </controls:PivotItem>
-            <controls:PivotItem Header="licencja">
-                <ScrollViewer Margin="0,30,0,0">
-                    <StackPanel HorizontalAlignment="Left" Margin="12,0">
-                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="This is a push button example" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <ScrollViewer>
+                    <StackPanel>
+                        <!--AppName-->
+                        <TextBlock Text="{Binding AppName}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" Margin="21,0,0,0"/>
+                        <!--Publisher-->
+                        <TextBlock Text="od Pabloware" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
+                        <!--Web-->
+                        <TextBlock Text="www.pabloware.com/dietphone" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,21" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Web_MouseLeftButtonUp" />
+                        <!--Version-->
+                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding AppVersion}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,0,24,1"/>
+                        <!--Review-->
+                        <TextBlock Text="Recenzuj tę aplikację" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,8" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Review_MouseLeftButtonUp" />
+                        <!--Feedback-->
+                        <TextBlock Text="Sugestie: dietphone@pabloware.com" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,0" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Feedback_MouseLeftButtonUp" />
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
+            <!--licencja-->
+            <controls:PivotItem Header="licencja">
+                <ScrollViewer Margin="0,30,0,0">
+                    <StackPanel HorizontalAlignment="Left" Margin="12,0">
+                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            This is a push button example
+                            <LineBreak/>
+                            <Run Foreground="{StaticResource PhoneSubtleBrush}">Subtext does not wrap</Run>
+                        </TextBlock>
+                        <TextBlock Text="Subtext does not wrap" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:PivotItem>
+            <!--nowości-->
             <controls:PivotItem Header="nowości">
                 <Grid/>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
-
-    <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
-    
 </phone:PhoneApplicationPage>

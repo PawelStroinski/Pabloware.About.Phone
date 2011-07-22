@@ -26,14 +26,19 @@ namespace Dietphone.Views
             InteractionEffectManager.AllowedTypes.Add(typeof(TextBlock));
         }
 
-        private void Www_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Web_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            viewModel.LaunchBrowser();
+            viewModel.OpenWeb();
+        }
+
+        private void Review_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.OpenReview();
         }
 
         private void Feedback_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            viewModel.ComposeMail();
+            viewModel.OpenFeedback();
         }
     }
 }

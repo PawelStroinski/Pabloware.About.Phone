@@ -44,30 +44,41 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                var version = GetPartOfAssemblyName(VERSION_PART_NUMBER);
-                var equationParts = version.Split('=');
-                var numbers = equationParts[1];
-                if (numbers.EndsWith(USELESS_MINOR_VERSION))
-                {
-                    numbers = numbers.Remove(numbers.Length -
-                        USELESS_MINOR_VERSION.Length, USELESS_MINOR_VERSION.Length);
-                }
-                return string.Format("Wersja: {0}", numbers);
+                return string.Format("Wersja: {0}", GetAppVersion());
             }
         }
 
-        public void LaunchBrowser()
+        public void OpenWeb()
         {
             var task = new WebBrowserTask();
             task.URL = URL;
             task.Show();
         }
 
-        public void ComposeMail()
+        public void OpenReview()
+        {
+            var task = new MarketplaceReviewTask();
+            task.Show();
+        }
+
+        public void OpenFeedback()
         {
             EmailComposeTask task = new EmailComposeTask();
             task.To = MAIL;
             task.Show();
+        }
+
+        private string GetAppVersion()
+        {
+            var version = GetPartOfAssemblyName(VERSION_PART_NUMBER);
+            var equationParts = version.Split('=');
+            var numbers = equationParts[1];
+            if (numbers.EndsWith(USELESS_MINOR_VERSION))
+            {
+                numbers = numbers.Remove(numbers.Length -
+                    USELESS_MINOR_VERSION.Length, USELESS_MINOR_VERSION.Length);
+            }
+            return numbers;
         }
 
         private string GetPartOfAssemblyName(byte partNumber)
