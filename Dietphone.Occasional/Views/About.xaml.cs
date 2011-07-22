@@ -11,15 +11,29 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Telerik.Windows.Controls;
+using Dietphone.ViewModels;
 
-namespace Hyperlink
+namespace Dietphone.Views
 {
     public partial class About : PhoneApplicationPage
     {
+        private AboutViewModel viewModel = new AboutViewModel();
+
         public About()
         {
             InitializeComponent();
+            DataContext = viewModel;
             InteractionEffectManager.AllowedTypes.Add(typeof(TextBlock));
+        }
+
+        private void Www_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.LaunchBrowser();
+        }
+
+        private void Feedback_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.ComposeMail();
         }
     }
 }
