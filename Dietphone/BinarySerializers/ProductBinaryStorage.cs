@@ -18,7 +18,7 @@ namespace Dietphone.BinarySerializers
         {
             get
             {
-                return 1;
+                return 2;
             }
         }
 
@@ -40,6 +40,7 @@ namespace Dietphone.BinarySerializers
             writer.Write(product.CarbsTotalPerServing);
             writer.Write(product.FiberPer100g);
             writer.Write(product.FiberPerServing);
+            writer.Write(product.AddedByUser);
         }
 
         public override void ReadItem(BinaryReader reader, Product product)
@@ -60,6 +61,10 @@ namespace Dietphone.BinarySerializers
             product.CarbsTotalPerServing = reader.ReadSingle();
             product.FiberPer100g = reader.ReadSingle();
             product.FiberPerServing = reader.ReadSingle();
+            if (ReadingVersion == 2)
+            {
+                product.AddedByUser = reader.ReadBoolean();
+            }
         }
     }
 }

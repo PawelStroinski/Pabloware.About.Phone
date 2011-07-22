@@ -11,6 +11,7 @@ namespace Dietphone.ViewModels
         void GoToProductEditing(Guid productId);
         void GoToMain();
         void GoToMainToAddMealItem();
+        void GoToAbout();
         Guid GetMealIdToEdit();
         Guid GetProductIdToEdit();
         bool ShouldAddMealItem();
@@ -71,6 +72,12 @@ namespace Dietphone.ViewModels
             NavigateWithAction();
         }
 
+        public void GoToAbout()
+        {
+            path = "/Views/About.xaml";
+            NavigateToOccasionalAssembly();
+        }
+
         public Guid GetMealIdToEdit()
         {
             idName = MEAL_ID_TO_EDIT;
@@ -111,6 +118,12 @@ namespace Dietphone.ViewModels
             {
                 return false;
             }
+        }
+
+        private void NavigateToOccasionalAssembly()
+        {
+            path = "/Dietphone.Occasional;component" + path;
+            Navigate();
         }
 
         private void Navigate()

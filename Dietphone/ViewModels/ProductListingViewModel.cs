@@ -62,6 +62,7 @@ namespace Dietphone.ViewModels
         public override void Add()
         {
             var product = factories.CreateProduct();
+            product.AddedByUser = true;
             Navigator.GoToProductEditing(product.Id);
         }
 

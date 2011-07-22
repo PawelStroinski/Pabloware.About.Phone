@@ -21,6 +21,7 @@ namespace Dietphone.Models
         public float CarbsTotalPerServing { get; set; }
         public float FiberPer100g { get; set; }
         public float FiberPerServing { get; set; }
+        public bool AddedByUser { get; set; }
         private const byte ENERGY_DIFF_TOLERANCE = 10;
         private const byte NUTRIENT_PROP_TOLERANCE = 1;
 

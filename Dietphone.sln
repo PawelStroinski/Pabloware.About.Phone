@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone", "Dietphone\Dietphone.csproj", "{87742C9F-0ED0-48E1-81D6-F5DFFF417259}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Occasional", "Dietphone.Occasional\Dietphone.Occasional.csproj", "{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{87742C9F-0ED0-48E1-81D6-F5DFFF417259}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87742C9F-0ED0-48E1-81D6-F5DFFF417259}.Release|Any CPU.Build.0 = Release|Any CPU
 		{87742C9F-0ED0-48E1-81D6-F5DFFF417259}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
