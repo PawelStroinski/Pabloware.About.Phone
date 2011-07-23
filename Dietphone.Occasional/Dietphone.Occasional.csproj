@@ -60,7 +60,11 @@
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="content\license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\About.xaml">
       <Generator>MSBuild:Compile</Generator>
