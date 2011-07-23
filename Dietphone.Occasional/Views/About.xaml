@@ -16,7 +16,7 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <controls:Pivot Title="{Binding AppNameUppercased}" SelectedIndex="1">
+        <controls:Pivot Title="{Binding AppNameUppercased}" SelectedIndex="{Binding SelectedPivot, Mode=TwoWay}">
             <!--o aplikacji-->
             <controls:PivotItem Header="o aplikacji">
                 <ScrollViewer>
@@ -38,15 +38,8 @@
             </controls:PivotItem>
             <!--licencja-->
             <controls:PivotItem Header="licencja">
-                <ScrollViewer Margin="0,30,0,0">
-                    <StackPanel HorizontalAlignment="Left" Margin="12,0">
-                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            This is a push button example
-                            <LineBreak/>
-                            <Run Foreground="{StaticResource PhoneSubtleBrush}">Subtext does not wrap</Run>
-                        </TextBlock>
-                        <TextBlock Text="Subtext does not wrap" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Margin="0,0,0,13"/>
-                    </StackPanel>
+                <ScrollViewer Margin="0,0,-12,24">
+                    <ContentPresenter Content="{Binding License}"/>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--nowości-->

@@ -50,20 +50,21 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="Telerik.Windows.Core">
-      <HintPath>..\Dietphone\Bin\Debug\Telerik.Windows.Core.dll</HintPath>
+      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Dietphone\ViewModels\ViewModelBase.cs">
+      <Link>ViewModels\ViewModelBase.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\OptionalDispatcher.cs" />
+    <Compile Include="Tools\PhoneResourceStreamProvider.cs" />
+    <Compile Include="Tools\ResourceStreamProvider.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="content\license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\About.xaml">

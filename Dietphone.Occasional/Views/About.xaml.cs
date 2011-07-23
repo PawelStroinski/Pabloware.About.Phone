@@ -12,16 +12,20 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Telerik.Windows.Controls;
 using Dietphone.ViewModels;
+using Dietphone.Tools;
 
 namespace Dietphone.Views
 {
     public partial class About : PhoneApplicationPage
     {
-        private AboutViewModel viewModel = new AboutViewModel();
+        private AboutViewModel viewModel;
 
         public About()
         {
             InitializeComponent();
+            var dispatcher = new OptionalDispatcher(Dispatcher);
+            var resStreamProvider = new PhoneResourceStreamProvider();
+            viewModel = new AboutViewModel(dispatcher, resStreamProvider);
             DataContext = viewModel;
             InteractionEffectManager.AllowedTypes.Add(typeof(TextBlock));
         }
