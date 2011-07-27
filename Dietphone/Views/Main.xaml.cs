@@ -36,6 +36,8 @@ namespace Dietphone.Views
             subConnector.Navigator = navigator;
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
+            // Test:
+            navigator.GoToExportAndImport();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -7,7 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:view="clr-namespace:Dietphone.View"
+    xmlns:views="clr-namespace:Dietphone.Views"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -15,7 +15,7 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid Background="Transparent">
         <controls:Pivot Title="{Binding AppNameUppercased}" SelectedIndex="{Binding SelectedPivot, Mode=TwoWay}">
             <!--o aplikacji-->
             <controls:PivotItem Header="o aplikacji">
@@ -58,12 +58,12 @@
             <!--nowości-->
             <controls:PivotItem Header="co nowego">
                 <ScrollViewer>
-                    <view:WebXamlBlock
+                    <views:WebXamlBlock
                         Margin="0,0,12,24"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
                         XamlUri="http://www.pabloware.com/dietphone/changelog.xaml">
-                        <view:WebXamlBlock.FallbackContent>
+                        <views:WebXamlBlock.FallbackContent>
                             <StackPanel>
                                 <TextBlock
                                     TextWrapping="Wrap"
@@ -77,8 +77,8 @@
                                     Content="www.pabloware.com/dietphone"
                                     TargetName="_self" />
                             </StackPanel>
-                        </view:WebXamlBlock.FallbackContent>
-                    </view:WebXamlBlock>
+                        </views:WebXamlBlock.FallbackContent>
+                    </views:WebXamlBlock>
                 </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>

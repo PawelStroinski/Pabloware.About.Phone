@@ -12,6 +12,7 @@ namespace Dietphone.ViewModels
         void GoToMain();
         void GoToMainToAddMealItem();
         void GoToAbout();
+        void GoToExportAndImport();
         Guid GetMealIdToEdit();
         Guid GetProductIdToEdit();
         bool ShouldAddMealItem();
@@ -75,6 +76,12 @@ namespace Dietphone.ViewModels
         public void GoToAbout()
         {
             path = "/Views/About.xaml";
+            NavigateToOccasionalAssembly();
+        }
+
+        public void GoToExportAndImport()
+        {
+            path = "/Views/ExportAndImport.xaml";
             NavigateToOccasionalAssembly();
         }
 

@@ -120,6 +120,7 @@
     <Compile Include="Models\Factory.cs" />
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Finder.cs" />
+    <Compile Include="Models\ExportAndImport.cs" />
     <Compile Include="Models\MealName.cs" />
     <Compile Include="Models\MealItem.cs" />
     <Compile Include="Models\Calculator.cs" />
