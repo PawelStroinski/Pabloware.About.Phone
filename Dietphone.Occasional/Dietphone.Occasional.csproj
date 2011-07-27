@@ -65,6 +65,7 @@
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WebXamlBlock.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\About.xaml">

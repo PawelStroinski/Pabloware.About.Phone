@@ -20,10 +20,9 @@ namespace Dietphone.ViewModels
         private const byte NAME_PART_NUMBER = 0;
         private const byte VERSION_PART_NUMBER = 1;
         private const string USELESS_MINOR_VERSION = ".0.0";
-        private const string URL = "http://www.pabloware.com/dietphone";
         private const string MAIL = "dietphone@pabloware.com";
         private const byte LICENSE_PIVOT = 1;
-        private const byte DEFAULT_PIVOT = 1;
+        private const byte DEFAULT_PIVOT = 0;
         private const string PATH_TO_LICENSE = "documents/license.txt";
 
         public AboutViewModel(OptionalDispatcher dispatcher, ResourceStreamProvider resStreamProvider)
@@ -70,13 +69,6 @@ namespace Dietphone.ViewModels
                 selectedPivot = value;
                 OnSelectedPivotChange();
             }
-        }
-
-        public void OpenWeb()
-        {
-            var task = new WebBrowserTask();
-            task.URL = URL;
-            task.Show();
         }
 
         public void OpenReview()

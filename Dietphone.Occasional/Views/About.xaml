@@ -7,7 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    xmlns:view="clr-namespace:Dietphone.View"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -26,13 +26,26 @@
                         <!--Publisher-->
                         <TextBlock Text="od Pabloware" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
                         <!--Web-->
-                        <TextBlock Text="www.pabloware.com/dietphone" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,21" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Web_MouseLeftButtonUp" />
+                        <HyperlinkButton
+                                    Style="{StaticResource AccentHyperlink}"
+                                    NavigateUri="http://www.pabloware.com/dietphone"
+                                    Content="www.pabloware.com/dietphone"
+                                    TargetName="_self"
+                                    Margin="12,1,12,20"/>
                         <!--Version-->
                         <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding AppVersion}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,0,24,1"/>
                         <!--Review-->
-                        <TextBlock Text="Recenzuj tę aplikację" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,8" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Review_MouseLeftButtonUp" />
+                        <HyperlinkButton
+                                    Style="{StaticResource AccentHyperlink}"
+                                    Content="Recenzuj tę aplikację"
+                                    Margin="12,1,12,7"
+                                    Click="Review_Click"/>
                         <!--Feedback-->
-                        <TextBlock Text="Sugestie: dietphone@pabloware.com" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="24,0,24,0" telerikCore:InteractionEffectManager.IsInteractionEnabled="True"  HorizontalAlignment="Left" MouseLeftButtonUp="Feedback_MouseLeftButtonUp" />
+                        <HyperlinkButton
+                                    Style="{StaticResource AccentHyperlink}"
+                                    Content="Sugestie: dietphone@pabloware.com"
+                                    Margin="12,1,12,0"
+                                    Click="Feddback_Click"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
@@ -43,8 +56,30 @@
                 </ScrollViewer>
             </controls:PivotItem>
             <!--nowości-->
-            <controls:PivotItem Header="nowości">
-                <Grid/>
+            <controls:PivotItem Header="co nowego">
+                <ScrollViewer>
+                    <view:WebXamlBlock
+                        Margin="0,0,12,24"
+                        VerticalAlignment="Top"
+                        HorizontalContentAlignment="Left"
+                        XamlUri="http://www.pabloware.com/dietphone/changelog.xaml">
+                        <view:WebXamlBlock.FallbackContent>
+                            <StackPanel>
+                                <TextBlock
+                                    TextWrapping="Wrap"
+                                    Style="{StaticResource PhoneTextLargeStyle}">Zapraszamy na nastepującą stronę w celu uzyskania informacji o najnowszej wersji aplikacji:</TextBlock>
+                                <TextBlock
+                                    Text=" " />
+                                <HyperlinkButton
+                                    Style="{StaticResource AccentHyperlink}"
+                                    FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+                                    NavigateUri="http://www.pabloware.com/dietphone"
+                                    Content="www.pabloware.com/dietphone"
+                                    TargetName="_self" />
+                            </StackPanel>
+                        </view:WebXamlBlock.FallbackContent>
+                    </view:WebXamlBlock>
+                </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
