@@ -53,6 +53,11 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void About()
+        {
+            navigator.GoToAbout();
+        }
+
         protected void OnNavigatorChanged()
         {
             if (navigator.ShouldAddMealItem())

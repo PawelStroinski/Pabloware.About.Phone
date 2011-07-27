@@ -36,8 +36,6 @@ namespace Dietphone.Views
             subConnector.Navigator = navigator;
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
-            // Test:
-            navigator.GoToAbout();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -78,8 +76,7 @@ namespace Dietphone.Views
 
         private void About_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("© 26 maja 2011 Paweł Stroiński\r\npol84@live.com",
-                "Dietphone", MessageBoxButton.OK);
+            ViewModel.About();
         }
 
         private void SearchIcon_Click(object sender, EventArgs e)
