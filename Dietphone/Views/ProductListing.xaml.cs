@@ -18,7 +18,7 @@ namespace Dietphone.Views
         public ProductListing()
         {
             InitializeComponent();
-            ViewModel = new ProductListingViewModel(App.Factories);
+            ViewModel = new ProductListingViewModel(MyApp.Factories);
             DataContext = ViewModel;
             ViewModel.GroupDescriptors = List.GroupDescriptors;
             ViewModel.SortDescriptors = List.SortDescriptors;

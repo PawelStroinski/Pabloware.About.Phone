@@ -127,6 +127,7 @@
     <Compile Include="Models\MealName.cs" />
     <Compile Include="Models\MealItem.cs" />
     <Compile Include="Models\Calculator.cs" />
+    <Compile Include="MyApp.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Tools\Constrains.cs" />
     <Compile Include="Tools\IsolatedFile.cs" />

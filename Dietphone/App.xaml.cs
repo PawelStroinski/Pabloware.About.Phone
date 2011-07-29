@@ -2,8 +2,6 @@
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Shell;
-using Dietphone.Models;
-using Dietphone.BinarySerializers;
 using Microsoft.Phone.Tasks;
 using Telerik.Windows.Controls;
 
@@ -13,31 +11,6 @@ namespace Dietphone
     {
         public RadPhoneApplicationFrame RootFrame { get; private set; }
         private bool phoneApplicationInitialized = false;
-        private static Factories factories = null;
-        private static readonly object factoriesLock = new object();
-
-        public static Factories Factories
-        {
-            get
-            {
-                lock (factoriesLock)
-                {
-                    if (factories == null)
-                    {
-                        CreateFactories();
-                    }
-                    return factories;
-                }
-            }
-            set
-            {
-                if (value == null)
-                {
-                    throw new NullReferenceException("Factories");
-                }
-                factories = value;
-            }
-        }
 
         public App()
         {
@@ -74,22 +47,29 @@ namespace Dietphone
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            Factories.Save();
+            SaveFactories();
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
-            Factories.Save();
+            SaveFactories();
         }
 
-        private static void CreateFactories()
+        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
-            StorageCreator binary = new PhoneBinaryStorageCreator();
-            factories = new FactoriesImpl(binary);
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+            else
+            {
+                var exception = e.ExceptionObject;
+                SendExceptionQuestion(exception.ToString());
+                e.Handled = true;
+            }
         }
-
         private void InitializePhoneApplication()
         {
             if (phoneApplicationInitialized)
@@ -100,6 +80,21 @@ namespace Dietphone
             RootFrame.Navigated += CompleteInitializePhoneApplication;
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
             phoneApplicationInitialized = true;
+        }
+
+        private static void SaveFactories()
+        {
+            var factories = MyApp.Factories;
+            factories.Save();
+        }
+
+        private void SendExceptionQuestion(string exception)
+        {
+            if (MessageBox.Show(exception, "A niech to, pluskwa w aplikacji! Zgłosić autorowi?",
+                MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                SendException(exception);
+            }
         }
 
         private void CompleteInitializePhoneApplication(object sender, NavigationEventArgs e)
@@ -123,33 +118,10 @@ namespace Dietphone
             }
         }
 
-        private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
-        {
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                System.Diagnostics.Debugger.Break();
-            }
-            else
-            {
-                var exception = e.ExceptionObject;
-                SendExceptionQuestion(exception.ToString());
-                e.Handled = true;
-            }
-        }
-
-        private void SendExceptionQuestion(string exception)
-        {
-            if (MessageBox.Show(exception, "A niech to, pluskwa w aplikacji! Zgłosić autorowi?",
-                MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-            {
-                SendException(exception);
-            }
-        }
-
         private void SendException(string exception)
         {
             EmailComposeTask task = new EmailComposeTask();
-            task.To = "pol84@live.com";
+            task.To = "dietphone@pabloware.com";
             task.Body = String.Format("Zgłaszam poniższą pluskwę:\r\n\r\n{0}", exception);
             task.Subject = "Pluskwa!";
             task.Show();

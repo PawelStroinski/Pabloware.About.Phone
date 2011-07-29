@@ -22,7 +22,7 @@ namespace Dietphone.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-            viewModel = new ProductEditingViewModel(App.Factories, navigator);
+            viewModel = new ProductEditingViewModel(MyApp.Factories, navigator);
             DataContext = viewModel;
             viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
             viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);

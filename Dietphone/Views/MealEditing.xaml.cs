@@ -24,7 +24,7 @@ namespace Dietphone.Views
             if (ViewModel == null)
             {
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-                ViewModel = new MealEditingViewModel(App.Factories, navigator);
+                ViewModel = new MealEditingViewModel(MyApp.Factories, navigator);
                 DataContext = ViewModel;
                 ViewModel.GotDirty += new EventHandler(viewModel_GotDirty);
                 ViewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);

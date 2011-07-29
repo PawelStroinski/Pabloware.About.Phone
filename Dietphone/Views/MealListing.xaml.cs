@@ -20,7 +20,7 @@ namespace Dietphone.Views
         public MealListing()
         {
             InitializeComponent();
-            ViewModel = new MealListingViewModel(App.Factories);
+            ViewModel = new MealListingViewModel(MyApp.Factories);
             DataContext = ViewModel;
             ViewModel.GroupDescriptors = List.GroupDescriptors;
             ViewModel.FilterDescriptors = List.FilterDescriptors;

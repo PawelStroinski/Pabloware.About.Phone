@@ -21,7 +21,7 @@ namespace Dietphone.Views
         public Main()
         {
             InitializeComponent();
-            ViewModel = new MainViewModel(App.Factories)
+            ViewModel = new MainViewModel(MyApp.Factories)
             {
                 ProductListing = ProductListing.ViewModel,
                 MealItemEditing = MealItemEditing.ViewModel
@@ -38,7 +38,7 @@ namespace Dietphone.Views
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
             // Test:
-            navigator.GoToExportAndImport();
+            //navigator.GoToExportAndImport();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
