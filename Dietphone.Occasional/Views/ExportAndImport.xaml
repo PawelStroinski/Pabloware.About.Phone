@@ -40,7 +40,6 @@
         </StackPanel>
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" IsIndeterminate="{Binding IsBusy}"/>
         <telerikPrimitives:RadModalWindow Name="CopyPaste"
-                                          IsOpen="{Binding IsWindowAfterExportOpen}"
                                           Placement="TopCenter">
             <Border BorderBrush="{StaticResource PhoneBorderBrush}"
                     BorderThickness="{StaticResource PhoneBorderThickness}">
