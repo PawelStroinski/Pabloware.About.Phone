@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone", "Dietphone\Diet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Occasional", "Dietphone.Occasional\Dietphone.Occasional.csproj", "{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common", "Dietphone.Common\Dietphone.Common.csproj", "{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common.Phone", "Dietphone.Common.Phone\Dietphone.Common.Phone.csproj", "{053D7B63-D632-4332-8263-E6B667AE86CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053D7B63-D632-4332-8263-E6B667AE86CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053D7B63-D632-4332-8263-E6B667AE86CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053D7B63-D632-4332-8263-E6B667AE86CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053D7B63-D632-4332-8263-E6B667AE86CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

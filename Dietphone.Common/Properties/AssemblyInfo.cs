@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Dietphone Assembly")]
+[assembly: AssemblyTitle("Dietphone Common Assembly")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pabloware")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("32b8597e-21ad-46c8-9f8f-c7690b15e885")]
+[assembly: Guid("ac3c1a7f-720b-4a25-844f-9ceff037e92c")]
 
 // Version information for an assembly consists of the following four values:
 //
