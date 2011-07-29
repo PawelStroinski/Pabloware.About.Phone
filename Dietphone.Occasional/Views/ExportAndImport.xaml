@@ -7,6 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Dietphone.Views"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -22,19 +25,39 @@
 
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="DIETPHONE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="przenieś dane" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="eksport import" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
             <StackPanel Margin="12,14,12,0">
-                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left">
+                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Copy_Click">
                     <views:MultiLineItem Line1="kopiuj" Line2="Umożliwia wklejenie danych np. do e-maila. Dane są w formacie XML. Nie edytuj ich ręcznie."/>
                 </Button>
-                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left">
-                    <views:MultiLineItem Line1="wklej" Line2="Umożliwia wklejenie danych skopiowanych np. z emaila. Dane muszą być w formacie XML."/>
+                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Paste_Click">
+                    <views:MultiLineItem Line1="wklej" Line2="Umożliwia wklejenie danych skopiowanych np. z e-maila. Dane muszą być w formacie XML."/>
                 </Button>
             </StackPanel>
         </StackPanel>
+        <toolkit:PerformanceProgressBar VerticalAlignment="Top" IsIndeterminate="{Binding IsBusy}"/>
+        <telerikPrimitives:RadModalWindow Name="CopyPaste"
+                                          IsOpen="{Binding IsWindowAfterExportOpen}"
+                                          Placement="TopCenter">
+            <Border BorderBrush="{StaticResource PhoneBorderBrush}"
+                    BorderThickness="{StaticResource PhoneBorderThickness}">
+                <StackPanel Background="{StaticResource PhoneBackgroundBrush}">
+                    <TextBlock TextWrapping="Wrap"
+                               VerticalAlignment="Bottom"
+                               Margin="{StaticResource PhoneMargin}"
+                               HorizontalAlignment="Center"
+                               Name="CopyPasteInfo"/>
+                    <TextBox Height="72" Name="CopyPasteText" AcceptsReturn="True" />
+                    <Button Content="gotowe" Click="CopyPasteClose_Click"/>
+                </StackPanel>
+            </Border>
+            <telerikPrimitives:RadModalWindow.OpenAnimation>
+                <telerikCore:RadSlideAnimation MoveDirection="BottomIn" Duration="0:0:0.2" Ended="CopyPasteAnimation_Ended"/>
+            </telerikPrimitives:RadModalWindow.OpenAnimation>
+        </telerikPrimitives:RadModalWindow>
     </Grid>
 
 </phone:PhoneApplicationPage>

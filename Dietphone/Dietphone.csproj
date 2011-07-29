@@ -101,6 +101,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Dietphone.Occasional\Tools\AppVersion.cs">
+      <Link>Tools\AppVersion.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -120,7 +123,7 @@
     <Compile Include="Models\Factory.cs" />
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Finder.cs" />
-    <Compile Include="Models\ExportAndImport.cs" />
+    <Compile Include="Models\ExportAndImportImpl.cs" />
     <Compile Include="Models\MealName.cs" />
     <Compile Include="Models\MealItem.cs" />
     <Compile Include="Models\Calculator.cs" />

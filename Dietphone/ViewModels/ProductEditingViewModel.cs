@@ -102,7 +102,7 @@ namespace Dietphone.ViewModels
             if (modelSource != null)
             {
                 modelCopy = modelSource.GetCopy();
-                modelCopy.Owner = factories;
+                modelCopy.SetOwner(factories);
             }
         }
 

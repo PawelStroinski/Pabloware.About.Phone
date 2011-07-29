@@ -7,6 +7,7 @@ using System.ComponentModel;
 using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
+using Dietphone.Models;
 
 namespace Dietphone.Views
 {
@@ -49,6 +50,15 @@ namespace Dietphone.Views
                 {
                     ViewModel.MealEditing = viewModel;
                     ViewModel.ReturningToMealEditing();
+                }
+            }
+            if (e.Content is ExportAndImport)
+            {
+                var viewModel = (e.Content as ExportAndImport).ViewModel;
+                if (viewModel != null)
+                {
+                    ViewModel.ExportAndImport = viewModel;
+                    ViewModel.GoingToExportAndImport();
                 }
             }
         }

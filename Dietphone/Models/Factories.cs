@@ -93,7 +93,7 @@ namespace Dietphone.Models
         public MealItem CreateMealItem()
         {
             var mealItem = new MealItem();
-            mealItem.Owner = this;
+            mealItem.SetOwner(this);
             return mealItem;
         }
 

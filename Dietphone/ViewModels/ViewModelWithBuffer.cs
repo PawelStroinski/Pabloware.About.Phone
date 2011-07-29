@@ -37,7 +37,7 @@ namespace Dietphone.ViewModels
             {
                 IsBuffered = true;
                 buffer = Model.GetCopy();
-                buffer.Owner = factories;
+                buffer.SetOwner(factories);
             }
         }
 

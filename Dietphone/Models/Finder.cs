@@ -11,6 +11,7 @@ namespace Dietphone.Models
         Product FindProductById(Guid productId);
         Category FindCategoryById(Guid categoryId);
         List<Product> FindProductsByCategory(Guid categoryId);
+        List<Product> FindProductsAddedByUser();
         Category FindCategoryFirstAlphabetically();
     }
 
@@ -51,6 +52,14 @@ namespace Dietphone.Models
         {
             var result = from product in factories.Products
                          where product.CategoryId == categoryId
+                         select product;
+            return result.ToList();
+        }
+
+        public List<Product> FindProductsAddedByUser()
+        {
+            var result = from product in factories.Products
+                         where product.AddedByUser
                          select product;
             return result.ToList();
         }

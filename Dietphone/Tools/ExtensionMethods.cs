@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace Dietphone.Tools
 {
@@ -38,7 +42,7 @@ namespace Dietphone.Tools
 
         public static void CopyFrom<T>(this T target, T source) where T : class
         {
-            var type = target.GetType();
+            var type = typeof(T);
             var properties = type.GetProperties();
             foreach (var property in properties)
             {
@@ -193,6 +197,25 @@ namespace Dietphone.Tools
                 indexOfNextSelected = indexOfSelected + 1;
             }
             return items[indexOfNextSelected];
+        }
+
+        public static string Serialize(this object source, string defaultNamespaceUri)
+        {
+            var sourceType = source.GetType();
+            var serializer = new XmlSerializer(sourceType, defaultNamespaceUri);
+            var builder = new StringBuilder();
+            var writer = XmlWriter.Create(builder);
+            var defaultNamespace = new XmlSerializerNamespaces();
+            defaultNamespace.Add(string.Empty, defaultNamespaceUri);
+            serializer.Serialize(writer, source, defaultNamespace);
+            return builder.ToString();
+        }
+
+        public static T Deserialize<T>(this string source, string defaultNamespaceUri)
+        {
+            var serializer = new XmlSerializer(typeof(T), defaultNamespaceUri);
+            var reader = new StringReader(source);
+            return (T)serializer.Deserialize(reader);
         }
     }
 }

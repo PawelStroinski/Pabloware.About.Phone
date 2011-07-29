@@ -1,6 +1,6 @@
 ﻿namespace Dietphone.Models
 {
-    public interface ExporterAndImporter
+    public interface ExportAndImport
     {
         string Export();
         void Import(string data);

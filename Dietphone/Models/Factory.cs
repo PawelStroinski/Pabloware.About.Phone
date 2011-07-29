@@ -36,7 +36,7 @@ namespace Dietphone.Models
         {
             var entity = new T();
             Entities.Add(entity);
-            entity.Owner = owner;
+            entity.SetOwner(owner);
             return entity;
         }
 
@@ -52,7 +52,7 @@ namespace Dietphone.Models
         {
             foreach (var entity in entities)
             {
-                entity.Owner = owner;
+                entity.SetOwner(owner);
             }
         }
     }

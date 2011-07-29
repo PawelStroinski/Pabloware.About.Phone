@@ -8,6 +8,7 @@ namespace Dietphone.ViewModels
         public ProductListingViewModel ProductListing { private get; set; }
         public MealItemEditingViewModel MealItemEditing { private get; set; }
         public MealEditingViewModel MealEditing { private get; set; }
+        public ExportAndImportViewModel ExportAndImport { private get; set; }
         public event EventHandler ShowProductsOnly;
         private string search = string.Empty;
         private Navigator navigator;
@@ -51,6 +52,12 @@ namespace Dietphone.ViewModels
             {
                 MealEditing.AddCopyOfItem(tempMealItem);
             }
+        }
+
+        public void GoingToExportAndImport()
+        {
+            Models.ExportAndImport implementation = new ExportAndImportImpl(factories);
+            ExportAndImport.Implementation = implementation;
         }
 
         public void About()

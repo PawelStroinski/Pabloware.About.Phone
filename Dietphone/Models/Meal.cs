@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using Dietphone.Tools;
+using System.Xml.Serialization;
 
 namespace Dietphone.Models
 {
-    public sealed class Meal : EntityWithId
+    public class Meal : EntityWithId
     {
         public DateTime DateTime { get; set; }
         public Guid NameId { get; set; }
         public string Note { get; set; }
-        private List<MealItem> items;
+        protected List<MealItem> items;
 
+        [XmlIgnore]
         public ReadOnlyCollection<MealItem> Items
         {
             get
@@ -74,8 +76,7 @@ namespace Dietphone.Models
 
         public void CopyItemsFrom(Meal source)
         {
-            var sourceItems = source.items;
-            items = sourceItems.GetItemsCopy();
+            InternalCopyItemsFrom(source);
             AssignOwner();
         }
 
@@ -94,6 +95,12 @@ namespace Dietphone.Models
         public string Validate()
         {
             return ValidateItems();
+        }
+
+        protected void InternalCopyItemsFrom(Meal source)
+        {
+            var sourceItems = source.items;
+            items = sourceItems.GetItemsCopy();
         }
 
         protected override void OnOwnerAssigned()
@@ -125,7 +132,7 @@ namespace Dietphone.Models
         {
             foreach (var item in items)
             {
-                item.Owner = Owner;
+                item.SetOwner(Owner);
             }
         }
     }

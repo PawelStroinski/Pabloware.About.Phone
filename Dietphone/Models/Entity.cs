@@ -4,29 +4,22 @@ namespace Dietphone.Models
 {
     public class Entity
     {
-        private Factories owner;
-
-        public Factories Owner
+        public void SetOwner(Factories value)
         {
-            protected get
+            var alreadyAssigned = Owner != null;
+            if (alreadyAssigned)
             {
-                return owner;
+                throw new InvalidOperationException("Owner can only be assigned once.");
             }
-            set
+            if (value == null)
             {
-                var alreadyAssigned = owner != null;
-                if (alreadyAssigned)
-                {
-                    throw new InvalidOperationException("Owner can only be assigned once.");
-                }
-                if (value == null)
-                {
-                    throw new NullReferenceException("Owner");
-                }
-                owner = value;
-                OnOwnerAssigned();
+                throw new NullReferenceException("Owner");
             }
+            Owner = value;
+            OnOwnerAssigned();
         }
+
+        protected Factories Owner { get; private set; }
 
         protected Finder Finder
         {
