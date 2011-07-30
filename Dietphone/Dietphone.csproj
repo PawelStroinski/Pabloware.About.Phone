@@ -91,8 +91,8 @@
       <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Data, Version=2011.1.420.1037, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Data.dll</HintPath>
     </Reference>
     <Reference Include="WindowsPhoneWatermarkTextBoxControl">
       <HintPath>..\..\..\windowsphone\WatermarkTextBox\WindowsPhoneWatermarkTextBoxControl\Bin\Release\WindowsPhoneWatermarkTextBoxControl.dll</HintPath>
