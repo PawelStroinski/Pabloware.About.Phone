@@ -63,7 +63,6 @@
     <Compile Include="Models\DefaultEntities.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\ExportAndImport.cs" />
-    <Compile Include="Models\ExportAndImportImpl.cs" />
     <Compile Include="Models\Factories.cs" />
     <Compile Include="Models\Factory.cs" />
     <Compile Include="Models\Finder.cs" />

@@ -57,6 +57,7 @@
             <shell:ApplicationBarIconButton IconUri="/images/appbar.feature.search.rest.png" Text="szukaj" Click="SearchIcon_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="o dietphone" Click="About_Click"/>
+                <shell:ApplicationBarMenuItem Text="eksport i import danych" Click="ExportAndImport_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

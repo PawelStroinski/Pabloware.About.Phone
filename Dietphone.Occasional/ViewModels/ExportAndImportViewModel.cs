@@ -9,10 +9,15 @@ namespace Dietphone.ViewModels
         public event EventHandler ExportComplete;
         public event EventHandler ImportSuccessful;
         public event EventHandler ErrorsDuringImport;
-        public ExportAndImport Implementation { private get; set; }
         public string Data { get; set; }
         private bool isBusy;
         private bool errorsDuringImport;
+        private readonly ExportAndImport exportAndImport;
+
+        public ExportAndImportViewModel(Factories factories)
+        {
+            exportAndImport = new ExportAndImport(factories);
+        }
 
         public bool IsBusy
         {
@@ -36,7 +41,7 @@ namespace Dietphone.ViewModels
             var worker = new BackgroundWorker();
             worker.DoWork += delegate
             {
-                Data = Implementation.Export();
+                Data = exportAndImport.Export();
             };
             worker.RunWorkerCompleted += delegate
             {
@@ -72,7 +77,7 @@ namespace Dietphone.ViewModels
         {
             try
             {
-                Implementation.Import(Data);
+                exportAndImport.Import(Data);
             }
             catch (Exception)
             {

@@ -37,8 +37,6 @@ namespace Dietphone.Views
             subConnector.Navigator = navigator;
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
-            // Test:
-            //navigator.GoToExportAndImport();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -50,15 +48,6 @@ namespace Dietphone.Views
                 {
                     ViewModel.MealEditing = viewModel;
                     ViewModel.ReturningToMealEditing();
-                }
-            }
-            if (e.Content is ExportAndImport)
-            {
-                var viewModel = (e.Content as ExportAndImport).ViewModel;
-                if (viewModel != null)
-                {
-                    ViewModel.ExportAndImport = viewModel;
-                    ViewModel.GoingToExportAndImport();
                 }
             }
         }
@@ -89,6 +78,11 @@ namespace Dietphone.Views
         private void About_Click(object sender, EventArgs e)
         {
             ViewModel.About();
+        }
+
+        private void ExportAndImport_Click(object sender, EventArgs e)
+        {
+            ViewModel.ExportAndImport();
         }
 
         private void SearchIcon_Click(object sender, EventArgs e)

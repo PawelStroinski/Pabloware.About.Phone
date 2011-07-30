@@ -14,7 +14,7 @@ namespace Dietphone.Views
         public ExportAndImport()
         {
             InitializeComponent();
-            ViewModel = new ExportAndImportViewModel();
+            ViewModel = new ExportAndImportViewModel(MyApp.Factories);
             ViewModel.ExportComplete += ViewModel_ExportComplete;
             ViewModel.ImportSuccessful += ViewModel_ImportSuccessful;
             ViewModel.ErrorsDuringImport += ViewModel_ErrorsDuringImport;
