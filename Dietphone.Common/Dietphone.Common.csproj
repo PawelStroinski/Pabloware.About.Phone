@@ -46,10 +46,40 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinarySerializers\BinaryFile.cs" />
+    <Compile Include="BinarySerializers\BinarySerializer.cs" />
+    <Compile Include="BinarySerializers\BinaryStorage.cs" />
+    <Compile Include="BinarySerializers\BinaryStorageCreator.cs" />
+    <Compile Include="BinarySerializers\BinaryStreamProvider.cs" />
+    <Compile Include="BinarySerializers\CategoryBinaryStorage.cs" />
+    <Compile Include="BinarySerializers\MealBinaryStorage.cs" />
+    <Compile Include="BinarySerializers\MealNameBinaryStorage.cs" />
+    <Compile Include="BinarySerializers\ProductBinaryStorage.cs" />
+    <Compile Include="Models\Calculator.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\DefaultEntities.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\ExportAndImport.cs" />
+    <Compile Include="Models\ExportAndImportImpl.cs" />
+    <Compile Include="Models\Factories.cs" />
+    <Compile Include="Models\Factory.cs" />
+    <Compile Include="Models\Finder.cs" />
+    <Compile Include="Models\Meal.cs" />
+    <Compile Include="Models\MealItem.cs" />
+    <Compile Include="Models\MealName.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Storage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\AppVersion.cs" />
+    <Compile Include="Tools\Constrains.cs" />
+    <Compile Include="Tools\ExtensionMethods.cs" />
+    <Compile Include="Tools\FallbackParserExtensions.cs" />
+    <Compile Include="Tools\MyEnum.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />

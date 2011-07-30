@@ -66,17 +66,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Dietphone\ViewModels\ViewModelBase.cs">
-      <Link>ViewModels\ViewModelBase.cs</Link>
-    </Compile>
-    <Compile Include="Models\ExportAndImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\AppVersion.cs" />
-    <Compile Include="ViewModels\AboutViewModel.cs" />
-    <Compile Include="ViewModels\ExportAndImportViewModel.cs" />
-    <Compile Include="ViewModels\OptionalDispatcher.cs" />
+    <Compile Include="Tools\OptionalDispatcher.cs" />
     <Compile Include="Tools\PhoneResourceStreamProvider.cs" />
     <Compile Include="Tools\ResourceStreamProvider.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\ExportAndImportViewModel.cs" />
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -95,6 +90,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dietphone.Common.Phone\Dietphone.Common.Phone.csproj">
+      <Project>{053D7B63-D632-4332-8263-E6B667AE86CB}</Project>
+      <Name>Dietphone.Common.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dietphone.Common\Dietphone.Common.csproj">
+      <Project>{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}</Project>
+      <Name>Dietphone.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />

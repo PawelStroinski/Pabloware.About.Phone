@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Threading;
 
-namespace Dietphone.ViewModels
+namespace Dietphone.Tools
 {
     public class OptionalDispatcher
     {

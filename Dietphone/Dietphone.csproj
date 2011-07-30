@@ -91,9 +91,8 @@
       <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Data">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Data.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Telerik.Windows.Data, Version=2011.1.420.1037, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="WindowsPhoneWatermarkTextBoxControl">
       <HintPath>..\..\..\windowsphone\WatermarkTextBox\WindowsPhoneWatermarkTextBoxControl\Bin\Release\WindowsPhoneWatermarkTextBoxControl.dll</HintPath>
@@ -101,41 +100,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Dietphone.Occasional\Tools\AppVersion.cs">
-      <Link>Tools\AppVersion.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BinarySerializers\BinaryFile.cs" />
-    <Compile Include="BinarySerializers\BinarySerializer.cs" />
-    <Compile Include="BinarySerializers\BinaryStorage.cs" />
-    <Compile Include="BinarySerializers\BinaryStorageCreator.cs" />
-    <Compile Include="BinarySerializers\BinaryStreamProvider.cs" />
-    <Compile Include="BinarySerializers\CategoryBinaryStorage.cs" />
-    <Compile Include="BinarySerializers\MealBinaryStorage.cs" />
-    <Compile Include="BinarySerializers\MealNameBinaryStorage.cs" />
-    <Compile Include="BinarySerializers\PhoneBinaryStorageCreator.cs" />
-    <Compile Include="BinarySerializers\PhoneBinaryStreamProvider.cs" />
-    <Compile Include="BinarySerializers\ProductBinaryStorage.cs" />
-    <Compile Include="Models\DefaultEntities.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\Factory.cs" />
-    <Compile Include="Models\Factories.cs" />
-    <Compile Include="Models\Finder.cs" />
-    <Compile Include="Models\ExportAndImportImpl.cs" />
-    <Compile Include="Models\MealName.cs" />
-    <Compile Include="Models\MealItem.cs" />
-    <Compile Include="Models\Calculator.cs" />
-    <Compile Include="MyApp.cs" />
-    <Compile Include="Models\Storage.cs" />
-    <Compile Include="Tools\Constrains.cs" />
-    <Compile Include="Tools\IsolatedFile.cs" />
-    <Compile Include="Tools\MyEnum.cs" />
-    <Compile Include="Tools\FallbackParserExtensions.cs" />
-    <Compile Include="Tools\MyStopwatch.cs" />
-    <Compile Include="Tools\UIExtensionMethods.cs" />
-    <Compile Include="Tools\Vibration.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\EditingViewModelBase.cs" />
     <Compile Include="ViewModels\LoaderBase.cs" />
@@ -145,25 +112,18 @@
     <Compile Include="ViewModels\MealItemViewModel.cs" />
     <Compile Include="ViewModels\MealNameViewModel.cs" />
     <Compile Include="ViewModels\MealViewModel.cs" />
-    <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductEditingViewModel.cs" />
-    <Compile Include="Tools\XnaInputBox.cs" />
     <Compile Include="ViewModels\ViewModelWithBuffer.cs" />
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Meal.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProductListingViewModel.cs" />
     <Compile Include="ViewModels\SubViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="Tools\ExtensionMethods.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\UpdateOnTextChangedBehavior.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\MealEditing.xaml.cs">
       <DependentUpon>MealEditing.xaml</DependentUpon>
     </Compile>
@@ -267,6 +227,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dietphone.Common.Phone\Dietphone.Common.Phone.csproj">
+      <Project>{053D7B63-D632-4332-8263-E6B667AE86CB}</Project>
+      <Name>Dietphone.Common.Phone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dietphone.Common\Dietphone.Common.csproj">
+      <Project>{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}</Project>
+      <Name>Dietphone.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dietphone.Occasional\Dietphone.Occasional.csproj">
       <Project>{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}</Project>
       <Name>Dietphone.Occasional</Name>
