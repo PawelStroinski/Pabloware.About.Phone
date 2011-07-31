@@ -27,7 +27,19 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="HyperlinkButton">
-                        <TextBlock x:Name="TextElement" Text="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextWrapping="Wrap" TextDecorations="None" Margin="{StaticResource PhoneHorizontalMargin}" Padding="{TemplateBinding Padding}"/>
+                        <TextBlock x:Name="TextElement" Text="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextWrapping="Wrap" TextDecorations="None" Margin="{StaticResource PhoneHorizontalMargin}" Padding="{TemplateBinding Padding}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" Storyboard.TargetName="TextElement" Storyboard.TargetProperty="Opacity" To="0.5" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </TextBlock>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
