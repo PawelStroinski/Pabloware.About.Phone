@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
-    xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
     mc:Ignorable="d">
 
     <Application.Resources>
@@ -136,29 +135,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style x:Key="AccentHyperlink" TargetType="HyperlinkButton">
-            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
-            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}"/>
-            <Setter Property="telerikCore:InteractionEffectManager.IsInteractionEnabled" Value="True"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="HyperlinkButton">
-                        <TextBlock x:Name="TextElement" Text="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextWrapping="Wrap" TextDecorations="None" Margin="{StaticResource PhoneHorizontalMargin}" Padding="{TemplateBinding Padding}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <DataTemplate x:Name="MultiLineButtonTemplate">
-            <StackPanel>
-                <TextBlock Text="{Binding Line1}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Padding="0,3,0,0" />
-                <TextBlock Text="{Binding Line2}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,2,0,7"/>
-            </StackPanel>
-        </DataTemplate>
 
     </Application.Resources>
 
