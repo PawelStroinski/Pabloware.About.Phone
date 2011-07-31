@@ -15,7 +15,7 @@
     shell:SystemTray.IsVisible="True" 
     xmlns:watermark="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl" 
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:viewModels="clr-namespace:Dietphone.ViewModels" xmlns:views="clr-namespace:Dietphone.Views" 
+    xmlns:views="clr-namespace:Dietphone.Views"
     BackKeyPress="Main_BackKeyPress">
 
     <phone:PhoneApplicationPage.Resources>
@@ -43,7 +43,7 @@
             </Border.RenderTransform>
             <watermark:WatermarkTextBox Name="SearchBox" x:FieldModifier="private" Height="72" VerticalAlignment="Top" WatermarkText="Szukaj" KeyUp="SearchBox_KeyUp" Text="{Binding Search, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
-                    <viewModels:UpdateOnTextChangedBehavior/>
+                    <views:UpdateOnTextChangedBehavior/>
                 </i:Interaction.Behaviors>
             </watermark:WatermarkTextBox>
         </Border>

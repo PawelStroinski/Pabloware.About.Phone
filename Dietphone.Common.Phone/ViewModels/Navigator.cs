@@ -24,6 +24,8 @@ namespace Dietphone.ViewModels
         private string idName;
         private Guid idValue;
         private string action;
+        private bool occasional;
+        private bool medium;
         private readonly NavigationService service;
         private readonly IDictionary<string, string> passedQueryString;
         private const string MEAL_ID_TO_EDIT = "MealIdToEdit";
@@ -57,6 +59,7 @@ namespace Dietphone.ViewModels
             idName = PRODUCT_ID_TO_EDIT;
             idValue = productId;
             path = "/Views/ProductEditing.xaml";
+            medium = true;
             NavigateWithId();
         }
 
@@ -76,13 +79,15 @@ namespace Dietphone.ViewModels
         public void GoToAbout()
         {
             path = "/Views/About.xaml";
-            NavigateToOccasionalAssembly();
+            occasional = true;
+            Navigate();
         }
 
         public void GoToExportAndImport()
         {
             path = "/Views/ExportAndImport.xaml";
-            NavigateToOccasionalAssembly();
+            occasional = true;
+            Navigate();
         }
 
         public Guid GetMealIdToEdit()
@@ -127,12 +132,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void NavigateToOccasionalAssembly()
-        {
-            path = "/Dietphone.Occasional;component" + path;
-            Navigate();
-        }
-
         private void Navigate()
         {
             var destination = new UriBuilder();
@@ -160,6 +159,14 @@ namespace Dietphone.ViewModels
         {
             destination.Scheme = "";
             destination.Host = "";
+            if (occasional)
+            {
+                destination.Host = "/Dietphone.Occasional;component";
+            }
+            if (medium)
+            {
+                destination.Host = "/Dietphone.Medium;component";
+            }
             var uri = new Uri(destination.ToString(), UriKind.Relative);
             service.Navigate(uri);
         }

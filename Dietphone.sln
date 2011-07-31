@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common", "Dietpho
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common.Phone", "Dietphone.Common.Phone\Dietphone.Common.Phone.csproj", "{053D7B63-D632-4332-8263-E6B667AE86CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Medium", "Dietphone.Medium\Dietphone.Medium.csproj", "{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{053D7B63-D632-4332-8263-E6B667AE86CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{053D7B63-D632-4332-8263-E6B667AE86CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{053D7B63-D632-4332-8263-E6B667AE86CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

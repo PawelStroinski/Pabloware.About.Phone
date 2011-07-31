@@ -103,35 +103,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\DateViewModel.cs" />
-    <Compile Include="ViewModels\EditingViewModelBase.cs" />
-    <Compile Include="ViewModels\LoaderBase.cs" />
-    <Compile Include="ViewModels\MealEditingViewModel.cs" />
-    <Compile Include="ViewModels\MealItemEditingViewModel.cs" />
-    <Compile Include="ViewModels\MealListingViewModel.cs" />
-    <Compile Include="ViewModels\MealItemViewModel.cs" />
-    <Compile Include="ViewModels\MealNameViewModel.cs" />
-    <Compile Include="ViewModels\MealViewModel.cs" />
-    <Compile Include="ViewModels\ProductEditingViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelWithBuffer.cs" />
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ProductListingViewModel.cs" />
-    <Compile Include="ViewModels\SubViewModel.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ProductViewModel.cs" />
-    <Compile Include="ViewModels\UpdateOnTextChangedBehavior.cs" />
     <Compile Include="Views\MealEditing.xaml.cs">
       <DependentUpon>MealEditing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MealListing.xaml.cs">
       <DependentUpon>MealListing.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProductEditing.xaml.cs">
-      <DependentUpon>ProductEditing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductListing.xaml.cs">
       <DependentUpon>ProductListing.xaml</DependentUpon>
@@ -139,6 +119,7 @@
     <Compile Include="Views\MealItemEditing.xaml.cs">
       <DependentUpon>MealItemEditing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateOnTextChangedBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -154,10 +135,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MealListing.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProductEditing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -234,6 +211,10 @@
     <ProjectReference Include="..\Dietphone.Common\Dietphone.Common.csproj">
       <Project>{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}</Project>
       <Name>Dietphone.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dietphone.Medium\Dietphone.Medium.csproj">
+      <Project>{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}</Project>
+      <Name>Dietphone.Medium</Name>
     </ProjectReference>
     <ProjectReference Include="..\Dietphone.Occasional\Dietphone.Occasional.csproj">
       <Project>{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}</Project>

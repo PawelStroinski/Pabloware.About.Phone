@@ -6,7 +6,7 @@
     xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-    xmlns:viewModels="clr-namespace:Dietphone.ViewModels"
+    xmlns:views="clr-namespace:Dietphone.Views"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -37,7 +37,7 @@
                 <!--Ilość-->
                 <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Value, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Margin="0 0 1 0" x:Name="Value" x:FieldModifier="private">
                     <i:Interaction.Behaviors>
-                        <viewModels:UpdateOnTextChangedBehavior/>
+                        <views:UpdateOnTextChangedBehavior/>
                     </i:Interaction.Behaviors>
                 </TextBox>
                 <!--Jednostka-->

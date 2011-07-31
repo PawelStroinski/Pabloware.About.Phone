@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{053D7B63-D632-4332-8263-E6B667AE86CB}</ProjectGuid>
+    <ProjectGuid>{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dietphone</RootNamespace>
-    <AssemblyName>Dietphone.Common.Phone</AssemblyName>
+    <AssemblyName>Dietphone.Medium</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
@@ -41,21 +41,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Coding4Fun.Phone.Controls">
+      <HintPath>..\..\..\windowsphone\Coding4Fun.Phone\bin\Release\Coding4Fun.Phone.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\..\..\windowsphone\Toolkit Feb 2011 Source and Samples\Bin\Debug\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.GamerServices" />
+    <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity, Version=3.7.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="Telerik.Windows.Controls.Data">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Controls.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Windows.Controls.Input">
       <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Controls.Input.dll</HintPath>
     </Reference>
@@ -65,46 +64,30 @@
     <Reference Include="Telerik.Windows.Core">
       <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Data, Version=2011.1.420.1037, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Data.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinarySerializers\PhoneBinaryStorageCreator.cs" />
-    <Compile Include="BinarySerializers\PhoneBinaryStreamProvider.cs" />
-    <Compile Include="MyApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\IsolatedFile.cs" />
-    <Compile Include="Tools\MyStopwatch.cs" />
-    <Compile Include="Tools\UIExtensionMethods.cs" />
-    <Compile Include="Tools\Vibration.cs" />
-    <Compile Include="Tools\XnaInputBox.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\DateViewModel.cs" />
-    <Compile Include="ViewModels\EditingViewModelBase.cs" />
-    <Compile Include="ViewModels\LoaderBase.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MealEditingViewModel.cs" />
-    <Compile Include="ViewModels\MealItemEditingViewModel.cs" />
-    <Compile Include="ViewModels\MealItemViewModel.cs" />
-    <Compile Include="ViewModels\MealListingViewModel.cs" />
-    <Compile Include="ViewModels\MealNameViewModel.cs" />
-    <Compile Include="ViewModels\MealViewModel.cs" />
-    <Compile Include="ViewModels\Navigator.cs" />
-    <Compile Include="ViewModels\ProductListingViewModel.cs" />
-    <Compile Include="ViewModels\ProductViewModel.cs" />
-    <Compile Include="ViewModels\SubViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\ViewModelWithBuffer.cs" />
+    <Compile Include="ViewModels\ProductEditingViewModel.cs" />
+    <Compile Include="Views\ProductEditing.xaml.cs">
+      <DependentUpon>ProductEditing.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ProductEditing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dietphone.Common.Phone\Dietphone.Common.Phone.csproj">
+      <Project>{053D7B63-D632-4332-8263-E6B667AE86CB}</Project>
+      <Name>Dietphone.Common.Phone</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dietphone.Common\Dietphone.Common.csproj">
       <Project>{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}</Project>
       <Name>Dietphone.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />

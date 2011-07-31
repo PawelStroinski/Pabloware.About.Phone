@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interactivity;
 
-namespace Dietphone.ViewModels
+namespace Dietphone.Views
 {
     public class UpdateOnTextChangedBehavior : Behavior<TextBox>
     {
