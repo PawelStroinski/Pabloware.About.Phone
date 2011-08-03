@@ -69,5 +69,19 @@ namespace Dietphone.Tools
                 return Visibility.Collapsed;
             }
         }
+
+        public static InputScope GetInputScope(this InputScopeNameValue kind)
+        {
+            return new InputScope
+            {
+                Names = 
+                { 
+                    new InputScopeName() 
+                    { 
+                        NameValue = kind
+                    } 
+                }
+            };
+        }
     }
 }

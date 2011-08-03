@@ -3,120 +3,93 @@ using System.Windows;
 using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 using System.Windows.Media;
+using System.Windows.Input;
+using Dietphone.Tools;
 
 namespace Dietphone.Views
 {
     public partial class ExportAndImport : PhoneApplicationPage
     {
         public ExportAndImportViewModel ViewModel { get; private set; }
-        private bool copyMode;
+        private bool exportMode;
 
         public ExportAndImport()
         {
             InitializeComponent();
             ViewModel = new ExportAndImportViewModel(MyApp.Factories);
-            ViewModel.ExportComplete += ViewModel_ExportComplete;
+            ViewModel.ExportAndSendSuccessful += ViewModel_ExportAndSendSuccessful;
             ViewModel.ImportSuccessful += ViewModel_ImportSuccessful;
+            ViewModel.SendingFailedDuringExport += ViewModel_SendingFailedDuringExport;
             ViewModel.ErrorsDuringImport += ViewModel_ErrorsDuringImport;
             DataContext = ViewModel;
             SetWindowBackground();
             SetWindowSize();
         }
 
-        private void ViewModel_ExportComplete(object sender, EventArgs e)
+        private void ViewModel_ExportAndSendSuccessful(object sender, EventArgs e)
         {
-            copyMode = true;
-            CopyPasteInfo.Text = "Naciśnij ikonę kopiowania";
-            OpenCopyPaste();
+            MessageBox.Show("Eksport zakończony sukcesem.");
         }
 
         private void ViewModel_ImportSuccessful(object sender, EventArgs e)
         {
-            MessageBox.Show("Operacja zakończona sukcesem.");
+            MessageBox.Show("Import zakończony sukcesem.");
+        }
+
+        private void ViewModel_SendingFailedDuringExport(object sender, EventArgs e)
+        {
+            MessageBox.Show("Wystąpił błąd podczas wysyłania eksportowanych danych. " +
+                "Upewnij się, że masz dostęp do internetu i adres e-mail jest prawidłowy.");
         }
 
         private void ViewModel_ErrorsDuringImport(object sender, EventArgs e)
         {
-            MessageBox.Show("Wystąpił błąd podczas tej operacji. " +
-                "Upewnij się, że wklejone dane nie są naruszone.");
+            MessageBox.Show("Wystąpił błąd podczas importu. " +
+                "Upewnij się, że importowane dane nie były naruszone.");
         }
 
-        private void Copy_Click(object sender, RoutedEventArgs e)
+        private void Export_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.Export();
+            exportMode = true;
+            Info.Text = "Adres e-mail do wysłania";
+            Input.Text = string.Empty;
+            Input.InputScope = InputScopeNameValue.EmailSmtpAddress.GetInputScope();
+            Window.IsOpen = true;
         }
 
-        private void Paste_Click(object sender, RoutedEventArgs e)
+        private void Import_Click(object sender, RoutedEventArgs e)
         {
-            copyMode = false;
-            CopyPasteInfo.Text = "Wklej tutaj";
-            OpenCopyPaste();
+            exportMode = false;
+            Info.Text = "Adres pliku do pobrania";
+            Input.Text = "http://";
+            Input.InputScope = InputScopeNameValue.Url.GetInputScope();
+            Window.IsOpen = true;
         }
 
-        private void CopyPasteAnimation_Ended(object sender, EventArgs e)
+        private void WindowAnimation_Ended(object sender, EventArgs e)
         {
-            if (!CopyPaste.IsOpen)
+            if (Window.IsOpen)
             {
-                return;
+                Input.Focus();
+                if (!exportMode)
+                {
+                    var text = Input.Text;
+                    Input.Select(text.Length, 0);
+                }
             }
-            if (copyMode)
+        }
+
+        private void Done_Click(object sender, RoutedEventArgs e)
+        {
+            if (exportMode)
             {
-                OpenedCopy();
+                ViewModel.Email = Input.Text;
+                ViewModel.ExportAndSend();
             }
             else
             {
-                OpenedPaste();
             }
-        }
-
-        private void CopyPasteClose_Click(object sender, RoutedEventArgs e)
-        {
-            if (copyMode)
-            {
-                CloseCopy();
-            }
-            else
-            {
-                ClosePaste();
-            }
-        }
-
-        private void OpenCopyPaste()
-        {
-            CopyPasteText.Text = string.Empty;
-            CopyPaste.IsOpen = true;
-        }
-
-        private void OpenedCopy()
-        {
-            CopyPasteText.Text = ViewModel.Data;
-            CopyPasteText.Focus();
-            CopyPasteText.SelectAll();
-        }
-
-        private void OpenedPaste()
-        {
-            CopyPasteText.Focus();
-        }
-
-        private void CloseCopy()
-        {
-            CopyPasteText.Text = string.Empty;
-            Dispatcher.BeginInvoke(() =>
-            {
-                CopyPaste.IsOpen = false;
-            });
-        }
-
-        private void ClosePaste()
-        {
-            ViewModel.Data = CopyPasteText.Text;
-            CopyPasteText.Text = string.Empty;
-            Dispatcher.BeginInvoke(() =>
-            {
-                CopyPaste.IsOpen = false;
-                ViewModel.Import();
-            });
+            Window.IsOpen = false;
         }
 
         private void SetWindowBackground()
@@ -130,7 +103,7 @@ namespace Dietphone.Views
             {
                 color = Color.FromArgb(0xCC, 255, 255, 255);
             }
-            CopyPaste.Background = new SolidColorBrush(color);
+            Window.Background = new SolidColorBrush(color);
         }
 
         private void SetWindowSize()
@@ -138,7 +111,7 @@ namespace Dietphone.Views
             Loaded += (sender, args) =>
             {
                 var size = new Size(Application.Current.RootVisual.RenderSize.Width, double.NaN);
-                CopyPaste.WindowSize = size;
+                Window.WindowSize = size;
             };
         }
 

@@ -217,5 +217,10 @@ namespace Dietphone.Tools
             var reader = new StringReader(source);
             return (T)serializer.Deserialize(reader);
         }
+
+        public static bool IsValidEmail(this string source)
+        {
+            return source.Contains('@') && source.Contains('.');
+        }
     }
 }

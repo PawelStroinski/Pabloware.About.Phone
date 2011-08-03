@@ -39,16 +39,16 @@
 
         <StackPanel Grid.Row="1">
             <StackPanel Margin="12,14,12,0">
-                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Copy_Click">
-                    <views:MultiLineItem Line1="kopiuj" Line2="Umożliwia wklejenie danych np. do e-maila. Dane są w formacie XML. Nie edytuj ich ręcznie."/>
+                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Export_Click">
+                    <views:MultiLineItem Line1="eksportuj" Line2="Umożliwia wysłanie danych w załączniku e-maila. Dane będą w formacie XML."/>
                 </Button>
-                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Paste_Click">
-                    <views:MultiLineItem Line1="wklej" Line2="Umożliwia wklejenie danych skopiowanych np. z e-maila. Dane muszą być w formacie XML."/>
+                <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Import_Click">
+                    <views:MultiLineItem Line1="importuj" Line2="Umożliwia pobranie danych z pliku w formacie XML. Plik ten należy wcześniej wysłać na dowolny serwer."/>
                 </Button>
             </StackPanel>
         </StackPanel>
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" IsIndeterminate="{Binding IsBusy}"/>
-        <telerikPrimitives:RadModalWindow Name="CopyPaste"
+        <telerikPrimitives:RadModalWindow Name="Window"
                                           Placement="TopCenter">
             <Border BorderBrush="{StaticResource PhoneBorderBrush}"
                     BorderThickness="{StaticResource PhoneBorderThickness}">
@@ -56,14 +56,14 @@
                     <TextBlock TextWrapping="Wrap"
                                VerticalAlignment="Bottom"
                                Margin="{StaticResource PhoneMargin}"
-                               HorizontalAlignment="Center"
-                               Name="CopyPasteInfo"/>
-                    <TextBox Height="72" Name="CopyPasteText" AcceptsReturn="True" />
-                    <Button Content="gotowe" Click="CopyPasteClose_Click"/>
+                               Name="Info"/>
+                    <TextBox Height="72" 
+                             Name="Input"/>
+                    <Button Content="gotowe" Click="Done_Click"/>
                 </StackPanel>
             </Border>
             <telerikPrimitives:RadModalWindow.OpenAnimation>
-                <telerikCore:RadSlideAnimation MoveDirection="BottomIn" Duration="0:0:0.2" Ended="CopyPasteAnimation_Ended"/>
+                <telerikCore:RadSlideAnimation MoveDirection="BottomIn" Duration="0:0:0.2" Ended="WindowAnimation_Ended"/>
             </telerikPrimitives:RadModalWindow.OpenAnimation>
         </telerikPrimitives:RadModalWindow>
     </Grid>

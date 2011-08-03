@@ -69,6 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\OptionalDispatcher.cs" />
     <Compile Include="Tools\PhoneResourceStreamProvider.cs" />
+    <Compile Include="Tools\PostSender.cs" />
     <Compile Include="Tools\ResourceStreamProvider.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ExportAndImportViewModel.cs" />
