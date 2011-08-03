@@ -83,5 +83,11 @@ namespace Dietphone.Tools
                 }
             };
         }
+
+        public static bool IsDarkTheme(this PhoneApplicationPage page)
+        {
+            var themeVisibility = (Visibility)page.Resources["PhoneDarkThemeVisibility"];
+            return themeVisibility == Visibility.Visible;
+        }
     }
 }

@@ -43,8 +43,14 @@
                     <views:MultiLineItem Line1="eksportuj" Line2="Umożliwia wysłanie danych w załączniku e-maila. Dane będą w formacie XML."/>
                 </Button>
                 <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Import_Click">
-                    <views:MultiLineItem Line1="importuj" Line2="Umożliwia pobranie danych z pliku w formacie XML. Plik ten należy wcześniej wysłać na dowolny serwer."/>
+                    <views:MultiLineItem Line1="importuj" Line2="Umożliwia pobranie danych z pliku w formacie XML. Plik ten należy wcześniej wysłać na dowolny serwer, np. Google Docs."/>
                 </Button>
+                <TextBlock
+                           Text=" " />
+                <TextBlock TextWrapping="Wrap" 
+                           Visibility="{Binding IsBusyAsVisibility}"
+                           Style="{StaticResource PhoneTextTitle2Style}">Proszę czekać...</TextBlock>
+
             </StackPanel>
         </StackPanel>
         <toolkit:PerformanceProgressBar VerticalAlignment="Top" IsIndeterminate="{Binding IsBusy}"/>

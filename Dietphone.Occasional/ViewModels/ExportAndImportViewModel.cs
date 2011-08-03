@@ -2,20 +2,24 @@
 using Dietphone.Models;
 using System.ComponentModel;
 using Dietphone.Tools;
+using System.Net;
+using System.Text;
+using System.Windows;
 
 namespace Dietphone.ViewModels
 {
     public class ExportAndImportViewModel : ViewModelBase
     {
         public event EventHandler ExportAndSendSuccessful;
-        public event EventHandler ImportSuccessful;
+        public event EventHandler DownloadAndImportSuccessful;
         public event EventHandler SendingFailedDuringExport;
-        public event EventHandler ErrorsDuringImport;
+        public event EventHandler DownloadingFailedDuringImport;
+        public event EventHandler ReadingFailedDuringImport;
         public string Email { private get; set; }
         public string Url { private get; set; }
         private string data;
         private bool isBusy;
-        private bool errorsDuringImport;
+        private bool readingFailedDuringImport;
         private readonly ExportAndImport exportAndImport;
         private const string MAILEXPORT_URL = "http://bizmaster.pl/varia/dietphone/MailExport.aspx";
         private const string MAILEXPORT_SUCCESS_RESULT = "Success!";
@@ -35,6 +39,15 @@ namespace Dietphone.ViewModels
             {
                 isBusy = value;
                 OnPropertyChanged("IsBusy");
+                OnPropertyChanged("IsBusyAsVisibility");
+            }
+        }
+
+        public Visibility IsBusyAsVisibility
+        {
+            get
+            {
+                return IsBusy.ToVisibility();
             }
         }
 
@@ -62,25 +75,13 @@ namespace Dietphone.ViewModels
             worker.RunWorkerAsync();
         }
 
-        public void Import()
+        public void DownloadAndImport()
         {
             if (IsBusy)
             {
                 return;
             }
-            var worker = new BackgroundWorker();
-            worker.DoWork += delegate
-            {
-                CatchedImport();
-            };
-            worker.RunWorkerCompleted += delegate
-            {
-                IsBusy = false;
-                NotifyAfterImport();
-            };
-            IsBusy = true;
-            errorsDuringImport = false;
-            worker.RunWorkerAsync();
+            Download();
         }
 
         private void Send()
@@ -92,9 +93,25 @@ namespace Dietphone.ViewModels
             sender.SendAsync();
         }
 
+        private void Download()
+        {
+            if (!Url.IsValidUri())
+            {
+                OnDownloadingFailedDuringImport();
+                return;
+            }
+            IsBusy = true;
+            var web = new WebClient();
+            web.Encoding = Encoding.Unicode;
+            web.DownloadStringCompleted += Download_Completed;
+            web.DownloadStringAsync(new Uri(Url));
+        }
+
         private void Send_Completed(object sender, System.Net.UploadStringCompletedEventArgs e)
         {
-            if (e.Error == null && e.Result == MAILEXPORT_SUCCESS_RESULT)
+            var webClientOk = e.Error == null & !e.Cancelled;
+            IsBusy = false;
+            if (webClientOk && e.Result == MAILEXPORT_SUCCESS_RESULT)
             {
                 OnExportAndSendSuccessful();
             }
@@ -102,7 +119,37 @@ namespace Dietphone.ViewModels
             {
                 OnSendingFailedDuringExport();
             }
-            IsBusy = false;
+        }
+
+        private void Download_Completed(object sender, DownloadStringCompletedEventArgs e)
+        {
+            var webClientOk = e.Error == null & !e.Cancelled;
+            if (webClientOk)
+            {
+                data = e.Result;
+                Import();
+            }
+            else
+            {
+                IsBusy = false;
+                OnDownloadingFailedDuringImport();
+            }
+        }
+
+        private void Import()
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += delegate
+            {
+                CatchedImport();
+            };
+            worker.RunWorkerCompleted += delegate
+            {
+                IsBusy = false;
+                NotifyAfterImport();
+            };
+            readingFailedDuringImport = false;
+            worker.RunWorkerAsync();
         }
 
         private void CatchedImport()
@@ -113,19 +160,19 @@ namespace Dietphone.ViewModels
             }
             catch (Exception)
             {
-                errorsDuringImport = true;
+                readingFailedDuringImport = true;
             }
         }
 
         private void NotifyAfterImport()
         {
-            if (errorsDuringImport)
+            if (readingFailedDuringImport)
             {
-                OnErrorsDuringImport();
+                OnReadingFailedDuringImport();
             }
             else
             {
-                OnImportSuccesful();
+                OnDownloadAndImportSuccesful();
             }
         }
 
@@ -137,11 +184,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnImportSuccesful()
+        protected void OnDownloadAndImportSuccesful()
         {
-            if (ImportSuccessful != null)
+            if (DownloadAndImportSuccessful != null)
             {
-                ImportSuccessful(this, EventArgs.Empty);
+                DownloadAndImportSuccessful(this, EventArgs.Empty);
             }
         }
 
@@ -153,11 +200,19 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnErrorsDuringImport()
+        protected void OnDownloadingFailedDuringImport()
         {
-            if (ErrorsDuringImport != null)
+            if (DownloadingFailedDuringImport != null)
             {
-                ErrorsDuringImport(this, EventArgs.Empty);
+                DownloadingFailedDuringImport(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnReadingFailedDuringImport()
+        {
+            if (ReadingFailedDuringImport != null)
+            {
+                ReadingFailedDuringImport(this, EventArgs.Empty);
             }
         }
     }

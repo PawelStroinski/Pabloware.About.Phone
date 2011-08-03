@@ -18,9 +18,10 @@ namespace Dietphone.Views
             InitializeComponent();
             ViewModel = new ExportAndImportViewModel(MyApp.Factories);
             ViewModel.ExportAndSendSuccessful += ViewModel_ExportAndSendSuccessful;
-            ViewModel.ImportSuccessful += ViewModel_ImportSuccessful;
+            ViewModel.DownloadAndImportSuccessful += ViewModel_DownloadAndImportSuccessful;
             ViewModel.SendingFailedDuringExport += ViewModel_SendingFailedDuringExport;
-            ViewModel.ErrorsDuringImport += ViewModel_ErrorsDuringImport;
+            ViewModel.DownloadingFailedDuringImport += ViewModel_DownloadingFailedDuringImport;
+            ViewModel.ReadingFailedDuringImport += ViewModel_ReadingFailedDuringImport;
             DataContext = ViewModel;
             SetWindowBackground();
             SetWindowSize();
@@ -28,24 +29,45 @@ namespace Dietphone.Views
 
         private void ViewModel_ExportAndSendSuccessful(object sender, EventArgs e)
         {
-            MessageBox.Show("Eksport zakończony sukcesem.");
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show("Eksport zakończony sukcesem.");
+            });
         }
 
-        private void ViewModel_ImportSuccessful(object sender, EventArgs e)
+        private void ViewModel_DownloadAndImportSuccessful(object sender, EventArgs e)
         {
-            MessageBox.Show("Import zakończony sukcesem.");
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show("Import zakończony sukcesem.");
+            });
         }
 
         private void ViewModel_SendingFailedDuringExport(object sender, EventArgs e)
         {
-            MessageBox.Show("Wystąpił błąd podczas wysyłania eksportowanych danych. " +
-                "Upewnij się, że masz dostęp do internetu i adres e-mail jest prawidłowy.");
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show("Wystąpił błąd podczas wysyłania eksportowanych danych. " +
+                    "Upewnij się, że masz dostęp do internetu i adres e-mail jest prawidłowy.");
+            });
         }
 
-        private void ViewModel_ErrorsDuringImport(object sender, EventArgs e)
+        private void ViewModel_DownloadingFailedDuringImport(object sender, EventArgs e)
         {
-            MessageBox.Show("Wystąpił błąd podczas importu. " +
-                "Upewnij się, że importowane dane nie były naruszone.");
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show("Wystąpił błąd podczas pobierania importowanych danych. " +
+                    "Upewnij się, że masz dostęp do internetu i adres pliku jest prawidłowy.");
+            });
+        }
+
+        private void ViewModel_ReadingFailedDuringImport(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show("Wystąpił błąd podczas importu. " +
+                    "Upewnij się, że importowane dane nie były naruszone.");
+            });
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
@@ -88,6 +110,8 @@ namespace Dietphone.Views
             }
             else
             {
+                ViewModel.Url = Input.Text;
+                ViewModel.DownloadAndImport();
             }
             Window.IsOpen = false;
         }
@@ -95,7 +119,7 @@ namespace Dietphone.Views
         private void SetWindowBackground()
         {
             Color color;
-            if (IsDarkTheme())
+            if (this.IsDarkTheme())
             {
                 color = Color.FromArgb(0xCC, 0, 0, 0);
             }
@@ -113,11 +137,6 @@ namespace Dietphone.Views
                 var size = new Size(Application.Current.RootVisual.RenderSize.Width, double.NaN);
                 Window.WindowSize = size;
             };
-        }
-
-        private bool IsDarkTheme()
-        {
-            return (Visibility)Resources["PhoneDarkThemeVisibility"] == Visibility.Visible;
         }
     }
 }

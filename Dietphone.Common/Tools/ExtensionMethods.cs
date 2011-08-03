@@ -218,9 +218,22 @@ namespace Dietphone.Tools
             return (T)serializer.Deserialize(reader);
         }
 
-        public static bool IsValidEmail(this string source)
+        public static bool IsValidEmail(this string candidate)
         {
-            return source.Contains('@') && source.Contains('.');
+            return candidate.Contains('@') && candidate.Contains('.');
+        }
+
+        public static bool IsValidUri(this string candidate)
+        {
+            try
+            {
+                new Uri(candidate);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
