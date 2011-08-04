@@ -1,0 +1,11 @@
+﻿<Window x:Class="Dietphone.DesktopHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525" Closed="Window_Closed">
+    <Grid>
+        <Button Content="Create &amp; show directory" Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="ShowDirectory" VerticalAlignment="Top" Width="162" Click="CreateAndShowDirectory_Click" />
+        <Button Content="Set default settings" Height="23" HorizontalAlignment="Left" Margin="156,55,0,0" Name="SetDefaultSettings" VerticalAlignment="Top" Width="145" Click="SetDefaultSettings_Click" />
+        <Button Content="Initialize settings" Height="23" HorizontalAlignment="Left" Margin="12,55,0,0" Name="InitializeSettings" VerticalAlignment="Top" Width="138" Click="InitializeSettings_Click" />
+        <Button Content="Clear meals" Height="23" HorizontalAlignment="Left" Margin="12,99,0,0" Name="ClearMeals" VerticalAlignment="Top" Width="99" Click="ClearMeals_Click" />
+    </Grid>
+</Window>
