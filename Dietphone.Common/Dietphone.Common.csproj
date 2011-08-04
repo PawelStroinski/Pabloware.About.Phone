@@ -58,6 +58,7 @@
     <Compile Include="BinarySerializers\MealBinaryStorage.cs" />
     <Compile Include="BinarySerializers\MealNameBinaryStorage.cs" />
     <Compile Include="BinarySerializers\ProductBinaryStorage.cs" />
+    <Compile Include="BinarySerializers\SettingsBinaryStorage.cs" />
     <Compile Include="Models\Calculator.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DefaultEntities.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Models\MealItem.cs" />
     <Compile Include="Models\MealName.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Storage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\AppVersion.cs" />

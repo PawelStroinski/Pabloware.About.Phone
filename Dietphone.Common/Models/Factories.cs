@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using Dietphone.Tools;
+using System.Linq;
 
 namespace Dietphone.Models
 {
@@ -12,6 +13,7 @@ namespace Dietphone.Models
         List<MealName> MealNames { get; }
         List<Product> Products { get; }
         List<Category> Categories { get; }
+        Settings Settings { get; }
 
         Meal CreateMeal();
         MealName CreateMealName();
@@ -29,6 +31,7 @@ namespace Dietphone.Models
         private Factory<MealName> mealNameFactory;
         private Factory<Product> productFactory;
         private Factory<Category> categoryFactory;
+        private Factory<Settings> settingsFactory;
         private readonly FactoryCreator factoryCreator;
 
         public FactoriesImpl(StorageCreator storageCreator)
@@ -68,6 +71,15 @@ namespace Dietphone.Models
             get
             {
                 return categoryFactory.Entities;
+            }
+        }
+
+        public Settings Settings
+        {
+            get
+            {
+                var entities = settingsFactory.Entities;
+                return entities.First();
             }
         }
 
@@ -121,6 +133,7 @@ namespace Dietphone.Models
             mealNameFactory.Save();
             productFactory.Save();
             categoryFactory.Save();
+            settingsFactory.Save();
         }
 
         private void CreateFactories()
@@ -129,6 +142,7 @@ namespace Dietphone.Models
             mealNameFactory = factoryCreator.CreateFactory<MealName>();
             productFactory = factoryCreator.CreateFactory<Product>();
             categoryFactory = factoryCreator.CreateFactory<Category>();
+            settingsFactory = factoryCreator.CreateFactory<Settings>();
         }
     }
 }

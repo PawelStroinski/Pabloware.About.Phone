@@ -62,7 +62,7 @@ namespace Dietphone.ViewModels
                 OnSendingFailedDuringExport();
                 return;
             }
-            var worker = new BackgroundWorker();
+            var worker = new VerboseBackgroundWorker();
             worker.DoWork += delegate
             {
                 data = exportAndImport.Export();
@@ -107,11 +107,10 @@ namespace Dietphone.ViewModels
             web.DownloadStringAsync(new Uri(Url));
         }
 
-        private void Send_Completed(object sender, System.Net.UploadStringCompletedEventArgs e)
+        private void Send_Completed(object sender, UploadStringCompletedEventArgs e)
         {
-            var webClientOk = e.Error == null & !e.Cancelled;
             IsBusy = false;
-            if (webClientOk && e.Result == MAILEXPORT_SUCCESS_RESULT)
+            if (e.IsGeneralSuccess() && e.Result == MAILEXPORT_SUCCESS_RESULT)
             {
                 OnExportAndSendSuccessful();
             }
@@ -123,8 +122,7 @@ namespace Dietphone.ViewModels
 
         private void Download_Completed(object sender, DownloadStringCompletedEventArgs e)
         {
-            var webClientOk = e.Error == null & !e.Cancelled;
-            if (webClientOk)
+            if (e.IsGeneralSuccess())
             {
                 data = e.Result;
                 Import();

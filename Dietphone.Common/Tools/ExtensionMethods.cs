@@ -7,6 +7,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.ComponentModel;
 
 namespace Dietphone.Tools
 {
@@ -234,6 +235,11 @@ namespace Dietphone.Tools
             {
                 return false;
             }
+        }
+
+        public static bool IsGeneralSuccess(this AsyncCompletedEventArgs operation)
+        {
+            return operation.Error == null && !operation.Cancelled;
         }
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Tools\PhoneResourceStreamProvider.cs" />
     <Compile Include="Tools\PostSender.cs" />
     <Compile Include="Tools\ResourceStreamProvider.cs" />
+    <Compile Include="Tools\VerboseBackgroundWorker.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\ExportAndImportViewModel.cs" />
     <Compile Include="Views\About.xaml.cs">

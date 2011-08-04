@@ -25,7 +25,8 @@ namespace Dietphone.Models
                 Meals = ExportMeals(),
                 MealNames = factories.MealNames,
                 Products = finder.FindProductsAddedByUser(),
-                Categories = factories.Categories
+                Categories = factories.Categories,
+                Settings = factories.Settings
             };
             return dto.Serialize(NAMESPACE);
         }
@@ -37,6 +38,7 @@ namespace Dietphone.Models
             ImportMealNames();
             ImportProducts();
             ImportCategories();
+            ImportSettings();
         }
 
         private List<MealDTO> ExportMeals()
@@ -99,6 +101,13 @@ namespace Dietphone.Models
             importer.Execute();
         }
 
+        private void ImportSettings()
+        {
+            var source = dto.Settings;
+            var target = factories.Settings;
+            target.CopyFrom(source);
+        }
+
         public sealed class ExportAndImportDTO
         {
             public string AppVersion { get; set; }
@@ -106,6 +115,7 @@ namespace Dietphone.Models
             public List<MealName> MealNames { get; set; }
             public List<Product> Products { get; set; }
             public List<Category> Categories { get; set; }
+            public Settings Settings { get; set; }
         }
 
         public sealed class MealDTO : Meal
