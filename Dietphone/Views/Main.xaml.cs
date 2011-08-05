@@ -85,6 +85,11 @@ namespace Dietphone.Views
             ViewModel.ExportAndImport();
         }
 
+        private void Settings_Click(object sender, EventArgs e)
+        {
+            ViewModel.Settings();
+        }
+
         private void SearchIcon_Click(object sender, EventArgs e)
         {
             if (searchShowed)

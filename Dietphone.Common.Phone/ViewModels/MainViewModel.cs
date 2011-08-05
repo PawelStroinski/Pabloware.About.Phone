@@ -63,6 +63,11 @@ namespace Dietphone.ViewModels
             navigator.GoToExportAndImport();
         }
 
+        public void Settings()
+        {
+            navigator.GoToSettings();
+        }
+
         protected void OnNavigatorChanged()
         {
             if (navigator.ShouldAddMealItem())
