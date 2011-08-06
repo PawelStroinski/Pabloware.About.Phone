@@ -7,8 +7,8 @@ namespace Dietphone.Tools
 {
     public class PostSender
     {
-        public event UploadStringCompletedEventHandler Completed;
         public Dictionary<string, string> Inputs { get; set; }
+        public event UploadStringCompletedEventHandler Completed;
         private readonly string targetUrl;
 
         public PostSender(string targetUrl)

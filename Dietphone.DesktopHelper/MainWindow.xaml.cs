@@ -45,12 +45,13 @@ namespace Dietphone.DesktopHelper
         private void SetDefaultSettings_Click(object sender, RoutedEventArgs e)
         {
             var settings = factories.Settings;
-            settings.ShowEnergy = true;
-            settings.ShowProteinInGrams = false;
-            settings.ShowDigestibleCarbsInGrams = false;
-            settings.ShowFatInGrams = false;
-            settings.ShowCu = true;
-            settings.ShowFpu = true;
+            settings.CalculateEnergy = true;
+            settings.CalculateProteinInGrams = false;
+            settings.CalculateDigestibleCarbsInGrams = false;
+            settings.CalculateFatInGrams = false;
+            settings.CalculateCu = false;
+            settings.CalculateFpu = false;
+            settings.FirstRun = true;
         }
 
         private void ClearMeals_Click(object sender, RoutedEventArgs e)

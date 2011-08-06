@@ -142,9 +142,9 @@ namespace Dietphone.Models
         {
             public delegate T CreateHandler();
 
-            public event CreateHandler Create;
             public List<T> Sources { get; set; }
             public List<T> Targets { get; set; }
+            public event CreateHandler Create;
 
             public void Execute()
             {

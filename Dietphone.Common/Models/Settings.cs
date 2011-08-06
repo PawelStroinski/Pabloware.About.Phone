@@ -8,5 +8,6 @@
         public bool CalculateFatInGrams { get; set; }
         public bool CalculateCu { get; set; }
         public bool CalculateFpu { get; set; }
+        public bool FirstRun { get; set; }
     }
 }

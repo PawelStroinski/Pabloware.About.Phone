@@ -9,15 +9,18 @@ namespace Dietphone.ViewModels
         public MealItemEditingViewModel MealItemEditing { private get; set; }
         public MealEditingViewModel MealEditing { private get; set; }
         public event EventHandler ShowProductsOnly;
+        public event EventHandler GoingToSettings;
         private string search = string.Empty;
         private Navigator navigator;
         private MealItem tempMealItem;
         private bool addMealItem;
         private readonly Factories factories;
+        private readonly Settings settings;
 
         public MainViewModel(Factories factories)
         {
             this.factories = factories;
+            this.settings = factories.Settings;
         }
 
         public string Search
@@ -61,6 +64,16 @@ namespace Dietphone.ViewModels
         public void ExportAndImport()
         {
             navigator.GoToExportAndImport();
+        }
+
+        public void SettingsIfFirstRun()
+        {
+            if (settings.FirstRun)
+            {
+                settings.FirstRun = false;
+                OnGoingToSettings();
+                Settings();
+            }
         }
 
         public void Settings()
@@ -110,6 +123,14 @@ namespace Dietphone.ViewModels
             if (ShowProductsOnly != null)
             {
                 ShowProductsOnly(this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnGoingToSettings()
+        {
+            if (GoingToSettings != null)
+            {
+                GoingToSettings(this, e);
             }
         }
     }

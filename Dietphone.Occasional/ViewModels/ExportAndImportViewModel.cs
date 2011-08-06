@@ -10,13 +10,13 @@ namespace Dietphone.ViewModels
 {
     public class ExportAndImportViewModel : ViewModelBase
     {
+        public string Email { private get; set; }
+        public string Url { private get; set; }
         public event EventHandler ExportAndSendSuccessful;
         public event EventHandler DownloadAndImportSuccessful;
         public event EventHandler SendingFailedDuringExport;
         public event EventHandler DownloadingFailedDuringImport;
         public event EventHandler ReadingFailedDuringImport;
-        public string Email { private get; set; }
-        public string Url { private get; set; }
         private string data;
         private bool isBusy;
         private bool readingFailedDuringImport;

@@ -26,7 +26,7 @@
                     <ScrollViewer>
                         <StackPanel Margin="0,22,0,0">
                             <StackPanel Margin="0,0,0,36">
-                                <TextBlock Margin="{StaticResource PhoneHorizontalMargin}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" Text="Obliczanie wartości odżywczyczych" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                                <TextBlock Margin="{StaticResource PhoneHorizontalMargin}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" Text="Wybierz obliczane wartości odżywcze (maks. 4)" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"/>
                                 <StackPanel Orientation="Vertical" Grid.Row="2">
                                     <CheckBox Content="wartość energetyczna (kcal)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateEnergy, Mode=TwoWay}"/>
                                     <CheckBox Content="białko (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateProteinInGrams, Mode=TwoWay}"/>

@@ -8,6 +8,7 @@ using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
 using Dietphone.Models;
+using System.Windows.Threading;
 
 namespace Dietphone.Views
 {
@@ -26,7 +27,8 @@ namespace Dietphone.Views
                 ProductListing = ProductListing.ViewModel,
                 MealItemEditing = MealItemEditing.ViewModel
             };
-            ViewModel.ShowProductsOnly += new EventHandler(ViewModel_ShowProductsOnly);
+            ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
+            ViewModel.GoingToSettings += ViewModel_GoingToSettings;
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
         }
@@ -37,6 +39,7 @@ namespace Dietphone.Views
             subConnector.Navigator = navigator;
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
+            SettingsIfFirstRunOnTimer();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -73,6 +76,12 @@ namespace Dietphone.Views
         private void ViewModel_ShowProductsOnly(object sender, EventArgs e)
         {
             Pivot.Items.Remove(Meals);
+        }
+
+        private void ViewModel_GoingToSettings(object sender, EventArgs e)
+        {
+            MessageBox.Show("Dostosuj teraz Dietphone do siebie.",
+                "Witaj w Dietphone!", MessageBoxButton.OK);
         }
 
         private void About_Click(object sender, EventArgs e)
@@ -188,6 +197,17 @@ namespace Dietphone.Views
             {
                 Focus();
             }
+        }
+
+        private void SettingsIfFirstRunOnTimer()
+        {
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(0.1);
+            timer.Tick += delegate
+            {
+                ViewModel.SettingsIfFirstRun();
+            };
+            timer.Start();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Dietphone.BinarySerializers
         {
             get
             {
-                return 1;
+                return 2;
             }
         }
 
@@ -30,6 +30,7 @@ namespace Dietphone.BinarySerializers
             writer.Write(item.CalculateFatInGrams);
             writer.Write(item.CalculateCu);
             writer.Write(item.CalculateFpu);
+            writer.Write(item.FirstRun);
         }
 
         public override void ReadItem(BinaryReader reader, Settings item)
@@ -40,6 +41,10 @@ namespace Dietphone.BinarySerializers
             item.CalculateFatInGrams = reader.ReadBoolean();
             item.CalculateCu = reader.ReadBoolean();
             item.CalculateFpu = reader.ReadBoolean();
+            if (ReadingVersion == 2)
+            {
+                item.FirstRun = reader.ReadBoolean();
+            }
         }
     }
 }
