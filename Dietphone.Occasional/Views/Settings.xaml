@@ -19,7 +19,7 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="USTAWIENIA">
+        <controls:Pivot Title="USTAWIENIA" SelectedIndex="1">
             <controls:PivotItem Header="wartości">
                 <Grid>
                     <ScrollViewer>
@@ -40,6 +40,21 @@
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="język">
+                <Grid>
+                    <StackPanel>
+                        <StackPanel Margin="12,0,12,13" Orientation="Vertical">
+                            <TextBlock Text="Enter Live ID" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <PasswordBox Height="72"/>
+                        </StackPanel>
+                        <StackPanel Margin="12,0,12,-11" Orientation="Vertical">
+                            <TextBlock Text="Enter password" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <PasswordBox Height="72"/>
+                        </StackPanel>
+                        <TextBlock Text="If you don't have a Live ID, enter any email address and we'll create one for you." FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
+                    </StackPanel>
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>
