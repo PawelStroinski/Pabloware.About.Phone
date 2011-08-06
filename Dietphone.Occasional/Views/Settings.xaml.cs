@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Microsoft.Phone.Controls;
 using Dietphone.ViewModels;
 
@@ -23,6 +13,15 @@ namespace Dietphone.Views
             InitializeComponent();
             viewModel = new SettingsViewModel(MyApp.Factories);
             DataContext = viewModel;
+        }
+
+        private void LearnCuFpu_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(@"WW czyli wymiennik węglowodanowy to ilość węglowodanów przyswajalnych w gramach podzielona przez 10.
+Został wprowadzony, żeby łatwiej liczyło się węglowodany w posiłku.
+
+WBT czyli wymiennik białkowo-tłuszczowy to wartość energetyczna (kcal) pochodząca z białka i tłuszczu podzielona przez 100.
+Pozwala w jednej poręcznej liczbie określić zawartość białka i tłuszczu w posiłku.");
         }
     }
 }

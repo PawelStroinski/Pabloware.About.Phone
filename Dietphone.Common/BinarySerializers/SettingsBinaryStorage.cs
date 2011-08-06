@@ -24,22 +24,22 @@ namespace Dietphone.BinarySerializers
 
         public override void WriteItem(BinaryWriter writer, Settings item)
         {
-            writer.Write(item.ShowEnergy);
-            writer.Write(item.ShowProteinInGrams);
-            writer.Write(item.ShowDigestibleCarbsInGrams);
-            writer.Write(item.ShowFatInGrams);
-            writer.Write(item.ShowCu);
-            writer.Write(item.ShowFpu);
+            writer.Write(item.CalculateEnergy);
+            writer.Write(item.CalculateProteinInGrams);
+            writer.Write(item.CalculateDigestibleCarbsInGrams);
+            writer.Write(item.CalculateFatInGrams);
+            writer.Write(item.CalculateCu);
+            writer.Write(item.CalculateFpu);
         }
 
         public override void ReadItem(BinaryReader reader, Settings item)
         {
-            item.ShowEnergy = reader.ReadBoolean();
-            item.ShowProteinInGrams = reader.ReadBoolean();
-            item.ShowDigestibleCarbsInGrams = reader.ReadBoolean();
-            item.ShowFatInGrams = reader.ReadBoolean();
-            item.ShowCu = reader.ReadBoolean();
-            item.ShowFpu = reader.ReadBoolean();
+            item.CalculateEnergy = reader.ReadBoolean();
+            item.CalculateProteinInGrams = reader.ReadBoolean();
+            item.CalculateDigestibleCarbsInGrams = reader.ReadBoolean();
+            item.CalculateFatInGrams = reader.ReadBoolean();
+            item.CalculateCu = reader.ReadBoolean();
+            item.CalculateFpu = reader.ReadBoolean();
         }
     }
 }

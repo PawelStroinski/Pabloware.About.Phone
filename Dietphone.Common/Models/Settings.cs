@@ -2,11 +2,11 @@
 {
     public class Settings : Entity
     {
-        public bool ShowEnergy { get; set; }
-        public bool ShowProteinInGrams { get; set; }
-        public bool ShowDigestibleCarbsInGrams { get; set; }
-        public bool ShowFatInGrams { get; set; }
-        public bool ShowCu { get; set; }
-        public bool ShowFpu { get; set; }
+        public bool CalculateEnergy { get; set; }
+        public bool CalculateProteinInGrams { get; set; }
+        public bool CalculateDigestibleCarbsInGrams { get; set; }
+        public bool CalculateFatInGrams { get; set; }
+        public bool CalculateCu { get; set; }
+        public bool CalculateFpu { get; set; }
     }
 }
