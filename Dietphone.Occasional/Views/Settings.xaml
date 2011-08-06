@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"    
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -42,18 +43,18 @@
                     </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
-            <controls:PivotItem Header="język">
+            <controls:PivotItem Header="regionalne">
                 <Grid>
                     <StackPanel>
                         <StackPanel Margin="12,0,12,13" Orientation="Vertical">
-                            <TextBlock Text="Enter Live ID" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
-                            <PasswordBox Height="72"/>
+                            <TextBlock Text="Język aplikacji" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding Languages}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
                         <StackPanel Margin="12,0,12,-11" Orientation="Vertical">
-                            <TextBlock Text="Enter password" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
-                            <PasswordBox Height="72"/>
+                            <TextBlock Text="Lokalizacja bazy produktów" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding ProductLocalisations}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
-                        <TextBlock Text="If you don't have a Live ID, enter any email address and we'll create one for you." FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
+                        <TextBlock Text="Lokalizację bazy produktów możesz zmieniać wielokrotnie. Jest to przydatne, jeśli często podróżujesz." FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>
