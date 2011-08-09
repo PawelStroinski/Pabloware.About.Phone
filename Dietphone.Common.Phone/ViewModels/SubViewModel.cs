@@ -1,6 +1,7 @@
 ﻿using System;
 using Dietphone.Tools;
 using System.ComponentModel;
+using System.Windows;
 
 namespace Dietphone.ViewModels
 {
@@ -77,14 +78,14 @@ namespace Dietphone.ViewModels
 
     public class SubViewModelConnector
     {
-        private MainViewModel mainViewModel;
         private SubViewModel subViewModel;
         private Navigator navigator;
+        private readonly MainViewModel mainViewModel;
 
         public SubViewModelConnector(MainViewModel mainViewModel)
         {
             this.mainViewModel = mainViewModel;
-            mainViewModel.PropertyChanged += new PropertyChangedEventHandler(mainViewModel_PropertyChanged);
+            mainViewModel.PropertyChanged += mainViewModel_PropertyChanged;
         }
 
         public SubViewModel SubViewModel
@@ -128,6 +129,7 @@ namespace Dietphone.ViewModels
         {
             subViewModel.Search = mainViewModel.Search;
             subViewModel.Navigator = navigator;
+            subViewModel.Loaded += subViewModel_Loaded;
             subViewModel.Load();
         }
 
@@ -140,6 +142,11 @@ namespace Dietphone.ViewModels
                     subViewModel.Search = mainViewModel.Search;
                 }
             }
+        }
+
+        private void subViewModel_Loaded(object sender, EventArgs e)
+        {
+            mainViewModel.Loaded();
         }
 
         protected void OnNavigatorChanged()

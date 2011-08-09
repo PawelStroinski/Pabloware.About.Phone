@@ -1,5 +1,6 @@
 ﻿using System;
 using Dietphone.Models;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
@@ -8,6 +9,7 @@ namespace Dietphone.ViewModels
         public ProductListingViewModel ProductListing { private get; set; }
         public MealItemEditingViewModel MealItemEditing { private get; set; }
         public MealEditingViewModel MealEditing { private get; set; }
+        public OptionalDispatcher Dispatcher { private get; set; }
         public event EventHandler ShowProductsOnly;
         public event EventHandler GoingToSettings;
         private string search = string.Empty;
@@ -15,12 +17,10 @@ namespace Dietphone.ViewModels
         private MealItem tempMealItem;
         private bool addMealItem;
         private readonly Factories factories;
-        private readonly Settings settings;
 
         public MainViewModel(Factories factories)
         {
             this.factories = factories;
-            this.settings = factories.Settings;
         }
 
         public string Search
@@ -68,6 +68,7 @@ namespace Dietphone.ViewModels
 
         public void SettingsIfFirstRun()
         {
+            var settings = factories.Settings;
             if (settings.FirstRun)
             {
                 settings.FirstRun = false;
@@ -79,6 +80,14 @@ namespace Dietphone.ViewModels
         public void Settings()
         {
             navigator.GoToSettings();
+        }
+
+        public void Loaded()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                SettingsIfFirstRun();
+            });
         }
 
         protected void OnNavigatorChanged()
@@ -130,7 +139,7 @@ namespace Dietphone.ViewModels
         {
             if (GoingToSettings != null)
             {
-                GoingToSettings(this, e);
+                GoingToSettings(this, EventArgs.Empty);
             }
         }
     }

@@ -22,10 +22,12 @@ namespace Dietphone.Views
         public Main()
         {
             InitializeComponent();
+            var dispatcher = new OptionalDispatcher(Dispatcher);
             ViewModel = new MainViewModel(MyApp.Factories)
             {
                 ProductListing = ProductListing.ViewModel,
-                MealItemEditing = MealItemEditing.ViewModel
+                MealItemEditing = MealItemEditing.ViewModel,
+                Dispatcher = dispatcher
             };
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
             ViewModel.GoingToSettings += ViewModel_GoingToSettings;
@@ -39,7 +41,6 @@ namespace Dietphone.Views
             subConnector.Navigator = navigator;
             subConnector.Refresh();
             ViewModel.Navigator = navigator;
-            SettingsIfFirstRunOnTimer();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -197,17 +198,6 @@ namespace Dietphone.Views
             {
                 Focus();
             }
-        }
-
-        private void SettingsIfFirstRunOnTimer()
-        {
-            var timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(0.1);
-            timer.Tick += delegate
-            {
-                ViewModel.SettingsIfFirstRun();
-            };
-            timer.Start();
         }
     }
 }
