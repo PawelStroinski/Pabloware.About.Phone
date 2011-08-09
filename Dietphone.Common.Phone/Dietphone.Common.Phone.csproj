@@ -76,7 +76,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\IsolatedFile.cs" />
     <Compile Include="Tools\MyStopwatch.cs" />
-    <Compile Include="Tools\OptionalDispatcher.cs" />
     <Compile Include="Tools\UIExtensionMethods.cs" />
     <Compile Include="Tools\Vibration.cs" />
     <Compile Include="Tools\XnaInputBox.cs" />

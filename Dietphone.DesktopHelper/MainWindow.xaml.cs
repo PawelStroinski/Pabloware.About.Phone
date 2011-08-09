@@ -46,9 +46,9 @@ namespace Dietphone.DesktopHelper
         {
             var settings = factories.Settings;
             settings.CalculateEnergy = true;
-            settings.CalculateProteinInGrams = false;
-            settings.CalculateDigestibleCarbsInGrams = false;
-            settings.CalculateFatInGrams = false;
+            settings.CalculateProteinInGrams = true;
+            settings.CalculateDigestibleCarbsInGrams = true;
+            settings.CalculateFatInGrams = true;
             settings.CalculateCu = false;
             settings.CalculateFpu = false;
             settings.FirstRun = true;
