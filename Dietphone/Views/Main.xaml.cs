@@ -8,7 +8,6 @@ using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
 using Dietphone.Models;
-using System.Windows.Threading;
 
 namespace Dietphone.Views
 {
@@ -22,15 +21,12 @@ namespace Dietphone.Views
         public Main()
         {
             InitializeComponent();
-            var dispatcher = new OptionalDispatcher(Dispatcher);
             ViewModel = new MainViewModel(MyApp.Factories)
             {
                 ProductListing = ProductListing.ViewModel,
-                MealItemEditing = MealItemEditing.ViewModel,
-                Dispatcher = dispatcher
+                MealItemEditing = MealItemEditing.ViewModel
             };
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
-            ViewModel.GoingToSettings += ViewModel_GoingToSettings;
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
         }
@@ -77,12 +73,6 @@ namespace Dietphone.Views
         private void ViewModel_ShowProductsOnly(object sender, EventArgs e)
         {
             Pivot.Items.Remove(Meals);
-        }
-
-        private void ViewModel_GoingToSettings(object sender, EventArgs e)
-        {
-            MessageBox.Show("Dostosuj teraz Dietphone do siebie.",
-                "Witaj w Dietphone!", MessageBoxButton.OK);
         }
 
         private void About_Click(object sender, EventArgs e)
