@@ -43,14 +43,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string TitleWithEnergy
-        {
-            get
-            {
-                return string.Format("POSIŁEK / {0}", Meal.Energy);
-            }
-        }
-
         public string NameOfName
         {
             get
@@ -235,10 +227,6 @@ namespace Dietphone.ViewModels
         private void Meal_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnGotDirty();
-            if (e.PropertyName == "Energy")
-            {
-                OnPropertyChanged("TitleWithEnergy");
-            }
             if (e.PropertyName == "DateTime" && !updatingLockedDateTime)
             {
                 NotIsLockedDateTime = true;

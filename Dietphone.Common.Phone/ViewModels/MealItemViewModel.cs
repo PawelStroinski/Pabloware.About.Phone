@@ -2,17 +2,20 @@
 using Dietphone.Models;
 using Dietphone.Tools;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace Dietphone.ViewModels
 {
     public class MealItemViewModel : ViewModelWithBuffer<MealItem>
     {
         public event EventHandler ItemChanged;
+        private readonly ScoreSelector scores;
         private static readonly Constrains big = new Constrains { Max = 10000 };
 
         public MealItemViewModel(MealItem model, Factories factories)
             : base(model, factories)
         {
+            scores = new MealItemScoreSelector(this);
         }
 
         public Guid ProductId
@@ -92,30 +95,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string Energy
+        public ScoreSelector Scores
         {
             get
             {
-                var result = BufferOrModel.Energy;
-                return string.Format("{0} kcal", result);
-            }
-        }
-
-        public string Cu
-        {
-            get
-            {
-                var result = BufferOrModel.Cu;
-                return string.Format("{0} WW", result);
-            }
-        }
-
-        public string Fpu
-        {
-            get
-            {
-                var result = BufferOrModel.Fpu;
-                return string.Format("{0} WBT", result);
+                return scores;
             }
         }
 
@@ -146,6 +130,63 @@ namespace Dietphone.ViewModels
             OnItemChanged();
         }
 
+        private string Energy
+        {
+            get
+            {
+                var result = BufferOrModel.Energy;
+                return string.Format("{0} kcal", result);
+            }
+        }
+
+        private string Protein
+        {
+            get
+            {
+                var value = BufferOrModel.Protein;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} białk", rounded);
+            }
+        }
+
+        private string Fat
+        {
+            get
+            {
+                var value = BufferOrModel.Fat;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} tł", rounded);
+            }
+        }
+
+        private string DigestibleCarbs
+        {
+            get
+            {
+                var value = BufferOrModel.DigestibleCarbs;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} węgl", rounded);
+            }
+        }
+
+        private string Cu
+        {
+            get
+            {
+                var result = BufferOrModel.Cu;
+                return string.Format("{0} WW", result);
+            }
+        }
+
+        private string Fpu
+        {
+            get
+            {
+                var result = BufferOrModel.Fpu;
+                return string.Format("{0} WBT", result);
+            }
+        }
+
         private bool IsUnitUsable(Models.Unit unit)
         {
             var unitUsability = new UnitUsability()
@@ -170,12 +211,50 @@ namespace Dietphone.ViewModels
             OnPropertyChanged("ValueWithUnit");
             OnPropertyChanged("Unit");
             OnPropertyChanged("UnitWithDetalis");
-            OnPropertyChanged("Energy");
-            OnPropertyChanged("Cu");
-            OnPropertyChanged("Fpu");
+            OnPropertyChanged("Scores");
             if (ItemChanged != null)
             {
                 ItemChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private class MealItemScoreSelector : ScoreSelector
+        {
+            private readonly MealItemViewModel item;
+
+            public MealItemScoreSelector(MealItemViewModel item)
+                : base(item.factories)
+            {
+                this.item = item;
+            }
+
+            protected override string GetCurrent()
+            {
+                if (settingsCopy.ScoreEnergy)
+                {
+                    return item.Energy;
+                }
+                if (settingsCopy.ScoreProtein)
+                {
+                    return item.Protein;
+                }
+                if (settingsCopy.ScoreDigestibleCarbs)
+                {
+                    return item.DigestibleCarbs;
+                }
+                if (settingsCopy.ScoreFat)
+                {
+                    return item.Fat;
+                }
+                if (settingsCopy.ScoreCu)
+                {
+                    return item.Cu;
+                }
+                if (settingsCopy.ScoreFpu)
+                {
+                    return item.Fpu;
+                }
+                return string.Empty;
             }
         }
     }

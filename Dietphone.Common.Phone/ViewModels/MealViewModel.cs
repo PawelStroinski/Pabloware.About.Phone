@@ -23,12 +23,14 @@ namespace Dietphone.ViewModels
         private IEnumerable<string> productsTailCache;
         private readonly object itemsLock = new object();
         private readonly Factories factories;
+        private readonly ScoreSelector scores;
         private const byte TAKE_PRODUCTS_TO_HEAD = 3;
 
         public MealViewModel(Meal meal, Factories factories)
         {
             Meal = meal;
             this.factories = factories;
+            scores = new MealScoreSelector(this);
         }
 
         public Guid Id
@@ -167,30 +169,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public string Energy
+        public ScoreSelector Scores
         {
             get
             {
-                var result = Meal.Energy;
-                return string.Format("{0} kcal", result);
-            }
-        }
-
-        public string Cu
-        {
-            get
-            {
-                var result = Meal.Cu;
-                return string.Format("{0} WW", result);
-            }
-        }
-
-        public string Fpu
-        {
-            get
-            {
-                var result = Meal.Fpu;
-                return string.Format("{0} WBT", result);
+                return scores;
             }
         }
 
@@ -262,6 +245,64 @@ namespace Dietphone.ViewModels
                 return true;
             }
             return false;
+        }
+
+
+        private string Energy
+        {
+            get
+            {
+                var result = Meal.Energy;
+                return string.Format("{0} kcal", result);
+            }
+        }
+
+        private string Protein
+        {
+            get
+            {
+                var value = Meal.Protein;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} białk", rounded);
+            }
+        }
+
+        private string Fat
+        {
+            get
+            {
+                var value = Meal.Fat;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} tł", rounded);
+            }
+        }
+
+        private string DigestibleCarbs
+        {
+            get
+            {
+                var value = Meal.DigestibleCarbs;
+                var rounded = (int)Math.Round(value);
+                return string.Format("{0} węgl", rounded);
+            }
+        }
+
+        private string Cu
+        {
+            get
+            {
+                var result = Meal.Cu;
+                return string.Format("{0} WW", result);
+            }
+        }
+
+        private string Fpu
+        {
+            get
+            {
+                var result = Meal.Fpu;
+                return string.Format("{0} WBT", result);
+            }
         }
 
         private bool IsNewer
@@ -357,9 +398,47 @@ namespace Dietphone.ViewModels
         {
             isProductsHeadCached = false;
             isProductsTailCached = false;
-            OnPropertyChanged("Energy");
-            OnPropertyChanged("Cu");
-            OnPropertyChanged("Fpu");
+            OnPropertyChanged("Scores");
+        }
+
+        private class MealScoreSelector : ScoreSelector
+        {
+            private readonly MealViewModel meal;
+
+            public MealScoreSelector(MealViewModel meal)
+                : base(meal.factories)
+            {
+                this.meal = meal;
+            }
+
+            protected override string GetCurrent()
+            {
+                if (settingsCopy.ScoreEnergy)
+                {
+                    return meal.Energy;
+                }
+                if (settingsCopy.ScoreProtein)
+                {
+                    return meal.Protein;
+                }
+                if (settingsCopy.ScoreDigestibleCarbs)
+                {
+                    return meal.DigestibleCarbs;
+                }
+                if (settingsCopy.ScoreFat)
+                {
+                    return meal.Fat;
+                }
+                if (settingsCopy.ScoreCu)
+                {
+                    return meal.Cu;
+                }
+                if (settingsCopy.ScoreFpu)
+                {
+                    return meal.Fpu;
+                }
+                return string.Empty;
+            }
         }
     }
 }

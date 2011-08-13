@@ -36,6 +36,33 @@ namespace Dietphone.Models
             }
         }
 
+        public float Protein
+        {
+            get
+            {
+                var proteinSum = Items.Sum(item => item.Protein);
+                return proteinSum;
+            }
+        }
+
+        public float Fat
+        {
+            get
+            {
+                var fatSum = Items.Sum(item => item.Fat);
+                return fatSum;
+            }
+        }
+
+        public float DigestibleCarbs
+        {
+            get
+            {
+                var digestibleCarbsSum = Items.Sum(item => item.DigestibleCarbs);
+                return digestibleCarbsSum;
+            }
+        }
+
         public float Cu
         {
             get

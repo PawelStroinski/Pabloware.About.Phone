@@ -89,5 +89,12 @@ namespace Dietphone.Tools
             var themeVisibility = (Visibility)page.Resources["PhoneDarkThemeVisibility"];
             return themeVisibility == Visibility.Visible;
         }
+
+        public static void HideColumnWithIndex(this Grid grid, byte columnIndex)
+        {
+            var column = grid.ColumnDefinitions[columnIndex];
+            var width = new GridLength(0);
+            column.Width = width;
+        }
     }
 }

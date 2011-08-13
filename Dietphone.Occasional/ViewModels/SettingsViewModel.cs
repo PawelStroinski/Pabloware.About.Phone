@@ -1,4 +1,4 @@
-﻿// Uwaga: włączenie property z grupy Calculate* może automatycznie wyłączyć inne property z tej grupy.
+﻿// Uwaga: włączenie property z grupy Score* może automatycznie wyłączyć inne property z tej grupy.
 using System;
 using System.Collections.Generic;
 using Dietphone.Models;
@@ -10,7 +10,7 @@ namespace Dietphone.ViewModels
         public List<string> Languages { get; private set; }
         public List<string> ProductLocalisations { get; private set; }
         private readonly Settings settings;
-        private const byte CALCULATE_MAX_ITEMS = 4;
+        private const byte MAX_SCORES = 4;
 
         public SettingsViewModel(Factories factories)
         {
@@ -23,162 +23,162 @@ namespace Dietphone.ViewModels
             ProductLocalisations.Add("angielski (Stany Zjednoczone)");
         }
 
-        public bool CalculateEnergy
+        public bool ScoreEnergy
         {
             get
             {
-                return settings.CalculateEnergy;
+                return settings.ScoreEnergy;
             }
             set
             {
-                if (settings.CalculateEnergy != value)
+                if (settings.ScoreEnergy != value)
                 {
-                    settings.CalculateEnergy = value;
-                    OnPropertyChanged("CalculateEnergy");
+                    settings.ScoreEnergy = value;
+                    OnPropertyChanged("ScoreEnergy");
                     if (value)
                     {
-                        DisableFpuAndCuIfCalculateTooMany();
+                        DisableFpuAndCuIfTooManyScores();
                     }
                 }
             }
         }
 
-        public bool CalculateProteinInGrams
+        public bool ScoreProtein
         {
             get
             {
-                return settings.CalculateProteinInGrams;
+                return settings.ScoreProtein;
             }
             set
             {
-                if (settings.CalculateProteinInGrams != value)
+                if (settings.ScoreProtein != value)
                 {
-                    settings.CalculateProteinInGrams = value;
-                    OnPropertyChanged("CalculateProteinInGrams");
+                    settings.ScoreProtein = value;
+                    OnPropertyChanged("ScoreProtein");
                     if (value)
                     {
-                        DisableFpuAndCuIfCalculateTooMany();
+                        DisableFpuAndCuIfTooManyScores();
                     }
                 }
             }
         }
 
-        public bool CalculateDigestibleCarbsInGrams
+        public bool ScoreDigestibleCarbs
         {
             get
             {
-                return settings.CalculateDigestibleCarbsInGrams;
+                return settings.ScoreDigestibleCarbs;
             }
             set
             {
-                if (settings.CalculateDigestibleCarbsInGrams != value)
+                if (settings.ScoreDigestibleCarbs != value)
                 {
-                    settings.CalculateDigestibleCarbsInGrams = value;
-                    OnPropertyChanged("CalculateDigestibleCarbsInGrams");
+                    settings.ScoreDigestibleCarbs = value;
+                    OnPropertyChanged("ScoreDigestibleCarbs");
                     if (value)
                     {
-                        DisableFpuAndCuIfCalculateTooMany();
+                        DisableFpuAndCuIfTooManyScores();
                     }
                 }
             }
         }
 
-        public bool CalculateFatInGrams
+        public bool ScoreFat
         {
             get
             {
-                return settings.CalculateFatInGrams;
+                return settings.ScoreFat;
             }
             set
             {
-                if (settings.CalculateFatInGrams != value)
+                if (settings.ScoreFat != value)
                 {
-                    settings.CalculateFatInGrams = value;
-                    OnPropertyChanged("CalculateFatInGrams");
+                    settings.ScoreFat = value;
+                    OnPropertyChanged("ScoreFat");
                     if (value)
                     {
-                        DisableFpuAndCuIfCalculateTooMany();
+                        DisableFpuAndCuIfTooManyScores();
                     }
                 }
             }
         }
 
-        public bool CalculateCu
+        public bool ScoreCu
         {
             get
             {
-                return settings.CalculateCu;
+                return settings.ScoreCu;
             }
             set
             {
-                if (settings.CalculateCu != value)
+                if (settings.ScoreCu != value)
                 {
-                    settings.CalculateCu = value;
-                    OnPropertyChanged("CalculateCu");
+                    settings.ScoreCu = value;
+                    OnPropertyChanged("ScoreCu");
                     if (value)
                     {
-                        DisableNutrientsIfCalculateTooMany();
+                        DisableNutrientsIfTooManyScores();
                     }
                 }
             }
         }
 
-        public bool CalculateFpu
+        public bool ScoreFpu
         {
             get
             {
-                return settings.CalculateFpu;
+                return settings.ScoreFpu;
             }
             set
             {
-                if (settings.CalculateFpu != value)
+                if (settings.ScoreFpu != value)
                 {
-                    settings.CalculateFpu = value;
-                    OnPropertyChanged("CalculateFpu");
+                    settings.ScoreFpu = value;
+                    OnPropertyChanged("ScoreFpu");
                     if (value)
                     {
-                        DisableNutrientsIfCalculateTooMany();
+                        DisableNutrientsIfTooManyScores();
                     }
                 }
             }
         }
 
-        private void DisableFpuAndCuIfCalculateTooMany()
+        private void DisableFpuAndCuIfTooManyScores()
         {
-            if (IsCalculateTooMany)
+            if (IsTooManyScores)
             {
-                CalculateFpu = false;
+                ScoreFpu = false;
             }
-            if (IsCalculateTooMany)
+            if (IsTooManyScores)
             {
-                CalculateCu = false;
+                ScoreCu = false;
             }
         }
 
-        private void DisableNutrientsIfCalculateTooMany()
+        private void DisableNutrientsIfTooManyScores()
         {
-            if (IsCalculateTooMany)
+            if (IsTooManyScores)
             {
-                CalculateProteinInGrams = false;
+                ScoreProtein = false;
             }
-            if (IsCalculateTooMany)
+            if (IsTooManyScores)
             {
-                CalculateDigestibleCarbsInGrams = false;
+                ScoreDigestibleCarbs = false;
             }
-            if (IsCalculateTooMany)
+            if (IsTooManyScores)
             {
-                CalculateFatInGrams = false;
+                ScoreFat = false;
             }
         }
 
-        private bool IsCalculateTooMany
+        private bool IsTooManyScores
         {
             get
             {
-                var count = Convert.ToByte(CalculateEnergy) + Convert.ToByte(CalculateProteinInGrams) +
-                    Convert.ToByte(CalculateDigestibleCarbsInGrams) + Convert.ToByte(CalculateFatInGrams) +
-                    Convert.ToByte(CalculateCu) + Convert.ToByte(CalculateFpu);
-                return count > CALCULATE_MAX_ITEMS;
+                var scoresCount = Convert.ToByte(ScoreEnergy) + Convert.ToByte(ScoreProtein) +
+                    Convert.ToByte(ScoreDigestibleCarbs) + Convert.ToByte(ScoreFat) +
+                    Convert.ToByte(ScoreCu) + Convert.ToByte(ScoreFpu);
+                return scoresCount > MAX_SCORES;
             }
         }
     }

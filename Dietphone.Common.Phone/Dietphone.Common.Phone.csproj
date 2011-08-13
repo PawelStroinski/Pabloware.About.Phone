@@ -93,6 +93,7 @@
     <Compile Include="ViewModels\Navigator.cs" />
     <Compile Include="ViewModels\ProductListingViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\ScoreSelector.cs" />
     <Compile Include="ViewModels\SubViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelWithBuffer.cs" />
