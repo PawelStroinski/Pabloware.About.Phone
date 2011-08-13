@@ -5,6 +5,7 @@ using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
 using Dietphone.Tools;
 using System.Windows.Navigation;
+using System.Windows.Controls;
 
 namespace Dietphone.Views
 {
@@ -26,8 +27,8 @@ namespace Dietphone.Views
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
                 ViewModel = new MealEditingViewModel(MyApp.Factories, navigator);
                 DataContext = ViewModel;
-                ViewModel.GotDirty += new EventHandler(viewModel_GotDirty);
-                ViewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
+                ViewModel.GotDirty += viewModel_GotDirty;
+                ViewModel.CannotSave += viewModel_CannotSave;
                 ViewModel.ItemEditing = ItemEditing.ViewModel;
             }
         }
@@ -52,7 +53,7 @@ namespace Dietphone.Views
         {
             if (ViewModel.CanEditName())
             {
-                EditName();
+                EditMealNameDo();
             }
             else
             {
@@ -61,7 +62,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void EditName()
+        private void EditMealNameDo()
         {
             MealName.QuicklyCollapse();
             var input = new XnaInputBox(this)
@@ -82,7 +83,7 @@ namespace Dietphone.Views
         {
             if (ViewModel.CanDeleteName())
             {
-                DeleteMealName();
+                DeleteMealNameDo();
             }
             else
             {
@@ -91,7 +92,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void DeleteMealName()
+        private void DeleteMealNameDo()
         {
             if (MessageBox.Show(
                 String.Format("Czy na pewno chcesz trwale usunąć tę nazwę?\r\n\r\n{0}",
@@ -160,6 +161,29 @@ namespace Dietphone.Views
                 ViewModel.EditItem(item);
             }
             Items.SelectedItem = null;
+        }
+
+        private void ItemsGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            var itemsGrid = (Grid)sender;
+            var meal = ViewModel.Meal;
+            var scores = meal.Scores;
+            if (!scores.FirstExists)
+            {
+                itemsGrid.HideColumnWithIndex(1);
+            }
+            if (!scores.SecondExists)
+            {
+                itemsGrid.HideColumnWithIndex(2);
+            }
+            if (!scores.ThirdExists)
+            {
+                itemsGrid.HideColumnWithIndex(3);
+            }
+            if (!scores.FourthExists)
+            {
+                itemsGrid.HideColumnWithIndex(4);
+            }
         }
     }
 }

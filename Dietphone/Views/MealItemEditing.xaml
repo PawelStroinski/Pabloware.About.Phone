@@ -29,7 +29,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-            <Grid Grid.Row="1" Margin="14, 26, 14, 26">
+            <Grid Grid.Row="1" Margin="14, 26, 14, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -43,15 +43,17 @@
                 <!--Jednostka-->
                 <telerikInput:RadListPicker Grid.Column="1" Grid.Row="0" Margin="13 4 12 0" VerticalAlignment="Top" SelectedItem="{Binding UnitWithDetalis, Mode=TwoWay}" ItemsSource="{Binding AllUsableUnitsWithDetalis}" IsEnabled="{Binding HasManyUsableUnits}" Style="{StaticResource OsListPickerStyle}" x:Name="Unit" x:FieldModifier="private" IsEnabledChanged="Unit_IsEnabledChanged"/>
             </Grid>
-            <StackPanel Grid.Row="2" Margin="26, 26, 14, 26">
+            <StackPanel Grid.Row="2" Margin="26, 0, 14, 363" VerticalAlignment="Bottom">
                 <!--Produkt-->
                 <TextBlock Text="{Binding ProductName}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                <!--WW-->
-                <TextBlock Text="{Binding Cu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                <!--WBT-->
-                <TextBlock Text="{Binding Fpu}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
-                <!--kcal-->
-                <TextBlock Text="{Binding Energy}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}"/>
+                <!--0-->
+                <TextBlock Text="{Binding Scores.First}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Visibility="{Binding Scores.FirstVisibility}"/>
+                <!--0-->
+                <TextBlock Text="{Binding Scores.Second}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Visibility="{Binding Scores.SecondVisibility}"/>
+                <!--0-->
+                <TextBlock Text="{Binding Scores.Third}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Visibility="{Binding Scores.ThirdVisibility}"/>
+                <!--0-->
+                <TextBlock Text="{Binding Scores.Fourth}" Opacity="0.65" HorizontalAlignment="Left" FontSize="{StaticResource PhoneFontSizeSmall}" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="{StaticResource PhoneForegroundBrush}" FontFamily="{StaticResource PhoneFontFamilyNormal}" Visibility="{Binding Scores.FourthVisibility}"/>
             </StackPanel>
         </Grid>
     </telerikPrimitives:RadPickerBox>

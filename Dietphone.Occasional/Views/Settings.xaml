@@ -28,12 +28,12 @@
                             <StackPanel Margin="0,0,0,36">
                                 <TextBlock Margin="{StaticResource PhoneHorizontalMargin}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" Text="Wybierz obliczane wartości odżywcze (maks. 4)" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"/>
                                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                                    <CheckBox Content="wartość energetyczna (kcal)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateEnergy, Mode=TwoWay}"/>
-                                    <CheckBox Content="białko (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateProteinInGrams, Mode=TwoWay}"/>
-                                    <CheckBox Content="węglowodany przyswajalne (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateDigestibleCarbsInGrams, Mode=TwoWay}"/>
-                                    <CheckBox Content="tłuszcz (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateFatInGrams, Mode=TwoWay}"/>
-                                    <CheckBox Content="WW - wymiennik węglowodanowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateCu, Mode=TwoWay}"/>
-                                    <CheckBox Content="WBT - wymiennik białkowo-tłuszczowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding CalculateFpu, Mode=TwoWay}"/>
+                                    <CheckBox Content="wartość energetyczna (kcal)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreEnergy, Mode=TwoWay}"/>
+                                    <CheckBox Content="białko (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreProtein, Mode=TwoWay}"/>
+                                    <CheckBox Content="węglowodany przyswajalne (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreDigestibleCarbs, Mode=TwoWay}"/>
+                                    <CheckBox Content="tłuszcz (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFat, Mode=TwoWay}"/>
+                                    <CheckBox Content="WW - wymiennik węglowodanowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreCu, Mode=TwoWay}"/>
+                                    <CheckBox Content="WBT - wymiennik białkowo-tłuszczowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFpu, Mode=TwoWay}"/>
                                     <HyperlinkButton Style="{StaticResource AccentHyperlink}"
                                                      Content="Dowiedz się więcej o WW i WBT..."
                                                      Margin="0,42,12,7"
