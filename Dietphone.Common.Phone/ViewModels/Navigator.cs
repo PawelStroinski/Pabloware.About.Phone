@@ -19,14 +19,15 @@ namespace Dietphone.ViewModels
         bool ShouldAddMealItem();
     }
 
+    public enum Assembly { Default, Occasional, Medium };
+
     public class NavigatorImpl : Navigator
     {
         private string path;
         private string idName;
         private Guid idValue;
         private string action;
-        private bool occasional;
-        private bool medium;
+        private Assembly assembly;
         private readonly NavigationService service;
         private readonly IDictionary<string, string> passedQueryString;
         private const string MEAL_ID_TO_EDIT = "MealIdToEdit";
@@ -52,6 +53,7 @@ namespace Dietphone.ViewModels
             idName = MEAL_ID_TO_EDIT;
             idValue = mealId;
             path = "/Views/MealEditing.xaml";
+            assembly = Assembly.Default;
             NavigateWithId();
         }
 
@@ -60,13 +62,14 @@ namespace Dietphone.ViewModels
             idName = PRODUCT_ID_TO_EDIT;
             idValue = productId;
             path = "/Views/ProductEditing.xaml";
-            medium = true;
+            assembly = Assembly.Medium;
             NavigateWithId();
         }
 
         public void GoToMain()
         {
             path = "/Views/Main.xaml";
+            assembly = Assembly.Default;
             Navigate();
         }
 
@@ -74,27 +77,28 @@ namespace Dietphone.ViewModels
         {
             action = ADD_MEAL_ITEM;
             path = "/Views/Main.xaml";
+            assembly = Assembly.Default;
             NavigateWithAction();
         }
 
         public void GoToAbout()
         {
             path = "/Views/About.xaml";
-            occasional = true;
+            assembly = Assembly.Occasional;
             Navigate();
         }
 
         public void GoToExportAndImport()
         {
             path = "/Views/ExportAndImport.xaml";
-            occasional = true;
+            assembly = Assembly.Occasional;
             Navigate();
         }
 
         public void GoToSettings()
         {
             path = "/Views/Settings.xaml";
-            occasional = true;
+            assembly = Assembly.Occasional;
             Navigate();
         }
 
@@ -165,18 +169,23 @@ namespace Dietphone.ViewModels
 
         private void Navigate(UriBuilder destination)
         {
-            destination.Scheme = "";
-            destination.Host = "";
-            if (occasional)
-            {
-                destination.Host = "/Dietphone.Occasional;component";
-            }
-            if (medium)
-            {
-                destination.Host = "/Dietphone.Medium;component";
-            }
+            destination.Scheme = string.Empty;
+            destination.Host = GetAssemblyPrefix();
             var uri = new Uri(destination.ToString(), UriKind.Relative);
             service.Navigate(uri);
+        }
+
+        private string GetAssemblyPrefix()
+        {
+            switch (assembly)
+            {
+                case Assembly.Occasional:
+                    return "/Dietphone.Occasional;component";
+                case Assembly.Medium:
+                    return "/Dietphone.Medium;component";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

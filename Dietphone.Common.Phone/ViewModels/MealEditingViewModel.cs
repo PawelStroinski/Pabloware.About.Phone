@@ -12,6 +12,7 @@ namespace Dietphone.ViewModels
     {
         public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
+        public event EventHandler InvalidateItems;
         private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
         private MealNameViewModel defaultName;
@@ -19,6 +20,7 @@ namespace Dietphone.ViewModels
         private bool updatingLockedDateTime;
         private MealItemEditingViewModel itemEditing;
         private MealItemViewModel editItem;
+        private bool wentToSettings;
         private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
 
         public MealEditingViewModel(Factories factories, Navigator navigator)
@@ -160,6 +162,23 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void ScoresSettings()
+        {
+            wentToSettings = true;
+            navigator.GoToSettings();
+        }
+
+        public void ReturnedFromNavigation()
+        {
+            if (wentToSettings)
+            {
+                wentToSettings = false;
+                OnPropertyChanged(string.Empty);
+                var e = new EventArgs();
+                OnInvalidateItems(e);
+            }
+        }
+
         protected override void FindAndCopyModel()
         {
             var id = navigator.GetMealIdToEdit();
@@ -263,6 +282,14 @@ namespace Dietphone.ViewModels
                 updatingLockedDateTime = true;
                 Meal.DateTime = DateTime.Now;
                 updatingLockedDateTime = false;
+            }
+        }
+
+        protected void OnInvalidateItems(EventArgs e)
+        {
+            if (InvalidateItems != null)
+            {
+                InvalidateItems(this, e);
             }
         }
     }

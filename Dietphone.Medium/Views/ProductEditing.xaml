@@ -17,6 +17,7 @@
     xmlns:c4f="clr-namespace:Coding4Fun.Phone.Controls;assembly=Coding4Fun.Phone.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:commonViews="clr-namespace:Dietphone.Views;assembly=Dietphone.Common.Phone"
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
@@ -98,16 +99,20 @@
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPer100g}" IsReadOnly="True"/>
                     </StackPanel>
                     <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="Pełny kwadrat oznacza maksimum w kategorii." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,7,24,9" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-                    <StackPanel Orientation="Horizontal" Margin="24,0,18,0" Grid.Column="0" Grid.Row="5">
-                        <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledCuRect}" Height="50" VerticalAlignment="Center" />
-                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyCuRect}" Height="50" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding Product.CuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="16,0,0,0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="18,0,24,0" Grid.Column="1" Grid.Row="5">
-                        <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledFpuRect}" Height="50" VerticalAlignment="Center" />
-                        <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyFpuRect}" Height="50" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding Product.FpuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="16,0,0,0"/>
-                    </StackPanel>
+                    <commonViews:InteractionEffectContainer Margin="24,0,18,0" Grid.Column="0" Grid.Row="5" MouseLeftButtonUp="Cu_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledCuRect}" Height="50" VerticalAlignment="Center" />
+                            <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyCuRect}" Height="50" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Product.CuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="16,0,0,0"/>
+                        </StackPanel>
+                    </commonViews:InteractionEffectContainer>
+                    <commonViews:InteractionEffectContainer Margin="18,0,24,0" Grid.Column="1" Grid.Row="5" MouseLeftButtonUp="Fpu_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledFpuRect}" Height="50" VerticalAlignment="Center" />
+                            <Rectangle Fill="{StaticResource PhoneSubtleBrush}" Width="{Binding Product.DoubledWidthOfEmptyFpuRect}" Height="50" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Product.FpuPer100g}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="16,0,0,0"/>
+                        </StackPanel>
+                    </commonViews:InteractionEffectContainer>
                 </Grid>
             </controls:PivotItem>
 

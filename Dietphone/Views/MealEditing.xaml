@@ -19,6 +19,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     xmlns:views="clr-namespace:Dietphone.Views"
+    xmlns:commonViews="clr-namespace:Dietphone.Views;assembly=Dietphone.Common.Phone"
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <Grid Background="Transparent">
@@ -37,13 +38,21 @@
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <!--0-->
-                    <TextBlock Text="{Binding Meal.Scores.First}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                    <commonViews:InteractionEffectContainer MouseLeftButtonUp="Score_Click">
+                        <TextBlock Text="{Binding Meal.Scores.First}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                    </commonViews:InteractionEffectContainer>
                     <!--0-->
-                    <TextBlock Text="{Binding Meal.Scores.Second}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Column="1" TextAlignment="Center" />
+                    <commonViews:InteractionEffectContainer Grid.Column="1" MouseLeftButtonUp="Score_Click">
+                        <TextBlock Text="{Binding Meal.Scores.Second}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextAlignment="Center" />
+                    </commonViews:InteractionEffectContainer>
                     <!--0-->
-                    <TextBlock Text="{Binding Meal.Scores.Third}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Row="1" Visibility="{Binding Meal.Scores.ThirdVisibility}"/>
+                    <commonViews:InteractionEffectContainer Grid.Row="1" MouseLeftButtonUp="Score_Click">
+                        <TextBlock Text="{Binding Meal.Scores.Third}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Visibility="{Binding Meal.Scores.ThirdVisibility}"/>
+                    </commonViews:InteractionEffectContainer>
                     <!--0-->
-                    <TextBlock Text="{Binding Meal.Scores.Fourth}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Grid.Row="1" Grid.Column="1" TextAlignment="Center" Visibility="{Binding Meal.Scores.ThirdVisibility}" />
+                    <commonViews:InteractionEffectContainer Grid.Row="1" Grid.Column="1" MouseLeftButtonUp="Score_Click">
+                        <TextBlock Text="{Binding Meal.Scores.Fourth}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextAlignment="Center" Visibility="{Binding Meal.Scores.ThirdVisibility}" />
+                    </commonViews:InteractionEffectContainer>
                     <!--+-->
                     <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddItem_Click" Grid.Column="2" Margin="-10 -2 0 0"/>
                     <!--[]-->

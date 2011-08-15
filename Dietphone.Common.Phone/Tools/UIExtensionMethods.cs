@@ -43,6 +43,13 @@ namespace Dietphone.Tools
             });
         }
 
+        public static void ForceInvalidate(this RadDataBoundListBox list)
+        {
+            var source = list.ItemsSource;
+            list.ItemsSource = null;
+            list.ItemsSource = source;
+        }
+
         public static void QuicklyCollapse(this RadListPicker picker)
         {
             var isAnimationEnabled = picker.IsAnimationEnabled;

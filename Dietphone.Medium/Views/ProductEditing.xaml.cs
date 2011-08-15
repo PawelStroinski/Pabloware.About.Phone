@@ -5,6 +5,7 @@ using Dietphone.ViewModels;
 using System.Windows.Navigation;
 using Dietphone.Tools;
 using Telerik.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace Dietphone.Views
 {
@@ -145,6 +146,18 @@ namespace Dietphone.Views
         {
             Vibration vibration = new VibrationImpl();
             vibration.VibrateOnButtonPress();
+        }
+
+        private void Cu_Click(object sender, MouseButtonEventArgs e)
+        {
+            var learn = new LearningCuAndFpu();
+            learn.LearnCu();
+        }
+
+        private void Fpu_Click(object sender, MouseButtonEventArgs e)
+        {
+            var learn = new LearningCuAndFpu();
+            learn.LearnFpu();
         }
     }
 }

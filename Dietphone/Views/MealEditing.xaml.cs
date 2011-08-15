@@ -6,6 +6,7 @@ using Telerik.Windows.Controls;
 using Dietphone.Tools;
 using System.Windows.Navigation;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dietphone.Views
 {
@@ -30,6 +31,11 @@ namespace Dietphone.Views
                 ViewModel.GotDirty += viewModel_GotDirty;
                 ViewModel.CannotSave += viewModel_CannotSave;
                 ViewModel.ItemEditing = ItemEditing.ViewModel;
+                ViewModel.InvalidateItems += ViewModel_InvalidateItems;
+            }
+            else
+            {
+                ViewModel.ReturnedFromNavigation();
             }
         }
 
@@ -184,6 +190,16 @@ namespace Dietphone.Views
             {
                 itemsGrid.HideColumnWithIndex(4);
             }
+        }
+
+        private void Score_Click(object sender, MouseButtonEventArgs e)
+        {
+            ViewModel.ScoresSettings();
+        }
+
+        private void ViewModel_InvalidateItems(object sender, EventArgs e)
+        {
+            Items.ForceInvalidate();
         }
     }
 }

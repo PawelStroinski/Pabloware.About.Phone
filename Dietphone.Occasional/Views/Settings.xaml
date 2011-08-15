@@ -21,7 +21,7 @@
 
     <Grid Background="Transparent">
         <controls:Pivot Title="USTAWIENIA">
-            <controls:PivotItem Header="obliczanie">
+            <controls:PivotItem Header="wyniki">
                 <Grid>
                     <ScrollViewer>
                         <StackPanel Margin="0,22,0,0">
@@ -37,14 +37,14 @@
                                     <HyperlinkButton Style="{StaticResource AccentHyperlink}"
                                                      Content="Dowiedz się więcej o WW i WBT..."
                                                      Margin="0,42,12,7"
-                                                     Click="LearnCuFpu_Click"/>
+                                                     Click="LearnCuAndFpu_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
-            <controls:PivotItem Header="regionalne">
+            <controls:PivotItem Header="język">
                 <Grid>
                     <StackPanel>
                         <StackPanel Margin="12,0,12,13" Orientation="Vertical">

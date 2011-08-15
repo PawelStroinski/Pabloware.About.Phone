@@ -15,13 +15,10 @@ namespace Dietphone.Views
             DataContext = viewModel;
         }
 
-        private void LearnCuFpu_Click(object sender, RoutedEventArgs e)
+        private void LearnCuAndFpu_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(@"WW czyli wymiennik węglowodanowy to ilość węglowodanów przyswajalnych w gramach podzielona przez 10.
-Został wprowadzony, żeby łatwiej liczyło się węglowodany w posiłku.
-
-WBT czyli wymiennik białkowo-tłuszczowy to wartość energetyczna (kcal) pochodząca z białka i tłuszczu podzielona przez 100.
-Pozwala w jednej poręcznej liczbie określić zawartość białka i tłuszczu w posiłku.");
+            var learn = new LearningCuAndFpu();
+            learn.LearnCuAndFpu();
         }
     }
 }
