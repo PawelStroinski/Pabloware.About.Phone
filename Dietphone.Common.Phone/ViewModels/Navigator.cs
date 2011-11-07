@@ -19,7 +19,7 @@ namespace Dietphone.ViewModels
         bool ShouldAddMealItem();
     }
 
-    public enum Assembly { Default, Occasional, Medium };
+    public enum Assembly { Default, Sometimes, Rarely };
 
     public class NavigatorImpl : Navigator
     {
@@ -62,7 +62,7 @@ namespace Dietphone.ViewModels
             idName = PRODUCT_ID_TO_EDIT;
             idValue = productId;
             path = "/Views/ProductEditing.xaml";
-            assembly = Assembly.Medium;
+            assembly = Assembly.Sometimes;
             NavigateWithId();
         }
 
@@ -84,21 +84,21 @@ namespace Dietphone.ViewModels
         public void GoToAbout()
         {
             path = "/Views/About.xaml";
-            assembly = Assembly.Occasional;
+            assembly = Assembly.Rarely;
             Navigate();
         }
 
         public void GoToExportAndImport()
         {
             path = "/Views/ExportAndImport.xaml";
-            assembly = Assembly.Occasional;
+            assembly = Assembly.Rarely;
             Navigate();
         }
 
         public void GoToSettings()
         {
             path = "/Views/Settings.xaml";
-            assembly = Assembly.Occasional;
+            assembly = Assembly.Rarely;
             Navigate();
         }
 
@@ -179,10 +179,10 @@ namespace Dietphone.ViewModels
         {
             switch (assembly)
             {
-                case Assembly.Occasional:
-                    return "/Dietphone.Occasional;component";
-                case Assembly.Medium:
-                    return "/Dietphone.Medium;component";
+                case Assembly.Sometimes:
+                    return "/Dietphone.Sometimes.Phone;component";
+                case Assembly.Rarely:
+                    return "/Dietphone.Rarely.Phone;component";
                 default:
                     return string.Empty;
             }

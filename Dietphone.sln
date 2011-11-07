@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone", "Dietphone\Dietphone.csproj", "{87742C9F-0ED0-48E1-81D6-F5DFFF417259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Occasional", "Dietphone.Occasional\Dietphone.Occasional.csproj", "{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Rarely.Phone", "Dietphone.Rarely.Phone\Dietphone.Rarely.Phone.csproj", "{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common", "Dietphone.Common\Dietphone.Common.csproj", "{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Common.Phone", "Dietphone.Common.Phone\Dietphone.Common.Phone.csproj", "{053D7B63-D632-4332-8263-E6B667AE86CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Medium", "Dietphone.Medium\Dietphone.Medium.csproj", "{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dietphone.Sometimes.Phone", "Dietphone.Sometimes.Phone\Dietphone.Sometimes.Phone.csproj", "{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

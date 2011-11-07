@@ -215,13 +215,13 @@
       <Project>{6D7F0A0C-AF4E-4CAC-B82B-35C703FDAF55}</Project>
       <Name>Dietphone.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dietphone.Medium\Dietphone.Medium.csproj">
+    <ProjectReference Include="..\Dietphone.Sometimes.Phone\Dietphone.Sometimes.Phone.csproj">
       <Project>{BDC02E97-D6B0-48A8-ABFD-6CFB46DE1D38}</Project>
-      <Name>Dietphone.Medium</Name>
+      <Name>Dietphone.Sometimes.Phone</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dietphone.Occasional\Dietphone.Occasional.csproj">
+    <ProjectReference Include="..\Dietphone.Rarely.Phone\Dietphone.Rarely.Phone.csproj">
       <Project>{6799EBF8-6CFB-4E40-8743-8DEFD9D4F1AF}</Project>
-      <Name>Dietphone.Occasional</Name>
+      <Name>Dietphone.Rarely.Phone</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
