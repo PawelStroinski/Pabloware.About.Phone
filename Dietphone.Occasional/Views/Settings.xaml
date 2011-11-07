@@ -49,11 +49,11 @@
                     <StackPanel>
                         <StackPanel Margin="12,0,12,13" Orientation="Vertical">
                             <TextBlock Text="Język aplikacji" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
-                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding Languages}" Style="{StaticResource OsListPickerStyle}"/>
+                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding UiCulture, Mode=TwoWay}" ItemsSource="{Binding UiCultures}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
                         <StackPanel Margin="12,0,12,-11" Orientation="Vertical">
                             <TextBlock Text="Lokalizacja bazy produktów" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
-                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding Product.ServingSizeUnit, Mode=TwoWay}" ItemsSource="{Binding ProductLocalisations}" Style="{StaticResource OsListPickerStyle}"/>
+                            <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding ProductCulture, Mode=TwoWay}" ItemsSource="{Binding ProductCultures}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
                         <TextBlock Text="Lokalizację bazy produktów możesz zmieniać wielokrotnie. Jest to przydatne, jeśli często podróżujesz." FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
                     </StackPanel>

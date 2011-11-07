@@ -2,25 +2,23 @@
 using System;
 using System.Collections.Generic;
 using Dietphone.Models;
+using System.Globalization;
 
 namespace Dietphone.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        public List<string> Languages { get; private set; }
-        public List<string> ProductLocalisations { get; private set; }
+        public List<string> UiCultures { get; private set; }
+        public List<string> ProductCultures { get; private set; }
         private readonly Settings settings;
         private const byte MAX_SCORES = 4;
 
         public SettingsViewModel(Factories factories)
         {
             settings = factories.Settings;
-            Languages = new List<string>();
-            ProductLocalisations = new List<string>();
-            Languages.Add("polski");
-            Languages.Add("angielski");
-            ProductLocalisations.Add("polski (Polska)");
-            ProductLocalisations.Add("angielski (Stany Zjednoczone)");
+            UiCultures = new List<string>();
+            ProductCultures = new List<string>();
+            BuildUiCulturesAndProductCultures();
         }
 
         public bool ScoreEnergy
@@ -143,6 +141,34 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public string UiCulture
+        {
+            get
+            {
+                var cultureName = settings.NextUiCulture;
+                return GetUiCultureFromCultureName(cultureName);
+            }
+            set
+            {
+                var cultureName = FindCultureNameByUiCulture(value);
+                settings.NextUiCulture = cultureName;
+            }
+        }
+
+        public string ProductCulture
+        {
+            get
+            {
+                var cultureName = settings.NextProductCulture;
+                return GetProductCultureFromCultureName(cultureName);
+            }
+            set
+            {
+                var cultureName = FindCultureNameByProductCulture(value);
+                settings.NextProductCulture = cultureName;
+            }
+        }
+
         private void DisableFpuAndCuIfTooManyScores()
         {
             if (IsTooManyScores)
@@ -180,6 +206,50 @@ namespace Dietphone.ViewModels
                     Convert.ToByte(ScoreCu) + Convert.ToByte(ScoreFpu);
                 return scoresCount > MAX_SCORES;
             }
+        }
+
+        private void BuildUiCulturesAndProductCultures()
+        {
+            var cultures = new Cultures();
+            foreach (var cultureName in cultures.SupportedCultures)
+            {
+                var uiCulture = GetUiCultureFromCultureName(cultureName);
+                var productCulture = GetProductCultureFromCultureName(cultureName);
+                UiCultures.Add(uiCulture);
+                ProductCultures.Add(productCulture);
+            }
+        }
+
+        private string GetUiCultureFromCultureName(string cultureName)
+        {
+            var result = GetProductCultureFromCultureName(cultureName);
+            var bracketPos = result.IndexOf('(');
+            if (bracketPos != -1)
+            {
+                result = result.Remove(bracketPos);
+                result = result.Trim();
+            }
+            return result;
+        }
+
+        private string GetProductCultureFromCultureName(string cultureName)
+        {
+            var culture = new CultureInfo(cultureName);
+            return culture.DisplayName;
+        }
+
+        private string FindCultureNameByUiCulture(string uiCulture)
+        {
+            var index = UiCultures.IndexOf(uiCulture);
+            var cultures = new Cultures();
+            return cultures.SupportedCultures[index];
+        }
+
+        private string FindCultureNameByProductCulture(string productCulture)
+        {
+            var index = ProductCultures.IndexOf(productCulture);
+            var cultures = new Cultures();
+            return cultures.SupportedCultures[index];
         }
     }
 }

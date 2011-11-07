@@ -11,58 +11,80 @@ namespace Dietphone.Models
         public bool ScoreFat { get; set; }
         public bool ScoreCu { get; set; }
         public bool ScoreFpu { get; set; }
-        public string NextUiCulture { get; set; }
-        public string NextProductCulture { get; set; }
-        private string lastUiCulture;
-        private string lastProductCulture;
-        private readonly object uiCultureLock = new object();
-        private readonly object productCultureLock = new object();
+        private string currentUiCulture;
+        private string currentProductCulture;
+        private string nextUiCulture;
+        private string nextProductCulture;
+        private readonly object currentUiCultureLock = new object();
+        private readonly object currentProductCultureLock = new object();
+        private readonly object nextUiCultureLock = new object();
+        private readonly object nextProductCultureLock = new object();
 
-        public string UiCulture
+        public string CurrentUiCulture
         {
             get
             {
-                lock (uiCultureLock)
+                lock (currentUiCultureLock)
                 {
-                    if (string.IsNullOrEmpty(lastUiCulture))
+                    if (string.IsNullOrEmpty(currentUiCulture))
                     {
-                        MakeSureNextUiCultureExists();
-                        lastUiCulture = NextUiCulture;
+                        currentUiCulture = NextUiCulture;
                     }
-                    return lastUiCulture;
+                    return currentUiCulture;
                 }
             }
         }
 
-        public string ProductCulture
+        public string CurrentProductCulture
         {
             get
             {
-                lock (productCultureLock)
+                lock (currentProductCultureLock)
                 {
-                    if (string.IsNullOrEmpty(lastProductCulture))
+                    if (string.IsNullOrEmpty(currentProductCulture))
                     {
-                        MakeSureNextProductCultureExists();
-                        lastProductCulture = NextProductCulture;
+                        currentProductCulture = NextProductCulture;
                     }
-                    return lastProductCulture;
+                    return currentProductCulture;
                 }
             }
         }
 
-        private void MakeSureNextUiCultureExists()
+        public string NextUiCulture
         {
-            if (string.IsNullOrEmpty(NextUiCulture))
+            get
             {
-                NextUiCulture = GetDefaultCulture();
+                lock (nextUiCultureLock)
+                {
+                    if (string.IsNullOrEmpty(nextUiCulture))
+                    {
+                        nextUiCulture = GetDefaultCulture();
+                    }
+                    return nextUiCulture;
+                }
+            }
+            set
+            {
+                nextUiCulture = value;
             }
         }
 
-        private void MakeSureNextProductCultureExists()
+        public string NextProductCulture
         {
-            if (string.IsNullOrEmpty(NextProductCulture))
+            get
             {
-                NextProductCulture = GetDefaultCulture();
+                lock (nextProductCultureLock)
+                {
+                    if (string.IsNullOrEmpty(nextProductCulture))
+                    {
+                        nextProductCulture = GetDefaultCulture();
+                    }
+                    return nextProductCulture;
+                }
+            }
+            set
+            {
+                nextProductCulture = value;
             }
         }
 

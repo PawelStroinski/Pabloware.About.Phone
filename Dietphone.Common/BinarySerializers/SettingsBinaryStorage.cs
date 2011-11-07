@@ -30,8 +30,8 @@ namespace Dietphone.BinarySerializers
             writer.Write(item.ScoreFat);
             writer.Write(item.ScoreCu);
             writer.Write(item.ScoreFpu);
-            writer.Write(item.NextUiCulture);
-            writer.Write(item.NextProductCulture);
+            writer.WriteString(item.NextUiCulture);
+            writer.WriteString(item.NextProductCulture);
         }
 
         public override void ReadItem(BinaryReader reader, Settings item)
