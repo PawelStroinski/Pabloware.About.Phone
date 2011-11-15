@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"
+    xmlns:views="clr-namespace:Dietphone.Views;assembly=Dietphone.Common.Phone"
     mc:Ignorable="d">
 
     <Application.Resources>
@@ -135,6 +136,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <views:TranslationsFactory x:Key="Translations"/>
 
     </Application.Resources>
 

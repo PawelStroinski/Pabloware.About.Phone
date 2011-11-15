@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\ViewModelWithBuffer.cs" />
     <Compile Include="Views\InteractionEffectContainer.cs" />
     <Compile Include="Views\LearningCuAndFpu.cs" />
+    <Compile Include="Views\TranslationsFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dietphone.Common\Dietphone.Common.csproj">
