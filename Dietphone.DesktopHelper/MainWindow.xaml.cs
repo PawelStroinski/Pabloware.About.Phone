@@ -45,18 +45,25 @@ namespace Dietphone.DesktopHelper
         private void SetDefaultSettings_Click(object sender, RoutedEventArgs e)
         {
             var settings = factories.Settings;
-            settings.CalculateEnergy = true;
-            settings.CalculateProteinInGrams = true;
-            settings.CalculateDigestibleCarbsInGrams = true;
-            settings.CalculateFatInGrams = true;
-            settings.CalculateCu = false;
-            settings.CalculateFpu = false;
-            settings.FirstRun = true;
+            settings.ScoreEnergy = true;
+            settings.ScoreProtein = true;
+            settings.ScoreDigestibleCarbs = true;
+            settings.ScoreFat = true;
+            settings.ScoreCu = false;
+            settings.ScoreFpu = false;
+            // These strings should be emptied manually in binary file (including setting their length at beginning)
+            settings.NextProductCulture = "DELETEME";
+            settings.NextUiCulture = "DELETEME";
         }
 
         private void ClearMeals_Click(object sender, RoutedEventArgs e)
         {
             factories.Meals.Clear();
+        }
+
+        private void OpenProducts_Click(object sender, RoutedEventArgs e)
+        {
+            var products = factories.Products;
         }
     }
 }
