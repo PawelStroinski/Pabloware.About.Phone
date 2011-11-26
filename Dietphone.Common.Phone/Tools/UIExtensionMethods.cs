@@ -65,6 +65,13 @@ namespace Dietphone.Tools
             return icons[whichIcon] as ApplicationBarIconButton;
         }
 
+        public static ApplicationBarMenuItem GetMenuItem(this PhoneApplicationPage page, int whichMenuItem)
+        {
+            var appBar = page.ApplicationBar;
+            var menuItems = appBar.MenuItems;
+            return menuItems[whichMenuItem] as ApplicationBarMenuItem;
+        }
+
         public static Visibility ToVisibility(this bool visible)
         {
             if (visible)

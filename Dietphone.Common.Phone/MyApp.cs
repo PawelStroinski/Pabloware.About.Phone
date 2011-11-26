@@ -32,6 +32,15 @@ namespace Dietphone
             }
         }
 
+        public static string CurrentUiCulture
+        {
+            get
+            {
+                var settings = Factories.Settings;
+                return settings.CurrentUiCulture;
+            }
+        }
+
         private static void CreateFactories()
         {
             StorageCreator binary = new PhoneBinaryStorageCreator();

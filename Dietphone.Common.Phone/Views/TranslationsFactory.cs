@@ -26,9 +26,7 @@ namespace Dietphone.Views
 
         private static void SetCulture()
         {
-            var factories = MyApp.Factories;
-            var settings = factories.Settings;
-            var cultureName = settings.CurrentUiCulture;
+            var cultureName = MyApp.CurrentUiCulture;
             var culture = new CultureInfo(cultureName);
             Translations.Culture = culture;
         }

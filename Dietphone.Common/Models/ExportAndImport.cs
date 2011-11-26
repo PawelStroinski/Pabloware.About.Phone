@@ -120,7 +120,7 @@ namespace Dietphone.Models
 
         public sealed class MealDTO : Meal
         {
-            public List<MealItem> Items
+            public new List<MealItem> Items
             {
                 get
                 {
