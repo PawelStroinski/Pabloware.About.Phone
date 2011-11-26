@@ -25,13 +25,14 @@ namespace Dietphone.Views
             DataContext = ViewModel;
             SetWindowBackground();
             SetWindowSize();
+            TranslateButtons();
         }
 
         private void ViewModel_ExportAndSendSuccessful(object sender, EventArgs e)
         {
             Dispatcher.BeginInvoke(() =>
             {
-                MessageBox.Show("Eksport zakończony sukcesem.");
+                MessageBox.Show(Translations.ExportCompletedSuccessfully);
             });
         }
 
@@ -39,7 +40,7 @@ namespace Dietphone.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                MessageBox.Show("Import zakończony sukcesem.");
+                MessageBox.Show(Translations.ImportCompletedSuccessfully);
             });
         }
 
@@ -47,8 +48,7 @@ namespace Dietphone.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                MessageBox.Show("Wystąpił błąd podczas wysyłania eksportowanych danych. " +
-                    "Upewnij się, że masz dostęp do internetu i adres e-mail jest prawidłowy.");
+                MessageBox.Show(Translations.AnErrorOccurredWhileSendingTheExportedData);
             });
         }
 
@@ -56,8 +56,7 @@ namespace Dietphone.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                MessageBox.Show("Wystąpił błąd podczas pobierania importowanych danych. " +
-                    "Upewnij się, że masz dostęp do internetu i adres pliku jest prawidłowy.");
+                MessageBox.Show(Translations.AnErrorOccurredWhileRetrievingTheImportedData);
             });
         }
 
@@ -65,15 +64,14 @@ namespace Dietphone.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                MessageBox.Show("Wystąpił błąd podczas importu. " +
-                    "Upewnij się, że importowane dane nie były naruszone.");
+                MessageBox.Show(Translations.AnErrorOccurredDuringImport);
             });
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
             exportMode = true;
-            Info.Text = "Adres e-mail do wysłania";
+            Info.Text = Translations.SendToAnEMailAddress;
             Input.Text = string.Empty;
             Input.InputScope = InputScopeNameValue.EmailSmtpAddress.GetInputScope();
             Window.IsOpen = true;
@@ -82,7 +80,7 @@ namespace Dietphone.Views
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             exportMode = false;
-            Info.Text = "Adres pliku do pobrania";
+            Info.Text = Translations.DownloadFileFromAddress;
             Input.Text = "http://";
             Input.InputScope = InputScopeNameValue.Url.GetInputScope();
             Window.IsOpen = true;
@@ -137,6 +135,14 @@ namespace Dietphone.Views
                 var size = new Size(Application.Current.RootVisual.RenderSize.Width, double.NaN);
                 Window.WindowSize = size;
             };
+        }
+
+        private void TranslateButtons()
+        {
+            Export.Line1 = Translations.Export;
+            Export.Line2 = Translations.AllowsSendingDataAttachedToAnEMail;
+            Import.Line1 = Translations.Import;
+            Import.Line2 = Translations.AllowsToRetrieveDataFromAFileInXmlFormat;
         }
     }
 }

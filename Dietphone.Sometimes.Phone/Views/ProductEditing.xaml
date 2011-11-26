@@ -40,15 +40,15 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="PRODUKT">
+        <controls:Pivot Title="{Binding Translations.Product, Source={StaticResource Translations}}">
             <!--ogólne-->
-            <controls:PivotItem Header="ogólne">
+            <controls:PivotItem Header="{Binding Translations.General, Source={StaticResource Translations}}">
                 <StackPanel Margin="12,0">
                     <TextBox Height="72" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Top" Margin="0,0,0,4" InputScope="Text" Name="NameBox"/>
-                    <telerikInput:RadListPicker Header="Kategoria" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Category" ItemClick="Categories_ItemClick" InlineModeThreshold="0">
+                    <telerikInput:RadListPicker Header="{Binding Translations.Category, Source={StaticResource Translations}}" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category, Mode=TwoWay}" Style="{StaticResource CategoriesStyle}" IsAnimationEnabled="False" Name="Category" ItemClick="Categories_ItemClick" InlineModeThreshold="0">
                         <telerikInput:RadListPicker.PopupHeader>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="KATEGORIA" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
+                                <TextBlock Text="{Binding Translations.CategoryUppercase, Source={StaticResource Translations}}" Margin="12, 24, 0, 24" FontWeight="SemiBold" Width="168"/>
                                 <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddCategory_Click"/>
                                 <c4f:RoundButton ImageSource="/images/appbar.edit.rest.png" Click="EditCategory_Click"/>
                                 <c4f:RoundButton ImageSource="/images/appbar.delete.rest.png" Click="DeleteCategory_Click"/>
@@ -73,32 +73,32 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Wartość odżywcza w 100 g" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="{Binding Translations.NutritionalValuePer100g, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-                        <TextBlock Text="Białko (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.ProteinG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.ProteinPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="1">
-                        <TextBlock Text="Węglowodany (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.CarbohydratesG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.CarbsTotalPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="2">
-                        <TextBlock Text="Tłuszcz (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.FatG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FatPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="2">
-                        <TextBlock Text="Błonnik (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.DietaryFiberG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FiberPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="3">
-                        <TextBlock Text="Wartość energetyczna (kcal)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.EnergyCaloriesUppercase, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.EnergyPer100g, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="3">
-                        <TextBlock Text="Węglowodany przyswajalne (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.DigestibleCarbsG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPer100g}" IsReadOnly="True"/>
                     </StackPanel>
-                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="Pełny kwadrat oznacza maksimum w kategorii." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,7,24,9" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding Translations.FullSquareMeansMaximumInCategory, Source={StaticResource Translations}}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,7,24,9" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
                     <commonViews:InteractionEffectContainer Margin="24,0,18,0" Grid.Column="0" Grid.Row="5" MouseLeftButtonUp="Cu_Click">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Fill="{StaticResource PhoneAccentBrush}" Width="{Binding Product.DoubledWidthOfFilledCuRect}" Height="50" VerticalAlignment="Center" />
@@ -117,7 +117,7 @@
             </controls:PivotItem>
 
             <!--porcja-->
-            <controls:PivotItem Header="porcja">
+            <controls:PivotItem Header="{Binding Translations.Serving, Source={StaticResource Translations}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -130,13 +130,13 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Wartość odżywcza w porcji" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                    <TextBlock Text="{Binding Translations.NutritionalValuePerServing, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Margin="21,0,0,21" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-                        <TextBlock Text="Opis porcji" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.ServingDescription, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="Text" Text="{Binding Product.ServingSizeDescription, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="1">
-                        <TextBlock Text="Rozmiar porcji" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.ServingSize, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -147,27 +147,27 @@
                         </Grid>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="2">
-                        <TextBlock Text="Białko (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.ProteinG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.ProteinPerServing, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="2">
-                        <TextBlock Text="Węglowodany (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.CarbohydratesG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.CarbsTotalPerServing, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="3">
-                        <TextBlock Text="Tłuszcz (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.FatG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FatPerServing, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="3">
-                        <TextBlock Text="Błonnik (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.DietaryFiberG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.FiberPerServing, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="12,0,6,13" Orientation="Vertical" Grid.Column="0" Grid.Row="4">
-                        <TextBlock Text="Wartość energetyczna (kcal)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.EnergyCaloriesUppercase, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.EnergyPerServing, Mode=TwoWay}"/>
                     </StackPanel>
                     <StackPanel Margin="6,0,12,13" Orientation="Vertical" Grid.Column="1" Grid.Row="4">
-                        <TextBlock Text="Węglowodany przyswajalne (g)" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                        <TextBlock Text="{Binding Translations.DigestibleCarbsG, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                         <TextBox Height="72" InputScope="TelephoneNumber" Text="{Binding Product.DigestibleCarbsPerServing}" IsReadOnly="True"/>
                     </StackPanel>
                 </Grid>
@@ -178,10 +178,10 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/images/appbar.save.rest.png" Text="zapisz" IsEnabled="False" Click="Save_Click" x:Name="Save" />
-            <shell:ApplicationBarIconButton IconUri="/images/appbar.cancel.rest.png" Text="anuluj" Click="Cancel_Click" />
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.save.rest.png" Text="-" IsEnabled="False" Click="Save_Click" x:Name="Save" />
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.cancel.rest.png" Text="-" Click="Cancel_Click" />
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="usuń" Click="Delete_Click"/>
+                <shell:ApplicationBarMenuItem Text="-" Click="Delete_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

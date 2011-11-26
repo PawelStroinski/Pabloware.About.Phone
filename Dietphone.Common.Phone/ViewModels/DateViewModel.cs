@@ -1,6 +1,7 @@
 ﻿using System;
 using Dietphone.Tools;
 using System.Globalization;
+using Dietphone.Views;
 
 namespace Dietphone.ViewModels
 {
@@ -48,15 +49,15 @@ namespace Dietphone.ViewModels
         {
             if (IsGroupOfOlder)
             {
-                return "starsze";
+                return Translations.Older;
             }
             if (Date.IsYesterday())
             {
-                return "wczoraj";
+                return Translations.Yesterday;
             }
             if (Date.IsToday())
             {
-                return "dziś";
+                return Translations.Today;
             }
             return Date.ToShortDateInAlternativeFormat();
         }

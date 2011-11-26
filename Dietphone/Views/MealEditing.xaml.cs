@@ -19,6 +19,7 @@ namespace Dietphone.Views
             InitializeComponent();
             InteractionEffectManager.AllowedTypes.Add(typeof(RadDataBoundListBoxItem));
             Save = this.GetIcon(0);
+            TranslateApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -44,8 +45,8 @@ namespace Dietphone.Views
             MealName.QuicklyCollapse();
             var input = new XnaInputBox(this)
             {
-                Title = "DODAJ NAZWĘ",
-                Description = "Nazwa"
+                Title = Translations.AddName,
+                Description = Translations.Name
             };
             input.Show();
             input.Confirmed += delegate
@@ -63,7 +64,7 @@ namespace Dietphone.Views
             }
             else
             {
-                MessageBox.Show(ViewModel.NameOfName, "Nie można edytować tej nazwy.",
+                MessageBox.Show(ViewModel.NameOfName, Translations.CannotEditThisName,
                     MessageBoxButton.OK);
             }
         }
@@ -73,8 +74,8 @@ namespace Dietphone.Views
             MealName.QuicklyCollapse();
             var input = new XnaInputBox(this)
             {
-                Title = "EDYTUJ NAZWĘ",
-                Description = "Nazwa",
+                Title = Translations.EditName,
+                Description = Translations.Name,
                 Text = ViewModel.NameOfName
             };
             input.Show();
@@ -93,7 +94,7 @@ namespace Dietphone.Views
             }
             else
             {
-                MessageBox.Show(ViewModel.NameOfName, "Nie można usunąć tej nazwy.",
+                MessageBox.Show(ViewModel.NameOfName, Translations.CannotDeleteThisName,
                     MessageBoxButton.OK);
             }
         }
@@ -101,9 +102,9 @@ namespace Dietphone.Views
         private void DeleteMealNameDo()
         {
             if (MessageBox.Show(
-                String.Format("Czy na pewno chcesz trwale usunąć tę nazwę?\r\n\r\n{0}",
+                String.Format(Translations.AreYouSureYouWantToPermanentlyDeleteThisName,
                 ViewModel.NameOfName),
-                "Usunąć nazwę?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                Translations.DeleteName, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 Save.IsEnabled = false;
                 MealName.QuicklyCollapse();
@@ -135,9 +136,9 @@ namespace Dietphone.Views
         private void Delete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show(
-                String.Format("Czy na pewno chcesz trwale usunąć ten posiłek?\r\n\r\n{0}",
+                String.Format(Translations.AreYouSureYouWantToPermanentlyDeleteThisMeal,
                 ViewModel.IdentifiableName),
-                "Usunąć posiłek?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                Translations.DeleteMeal, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 ViewModel.DeleteAndSaveAndReturn();
             }
@@ -150,7 +151,7 @@ namespace Dietphone.Views
 
         private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
         {
-            e.Ignore = (MessageBox.Show(e.Reason, "Czy na pewno chcesz zapisać ten posiłek?",
+            e.Ignore = (MessageBox.Show(e.Reason, Translations.AreYouSureYouWantToSaveThisMeal,
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
         }
 
@@ -200,6 +201,13 @@ namespace Dietphone.Views
         private void ViewModel_InvalidateItems(object sender, EventArgs e)
         {
             Items.ForceInvalidate();
+        }
+
+        private void TranslateApplicationBar()
+        {
+            Save.Text = Translations.Save;
+            this.GetIcon(1).Text = Translations.Cancel;
+            this.GetMenuItem(0).Text = Translations.Delete;
         }
     }
 }

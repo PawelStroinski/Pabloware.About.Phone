@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dietphone.Tools;
+using Dietphone.Views;
 
 namespace Dietphone.Models
 {
@@ -133,7 +134,7 @@ namespace Dietphone.Models
         {
             if (!AnyNutrientsPer100gPresent)
             {
-                return "Nie podano żadnych wartości odżywczych w 100 g.";
+                return Translations.NotSpecifiedNutritionalValuePer100g;
             }
             return string.Empty;
         }
@@ -145,7 +146,8 @@ namespace Dietphone.Models
             var diff = Math.Abs(typed - calculated);
             if (diff > ENERGY_DIFF_TOLERANCE)
             {
-                return String.Format("W 100 g produktu prawdopodobnie powinno być {0} kcal (+/-{1} kcal) a jest {2} kcal.", calculated, ENERGY_DIFF_TOLERANCE, typed);
+                return String.Format(Translations.In100gOfProductProbablyShouldBeCaloriesButIs,
+                    calculated, ENERGY_DIFF_TOLERANCE, typed);
             }
             return string.Empty;
         }
@@ -157,7 +159,8 @@ namespace Dietphone.Models
             var diff = Math.Abs(typed - calculated);
             if (diff > ENERGY_DIFF_TOLERANCE)
             {
-                return String.Format("W porcji produktu prawdopodobnie powinno być {0} kcal (+/-{1} kcal) a jest {2} kcal.", calculated, ENERGY_DIFF_TOLERANCE, typed);
+                return String.Format(Translations.InServingOfProductProbablyShouldBeCaloriesButIs,
+                    calculated, ENERGY_DIFF_TOLERANCE, typed);
             }
             return string.Empty;
         }
@@ -166,7 +169,7 @@ namespace Dietphone.Models
         {
             if (FiberPer100g > CarbsTotalPer100g || FiberPerServing > CarbsTotalPerServing)
             {
-                return "Nie może być więcej błonnika niż węglowodanów ogółem.";
+                return Translations.ThereMayNotBeMoreDietaryFiberThanCarbohydrates;
             }
             return string.Empty;
         }
@@ -177,20 +180,20 @@ namespace Dietphone.Models
             var sizePresent = ServingSizeValue != 0;
             if (descriptionPresent & !sizePresent)
             {
-                return "Podano opis porcji ale nie podano jej miary.";
+                return Translations.SpecifiedDescriptionOfServingSizeButNotTheSize;
             }
             if (sizePresent & !descriptionPresent)
             {
-                return "Podano rozmiar porcji ale nie podano jej opisu.";
+                return Translations.SpecifiedServingSizeButNotDescriptionOfServingSize;
             }
             var sizeInGrams = ServingSizeUnit == Unit.Gram;
             if (descriptionPresent & !sizeInGrams & !AnyNutrientsPerServingPresent)
             {
-                return "Podano porcję w innej jednostce niż gramy ale nie podano jej wartości odżywczych.";
+                return Translations.ServingSizeInADifferentUnitThanGramsIsSpecifiedBut;
             }
             if (AnyNutrientsPerServingPresent & !descriptionPresent)
             {
-                return "Podano wartości odżywcze porcji ale nie podano jej opisu.";
+                return Translations.NutritionalValuePerServingSizeIsSpecifiedButDesc;
             }
             return string.Empty;
         }
@@ -199,7 +202,7 @@ namespace Dietphone.Models
         {
             if (ServingSizeUnit == Unit.ServingSize)
             {
-                return "Jednostką w której podany jest rozmiar porcji nie może być porcja.";
+                return Translations.CantUseServingSizeAsAUnitOfSizeOfServingSize;
             }
             return string.Empty;
         }
@@ -212,23 +215,23 @@ namespace Dietphone.Models
             {
                 if (!IsServingNutrientProportional(EnergyPer100g, EnergyPerServing))
                 {
-                    return "Ilość kalorii w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
+                    return Translations.TheQuantityOfCaloriesInAServingSizeOfTheProductIs;
                 }
                 if (!IsServingNutrientProportional(ProteinPer100g, ProteinPerServing))
                 {
-                    return "Ilość białka w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
+                    return Translations.TheQuantityOfProteinInAServingSizeOfTheProductIs;
                 }
                 if (!IsServingNutrientProportional(FatPer100g, FatPerServing))
                 {
-                    return "Ilość tłuszczu w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
+                    return Translations.TheQuantityOfFatInAServingSizeOfTheProductIsNot;
                 }
                 if (!IsServingNutrientProportional(CarbsTotalPer100g, CarbsTotalPerServing))
                 {
-                    return "Ilość węglowodanów ogółem w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
+                    return Translations.TheQuantityOfTotalCarbohydratesInAServingSizeOfThe;
                 }
                 if (!IsServingNutrientProportional(FiberPer100g, FiberPerServing))
                 {
-                    return "Ilość błonnika pokarmowego w porcji produktu nie jest proporcjonalna do ilości w 100 g produktu.";
+                    return Translations.TheQuantityOfDietaryFiberInAServingSizeOfThe;
                 }
             }
             return string.Empty;
@@ -331,7 +334,7 @@ namespace Dietphone.Models
                 case Unit.Mililiter:
                     return "ml";
                 case Unit.ServingSize:
-                    return "porcja";
+                    return Translations.Serving;
                 default:
                     return string.Empty;
             }

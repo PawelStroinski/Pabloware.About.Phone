@@ -28,11 +28,11 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="DIETPHONE" x:Name="Pivot" x:FieldModifier="private" SelectionChanged="Pivot_SelectionChanged">
-            <controls:PivotItem Header="posiłki" x:Name="Meals" x:FieldModifier="private">
+        <controls:Pivot Title="{Binding Translations.Dietphone, Source={StaticResource Translations}}" x:Name="Pivot" x:FieldModifier="private" SelectionChanged="Pivot_SelectionChanged">
+            <controls:PivotItem Header="{Binding Path=Translations.Meals, Source={StaticResource Translations}}" x:Name="Meals" x:FieldModifier="private">
                 <views:MealListing HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="535" Margin="-12 0 -12 0" x:Name="MealListing" x:FieldModifier="private" DatesPoppedUp="MealListing_DatesPoppedUp" MouseEnter="MealListing_MouseEnter" />
             </controls:PivotItem>
-            <controls:PivotItem Header="produkty" x:Name="Products" x:FieldModifier="private">
+            <controls:PivotItem Header="{Binding Path=Translations.Products, Source={StaticResource Translations}}" x:Name="Products" x:FieldModifier="private">
                 <!--Width="480" Height="535" Margin="-12 0 -12 0"     /         Width="456" Height="535"-->
                 <views:ProductListing HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="535" Margin="-12 0 -12 0" x:Name="ProductListing" x:FieldModifier="private" CategoriesPoppedUp="ProductListing_CategoriesPoppedUp" MouseEnter="ProductListing_MouseEnter" />
             </controls:PivotItem>
@@ -41,7 +41,7 @@
             <Border.RenderTransform>
                 <CompositeTransform TranslateY="-100"/>
             </Border.RenderTransform>
-            <watermark:WatermarkTextBox Name="SearchBox" x:FieldModifier="private" Height="72" VerticalAlignment="Top" WatermarkText="Szukaj" KeyUp="SearchBox_KeyUp" Text="{Binding Search, Mode=TwoWay}">
+            <watermark:WatermarkTextBox Name="SearchBox" x:FieldModifier="private" Height="72" VerticalAlignment="Top" WatermarkText="{Binding Path=Translations.SearchUppercase, Source={StaticResource Translations}}" KeyUp="SearchBox_KeyUp" Text="{Binding Search, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                     <views:UpdateOnTextChangedBehavior/>
                 </i:Interaction.Behaviors>
@@ -53,12 +53,12 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton IconUri="/images/appbar.add.rest.png" Text="dodaj" Click="Add_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/images/appbar.feature.search.rest.png" Text="szukaj" Click="SearchIcon_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.add.rest.png" Text="-" Click="Add_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/images/appbar.feature.search.rest.png" Text="-" Click="SearchIcon_Click"/>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="ustawienia" Click="Settings_Click"/>
-                <shell:ApplicationBarMenuItem Text="eksport i import danych" Click="ExportAndImport_Click"/>
-                <shell:ApplicationBarMenuItem Text="o dietphone" Click="About_Click"/>
+                <shell:ApplicationBarMenuItem Text="-" Click="Settings_Click"/>
+                <shell:ApplicationBarMenuItem Text="-" Click="ExportAndImport_Click"/>
+                <shell:ApplicationBarMenuItem Text="-" Click="About_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

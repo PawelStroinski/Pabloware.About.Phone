@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Windows.Shapes;
 using Dietphone.Tools;
+using Dietphone.Views;
 
 namespace Dietphone.ViewModels
 {
@@ -21,20 +22,13 @@ namespace Dietphone.ViewModels
         private const string MAIL = "dietphone@pabloware.com";
         private const byte LICENSE_PIVOT = 1;
         private const byte DEFAULT_PIVOT = 0;
-        private const string PATH_TO_LICENSE = "documents/license.txt";
+        private const string PATH_TO_LICENSE = "/Dietphone.Rarely.Phone;component/documents/license.{0}.txt";
+        private const string CHANGELOG_URI = "http://www.pabloware.com/dietphone/changelog.{0}.xaml";
 
         public AboutViewModel(OptionalDispatcher dispatcher, ResourceStreamProvider resStreamProvider)
         {
             this.dispatcher = dispatcher;
             this.resStreamProvider = resStreamProvider;
-        }
-
-        public string AppNameUppercased
-        {
-            get
-            {
-                return AppName.ToUpper();
-            }
         }
 
         public string AppName
@@ -50,7 +44,15 @@ namespace Dietphone.ViewModels
             get
             {
                 var version = appVersion.GetAppVersion();
-                return string.Format("Wersja: {0}", version);
+                return string.Format(Translations.Version, version);
+            }
+        }
+
+        public string ChangelogUri
+        {
+            get
+            {
+                return string.Format(CHANGELOG_URI, MyApp.CurrentUiCulture);
             }
         }
 
@@ -106,7 +108,8 @@ namespace Dietphone.ViewModels
         {
             License = new StackPanel();
             var children = License.Children;
-            var stream = resStreamProvider.GetResourceStream(PATH_TO_LICENSE);
+            var pathToLicense = string.Format(PATH_TO_LICENSE, MyApp.CurrentUiCulture);
+            var stream = resStreamProvider.GetResourceStream(pathToLicense);
             using (var reader = new StreamReader(stream))
             {
                 string line = null;

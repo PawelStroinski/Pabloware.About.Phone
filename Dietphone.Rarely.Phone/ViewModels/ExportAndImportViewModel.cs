@@ -21,7 +21,7 @@ namespace Dietphone.ViewModels
         private bool isBusy;
         private bool readingFailedDuringImport;
         private readonly ExportAndImport exportAndImport;
-        private const string MAILEXPORT_URL = "http://bizmaster.pl/varia/dietphone/MailExport.aspx";
+        private const string MAILEXPORT_URL = "http://www.bizmaster.pl/varia/dietphone/MailExport.aspx";
         private const string MAILEXPORT_SUCCESS_RESULT = "Success!";
 
         public ExportAndImportViewModel(Factories factories)

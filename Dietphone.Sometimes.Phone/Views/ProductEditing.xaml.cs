@@ -18,6 +18,7 @@ namespace Dietphone.Views
             InitializeComponent();
             Save = this.GetIcon(0);
             Loaded += new RoutedEventHandler(ProductEditing_Loaded);
+            TranslateApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -43,8 +44,8 @@ namespace Dietphone.Views
             Category.IsExpanded = false;
             var input = new XnaInputBox(this)
             {
-                Title = "DODAJ KATEGORIĘ",
-                Description = "Nazwa"
+                Title = Translations.AddCategory,
+                Description = Translations.Name
             };
             input.Show();
             input.Confirmed += delegate
@@ -59,8 +60,8 @@ namespace Dietphone.Views
             Category.IsExpanded = false;
             var input = new XnaInputBox(this)
             {
-                Title = "EDYTUJ KATEGORIĘ",
-                Description = "Nazwa",
+                Title = Translations.EditCategory,
+                Description = Translations.Name,
                 Text = viewModel.CategoryName
             };
             input.Show();
@@ -79,18 +80,17 @@ namespace Dietphone.Views
             }
             else
             {
-                MessageBox.Show("Do tej kategorii należą inne produkty. " +
-                    "Zmień ich kategorię i spróbuj ponownie.",
-                    "Nie można usunąć", MessageBoxButton.OK);
+                MessageBox.Show(Translations.ThisCategoryIncludesOtherProducts,
+                    Translations.CannotDelete, MessageBoxButton.OK);
             }
         }
 
         private void DeleteCategory()
         {
             if (MessageBox.Show(
-                String.Format("Czy na pewno chcesz trwale usunąć tę kategorię?\r\n\r\n{0}",
+                String.Format(Translations.AreYouSureYouWantToPermanentlyDeleteThisCategory,
                 viewModel.CategoryName),
-                "Usunąć kategorię?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                Translations.DeleteCategory, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 Save.IsEnabled = false;
                 Category.IsExpanded = false;
@@ -123,9 +123,9 @@ namespace Dietphone.Views
         {
             var product = viewModel.Product;
             if (MessageBox.Show(
-                String.Format("Czy na pewno chcesz trwale usunąć ten produkt?\r\n\r\n{0}",
+                String.Format(Translations.AreYouSureYouWantToPermanentlyDeleteThisProduct,
                 product.Name),
-                "Usunąć produkt?", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                Translations.DeleteProduct, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 viewModel.DeleteAndSaveAndReturn();
             }
@@ -138,7 +138,7 @@ namespace Dietphone.Views
 
         private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
         {
-            e.Ignore = (MessageBox.Show(e.Reason, "Czy na pewno chcesz zapisać ten produkt?",
+            e.Ignore = (MessageBox.Show(e.Reason, Translations.AreYouSureYouWantToSaveThisProduct,
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
         }
 
@@ -158,6 +158,13 @@ namespace Dietphone.Views
         {
             var learn = new LearningCuAndFpu();
             learn.LearnFpu();
+        }
+
+        private void TranslateApplicationBar()
+        {
+            Save.Text = Translations.Save;
+            this.GetIcon(1).Text = Translations.Cancel;
+            this.GetMenuItem(0).Text = Translations.Delete;
         }
     }
 }

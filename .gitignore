@@ -29,3 +29,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 #Ignoruj plik z ikona folderu
 desktop.ini
+#Ignore Resource Editor project file because it contains absoulte filenames
+*.zreproj

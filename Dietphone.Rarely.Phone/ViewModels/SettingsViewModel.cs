@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using Dietphone.Models;
 using System.Globalization;
+using System.Windows;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
@@ -151,7 +153,11 @@ namespace Dietphone.ViewModels
             set
             {
                 var cultureName = FindCultureNameByUiCulture(value);
-                settings.NextUiCulture = cultureName;
+                if (settings.NextUiCulture != cultureName)
+                {
+                    settings.NextUiCulture = cultureName;
+                    OnPropertyChanged("CultureChanged");
+                }
             }
         }
 
@@ -165,7 +171,22 @@ namespace Dietphone.ViewModels
             set
             {
                 var cultureName = FindCultureNameByProductCulture(value);
-                settings.NextProductCulture = cultureName;
+                if (settings.NextProductCulture != cultureName)
+                {
+                    settings.NextProductCulture = cultureName;
+                    OnPropertyChanged("CultureChanged");
+                }
+            }
+        }
+
+        public Visibility CultureChanged
+        {
+            get
+            {
+                var uiCultureChanged = settings.CurrentUiCulture != settings.NextUiCulture;
+                var productCultureChanged = settings.CurrentProductCulture != settings.NextProductCulture;
+                var cultureChanged = uiCultureChanged || productCultureChanged;
+                return cultureChanged.ToVisibility();
             }
         }
 

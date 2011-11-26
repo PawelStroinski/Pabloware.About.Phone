@@ -29,6 +29,7 @@ namespace Dietphone.Views
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
+            TranslateApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -188,6 +189,15 @@ namespace Dietphone.Views
             {
                 Focus();
             }
+        }
+
+        private void TranslateApplicationBar()
+        {
+            this.GetIcon(0).Text = Translations.Add;
+            this.GetIcon(1).Text = Translations.Search;
+            this.GetMenuItem(0).Text = Translations.Settings;
+            this.GetMenuItem(1).Text = Translations.ExportAndImportData;
+            this.GetMenuItem(2).Text = Translations.About;
         }
     }
 }

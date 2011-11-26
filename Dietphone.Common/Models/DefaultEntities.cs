@@ -1,4 +1,5 @@
 ﻿using System;
+using Dietphone.Views;
 
 namespace Dietphone.Models
 {
@@ -33,7 +34,7 @@ namespace Dietphone.Models
                         var mealNames = owner.MealNames;
                         mealNames.Remove(mealName);
                         mealName.Id = Guid.Empty;
-                        mealName.Name = "Bez nazwy";
+                        mealName.Name = Translations.NoName;
                     }
                     return mealName;
                 }
@@ -52,7 +53,7 @@ namespace Dietphone.Models
                         var products = owner.Products;
                         products.Remove(product);
                         product.Id = Guid.Empty;
-                        product.Name = "Brak produktu";
+                        product.Name = Translations.NoProduct;
                     }
                     return product;
                 }

@@ -16,7 +16,7 @@
     <TargetFrameworkProfile>WindowsPhone</TargetFrameworkProfile>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>true</SilverlightApplication>
-	<SupportedCultures>pl-PL;</SupportedCultures>
+    <SupportedCultures>pl-PL;</SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>Dietphone.xap</XapFilename>
@@ -147,9 +147,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="documents\license.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="firstrun\categories.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

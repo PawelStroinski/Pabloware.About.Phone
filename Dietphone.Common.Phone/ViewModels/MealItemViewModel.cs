@@ -3,6 +3,7 @@ using Dietphone.Models;
 using Dietphone.Tools;
 using System.Collections.Generic;
 using System.Windows;
+using Dietphone.Views;
 
 namespace Dietphone.ViewModels
 {
@@ -135,7 +136,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = BufferOrModel.Energy;
-                return string.Format("{0} kcal", result);
+                return string.Format(Translations.Cal, result);
             }
         }
 
@@ -145,7 +146,7 @@ namespace Dietphone.ViewModels
             {
                 var value = BufferOrModel.Protein;
                 var rounded = (int)Math.Round(value);
-                return string.Format("{0} białk", rounded);
+                return string.Format(Translations.Prot, rounded);
             }
         }
 
@@ -155,7 +156,7 @@ namespace Dietphone.ViewModels
             {
                 var value = BufferOrModel.Fat;
                 var rounded = (int)Math.Round(value);
-                return string.Format("{0} tł", rounded);
+                return string.Format(Translations.Fat, rounded);
             }
         }
 
@@ -165,7 +166,7 @@ namespace Dietphone.ViewModels
             {
                 var value = BufferOrModel.DigestibleCarbs;
                 var rounded = (int)Math.Round(value);
-                return string.Format("{0} węgl", rounded);
+                return string.Format(Translations.Carb, rounded);
             }
         }
 
@@ -174,7 +175,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = BufferOrModel.Cu;
-                return string.Format("{0} WW", result);
+                return string.Format(Translations.Cu, result);
             }
         }
 
@@ -183,7 +184,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = BufferOrModel.Fpu;
-                return string.Format("{0} WBT", result);
+                return string.Format(Translations.Fpu, result);
             }
         }
 

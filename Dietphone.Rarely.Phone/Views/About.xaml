@@ -12,7 +12,7 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
+    SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
@@ -20,15 +20,15 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding AppNameUppercased}" SelectedIndex="{Binding SelectedPivot, Mode=TwoWay}">
+        <controls:Pivot Title="{Binding Translations.Dietphone, Source={StaticResource Translations}}" SelectedIndex="{Binding SelectedPivot, Mode=TwoWay}">
             <!--o aplikacji-->
-            <controls:PivotItem Header="o aplikacji">
+            <controls:PivotItem Header="{Binding Translations.AboutApp, Source={StaticResource Translations}}">
                 <ScrollViewer>
                     <StackPanel>
                         <!--AppName-->
                         <TextBlock Text="{Binding AppName}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" Margin="21,0,0,0"/>
                         <!--Publisher-->
-                        <TextBlock Text="od Pabloware" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
+                        <TextBlock Text="{Binding Translations.FromPabloware, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
                         <!--Web-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
@@ -41,37 +41,38 @@
                         <!--Review-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="Recenzuj tę aplikację"
+                                    Content="{Binding Translations.ReviewThisApp, Source={StaticResource Translations}}"
                                     Margin="12,1,12,7"
                                     Click="Review_Click"/>
                         <!--Feedback-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="Sugestie: dietphone@pabloware.com"
+                                    Content="{Binding Translations.SuggestionsMail, Source={StaticResource Translations}}"
                                     Margin="12,1,12,0"
                                     Click="Feddback_Click"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--licencja-->
-            <controls:PivotItem Header="licencja">
+            <controls:PivotItem Header="{Binding Translations.License, Source={StaticResource Translations}}">
                 <ScrollViewer Margin="0,0,-12,24">
                     <ContentPresenter Content="{Binding License}"/>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--nowości-->
-            <controls:PivotItem Header="co nowego">
+            <controls:PivotItem Header="{Binding Translations.WhatsNew, Source={StaticResource Translations}}">
                 <ScrollViewer>
                     <views:WebXamlBlock
                         Margin="0,0,12,24"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
-                        XamlUri="http://www.pabloware.com/dietphone/changelog.xaml">
+                        XamlUri="{Binding ChangelogUri}">
                         <views:WebXamlBlock.FallbackContent>
                             <StackPanel>
                                 <TextBlock
                                     TextWrapping="Wrap"
-                                    Style="{StaticResource PhoneTextLargeStyle}">Zapraszamy na nastepującą stronę w celu uzyskania informacji o najnowszej wersji aplikacji:</TextBlock>
+                                    Style="{StaticResource PhoneTextLargeStyle}"
+                                    Text="{Binding Translations.WeInviteYouToVisitThisPageForInformationAbout, Source={StaticResource Translations}}"/>
                                 <TextBlock
                                     Text=" " />
                                 <HyperlinkButton

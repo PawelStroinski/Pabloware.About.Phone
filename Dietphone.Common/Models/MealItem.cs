@@ -1,5 +1,6 @@
 ﻿using System;
 using Dietphone.Tools;
+using Dietphone.Views;
 
 namespace Dietphone.Models
 {
@@ -251,7 +252,7 @@ namespace Dietphone.Models
         {
             if (Product == DefaultEntities.Product)
             {
-                return "Produkt nie istnieje.";
+                return Translations.TheProductDoesNotExist;
             }
             return string.Empty;
         }
@@ -260,7 +261,7 @@ namespace Dietphone.Models
         {
             if (Value == 0)
             {
-                return "Nie podano ilości składnika.";
+                return Translations.QuantityOfTheIngredientWasNotSpecified;
             }
             return string.Empty;
         }
@@ -271,8 +272,7 @@ namespace Dietphone.Models
             if (canValidate && !UnitUsability.AnyNutrientsPerUnitPresent)
             {
                 var unit = Unit.GetAbbreviationOrServingSizeDesc(Product);
-                return string.Format("Brak informacji o wartościach odżywczych na jednostkę {0}. "
-                                     + "Wybierz inną jednostkę.", unit);
+                return string.Format(Translations.NoInformationAboutNutritionalValuePerUnit, unit);
             }
             return string.Empty;
         }

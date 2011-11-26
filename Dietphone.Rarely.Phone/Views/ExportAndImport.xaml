@@ -28,23 +28,24 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="DIETPHONE" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="eksport import" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding Translations.Dietphone, Source={StaticResource Translations}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding Translations.ExportAndImport, Source={StaticResource Translations}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
             <StackPanel Margin="12,14,12,0">
                 <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Export_Click">
-                    <views:MultiLineItem Line1="eksportuj" Line2="Umożliwia wysłanie danych w załączniku e-maila. Dane będą w formacie XML."/>
+                    <views:MultiLineItem x:Name="Export"/>
                 </Button>
                 <Button ContentTemplate="{StaticResource MultiLineButtonTemplate}" HorizontalContentAlignment="Left" Click="Import_Click">
-                    <views:MultiLineItem Line1="importuj" Line2="Umożliwia pobranie danych z pliku w formacie XML. Plik ten należy wcześniej wysłać na dowolny serwer, np. Google Docs."/>
+                    <views:MultiLineItem x:Name="Import"/>
                 </Button>
                 <TextBlock
                            Text=" " />
                 <TextBlock TextWrapping="Wrap" 
                            Visibility="{Binding IsBusyAsVisibility}"
-                           Style="{StaticResource PhoneTextTitle2Style}">Proszę czekać...</TextBlock>
+                           Style="{StaticResource PhoneTextTitle2Style}"
+                           Text="{Binding Translations.PleaseWait, Source={StaticResource Translations}}"/>
 
             </StackPanel>
         </StackPanel>
@@ -60,7 +61,7 @@
                                Name="Info"/>
                     <TextBox Height="72" 
                              Name="Input"/>
-                    <Button Content="gotowe" Click="Done_Click"/>
+                    <Button Content="{Binding Translations.Done, Source={StaticResource Translations}}" Click="Done_Click"/>
                 </StackPanel>
             </Border>
             <telerikPrimitives:RadModalWindow.OpenAnimation>

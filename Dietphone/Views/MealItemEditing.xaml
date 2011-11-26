@@ -17,9 +17,9 @@
     <telerikPrimitives:RadPickerBox x:Name="Picker" x:FieldModifier="private" Height="0" Width="0" PopupOpened="Picker_PopupOpened" PopupClosing="Picker_PopupClosing">
         <telerikPrimitives:RadPickerBox.ApplicationBarInfo>
             <telerikPrimitives:ApplicationBarInfo>
-                <telerikPrimitives:ApplicationBarButton Text="ok" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
-                <telerikPrimitives:ApplicationBarButton Text="anuluj" IconUri="/images/appbar.cancel.rest.png" Click="Cancel_Click"/>
-                <telerikPrimitives:ApplicationBarButton Text="usuń" IconUri="/images/appbar.delete.rest.png" Click="Delete_Click" x:Name="Delete" x:FieldModifier="private"/>
+                <telerikPrimitives:ApplicationBarButton Text="-" IconUri="/images/appbar.check.rest.png" Click="Ok_Click"/>
+                <telerikPrimitives:ApplicationBarButton Text="-" IconUri="/images/appbar.cancel.rest.png" Click="Cancel_Click"/>
+                <telerikPrimitives:ApplicationBarButton Text="-" IconUri="/images/appbar.delete.rest.png" Click="Delete_Click" x:Name="Delete" x:FieldModifier="private"/>
             </telerikPrimitives:ApplicationBarInfo>
         </telerikPrimitives:RadPickerBox.ApplicationBarInfo>
         <Grid Background="{StaticResource PhoneChromeBrush}">
@@ -28,7 +28,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="ILOŚĆ SKŁADNIKA" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
+            <TextBlock Text="{Binding Path=Translations.IngredientQuantity, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneSubtleBrush}" Margin="24, 26, 24, 26" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
             <Grid Grid.Row="1" Margin="14, 26, 14, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

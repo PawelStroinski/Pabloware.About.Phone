@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Dietphone.Tools;
 using System.Xml.Serialization;
+using Dietphone.Views;
 
 namespace Dietphone.Models
 {
@@ -147,7 +148,7 @@ namespace Dietphone.Models
                 if (!string.IsNullOrEmpty(itemValidation))
                 {
                     var itemNumber = Items.IndexOf(item) + 1;
-                    var itemFormatted = string.Format("Składnik nr {0} zawiera następujące błędy. {1}\r\n",
+                    var itemFormatted = string.Format(Translations.IngredientNoContainsFollowingErrors,
                         itemNumber, itemValidation);
                     validation += itemFormatted;
                 }

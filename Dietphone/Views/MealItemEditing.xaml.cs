@@ -24,6 +24,7 @@ namespace Dietphone.Views
                 Picker.IsPopupOpen = true;
                 controlledClosing = false;
             };
+            TranslateApplicationBar();
         }
 
         private void Unit_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -91,6 +92,16 @@ namespace Dietphone.Views
             {
                 ViewModel.Cancel();
             }
+        }
+
+        private void TranslateApplicationBar()
+        {
+            var applicationBar = Picker.ApplicationBarInfo;
+            var ok = applicationBar.Buttons[0];
+            var cancel = applicationBar.Buttons[1];
+            ok.Text = Translations.Ok;
+            cancel.Text = Translations.Cancel;
+            Delete.Text = Translations.Delete;
         }
     }
 }

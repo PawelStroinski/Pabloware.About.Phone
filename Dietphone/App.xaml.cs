@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using Telerik.Windows.Controls;
+using Dietphone.Views;
 
 namespace Dietphone
 {
@@ -90,7 +91,7 @@ namespace Dietphone
 
         private void SendExceptionQuestion(string exception)
         {
-            if (MessageBox.Show(exception, "A niech to, pluskwa w aplikacji! Zgłosić autorowi?",
+            if (MessageBox.Show(exception, Translations.BugInAppReportToTheAuthor,
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 SendException(exception);
@@ -122,8 +123,8 @@ namespace Dietphone
         {
             EmailComposeTask task = new EmailComposeTask();
             task.To = "dietphone@pabloware.com";
-            task.Body = String.Format("Zgłaszam poniższą pluskwę:\r\n\r\n{0}", exception);
-            task.Subject = "Pluskwa!";
+            task.Body = String.Format(Translations.IWouldLikeToReportTheFollowingBug, exception);
+            task.Subject = Translations.Bug;
             task.Show();
         }
     }

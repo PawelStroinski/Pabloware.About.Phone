@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dietphone.Models;
 using Dietphone.Tools;
+using Dietphone.Views;
 
 namespace Dietphone.ViewModels
 {
@@ -309,7 +310,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = Product.CuPer100g;
-                return string.Format("{0} WW", result);
+                return string.Format(Translations.Cu, result);
             }
         }
 
@@ -318,7 +319,7 @@ namespace Dietphone.ViewModels
             get
             {
                 var result = Product.FpuPer100g;
-                return string.Format("{0} WBT", result);
+                return string.Format(Translations.Fpu, result);
             }
         }
 

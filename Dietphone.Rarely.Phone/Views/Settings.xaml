@@ -20,22 +20,22 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="USTAWIENIA">
-            <controls:PivotItem Header="wyniki">
+        <controls:Pivot Title="{Binding Translations.SettingsUppercase, Source={StaticResource Translations}}">
+            <controls:PivotItem Header="{Binding Translations.Results, Source={StaticResource Translations}}">
                 <Grid>
                     <ScrollViewer>
                         <StackPanel Margin="0,22,0,0">
                             <StackPanel Margin="0,0,0,36">
-                                <TextBlock Margin="{StaticResource PhoneHorizontalMargin}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" Text="Wybierz obliczane wartości odżywcze (maks. 4)" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"/>
+                                <TextBlock Margin="{StaticResource PhoneHorizontalMargin}" Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap" Text="{Binding Translations.SelectNutritionalValuesToCalculateMax4, Source={StaticResource Translations}}" FontFamily="{StaticResource PhoneFontFamilyNormal}" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneForegroundBrush}"/>
                                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                                    <CheckBox Content="wartość energetyczna (kcal)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreEnergy, Mode=TwoWay}"/>
-                                    <CheckBox Content="białko (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreProtein, Mode=TwoWay}"/>
-                                    <CheckBox Content="węglowodany przyswajalne (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreDigestibleCarbs, Mode=TwoWay}"/>
-                                    <CheckBox Content="tłuszcz (gramy)" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFat, Mode=TwoWay}"/>
-                                    <CheckBox Content="WW - wymiennik węglowodanowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreCu, Mode=TwoWay}"/>
-                                    <CheckBox Content="WBT - wymiennik białkowo-tłuszczowy" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFpu, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.EnergyCalories, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreEnergy, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.ProteinGrams, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreProtein, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.DigestibleCarbohydratesGrams, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreDigestibleCarbs, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.FatGrams, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFat, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.CuCarbohydrateUnit, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreCu, Mode=TwoWay}"/>
+                                    <CheckBox Content="{Binding Translations.FpuFatProteinUnit, Source={StaticResource Translations}}" Foreground="{StaticResource PhoneForegroundBrush}" Height="72" HorizontalAlignment="Left" IsChecked="{Binding ScoreFpu, Mode=TwoWay}"/>
                                     <HyperlinkButton Style="{StaticResource AccentHyperlink}"
-                                                     Content="Dowiedz się więcej o WW i WBT..."
+                                                     Content="{Binding Translations.LearnMoreAboutCuAndFpu, Source={StaticResource Translations}}"
                                                      Margin="0,42,12,7"
                                                      Click="LearnCuAndFpu_Click"/>
                                 </StackPanel>
@@ -44,18 +44,19 @@
                     </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
-            <controls:PivotItem Header="język">
+            <controls:PivotItem Header="{Binding Translations.Language, Source={StaticResource Translations}}">
                 <Grid>
                     <StackPanel>
                         <StackPanel Margin="12,0,12,13" Orientation="Vertical">
-                            <TextBlock Text="Język aplikacji" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <TextBlock Text="{Binding Translations.AppLanguage, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                             <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding UiCulture, Mode=TwoWay}" ItemsSource="{Binding UiCultures}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
                         <StackPanel Margin="12,0,12,-11" Orientation="Vertical">
-                            <TextBlock Text="Lokalizacja bazy produktów" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
+                            <TextBlock Text="{Binding Translations.LocalizationOfProductDatabase, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeNormal}" FontFamily="{StaticResource PhoneFontFamilyNormal}" VerticalAlignment="Top" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneSubtleBrush}" TextWrapping="Wrap" Margin="12,0,12,-5"/>
                             <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding ProductCulture, Mode=TwoWay}" ItemsSource="{Binding ProductCultures}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
-                        <TextBlock Text="Lokalizację bazy produktów możesz zmieniać wielokrotnie. Jest to przydatne, jeśli często podróżujesz." FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
+                        <TextBlock Text="{Binding Translations.YouCanChangeLocalizationOfProductDatabaseManyTimes, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
+                        <TextBlock Text="{Binding Translations.ChangesOfLanguageAndLocalizationWillBeAppliedThe, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24" Visibility="{Binding CultureChanged}"/>
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>
