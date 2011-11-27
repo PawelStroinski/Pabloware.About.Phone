@@ -18,20 +18,35 @@ namespace Dietphone.BinarySerializers
         {
             get
             {
-                return 1;
+                return 2;
             }
         }
 
         public override void WriteItem(BinaryWriter writer, MealName mealName)
         {
             writer.Write(mealName.Id);
-            writer.WriteString(mealName.Name);
+            writer.Write((byte)mealName.Kind);
+            if (mealName.Kind == MealNameKind.Custom)
+            {
+                writer.WriteString(mealName.Name);
+            }
         }
 
         public override void ReadItem(BinaryReader reader, MealName mealName)
         {
             mealName.Id = reader.ReadGuid();
-            mealName.Name = reader.ReadString();
+            if (ReadingVersion == 1)
+            {
+                mealName.Name = reader.ReadString();
+            }
+            else
+            {
+                mealName.Kind = (MealNameKind)reader.ReadByte();
+                if (mealName.Kind == MealNameKind.Custom)
+                {
+                    mealName.Name = reader.ReadString();
+                }
+            }
         }
     }
 }

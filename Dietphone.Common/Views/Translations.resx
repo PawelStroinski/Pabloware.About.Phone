@@ -508,4 +508,13 @@ So one number gives information on both fat and protein in meal.</value>
 	<data name="AreYouSureYouWantToSaveThisProduct" xml:space="preserve">
     <value>Are you sure you want to save this product?</value>
   </data>
+	<data name="Breakfast" xml:space="preserve">
+		<value>Breakfast</value>
+	</data>
+	<data name="Lunch" xml:space="preserve">
+		<value>Lunch</value>
+	</data>
+	<data name="Dinner" xml:space="preserve">
+		<value>Dinner</value>
+	</data>
 </root>

@@ -508,4 +508,13 @@ Pozwala w jednej poręcznej liczbie określić zawartość białka i tłuszczu w
 	<data name="AreYouSureYouWantToSaveThisProduct" xml:space="preserve">
     <value>Czy na pewno chcesz zapisać ten produkt?</value>
   </data>
+	<data name="Breakfast" xml:space="preserve">
+		<value>Śniadanie</value>
+	</data>
+	<data name="Lunch" xml:space="preserve">
+		<value>Obiad</value>
+	</data>
+	<data name="Dinner" xml:space="preserve">
+		<value>Kolacja</value>
+	</data>
 </root>

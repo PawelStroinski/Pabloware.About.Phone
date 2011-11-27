@@ -222,6 +222,15 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Breakfast.
+        /// </summary>
+        public static string Breakfast {
+            get {
+                return ResourceManager.GetString("Breakfast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bug!.
         /// </summary>
         public static string Bug {
@@ -453,6 +462,15 @@ namespace Dietphone.Views {
         public static string DigestibleCarbsG {
             get {
                 return ResourceManager.GetString("DigestibleCarbsG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dinner.
+        /// </summary>
+        public static string Dinner {
+            get {
+                return ResourceManager.GetString("Dinner", resourceCulture);
             }
         }
         
@@ -736,6 +754,15 @@ namespace Dietphone.Views {
         public static string LocalizationOfProductDatabase {
             get {
                 return ResourceManager.GetString("LocalizationOfProductDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lunch.
+        /// </summary>
+        public static string Lunch {
+            get {
+                return ResourceManager.GetString("Lunch", resourceCulture);
             }
         }
         

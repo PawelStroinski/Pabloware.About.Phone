@@ -65,5 +65,17 @@ namespace Dietphone.DesktopHelper
         {
             var products = factories.Products;
         }
+
+        private void SetDefaultMealNames_Click(object sender, RoutedEventArgs e)
+        {
+            var mealNames = factories.MealNames;
+            mealNames.Clear();
+            var breakfast = factories.CreateMealName();
+            breakfast.Kind = MealNameKind.Breakfast;
+            var lunch = factories.CreateMealName();
+            lunch.Kind = MealNameKind.Lunch;
+            var dinner = factories.CreateMealName();
+            dinner.Kind = MealNameKind.Dinner;
+        }
     }
 }
