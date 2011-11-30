@@ -10,7 +10,7 @@ namespace Dietphone.BinarySerializers
         {
             get
             {
-                return "categories.db";
+                return string.Format("categories.{0}.db", CultureName);
             }
         }
 

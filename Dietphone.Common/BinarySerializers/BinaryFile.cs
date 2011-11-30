@@ -7,6 +7,7 @@ namespace Dietphone.BinarySerializers
     public abstract class BinaryFile<T> : BinarySerializer<T> where T : new()
     {
         public BinaryStreamProvider StreamProvider { protected get; set; }
+        public string CultureName { protected get; set; }
         protected abstract string FileName { get; }
         protected abstract byte WritingVersion { get; }
         protected Byte ReadingVersion { get; private set; }

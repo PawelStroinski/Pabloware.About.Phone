@@ -14,8 +14,11 @@ namespace Dietphone.DesktopHelper
         public MainWindow()
         {
             InitializeComponent();
-            storageCreator = new DesktopBinaryStorageCreator();
-            factories = new FactoriesImpl(storageCreator);
+            var streamProvider = new DesktopBinaryStreamProvider();
+            storageCreator = new BinaryStorageCreator(streamProvider);
+            factories = new FactoriesImpl();
+            factories.StorageCreator = storageCreator;
+            storageCreator.CultureName = "en-US";
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
@@ -32,7 +35,8 @@ namespace Dietphone.DesktopHelper
 
         private void InitializeSettings_Click(object sender, RoutedEventArgs e)
         {
-            var factoryCreator = new FactoryCreator(factories, storageCreator);
+            var factoryCreator = new FactoryCreator(factories);
+            factoryCreator.StorageCreator = storageCreator;
             var settingsFactory = factoryCreator.CreateFactory<Settings>();
             if (settingsFactory.Entities.Count > 0)
             {

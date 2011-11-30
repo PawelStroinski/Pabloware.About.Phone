@@ -147,10 +147,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="firstrun\categories.db">
+    <Content Include="firstrun\categories.pl-PL.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="firstrun\products.db">
+    <Content Include="firstrun\products.pl-PL.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\appbar.cancel.rest.png">
@@ -184,6 +184,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="firstrun\settings.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="firstrun\categories.en-US.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="firstrun\products.en-US.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\AppManifest.xml" />

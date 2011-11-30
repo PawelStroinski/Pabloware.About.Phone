@@ -43,8 +43,20 @@ namespace Dietphone
 
         private static void CreateFactories()
         {
-            StorageCreator binary = new PhoneBinaryStorageCreator();
-            factories = new FactoriesImpl(binary);
+            var streamProvider = new PhoneBinaryStreamProvider();
+            var storageCreator = new BinaryStorageCreator(streamProvider);
+            factories = new FactoriesImpl();
+            factories.StorageCreator = storageCreator;
+            storageCreator.CultureName = CurrentProductCulture;
+        }
+
+        private static string CurrentProductCulture
+        {
+            get
+            {
+                var settings = Factories.Settings;
+                return settings.CurrentProductCulture;
+            }
         }
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Dietphone.BinarySerializers
 {
-    public abstract class BinaryStorageCreator : StorageCreator
+    public sealed class BinaryStorageCreator : StorageCreator
     {
+        public string CultureName { private get; set; }
         private readonly BinaryStreamProvider streamProvider;
 
         public BinaryStorageCreator(BinaryStreamProvider streamProvider)
@@ -21,6 +22,7 @@ namespace Dietphone.BinarySerializers
             builder.ProposeStorageForEntity<SettingsBinaryStorage>();
             var storage = builder.RightStorageForEntity;
             storage.StreamProvider = streamProvider;
+            storage.CultureName = CultureName;
             return storage;
         }
     }

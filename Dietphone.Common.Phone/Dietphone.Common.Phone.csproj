@@ -70,7 +70,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinarySerializers\PhoneBinaryStorageCreator.cs" />
     <Compile Include="BinarySerializers\PhoneBinaryStreamProvider.cs" />
     <Compile Include="MyApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinarySerializers\DesktopBinaryStorageCreator.cs" />
     <Compile Include="BinarySerializers\DesktopBinaryStreamProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

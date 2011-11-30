@@ -59,18 +59,17 @@ namespace Dietphone.Models
 
     public sealed class FactoryCreator
     {
+        public StorageCreator StorageCreator { private get; set; }
         private readonly Factories owner;
-        private readonly StorageCreator storageCreator;
 
-        public FactoryCreator(Factories owner, StorageCreator storageCreator)
+        public FactoryCreator(Factories owner)
         {
             this.owner = owner;
-            this.storageCreator = storageCreator;
         }
 
         public Factory<T> CreateFactory<T>() where T : Entity, new()
         {
-            var storage = storageCreator.CreateStorage<T>();
+            var storage = StorageCreator.CreateStorage<T>();
             var factory = new Factory<T>(owner, storage);
             return factory;
         }

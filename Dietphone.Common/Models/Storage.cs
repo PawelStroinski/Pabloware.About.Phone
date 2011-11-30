@@ -5,12 +5,16 @@ namespace Dietphone.Models
 {
     public interface Storage<T> where T : Entity, new()
     {
+        string CultureName { set; }
+
         List<T> Load();
         void Save(List<T> entities);
     }
 
     public interface StorageCreator
     {
+        string CultureName { set; }
+
         Storage<T> CreateStorage<T>() where T : Entity, new();
     }
 

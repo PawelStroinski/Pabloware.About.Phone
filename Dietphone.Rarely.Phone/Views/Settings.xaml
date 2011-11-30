@@ -56,7 +56,7 @@
                             <telerikInput:RadListPicker Margin="12 4 12 12" VerticalAlignment="Top" SelectedItem="{Binding ProductCulture, Mode=TwoWay}" ItemsSource="{Binding ProductCultures}" Style="{StaticResource OsListPickerStyle}"/>
                         </StackPanel>
                         <TextBlock Text="{Binding Translations.YouCanChangeLocalizationOfProductDatabaseManyTimes, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24"/>
-                        <TextBlock Text="{Binding Translations.ChangesOfLanguageAndLocalizationWillBeAppliedThe, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" Margin="21,0,24,24" Visibility="{Binding CultureChanged}"/>
+                        <TextBlock Text="{Binding Translations.ChangesOfLanguageAndLocalizationWillBeAppliedThe, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeMedium}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="31" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" TextWrapping="Wrap" Margin="21,0,24,24" Visibility="{Binding CultureChanged}"/>
                     </StackPanel>
                 </Grid>
             </controls:PivotItem>

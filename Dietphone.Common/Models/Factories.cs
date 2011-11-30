@@ -7,6 +7,7 @@ namespace Dietphone.Models
 {
     public interface Factories
     {
+        StorageCreator StorageCreator { set; }
         Finder Finder { get; }
         DefaultEntities DefaultEntities { get; }
         List<Meal> Meals { get; }
@@ -33,20 +34,32 @@ namespace Dietphone.Models
         private Factory<Category> categoryFactory;
         private Factory<Settings> settingsFactory;
         private readonly FactoryCreator factoryCreator;
+        private readonly object mealFactoryLock = new object();
+        private readonly object mealNameFactoryLock = new object();
+        private readonly object productFactoryLock = new object();
+        private readonly object categoryFactoryLock = new object();
+        private readonly object settingsFactoryLock = new object();
 
-        public FactoriesImpl(StorageCreator storageCreator)
+        public FactoriesImpl()
         {
-            factoryCreator = new FactoryCreator(this, storageCreator);
-            CreateFactories();
+            factoryCreator = new FactoryCreator(this);
             Finder = new FinderImpl(this);
             DefaultEntities = new DefaultEntitiesImpl(this);
+        }
+
+        public StorageCreator StorageCreator
+        {
+            set
+            {
+                factoryCreator.StorageCreator = value;
+            }
         }
 
         public List<Meal> Meals
         {
             get
             {
-                return mealFactory.Entities;
+                return MealFactory.Entities;
             }
         }
 
@@ -54,7 +67,7 @@ namespace Dietphone.Models
         {
             get
             {
-                return mealNameFactory.Entities;
+                return MealNameFactory.Entities;
             }
         }
 
@@ -62,7 +75,7 @@ namespace Dietphone.Models
         {
             get
             {
-                return productFactory.Entities;
+                return ProductFactory.Entities;
             }
         }
 
@@ -70,7 +83,7 @@ namespace Dietphone.Models
         {
             get
             {
-                return categoryFactory.Entities;
+                return CategoryFactory.Entities;
             }
         }
 
@@ -78,14 +91,14 @@ namespace Dietphone.Models
         {
             get
             {
-                var entities = settingsFactory.Entities;
+                var entities = SettingsFactory.Entities;
                 return entities.First();
             }
         }
 
         public Meal CreateMeal()
         {
-            var meal = mealFactory.CreateEntity();
+            var meal = MealFactory.CreateEntity();
             meal.Id = Guid.NewGuid();
             meal.DateTime = DateTime.UtcNow;
             var items = new List<MealItem>();
@@ -96,7 +109,7 @@ namespace Dietphone.Models
 
         public MealName CreateMealName()
         {
-            var mealName = mealNameFactory.CreateEntity();
+            var mealName = MealNameFactory.CreateEntity();
             mealName.Id = Guid.NewGuid();
             mealName.SetNullStringPropertiesToEmpty();
             return mealName;
@@ -111,7 +124,7 @@ namespace Dietphone.Models
 
         public Product CreateProduct()
         {
-            var product = productFactory.CreateEntity();
+            var product = ProductFactory.CreateEntity();
             product.Id = Guid.NewGuid();
             var defaultCategory = Finder.FindCategoryFirstAlphabetically();
             product.CategoryId = defaultCategory.Id;
@@ -121,7 +134,7 @@ namespace Dietphone.Models
 
         public Category CreateCategory()
         {
-            var category = categoryFactory.CreateEntity();
+            var category = CategoryFactory.CreateEntity();
             category.Id = Guid.NewGuid();
             category.SetNullStringPropertiesToEmpty();
             return category;
@@ -129,20 +142,86 @@ namespace Dietphone.Models
 
         public void Save()
         {
-            mealFactory.Save();
-            mealNameFactory.Save();
-            productFactory.Save();
-            categoryFactory.Save();
-            settingsFactory.Save();
+            MealFactory.Save();
+            MealNameFactory.Save();
+            ProductFactory.Save();
+            CategoryFactory.Save();
+            SettingsFactory.Save();
         }
 
-        private void CreateFactories()
+        private Factory<Meal> MealFactory
         {
-            mealFactory = factoryCreator.CreateFactory<Meal>();
-            mealNameFactory = factoryCreator.CreateFactory<MealName>();
-            productFactory = factoryCreator.CreateFactory<Product>();
-            categoryFactory = factoryCreator.CreateFactory<Category>();
-            settingsFactory = factoryCreator.CreateFactory<Settings>();
+            get
+            {
+                lock (mealFactoryLock)
+                {
+                    if (mealFactory == null)
+                    {
+                        mealFactory = factoryCreator.CreateFactory<Meal>();
+                    }
+                    return mealFactory;
+                }
+            }
+        }
+
+        private Factory<MealName> MealNameFactory
+        {
+            get
+            {
+                lock (mealNameFactoryLock)
+                {
+                    if (mealNameFactory == null)
+                    {
+                        mealNameFactory = factoryCreator.CreateFactory<MealName>();
+                    }
+                    return mealNameFactory;
+                }
+            }
+        }
+
+        private Factory<Product> ProductFactory
+        {
+            get
+            {
+                lock (productFactoryLock)
+                {
+                    if (productFactory == null)
+                    {
+                        productFactory = factoryCreator.CreateFactory<Product>();
+                    }
+                    return productFactory;
+                }
+            }
+        }
+
+        private Factory<Category> CategoryFactory
+        {
+            get
+            {
+                lock (categoryFactoryLock)
+                {
+                    if (categoryFactory == null)
+                    {
+                        categoryFactory = factoryCreator.CreateFactory<Category>();
+                    }
+                    return categoryFactory;
+                }
+            }
+        }
+
+        private Factory<Settings> SettingsFactory
+        {
+            get
+            {
+                lock (settingsFactoryLock)
+                {
+                    if (settingsFactory == null)
+                    {
+                        settingsFactory = factoryCreator.CreateFactory<Settings>();
+                    }
+                    return settingsFactory;
+                }
+            }
         }
     }
 }
