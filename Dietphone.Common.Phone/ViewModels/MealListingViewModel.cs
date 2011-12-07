@@ -34,10 +34,12 @@ namespace Dietphone.ViewModels
 
         public override void Refresh()
         {
-            OnRefreshing();
-            var loader = new NamesAndMealsLoader(this);
-            loader.LoadAsync();
-            loader.Loaded += delegate { OnRefreshed(); };
+            if (Dates != null && Meals != null)
+            {
+                var loader = new NamesAndMealsLoader(this);
+                loader.LoadAsync();
+                loader.Loaded += delegate { OnRefreshed(); };
+            }
         }
 
         public void Choose(MealViewModel meal)

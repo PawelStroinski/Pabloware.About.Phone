@@ -5,15 +5,20 @@ using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Dietphone.Tools;
+using Microsoft.Phone.Shell;
+using Microsoft.Phone.Controls;
 
 namespace Dietphone.Views
 {
     public partial class ProductListing : UserControl
     {
         public ProductListingViewModel ViewModel { get; private set; }
+        public StateProvider StateProvider { private get; set; }
         public event EventHandler CategoriesPoppedUp;
         private bool isTopItemCategory;
         private Guid topItemId;
+        private const string IS_TOP_ITEM_CATEGORY = "IS_TOP_ITEM_CATEGORY";
+        private const string TOP_ITEM_ID = "TOP_ITEM_ID";
 
         public ProductListing()
         {
@@ -27,11 +32,30 @@ namespace Dietphone.Views
             ViewModel.UpdateSortDescriptors();
             ViewModel.DescriptorsUpdating += delegate { List.BeginDataUpdate(); };
             ViewModel.DescriptorsUpdated += delegate { List.EndDataUpdate(); };
-            ViewModel.Refreshing += new EventHandler(ViewModel_Refreshing);
-            ViewModel.Refreshed += new EventHandler(ViewModel_Refreshed);
+            ViewModel.Refreshed += delegate { RestoreTopItem(); };
+            ViewModel.Loaded += delegate { Untombstone(); };
         }
 
-        private void ViewModel_Refreshing(object sender, EventArgs e)
+        public void Tombstone()
+        {
+            SaveTopItem();
+            var state = StateProvider.State;
+            state[IS_TOP_ITEM_CATEGORY] = isTopItemCategory;
+            state[TOP_ITEM_ID] = topItemId;
+        }
+
+        private void Untombstone()
+        {
+            var state = StateProvider.State;
+            if (state.ContainsKey(IS_TOP_ITEM_CATEGORY))
+            {
+                isTopItemCategory = (bool)state[IS_TOP_ITEM_CATEGORY];
+                topItemId = (Guid)state[TOP_ITEM_ID];
+                RestoreTopItem();
+            }
+        }
+
+        private void SaveTopItem()
         {
             topItemId = Guid.Empty;
             var topItemSource = List.TopVisibleItem;
@@ -58,7 +82,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void ViewModel_Refreshed(object sender, EventArgs e)
+        private void RestoreTopItem()
         {
             object topItem = null;
             if (isTopItemCategory)

@@ -39,11 +39,13 @@ namespace Dietphone.ViewModels
 
         public override void Refresh()
         {
-            OnRefreshing();
-            maxCuAndFpu.Reset();
-            var loader = new CategoriesAndProductsLoader(this);
-            loader.LoadAsync();
-            loader.Loaded += delegate { OnRefreshed(); };
+            if (Categories != null && Products != null)
+            {
+                maxCuAndFpu.Reset();
+                var loader = new CategoriesAndProductsLoader(this);
+                loader.LoadAsync();
+                loader.Loaded += delegate { OnRefreshed(); };
+            }
         }
 
         public void Choose(ProductViewModel product)

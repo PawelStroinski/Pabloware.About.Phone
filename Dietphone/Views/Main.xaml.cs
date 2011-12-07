@@ -1,22 +1,28 @@
-﻿using System;
+﻿using Dietphone.Tools;
+using Dietphone.ViewModels;
+using Microsoft.Phone.Controls;
+using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Phone.Controls;
-using System.ComponentModel;
-using Dietphone.ViewModels;
 using System.Windows.Navigation;
-using Dietphone.Tools;
-using Dietphone.Models;
+using TombstoneHelper;
+using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class Main : PhoneApplicationPage
+    public partial class Main : PhoneApplicationPage, StateProvider
     {
         public MainViewModel ViewModel { get; private set; }
         private SubViewModelConnector subConnector;
         private bool searchShowed;
+        private bool searchFocused;
+        private bool alreadyRestoredSearch;
         private const byte BACK_KEY = 27;
+        private const string SEARCH = "SEARCH";
+        private const string SEARCH_SHOWED = "SEARCH_SHOWED";
+        private const string SEARCH_FOCUSED = "SEARCH_FOCUSED";
 
         public Main()
         {
@@ -29,11 +35,29 @@ namespace Dietphone.Views
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
+            subConnector.Loaded += delegate { RestoreSearchUi(); };
+            subConnector.Refreshed += delegate { RestoreSearchUi(); };
             TranslateApplicationBar();
+            MealListing.StateProvider = this;
+            ProductListing.StateProvider = this;
+        }
+
+        public IDictionary<string, object> State
+        {
+            get
+            {
+                return base.State;
+            }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            this.RestoreState();
+            // We need to restore pivot manually because TombstoneHelper will wait for
+            // event Pivot.Loaded which in this case is fired after page is shown to user.
+            // TombstoneHelper works this way probably because was bug in Pivot in WP 7.0.
+            Pivot.UntombstoneWith(this);
+            UntombstoneSearchNoRestoreUi();
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             subConnector.Navigator = navigator;
             subConnector.Refresh();
@@ -50,6 +74,17 @@ namespace Dietphone.Views
                     ViewModel.MealEditing = viewModel;
                     ViewModel.ReturningToMealEditing();
                 }
+            }
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            this.SaveState(e);
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                MealListing.Tombstone();
+                ProductListing.Tombstone();
+                TombstoneSearchBeforeExit();
             }
         }
 
@@ -100,6 +135,7 @@ namespace Dietphone.Views
             else
             {
                 ShowSearch();
+                FocusSearch();
             }
         }
 
@@ -140,6 +176,61 @@ namespace Dietphone.Views
             HideSearchSip();
         }
 
+        private void TombstoneSearchBeforeExit()
+        {
+            TombstoneSearchInternal();
+            HideSearchUiBeforeRestore();
+            alreadyRestoredSearch = false;
+        }
+
+        private void UntombstoneSearchNoRestoreUi()
+        {
+            if (State.ContainsKey(SEARCH))
+            {
+                ViewModel.Search = (string)State[SEARCH];
+                searchShowed = (bool)State[SEARCH_SHOWED];
+                searchFocused = (bool)State[SEARCH_FOCUSED];
+            }
+        }
+
+        private void RestoreSearchUi()
+        {
+            if (!alreadyRestoredSearch)
+            {
+                Dispatcher.BeginInvoke(() =>
+                {
+                    RestoreSearchUiInternal();
+                });
+                alreadyRestoredSearch = true;
+            }
+        }
+
+        private void TombstoneSearchInternal()
+        {
+            SaveSearchInternal();
+            State[SEARCH] = ViewModel.Search;
+            State[SEARCH_SHOWED] = searchShowed;
+            State[SEARCH_FOCUSED] = searchFocused;
+        }
+
+        private void SaveSearchInternal()
+        {
+            searchFocused = SearchBox.IsFocused();
+        }
+
+        private void RestoreSearchUiInternal()
+        {
+            if (searchShowed)
+            {
+                searchShowed = false;
+                ShowSearch();
+                if (searchFocused)
+                {
+                    FocusSearch();
+                }
+            }
+        }
+
         private void HideOrFocusSearch()
         {
             if (searchShowed)
@@ -170,6 +261,16 @@ namespace Dietphone.Views
             }
         }
 
+        private void HideSearchUiBeforeRestore()
+        {
+            if (searchShowed)
+            {
+                HideSearchAnimation.Begin();
+                HideSearchAnimation.SkipToFill();
+                SearchBorder.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void ShowSearch()
         {
             var searchHidden = !searchShowed;
@@ -178,7 +279,17 @@ namespace Dietphone.Views
                 searchShowed = true;
                 SearchBorder.Visibility = Visibility.Visible;
                 ShowSearchAnimation.Begin();
+            }
+        }
+
+        private void FocusSearch()
+        {
+            if (searchShowed)
+            {
                 SearchBox.Focus();
+                var text = SearchBox.Text;
+                var textLength = text.Length;
+                SearchBox.Select(textLength, 0);
             }
         }
 

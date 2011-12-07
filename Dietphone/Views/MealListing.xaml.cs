@@ -5,17 +5,25 @@ using Dietphone.ViewModels;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Dietphone.Tools;
+using System.Windows;
+using Microsoft.Phone.Shell;
+using Microsoft.Phone.Controls;
 
 namespace Dietphone.Views
 {
     public partial class MealListing : UserControl
     {
         public MealListingViewModel ViewModel { get; private set; }
+        public StateProvider StateProvider { private get; set; }
         public event EventHandler DatesPoppedUp;
         private bool isTopItemMeal;
         private bool isTopItemDate;
         private Guid topItemMealId;
         private DateTime topItemDate;
+        private const string IS_TOP_ITEM_MEAL = "IS_TOP_ITEM_MEAL";
+        private const string IS_TOP_ITEM_DATE = "IS_TOP_ITEM_DATE";
+        private const string TOP_ITEM_MEAL_ID = "TOP_ITEM_MEAL_ID";
+        private const string TOP_ITEM_DATE = "TOP_ITEM_DATE";
 
         public MealListing()
         {
@@ -27,11 +35,34 @@ namespace Dietphone.Views
             ViewModel.UpdateGroupDescriptors();
             ViewModel.DescriptorsUpdating += delegate { List.BeginDataUpdate(); };
             ViewModel.DescriptorsUpdated += delegate { List.EndDataUpdate(); };
-            ViewModel.Refreshing += new EventHandler(ViewModel_Refreshing);
-            ViewModel.Refreshed += new EventHandler(ViewModel_Refreshed);
+            ViewModel.Refreshed += delegate { RestoreTopItem(); };
+            ViewModel.Loaded += delegate { Untombstone(); };
         }
 
-        private void ViewModel_Refreshing(object sender, EventArgs e)
+        public void Tombstone()
+        {
+            SaveTopItem();
+            var state = StateProvider.State;
+            state[IS_TOP_ITEM_MEAL] = isTopItemMeal;
+            state[IS_TOP_ITEM_DATE] = isTopItemDate;
+            state[TOP_ITEM_MEAL_ID] = topItemMealId;
+            state[TOP_ITEM_DATE] = topItemDate;
+        }
+
+        private void Untombstone()
+        {
+            var state = StateProvider.State;
+            if (state.ContainsKey(IS_TOP_ITEM_MEAL))
+            {
+                isTopItemMeal = (bool)state[IS_TOP_ITEM_MEAL];
+                isTopItemDate = (bool)state[IS_TOP_ITEM_DATE];
+                topItemMealId = (Guid)state[TOP_ITEM_MEAL_ID];
+                topItemDate = (DateTime)state[TOP_ITEM_DATE];
+                RestoreTopItem();
+            }
+        }
+
+        private void SaveTopItem()
         {
             isTopItemMeal = false;
             isTopItemDate = false;
@@ -59,7 +90,7 @@ namespace Dietphone.Views
             }
         }
 
-        private void ViewModel_Refreshed(object sender, EventArgs e)
+        private void RestoreTopItem()
         {
             object topItem = null;
             if (isTopItemMeal)

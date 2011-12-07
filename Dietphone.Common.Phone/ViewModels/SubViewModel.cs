@@ -9,7 +9,6 @@ namespace Dietphone.ViewModels
     {
         public Navigator Navigator { protected get; set; }
         public event EventHandler Loaded;
-        public event EventHandler Refreshing;
         public event EventHandler Refreshed;
         protected string search = "";
         private bool isBusy;
@@ -59,14 +58,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected void OnRefreshing()
-        {
-            if (Refreshing != null)
-            {
-                Refreshing(this, EventArgs.Empty);
-            }
-        }
-
         protected void OnRefreshed()
         {
             if (Refreshed != null)
@@ -78,6 +69,8 @@ namespace Dietphone.ViewModels
 
     public class SubViewModelConnector
     {
+        public event EventHandler Loaded;
+        public event EventHandler Refreshed;
         private SubViewModel subViewModel;
         private Navigator navigator;
         private readonly MainViewModel mainViewModel;
@@ -94,6 +87,7 @@ namespace Dietphone.ViewModels
             {
                 if (subViewModel != value)
                 {
+                    OnSubViewModelChanging();
                     subViewModel = value;
                     OnSubViewModelChanged();
                 }
@@ -104,8 +98,11 @@ namespace Dietphone.ViewModels
         {
             set
             {
-                navigator = value;
-                OnNavigatorChanged();
+                if (navigator != value)
+                {
+                    navigator = value;
+                    OnNavigatorChanged();
+                }
             }
         }
 
@@ -125,12 +122,25 @@ namespace Dietphone.ViewModels
             }
         }
 
+        private void OnSubViewModelChanging()
+        {
+            if (subViewModel != null)
+            {
+                subViewModel.Loaded -= OnLoaded;
+                subViewModel.Refreshed -= OnRefreshed;
+            }
+        }
+
         protected virtual void OnSubViewModelChanged()
         {
             subViewModel.Search = mainViewModel.Search;
             subViewModel.Navigator = navigator;
-            subViewModel.Loaded += subViewModel_Loaded;
-            subViewModel.Load();
+            subViewModel.Loaded += OnLoaded;
+            subViewModel.Refreshed += OnRefreshed;
+            if (navigator != null)
+            {
+                subViewModel.Load();
+            }
         }
 
         private void mainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -144,16 +154,28 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void subViewModel_Loaded(object sender, EventArgs e)
-        {
-            mainViewModel.Loaded();
-        }
-
         protected void OnNavigatorChanged()
         {
             if (subViewModel != null)
             {
                 subViewModel.Navigator = navigator;
+                subViewModel.Load();
+            }
+        }
+
+        protected void OnLoaded(object sender, EventArgs e)
+        {
+            if (Loaded != null)
+            {
+                Loaded(sender, e);
+            }
+        }
+
+        protected void OnRefreshed(object sender, EventArgs e)
+        {
+            if (Refreshed != null)
+            {
+                Refreshed(sender, e);
             }
         }
     }

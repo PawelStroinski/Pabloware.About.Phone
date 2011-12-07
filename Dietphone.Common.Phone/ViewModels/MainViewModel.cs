@@ -1,5 +1,6 @@
 ﻿using System;
 using Dietphone.Models;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -66,10 +67,6 @@ namespace Dietphone.ViewModels
         public void Settings()
         {
             navigator.GoToSettings();
-        }
-
-        public void Loaded()
-        {
         }
 
         protected void OnNavigatorChanged()

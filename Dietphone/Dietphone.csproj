@@ -93,6 +93,9 @@
     <Reference Include="Telerik.Windows.Data">
       <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Data.dll</HintPath>
     </Reference>
+    <Reference Include="TombstoneHelper">
+      <HintPath>..\..\..\windowsphone\TombstoneHelper\TombstoneHelper\Bin\Release\TombstoneHelper.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsPhoneWatermarkTextBoxControl">
       <HintPath>..\..\..\windowsphone\WatermarkTextBox\WindowsPhoneWatermarkTextBoxControl\Bin\Release\WindowsPhoneWatermarkTextBoxControl.dll</HintPath>
       <Private>True</Private>

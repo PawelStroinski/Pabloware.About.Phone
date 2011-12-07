@@ -4,11 +4,15 @@ using Telerik.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows;
+using Microsoft.Phone.Controls;
+using System.Collections.Generic;
 
 namespace Dietphone.Tools
 {
     public static class UIExtensionMethods
     {
+        private const string TOMBSTONEHELPER_PIVOT = "Pivot^{0}^-1";
+
         public static bool IsFocused(this Control control)
         {
             return FocusManager.GetFocusedElement() == control;
@@ -109,6 +113,35 @@ namespace Dietphone.Tools
             var column = grid.ColumnDefinitions[columnIndex];
             var width = new GridLength(0);
             column.Width = width;
+        }
+
+        public static void UntombstoneWith(this Pivot pivot, StateProvider stateProvider)
+        {
+            var key = string.Format(TOMBSTONEHELPER_PIVOT, pivot.Name);
+            var state = stateProvider.State;
+            if (state.ContainsKey(key))
+            {
+                var value = state[key];
+                pivot.SelectedIndex = int.Parse(value.ToString());
+            }
+        }
+
+        public static string GetAbsoluteNamePath(this FrameworkElement element)
+        {
+            var parent = element.Parent as FrameworkElement;
+            var name = element.Name;
+            if (!string.IsNullOrEmpty(name))
+            {
+                name += "/";
+            }
+            if (parent == null)
+            {
+                return name;
+            }
+            else
+            {
+                return parent.GetAbsoluteNamePath() + name;
+            }
         }
     }
 }
