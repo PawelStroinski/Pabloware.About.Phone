@@ -106,14 +106,10 @@ namespace Dietphone.ViewModels
             }
         }
 
-        protected override void UntombstoneModel()
-        {
-        }
-        
         protected override void MakeViewModel()
         {
             LoadCategories();
-            CreateProductViewModel();
+            MakeProductViewModelInternal();
         }
 
         protected override string Validate()
@@ -131,7 +127,17 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void CreateProductViewModel()
+        protected override void TombstoneModel()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void UntombstoneModel()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void MakeProductViewModelInternal()
         {
             var maxCuAndFpu = new MaxCuAndFpuInCategories(finder, modelCopy);
             Product = new ProductViewModel(modelCopy)
@@ -139,7 +145,10 @@ namespace Dietphone.ViewModels
                 Categories = Categories,
                 MaxCuAndFpu = maxCuAndFpu
             };
-            Product.PropertyChanged += delegate { OnGotDirty(); };
+            Product.PropertyChanged += delegate
+            {
+                IsDirty = true;
+            };
         }
 
         private void SaveCategories()

@@ -34,9 +34,10 @@ namespace Dietphone.Views
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             viewModel = new ProductEditingViewModel(MyApp.Factories, navigator, this);
+            viewModel.IsDirtyChanged += ViewModel_IsDirtyChanged;
+            viewModel.CannotSave += ViewModel_CannotSave;
+            viewModel.Load();
             DataContext = viewModel;
-            viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
-            viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);
         }
 
         private void ProductEditing_Loaded(object sender, RoutedEventArgs e)
@@ -140,12 +141,12 @@ namespace Dietphone.Views
             }
         }
 
-        private void viewModel_GotDirty(object sender, EventArgs e)
+        private void ViewModel_IsDirtyChanged(object sender, EventArgs e)
         {
-            Save.IsEnabled = true;
+            Save.IsEnabled = viewModel.IsDirty;
         }
 
-        private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
+        private void ViewModel_CannotSave(object sender, CannotSaveEventArgs e)
         {
             e.Ignore = (MessageBox.Show(e.Reason, Translations.AreYouSureYouWantToSaveThisProduct,
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);

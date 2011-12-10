@@ -42,14 +42,6 @@ namespace Dietphone.Views
             ProductListing.StateProvider = this;
         }
 
-        public IDictionary<string, object> State
-        {
-            get
-            {
-                return base.State;
-            }
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.RestoreState();

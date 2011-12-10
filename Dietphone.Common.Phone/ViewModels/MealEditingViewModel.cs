@@ -14,7 +14,6 @@ namespace Dietphone.ViewModels
     {
         public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
-        public int Pivot { get; set; }
         public event EventHandler InvalidateItems;
         private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
@@ -28,13 +27,10 @@ namespace Dietphone.ViewModels
         private const string MEAL = "MEAL";
         private const string NAMES = "NAMES";
         private const string NOT_IS_LOCKED_DATE_TIME = "NOT_IS_LOCKED_DATE_TIME";
-        private const string PIVOT = "PIVOT";
 
         public MealEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
             : base(factories, navigator, stateProvider)
         {
-            LockRecentDateTime();
-            UntombstoneOthers();
         }
 
         public MealItemEditingViewModel ItemEditing
@@ -132,7 +128,7 @@ namespace Dietphone.ViewModels
             deletedNames.Add(toDelete);
         }
 
-        public void UpdateTimeAndSaveAndReturn()
+        public void SaveWithUpdatedTimeAndReturn()
         {
             UpdateLockedDateTime();
             modelSource.CopyFrom(modelCopy);
@@ -170,7 +166,7 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void ScoresSettings()
+        public void OpenScoresSettings()
         {
             wentToSettings = true;
             navigator.GoToSettings();
@@ -189,9 +185,8 @@ namespace Dietphone.ViewModels
 
         public void Tombstone()
         {
-            TombstoneModel();
+            base.Tombstone();
             TombstoneNames();
-            TombstoneOthers();
         }
 
         protected override void FindAndCopyModel()
@@ -210,7 +205,8 @@ namespace Dietphone.ViewModels
         {
             LoadNames();
             UntombstoneNames();
-            CreateMealViewModel();
+            MakeMealViewModelInternal();
+            LockRecentDateTime();
         }
 
         protected override string Validate()
@@ -249,7 +245,7 @@ namespace Dietphone.ViewModels
             Names.Insert(0, defaultName);
         }
 
-        private void TombstoneModel()
+        protected override void TombstoneModel()
         {
             var state = stateProvider.State;
             var dto = new MealDTO();
@@ -316,24 +312,22 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void TombstoneOthers()
+        protected override void TombstoneOthers()
         {
             var state = stateProvider.State;
             state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
-            state[PIVOT] = Pivot;
         }
 
-        private void UntombstoneOthers()
+        protected override void UntombstoneOthers()
         {
             var state = stateProvider.State;
             if (state.ContainsKey(NOT_IS_LOCKED_DATE_TIME))
             {
                 NotIsLockedDateTime = (bool)state[NOT_IS_LOCKED_DATE_TIME];
-                Pivot = (int)state[PIVOT];
             }
         }
 
-        private void CreateMealViewModel()
+        private void MakeMealViewModelInternal()
         {
             Meal = new MealViewModel(modelCopy, factories)
             {
@@ -345,7 +339,7 @@ namespace Dietphone.ViewModels
 
         private void Meal_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnGotDirty();
+            IsDirty = true;
             if (e.PropertyName == "DateTime" && !updatingLockedDateTime)
             {
                 NotIsLockedDateTime = true;

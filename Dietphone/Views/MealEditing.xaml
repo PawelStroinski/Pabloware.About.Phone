@@ -59,7 +59,7 @@
                     <telerikPrimitives:RadDataBoundListBox Name="Items" ItemsSource="{Binding Meal.Items}" Margin="-21,20,2,0" Grid.Row="2" Grid.ColumnSpan="3" ItemTap="Items_ItemTap">
                         <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid Margin="12,8,0,6" Loaded="ItemsGrid_Loaded">
+                                <Grid Margin="12,8,0,6" Loaded="ItemGrid_Loaded">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>

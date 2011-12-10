@@ -14,7 +14,6 @@ namespace Dietphone.Views
     public partial class MealEditing : PhoneApplicationPage, StateProvider
     {
         public MealEditingViewModel ViewModel { get; private set; }
-        private const string SAVE_ENABLED = "SAVE_ENABLED";
 
         public MealEditing()
         {
@@ -24,31 +23,23 @@ namespace Dietphone.Views
             TranslateApplicationBar();
         }
 
-        public IDictionary<string, object> State
-        {
-            get
-            {
-                return base.State;
-            }
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (ViewModel == null)
             {
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
                 ViewModel = new MealEditingViewModel(MyApp.Factories, navigator, this);
-                DataContext = ViewModel;
-                ViewModel.GotDirty += viewModel_GotDirty;
-                ViewModel.CannotSave += viewModel_CannotSave;
                 ViewModel.ItemEditing = ItemEditing.ViewModel;
+                ViewModel.IsDirtyChanged += ViewModel_IsDirtyChanged;
+                ViewModel.CannotSave += ViewModel_CannotSave;
                 ViewModel.InvalidateItems += ViewModel_InvalidateItems;
+                ViewModel.Load();
+                DataContext = ViewModel;
             }
             else
             {
                 ViewModel.ReturnedFromNavigation();
             }
-            UntombstoneApplicationBar();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -56,7 +47,6 @@ namespace Dietphone.Views
             if (e.NavigationMode != NavigationMode.Back)
             {
                 ViewModel.Tombstone();
-                TombstoneApplicationBar();
             }
         }
 
@@ -143,7 +133,7 @@ namespace Dietphone.Views
             {
                 if (ViewModel.CanSave())
                 {
-                    ViewModel.UpdateTimeAndSaveAndReturn();
+                    ViewModel.SaveWithUpdatedTimeAndReturn();
                 }
             });
         }
@@ -164,12 +154,12 @@ namespace Dietphone.Views
             }
         }
 
-        private void viewModel_GotDirty(object sender, EventArgs e)
+        private void ViewModel_IsDirtyChanged(object sender, EventArgs e)
         {
-            Save.IsEnabled = true;
+            Save.IsEnabled = ViewModel.IsDirty;
         }
 
-        private void viewModel_CannotSave(object sender, CannotSaveEventArgs e)
+        private void ViewModel_CannotSave(object sender, CannotSaveEventArgs e)
         {
             e.Ignore = (MessageBox.Show(e.Reason, Translations.AreYouSureYouWantToSaveThisMeal,
                 MessageBoxButton.OKCancel) == MessageBoxResult.OK);
@@ -190,32 +180,32 @@ namespace Dietphone.Views
             Items.SelectedItem = null;
         }
 
-        private void ItemsGrid_Loaded(object sender, RoutedEventArgs e)
+        private void ItemGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            var itemsGrid = (Grid)sender;
+            var itemGrid = (Grid)sender;
             var meal = ViewModel.Meal;
             var scores = meal.Scores;
             if (!scores.FirstExists)
             {
-                itemsGrid.HideColumnWithIndex(1);
+                itemGrid.HideColumnWithIndex(1);
             }
             if (!scores.SecondExists)
             {
-                itemsGrid.HideColumnWithIndex(2);
+                itemGrid.HideColumnWithIndex(2);
             }
             if (!scores.ThirdExists)
             {
-                itemsGrid.HideColumnWithIndex(3);
+                itemGrid.HideColumnWithIndex(3);
             }
             if (!scores.FourthExists)
             {
-                itemsGrid.HideColumnWithIndex(4);
+                itemGrid.HideColumnWithIndex(4);
             }
         }
 
         private void Score_Click(object sender, MouseButtonEventArgs e)
         {
-            ViewModel.ScoresSettings();
+            ViewModel.OpenScoresSettings();
         }
 
         private void ViewModel_InvalidateItems(object sender, EventArgs e)
@@ -228,19 +218,6 @@ namespace Dietphone.Views
             Save.Text = Translations.Save;
             this.GetIcon(1).Text = Translations.Cancel;
             this.GetMenuItem(0).Text = Translations.Delete;
-        }
-
-        private void TombstoneApplicationBar()
-        {
-            State[SAVE_ENABLED] = Save.IsEnabled;
-        }
-
-        private void UntombstoneApplicationBar()
-        {
-            if (State.ContainsKey(SAVE_ENABLED))
-            {
-                Save.IsEnabled = (bool)State[SAVE_ENABLED];
-            }
         }
     }
 }
