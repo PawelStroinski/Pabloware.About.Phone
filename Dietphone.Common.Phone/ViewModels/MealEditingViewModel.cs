@@ -14,6 +14,7 @@ namespace Dietphone.ViewModels
     {
         public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
+        public bool ScrollItemsDownOnLoad { get; set; }
         public event EventHandler InvalidateItems;
         private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
@@ -154,6 +155,7 @@ namespace Dietphone.ViewModels
         {
             var item = Meal.AddItem();
             item.CopyFromModel(source);
+            ScrollItemsDownOnLoad = true;
         }
 
         public void EditItem(MealItemViewModel itemViewModel)
