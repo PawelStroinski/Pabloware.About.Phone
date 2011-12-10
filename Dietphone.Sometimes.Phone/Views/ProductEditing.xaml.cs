@@ -6,10 +6,11 @@ using System.Windows.Navigation;
 using Dietphone.Tools;
 using Telerik.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class ProductEditing : PhoneApplicationPage
+    public partial class ProductEditing : PhoneApplicationPage, StateProvider
     {
         private ProductEditingViewModel viewModel;
 
@@ -21,10 +22,18 @@ namespace Dietphone.Views
             TranslateApplicationBar();
         }
 
+        public IDictionary<string, object> State
+        {
+            get
+            {
+                return base.State;
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-            viewModel = new ProductEditingViewModel(MyApp.Factories, navigator);
+            viewModel = new ProductEditingViewModel(MyApp.Factories, navigator, this);
             DataContext = viewModel;
             viewModel.GotDirty += new EventHandler(viewModel_GotDirty);
             viewModel.CannotSave += new EventHandler<CannotSaveEventArgs>(viewModel_CannotSave);

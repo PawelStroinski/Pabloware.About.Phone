@@ -23,7 +23,7 @@
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Path=Translations.Meal, Source={StaticResource Translations}}">
+        <controls:Pivot Title="{Binding Path=Translations.Meal, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}" >
             <!--składniki-->
             <controls:PivotItem Header="{Binding Path=Translations.Ingredients, Source={StaticResource Translations}}">
                 <Grid Margin="21,0,10,0">
@@ -56,7 +56,7 @@
                     <!--+-->
                     <c4f:RoundButton ImageSource="/images/appbar.add.rest.png" Click="AddItem_Click" Grid.Column="2" Margin="-10 -2 0 0"/>
                     <!--[]-->
-                    <telerikPrimitives:RadDataBoundListBox Name="Items" ItemsSource="{Binding Meal.Items}"  Margin="-21,20,2,0" Grid.Row="2" Grid.ColumnSpan="3" ItemTap="Items_ItemTap">
+                    <telerikPrimitives:RadDataBoundListBox Name="Items" ItemsSource="{Binding Meal.Items}" Margin="-21,20,2,0" Grid.Row="2" Grid.ColumnSpan="3" ItemTap="Items_ItemTap">
                         <telerikPrimitives:RadDataBoundListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="12,8,0,6" Loaded="ItemsGrid_Loaded">

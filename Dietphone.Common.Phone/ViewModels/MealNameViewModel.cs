@@ -1,5 +1,8 @@
 ﻿using System;
 using Dietphone.Models;
+using System.Collections.Generic;
+using Dietphone.Tools;
+using System.Linq;
 
 namespace Dietphone.ViewModels
 {
@@ -34,6 +37,25 @@ namespace Dietphone.ViewModels
         public override string ToString()
         {
             return Name;
+        }
+
+        public void AddModelTo(List<MealName> target)
+        {
+            target.Add(BufferOrModel);
+        }
+
+        public void CopyModelFrom(MealName source)
+        {
+            BufferOrModel.CopyFrom(source);
+        }
+    }
+
+    public static class MealNameExtensions
+    {
+        public static MealNameViewModel FindById(this IEnumerable<MealNameViewModel> names, Guid id)
+        {
+            var result = from name in names where name.Id == id select name;
+            return result.FirstOrDefault();
         }
     }
 }

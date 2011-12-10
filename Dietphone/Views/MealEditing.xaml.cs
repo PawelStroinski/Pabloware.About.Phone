@@ -7,12 +7,14 @@ using Dietphone.Tools;
 using System.Windows.Navigation;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class MealEditing : PhoneApplicationPage
+    public partial class MealEditing : PhoneApplicationPage, StateProvider
     {
         public MealEditingViewModel ViewModel { get; private set; }
+        private const string SAVE_ENABLED = "SAVE_ENABLED";
 
         public MealEditing()
         {
@@ -22,12 +24,20 @@ namespace Dietphone.Views
             TranslateApplicationBar();
         }
 
+        public IDictionary<string, object> State
+        {
+            get
+            {
+                return base.State;
+            }
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (ViewModel == null)
             {
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-                ViewModel = new MealEditingViewModel(MyApp.Factories, navigator);
+                ViewModel = new MealEditingViewModel(MyApp.Factories, navigator, this);
                 DataContext = ViewModel;
                 ViewModel.GotDirty += viewModel_GotDirty;
                 ViewModel.CannotSave += viewModel_CannotSave;
@@ -37,6 +47,16 @@ namespace Dietphone.Views
             else
             {
                 ViewModel.ReturnedFromNavigation();
+            }
+            UntombstoneApplicationBar();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                ViewModel.Tombstone();
+                TombstoneApplicationBar();
             }
         }
 
@@ -208,6 +228,19 @@ namespace Dietphone.Views
             Save.Text = Translations.Save;
             this.GetIcon(1).Text = Translations.Cancel;
             this.GetMenuItem(0).Text = Translations.Delete;
+        }
+
+        private void TombstoneApplicationBar()
+        {
+            State[SAVE_ENABLED] = Save.IsEnabled;
+        }
+
+        private void UntombstoneApplicationBar()
+        {
+            if (State.ContainsKey(SAVE_ENABLED))
+            {
+                Save.IsEnabled = (bool)State[SAVE_ENABLED];
+            }
         }
     }
 }

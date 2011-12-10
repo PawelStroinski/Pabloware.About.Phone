@@ -12,8 +12,8 @@ namespace Dietphone.ViewModels
         private List<CategoryViewModel> addedCategories = new List<CategoryViewModel>();
         private List<CategoryViewModel> deletedCategories = new List<CategoryViewModel>();
 
-        public ProductEditingViewModel(Factories factories, Navigator navigator)
-            : base(factories, navigator)
+        public ProductEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
+            : base(factories, navigator, stateProvider)
         {
         }
 
@@ -106,6 +106,10 @@ namespace Dietphone.ViewModels
             }
         }
 
+        protected override void UntombstoneModel()
+        {
+        }
+        
         protected override void MakeViewModel()
         {
             LoadCategories();

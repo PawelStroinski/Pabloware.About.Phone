@@ -1,5 +1,6 @@
 ﻿using System;
 using Dietphone.Models;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
@@ -12,12 +13,14 @@ namespace Dietphone.ViewModels
         protected readonly Factories factories;
         protected readonly Navigator navigator;
         protected readonly Finder finder;
+        protected readonly StateProvider stateProvider;
 
-        public EditingViewModelBase(Factories factories, Navigator navigator)
+        public EditingViewModelBase(Factories factories, Navigator navigator, StateProvider stateProvider)
         {
             this.factories = factories;
             this.navigator = navigator;
             finder = factories.Finder;
+            this.stateProvider = stateProvider;
             Load();
         }
 
@@ -42,6 +45,7 @@ namespace Dietphone.ViewModels
         private void Load()
         {
             FindAndCopyModel();
+            UntombstoneModel();
             if (modelCopy == null)
             {
                 navigator.GoBack();
@@ -53,6 +57,8 @@ namespace Dietphone.ViewModels
         }
 
         protected abstract void FindAndCopyModel();
+
+        protected abstract void UntombstoneModel();
 
         protected abstract void MakeViewModel();
 

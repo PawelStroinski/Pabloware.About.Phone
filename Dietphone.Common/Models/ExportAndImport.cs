@@ -118,26 +118,6 @@ namespace Dietphone.Models
             public Settings Settings { get; set; }
         }
 
-        public sealed class MealDTO : Meal
-        {
-            public new List<MealItem> Items
-            {
-                get
-                {
-                    return items;
-                }
-                set
-                {
-                    items = value;
-                }
-            }
-
-            public void DTOCopyItemsFrom(Meal source)
-            {
-                InternalCopyItemsFrom(source);
-            }
-        }
-
         private sealed class GenericImporter<T> where T : EntityWithId
         {
             public delegate T CreateHandler();
@@ -158,6 +138,26 @@ namespace Dietphone.Models
                     target.CopyFrom(source);
                 }
             }
+        }
+    }
+
+    public sealed class MealDTO : Meal
+    {
+        public new List<MealItem> Items
+        {
+            get
+            {
+                return items;
+            }
+            set
+            {
+                items = value;
+            }
+        }
+
+        public void DTOCopyItemsFrom(Meal source)
+        {
+            InternalCopyItemsFrom(source);
         }
     }
 }

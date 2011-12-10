@@ -5,6 +5,8 @@ using Dietphone.Tools;
 using System;
 using System.Globalization;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
 
 namespace Dietphone.ViewModels
 {
@@ -12,6 +14,7 @@ namespace Dietphone.ViewModels
     {
         public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
+        public int Pivot { get; set; }
         public event EventHandler InvalidateItems;
         private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
@@ -22,11 +25,16 @@ namespace Dietphone.ViewModels
         private MealItemViewModel editItem;
         private bool wentToSettings;
         private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
+        private const string MEAL = "MEAL";
+        private const string NAMES = "NAMES";
+        private const string NOT_IS_LOCKED_DATE_TIME = "NOT_IS_LOCKED_DATE_TIME";
+        private const string PIVOT = "PIVOT";
 
-        public MealEditingViewModel(Factories factories, Navigator navigator)
-            : base(factories, navigator)
+        public MealEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
+            : base(factories, navigator, stateProvider)
         {
             LockRecentDateTime();
+            UntombstoneOthers();
         }
 
         public MealItemEditingViewModel ItemEditing
@@ -179,6 +187,13 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void Tombstone()
+        {
+            TombstoneModel();
+            TombstoneNames();
+            TombstoneOthers();
+        }
+
         protected override void FindAndCopyModel()
         {
             var id = navigator.GetMealIdToEdit();
@@ -194,6 +209,7 @@ namespace Dietphone.ViewModels
         protected override void MakeViewModel()
         {
             LoadNames();
+            UntombstoneNames();
             CreateMealViewModel();
         }
 
@@ -231,6 +247,90 @@ namespace Dietphone.ViewModels
             }
             defaultName = loader.DefaultName;
             Names.Insert(0, defaultName);
+        }
+
+        private void TombstoneModel()
+        {
+            var state = stateProvider.State;
+            var dto = new MealDTO();
+            dto.CopyFrom(modelCopy);
+            dto.DTOCopyItemsFrom(modelCopy);
+            state[MEAL] = dto.Serialize(string.Empty);
+        }
+
+        protected override void UntombstoneModel()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(MEAL))
+            {
+                var dtoState = (string)state[MEAL];
+                var dto = dtoState.Deserialize<MealDTO>(string.Empty);
+                if (dto.Id == modelCopy.Id)
+                {
+                    modelCopy.CopyFrom(dto);
+                    modelCopy.CopyItemsFrom(dto);
+                }
+            }
+        }
+
+        private void TombstoneNames()
+        {
+            var names = new List<MealName>();
+            foreach (var name in Names)
+            {
+                name.AddModelTo(names);
+            }
+            var state = stateProvider.State;
+            state[NAMES] = names;
+        }
+
+        private void UntombstoneNames()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(NAMES))
+            {
+                var untombstoned = (List<MealName>)state[NAMES];
+                addedNames.Clear();
+                var notUntombstoned = from name in Names
+                                      where untombstoned.FindById(name.Id) == null
+                                      select name;
+                deletedNames = notUntombstoned.ToList();
+                foreach (var deletedName in deletedNames)
+                {
+                    Names.Remove(deletedName);
+                }
+                foreach (var model in untombstoned)
+                {
+                    var existingViewModel = Names.FindById(model.Id);
+                    if (existingViewModel != null)
+                    {
+                        existingViewModel.CopyModelFrom(model);
+                    }
+                    else
+                    {
+                        var addedViewModel = new MealNameViewModel(model, factories);
+                        Names.Add(addedViewModel);
+                        addedNames.Add(addedViewModel);
+                    }
+                }
+            }
+        }
+
+        private void TombstoneOthers()
+        {
+            var state = stateProvider.State;
+            state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
+            state[PIVOT] = Pivot;
+        }
+
+        private void UntombstoneOthers()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(NOT_IS_LOCKED_DATE_TIME))
+            {
+                NotIsLockedDateTime = (bool)state[NOT_IS_LOCKED_DATE_TIME];
+                Pivot = (int)state[PIVOT];
+            }
         }
 
         private void CreateMealViewModel()
