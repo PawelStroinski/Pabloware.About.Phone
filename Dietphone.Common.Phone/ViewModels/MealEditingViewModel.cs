@@ -183,12 +183,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void Tombstone()
-        {
-            base.Tombstone();
-            TombstoneNames();
-        }
-
         protected override void FindAndCopyModel()
         {
             var id = navigator.GetMealIdToEdit();
@@ -269,6 +263,22 @@ namespace Dietphone.ViewModels
             }
         }
 
+        protected override void TombstoneOthers()
+        {
+            var state = stateProvider.State;
+            state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
+            TombstoneNames();
+        }
+
+        protected override void UntombstoneOthers()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(NOT_IS_LOCKED_DATE_TIME))
+            {
+                NotIsLockedDateTime = (bool)state[NOT_IS_LOCKED_DATE_TIME];
+            }
+        }
+
         private void TombstoneNames()
         {
             var names = new List<MealName>();
@@ -309,21 +319,6 @@ namespace Dietphone.ViewModels
                         addedNames.Add(addedViewModel);
                     }
                 }
-            }
-        }
-
-        protected override void TombstoneOthers()
-        {
-            var state = stateProvider.State;
-            state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
-        }
-
-        protected override void UntombstoneOthers()
-        {
-            var state = stateProvider.State;
-            if (state.ContainsKey(NOT_IS_LOCKED_DATE_TIME))
-            {
-                NotIsLockedDateTime = (bool)state[NOT_IS_LOCKED_DATE_TIME];
             }
         }
 
