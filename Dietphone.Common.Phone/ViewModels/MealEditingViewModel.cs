@@ -28,6 +28,7 @@ namespace Dietphone.ViewModels
         private const string MEAL = "MEAL";
         private const string NAMES = "NAMES";
         private const string NOT_IS_LOCKED_DATE_TIME = "NOT_IS_LOCKED_DATE_TIME";
+        private const string EDIT_ITEM_INDEX = "EDIT_ITEM_INDEX";
 
         public MealEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
             : base(factories, navigator, stateProvider)
@@ -185,6 +186,11 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public void UiRendered()
+        {
+            UntombstoneEditItem();
+        }
+
         protected override void FindAndCopyModel()
         {
             var id = navigator.GetMealIdToEdit();
@@ -227,6 +233,7 @@ namespace Dietphone.ViewModels
                 Meal.DeleteItem(editItem);
             };
             ItemEditing.CanDelete = true;
+            ItemEditing.StateProvider = stateProvider;
         }
 
         private void LoadNames()
@@ -270,6 +277,7 @@ namespace Dietphone.ViewModels
             var state = stateProvider.State;
             state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
             TombstoneNames();
+            TombstoneEditItem();
         }
 
         protected override void UntombstoneOthers()
@@ -286,7 +294,7 @@ namespace Dietphone.ViewModels
             var names = new List<MealName>();
             foreach (var name in Names)
             {
-                name.AddModelTo(names);
+                names.Add(name.BufferOrModel);
             }
             var state = stateProvider.State;
             state[NAMES] = names;
@@ -312,7 +320,8 @@ namespace Dietphone.ViewModels
                     var existingViewModel = Names.FindById(model.Id);
                     if (existingViewModel != null)
                     {
-                        existingViewModel.CopyModelFrom(model);
+                        var existingModel = existingViewModel.BufferOrModel;
+                        existingModel.CopyFrom(model);
                     }
                     else
                     {
@@ -320,6 +329,33 @@ namespace Dietphone.ViewModels
                         Names.Add(addedViewModel);
                         addedNames.Add(addedViewModel);
                     }
+                }
+            }
+        }
+
+        private void TombstoneEditItem()
+        {
+            if (ItemEditing.IsVisible)
+            {
+                var state = stateProvider.State;
+                var items = Meal.Items;
+                var editItemIndex = items.IndexOf(editItem);
+                state[EDIT_ITEM_INDEX] = editItemIndex;
+                ItemEditing.Tombstone();
+            }
+        }
+
+        private void UntombstoneEditItem()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(EDIT_ITEM_INDEX))
+            {
+                var editItemIndex = (int)state[EDIT_ITEM_INDEX];
+                var items = Meal.Items;
+                if (editItemIndex > -1 && editItemIndex < items.Count)
+                {
+                    var item = items[editItemIndex];
+                    EditItem(item);
                 }
             }
         }

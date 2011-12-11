@@ -221,6 +221,10 @@ namespace Dietphone.Views
             {
                 UntombstoneTopItem();
             }
+            Dispatcher.BeginInvoke(() =>
+            {
+                ViewModel.UiRendered();
+            });
         }
 
         private void ViewModel_InvalidateItems(object sender, EventArgs e)

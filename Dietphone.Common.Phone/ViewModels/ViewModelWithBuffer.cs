@@ -1,5 +1,6 @@
 ﻿using Dietphone.Tools;
 using Dietphone.Models;
+using System.Collections.Generic;
 
 namespace Dietphone.ViewModels
 {
@@ -16,7 +17,7 @@ namespace Dietphone.ViewModels
             this.factories = factories;
         }
 
-        protected TModel BufferOrModel
+        public TModel BufferOrModel
         {
             get
             {

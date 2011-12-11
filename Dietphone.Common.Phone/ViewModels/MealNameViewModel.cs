@@ -38,16 +38,6 @@ namespace Dietphone.ViewModels
         {
             return Name;
         }
-
-        public void AddModelTo(List<MealName> target)
-        {
-            target.Add(BufferOrModel);
-        }
-
-        public void CopyModelFrom(MealName source)
-        {
-            BufferOrModel.CopyFrom(source);
-        }
     }
 
     public static class MealNameExtensions
