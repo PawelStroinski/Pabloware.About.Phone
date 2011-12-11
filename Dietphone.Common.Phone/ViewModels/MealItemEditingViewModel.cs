@@ -45,8 +45,7 @@ namespace Dietphone.ViewModels
         public void Tombstone()
         {
             var state = StateProvider.State;
-            var mealItem = MealItem.BufferOrModel;
-            state[MEAL_ITEM] = mealItem.Serialize(string.Empty);
+            state[MEAL_ITEM] = MealItem.SerializeModel();
         }
 
         private void Untombstone()
@@ -54,12 +53,11 @@ namespace Dietphone.ViewModels
             var state = StateProvider.State;
             if (state.ContainsKey(MEAL_ITEM))
             {
-                var source = (string)state[MEAL_ITEM];
-                var untombstoned = source.Deserialize<MealItem>(string.Empty);
-                var mealItem = MealItem.BufferOrModel;
-                if (mealItem.ProductId == untombstoned.ProductId)
+                var stateValue = (string)state[MEAL_ITEM];
+                var untombstoned = stateValue.Deserialize<MealItem>(string.Empty);
+                if (MealItem.ProductId == untombstoned.ProductId)
                 {
-                    mealItem.CopyFrom(untombstoned);
+                    MealItem.CopyFromModel(untombstoned);
                 }
             }
         }

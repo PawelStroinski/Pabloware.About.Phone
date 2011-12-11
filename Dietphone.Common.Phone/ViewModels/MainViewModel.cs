@@ -1,6 +1,7 @@
 ﻿using System;
 using Dietphone.Models;
 using System.Collections.Generic;
+using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
@@ -8,6 +9,7 @@ namespace Dietphone.ViewModels
     {
         public ProductListingViewModel ProductListing { private get; set; }
         public MealItemEditingViewModel MealItemEditing { private get; set; }
+        public StateProvider StateProvider { private get; set; }
         public MealEditingViewModel MealEditing { private get; set; }
         public event EventHandler ShowProductsOnly;
         private string search = string.Empty;
@@ -83,6 +85,7 @@ namespace Dietphone.ViewModels
             ProductListing.Choosed += ProductListing_Choosed;
             MealItemEditing.Confirmed -= MealItemEditing_Confirmed;
             MealItemEditing.Confirmed += MealItemEditing_Confirmed;
+            MealItemEditing.StateProvider = StateProvider;
             OnShowProductsOnly();
         }
 

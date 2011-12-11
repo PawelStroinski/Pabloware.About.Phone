@@ -126,6 +126,11 @@ namespace Dietphone.ViewModels
             OnItemChanged();
         }
 
+        public string SerializeModel()
+        {
+            return BufferOrModel.Serialize(string.Empty);
+        }
+
         public void Invalidate()
         {
             OnItemChanged();

@@ -30,7 +30,8 @@ namespace Dietphone.Views
             ViewModel = new MainViewModel(MyApp.Factories)
             {
                 ProductListing = ProductListing.ViewModel,
-                MealItemEditing = MealItemEditing.ViewModel
+                MealItemEditing = MealItemEditing.ViewModel,
+                StateProvider = this
             };
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
             DataContext = ViewModel;

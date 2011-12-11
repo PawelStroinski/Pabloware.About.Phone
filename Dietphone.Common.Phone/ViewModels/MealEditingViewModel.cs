@@ -28,6 +28,7 @@ namespace Dietphone.ViewModels
         private const string MEAL = "MEAL";
         private const string NAMES = "NAMES";
         private const string NOT_IS_LOCKED_DATE_TIME = "NOT_IS_LOCKED_DATE_TIME";
+        private const string ITEM_EDITING = "EDIT_ITEM";
         private const string EDIT_ITEM_INDEX = "EDIT_ITEM_INDEX";
 
         public MealEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
@@ -188,7 +189,7 @@ namespace Dietphone.ViewModels
 
         public void UiRendered()
         {
-            UntombstoneEditItem();
+            UntombstoneItemEditing();
         }
 
         protected override void FindAndCopyModel()
@@ -277,7 +278,7 @@ namespace Dietphone.ViewModels
             var state = stateProvider.State;
             state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
             TombstoneNames();
-            TombstoneEditItem();
+            TombstoneItemEditing();
         }
 
         protected override void UntombstoneOthers()
@@ -294,7 +295,7 @@ namespace Dietphone.ViewModels
             var names = new List<MealName>();
             foreach (var name in Names)
             {
-                names.Add(name.BufferOrModel);
+                name.AddModelTo(names);
             }
             var state = stateProvider.State;
             state[NAMES] = names;
@@ -320,8 +321,7 @@ namespace Dietphone.ViewModels
                     var existingViewModel = Names.FindById(model.Id);
                     if (existingViewModel != null)
                     {
-                        var existingModel = existingViewModel.BufferOrModel;
-                        existingModel.CopyFrom(model);
+                        existingViewModel.CopyFromModel(model);
                     }
                     else
                     {
@@ -333,11 +333,12 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void TombstoneEditItem()
+        private void TombstoneItemEditing()
         {
+            var state = stateProvider.State;
+            state[ITEM_EDITING] = ItemEditing.IsVisible;
             if (ItemEditing.IsVisible)
             {
-                var state = stateProvider.State;
                 var items = Meal.Items;
                 var editItemIndex = items.IndexOf(editItem);
                 state[EDIT_ITEM_INDEX] = editItemIndex;
@@ -345,10 +346,15 @@ namespace Dietphone.ViewModels
             }
         }
 
-        private void UntombstoneEditItem()
+        private void UntombstoneItemEditing()
         {
             var state = stateProvider.State;
-            if (state.ContainsKey(EDIT_ITEM_INDEX))
+            var itemEditing = false;
+            if (state.ContainsKey(ITEM_EDITING))
+            {
+                itemEditing = (bool)state[ITEM_EDITING];
+            }
+            if (itemEditing)
             {
                 var editItemIndex = (int)state[EDIT_ITEM_INDEX];
                 var items = Meal.Items;

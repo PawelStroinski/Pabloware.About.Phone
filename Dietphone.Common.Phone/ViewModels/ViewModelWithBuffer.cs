@@ -17,7 +17,7 @@ namespace Dietphone.ViewModels
             this.factories = factories;
         }
 
-        public TModel BufferOrModel
+        protected TModel BufferOrModel
         {
             get
             {
