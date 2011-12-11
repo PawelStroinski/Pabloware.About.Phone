@@ -22,14 +22,6 @@ namespace Dietphone.Views
             TranslateApplicationBar();
         }
 
-        public IDictionary<string, object> State
-        {
-            get
-            {
-                return base.State;
-            }
-        }
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);

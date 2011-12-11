@@ -4,7 +4,6 @@ using Telerik.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Windows;
-using Microsoft.Phone.Controls;
 using System.Collections.Generic;
 
 namespace Dietphone.Tools
