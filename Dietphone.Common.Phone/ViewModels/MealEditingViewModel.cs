@@ -12,9 +12,10 @@ namespace Dietphone.ViewModels
 {
     public class MealEditingViewModel : EditingViewModelBase<Meal>
     {
+        public MealItem AddCopyOfThisItem { get; set; }
+        public bool NeedsScrollingItemsDown { get; set; }
         public ObservableCollection<MealNameViewModel> Names { get; private set; }
         public MealViewModel Meal { get; private set; }
-        public bool ScrollItemsDownOnLoad { get; set; }
         public event EventHandler InvalidateItems;
         private List<MealNameViewModel> addedNames = new List<MealNameViewModel>();
         private List<MealNameViewModel> deletedNames = new List<MealNameViewModel>();
@@ -31,8 +32,8 @@ namespace Dietphone.ViewModels
         private const string ITEM_EDITING = "EDIT_ITEM";
         private const string EDIT_ITEM_INDEX = "EDIT_ITEM_INDEX";
 
-        public MealEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
-            : base(factories, navigator, stateProvider)
+        public MealEditingViewModel(Factories factories, StateProvider stateProvider)
+            : base(factories, stateProvider)
         {
         }
 
@@ -137,7 +138,7 @@ namespace Dietphone.ViewModels
             modelSource.CopyFrom(modelCopy);
             modelSource.CopyItemsFrom(modelCopy);
             SaveNames();
-            navigator.GoBack();
+            Navigator.GoBack();
         }
 
         public void DeleteAndSaveAndReturn()
@@ -145,19 +146,12 @@ namespace Dietphone.ViewModels
             var models = factories.Meals;
             models.Remove(modelSource);
             SaveNames();
-            navigator.GoBack();
+            Navigator.GoBack();
         }
 
         public void AddItem()
         {
-            navigator.GoToMainToAddMealItem();
-        }
-
-        public void AddCopyOfItem(MealItem source)
-        {
-            var item = Meal.AddItem();
-            item.CopyFromModel(source);
-            ScrollItemsDownOnLoad = true;
+            Navigator.GoToMainToAddMealItem();
         }
 
         public void EditItem(MealItemViewModel itemViewModel)
@@ -173,7 +167,7 @@ namespace Dietphone.ViewModels
         public void OpenScoresSettings()
         {
             wentToSettings = true;
-            navigator.GoToSettings();
+            Navigator.GoToSettings();
         }
 
         public void ReturnedFromNavigation()
@@ -182,8 +176,11 @@ namespace Dietphone.ViewModels
             {
                 wentToSettings = false;
                 OnPropertyChanged(string.Empty);
-                var e = new EventArgs();
-                OnInvalidateItems(e);
+                OnInvalidateItems(EventArgs.Empty);
+            }
+            else
+            {
+                AddCopyOfItem();
             }
         }
 
@@ -194,7 +191,7 @@ namespace Dietphone.ViewModels
 
         protected override void FindAndCopyModel()
         {
-            var id = navigator.GetMealIdToEdit();
+            var id = Navigator.GetMealIdToEdit();
             modelSource = finder.FindMealById(id);
             if (modelSource != null)
             {
@@ -202,6 +199,11 @@ namespace Dietphone.ViewModels
                 modelCopy.SetOwner(factories);
                 modelCopy.CopyItemsFrom(modelSource);
             }
+        }
+
+        protected override void OnModelReady()
+        {
+            AddCopyOfItem();
         }
 
         protected override void MakeViewModel()
@@ -399,6 +401,25 @@ namespace Dietphone.ViewModels
             foreach (var viewModel in deletedNames)
             {
                 models.Remove(viewModel.Model);
+            }
+        }
+
+        private void AddCopyOfItem()
+        {
+            if (AddCopyOfThisItem != null)
+            {
+                if (Meal == null)
+                {
+                    var model = modelCopy.AddItem();
+                    model.CopyFrom(AddCopyOfThisItem);
+                }
+                else
+                {
+                    var viewModel = Meal.AddItem();
+                    viewModel.CopyFromModel(AddCopyOfThisItem);
+                }
+                AddCopyOfThisItem = null;
+                NeedsScrollingItemsDown = true;
             }
         }
 

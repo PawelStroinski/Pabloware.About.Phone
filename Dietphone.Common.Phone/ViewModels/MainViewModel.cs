@@ -48,11 +48,11 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void ReturningToMealEditing()
+        public void GoingToMealEditing()
         {
             if (addMealItem)
             {
-                MealEditing.AddCopyOfItem(tempMealItem);
+                MealEditing.AddCopyOfThisItem = tempMealItem;
             }
         }
 
@@ -75,11 +75,11 @@ namespace Dietphone.ViewModels
         {
             if (navigator.ShouldAddMealItem())
             {
-                AddMealItem();
+                AddingMealItem();
             }
         }
 
-        private void AddMealItem()
+        private void AddingMealItem()
         {
             ProductListing.Choosed -= ProductListing_Choosed;
             ProductListing.Choosed += ProductListing_Choosed;

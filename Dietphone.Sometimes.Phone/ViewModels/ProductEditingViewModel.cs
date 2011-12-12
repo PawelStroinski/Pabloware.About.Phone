@@ -12,8 +12,8 @@ namespace Dietphone.ViewModels
         private List<CategoryViewModel> addedCategories = new List<CategoryViewModel>();
         private List<CategoryViewModel> deletedCategories = new List<CategoryViewModel>();
 
-        public ProductEditingViewModel(Factories factories, Navigator navigator, StateProvider stateProvider)
-            : base(factories, navigator, stateProvider)
+        public ProductEditingViewModel(Factories factories, StateProvider stateProvider)
+            : base(factories, stateProvider)
         {
         }
 
@@ -84,7 +84,7 @@ namespace Dietphone.ViewModels
         {
             modelSource.CopyFrom(modelCopy);
             SaveCategories();
-            navigator.GoBack();
+            Navigator.GoBack();
         }
 
         public void DeleteAndSaveAndReturn()
@@ -92,12 +92,12 @@ namespace Dietphone.ViewModels
             var models = factories.Products;
             models.Remove(modelSource);
             SaveCategories();
-            navigator.GoBack();
+            Navigator.GoBack();
         }
 
         protected override void FindAndCopyModel()
         {
-            var id = navigator.GetProductIdToEdit();
+            var id = Navigator.GetProductIdToEdit();
             modelSource = finder.FindProductById(id);
             if (modelSource != null)
             {

@@ -14,11 +14,19 @@ namespace Dietphone.Views
     public partial class MealEditing : PhoneApplicationPage, StateProvider
     {
         public MealEditingViewModel ViewModel { get; private set; }
+        private bool isOpened;
         private const string TOP_ITEM_INDEX = "TOP_ITEM_INDEX";
 
         public MealEditing()
         {
             InitializeComponent();
+            ViewModel = new MealEditingViewModel(MyApp.Factories, this)
+            {
+                ItemEditing = ItemEditing.ViewModel
+            };
+            ViewModel.IsDirtyChanged += ViewModel_IsDirtyChanged;
+            ViewModel.CannotSave += ViewModel_CannotSave;
+            ViewModel.InvalidateItems += ViewModel_InvalidateItems;
             InteractionEffectManager.AllowedTypes.Add(typeof(RadDataBoundListBoxItem));
             Save = this.GetIcon(0);
             TranslateApplicationBar();
@@ -26,14 +34,11 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (ViewModel == null)
+            isOpened = true;
+            if (ViewModel.Navigator == null)
             {
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
-                ViewModel = new MealEditingViewModel(MyApp.Factories, navigator, this);
-                ViewModel.ItemEditing = ItemEditing.ViewModel;
-                ViewModel.IsDirtyChanged += ViewModel_IsDirtyChanged;
-                ViewModel.CannotSave += ViewModel_CannotSave;
-                ViewModel.InvalidateItems += ViewModel_InvalidateItems;
+                ViewModel.Navigator = navigator;
                 ViewModel.Load();
                 DataContext = ViewModel;
             }
@@ -50,6 +55,7 @@ namespace Dietphone.Views
                 ViewModel.Tombstone();
                 TombstoneTopItem();
             }
+            isOpened = false;
         }
 
         private void AddMealName_Click(object sender, RoutedEventArgs e)
@@ -212,19 +218,22 @@ namespace Dietphone.Views
 
         private void Items_Loaded(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.ScrollItemsDownOnLoad)
+            if (isOpened)
             {
-                ViewModel.ScrollItemsDownOnLoad = false;
-                ScrollItemsDown();
+                if (ViewModel.NeedsScrollingItemsDown)
+                {
+                    ViewModel.NeedsScrollingItemsDown = false;
+                    ScrollItemsDown();
+                }
+                else
+                {
+                    UntombstoneTopItem();
+                }
+                Dispatcher.BeginInvoke(() =>
+                {
+                    ViewModel.UiRendered();
+                });
             }
-            else
-            {
-                UntombstoneTopItem();
-            }
-            Dispatcher.BeginInvoke(() =>
-            {
-                ViewModel.UiRendered();
-            });
         }
 
         private void ViewModel_InvalidateItems(object sender, EventArgs e)

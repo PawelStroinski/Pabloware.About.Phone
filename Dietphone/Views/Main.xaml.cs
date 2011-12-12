@@ -61,12 +61,9 @@ namespace Dietphone.Views
         {
             if (e.Content is MealEditing)
             {
-                var viewModel = (e.Content as MealEditing).ViewModel;
-                if (viewModel != null)
-                {
-                    ViewModel.MealEditing = viewModel;
-                    ViewModel.ReturningToMealEditing();
-                }
+                var mealEditing = (e.Content as MealEditing).ViewModel;
+                ViewModel.MealEditing = mealEditing;
+                ViewModel.GoingToMealEditing();
             }
         }
 

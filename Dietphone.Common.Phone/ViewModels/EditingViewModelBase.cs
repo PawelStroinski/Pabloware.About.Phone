@@ -6,23 +6,22 @@ namespace Dietphone.ViewModels
 {
     public abstract class EditingViewModelBase<TModel> : ViewModelBase
     {
+        public Navigator Navigator { get; set; }
         public int Pivot { get; set; }
         public event EventHandler<CannotSaveEventArgs> CannotSave;
         public event EventHandler IsDirtyChanged;
         protected TModel modelCopy;
         protected TModel modelSource;
         protected readonly Factories factories;
-        protected readonly Navigator navigator;
         protected readonly Finder finder;
         protected readonly StateProvider stateProvider;
         private bool isDirty;
         private const string PIVOT = "PIVOT";
         private const string IS_DIRTY = "IS_DIRTY";
 
-        public EditingViewModelBase(Factories factories, Navigator navigator, StateProvider stateProvider)
+        public EditingViewModelBase(Factories factories, StateProvider stateProvider)
         {
             this.factories = factories;
-            this.navigator = navigator;
             finder = factories.Finder;
             this.stateProvider = stateProvider;
         }
@@ -46,13 +45,14 @@ namespace Dietphone.ViewModels
         public void Load()
         {
             FindAndCopyModel();
-            UntombstoneModel();
             if (modelCopy == null)
             {
-                navigator.GoBack();
+                Navigator.GoBack();
             }
             else
             {
+                UntombstoneModel();
+                OnModelReady();
                 MakeViewModel();
                 UntombstoneOthers();
                 UntombstoneCommonUi();
@@ -81,7 +81,7 @@ namespace Dietphone.ViewModels
 
         public void CancelAndReturn()
         {
-            navigator.GoBack();
+            Navigator.GoBack();
         }
 
         protected abstract void FindAndCopyModel();
@@ -133,6 +133,10 @@ namespace Dietphone.ViewModels
             {
                 IsDirtyChanged(this, EventArgs.Empty);
             }
+        }
+
+        protected virtual void OnModelReady()
+        {
         }
     }
 
