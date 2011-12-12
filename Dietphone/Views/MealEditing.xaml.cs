@@ -229,11 +229,14 @@ namespace Dietphone.Views
                 {
                     UntombstoneTopItem();
                 }
-                Dispatcher.BeginInvoke(() =>
+            }
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (isOpened)
                 {
                     ViewModel.UiRendered();
-                });
-            }
+                }
+            });
         }
 
         private void ViewModel_InvalidateItems(object sender, EventArgs e)
