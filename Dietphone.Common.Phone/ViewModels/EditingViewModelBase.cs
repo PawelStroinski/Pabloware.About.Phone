@@ -56,6 +56,7 @@ namespace Dietphone.ViewModels
                 MakeViewModel();
                 UntombstoneOthers();
                 UntombstoneCommonUi();
+                OnCommonUiReady();
             }
         }
 
@@ -136,6 +137,10 @@ namespace Dietphone.ViewModels
         }
 
         protected virtual void OnModelReady()
+        {
+        }
+
+        protected virtual void OnCommonUiReady()
         {
         }
     }

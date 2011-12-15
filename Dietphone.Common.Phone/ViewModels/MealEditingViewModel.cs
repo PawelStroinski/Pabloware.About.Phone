@@ -25,6 +25,7 @@ namespace Dietphone.ViewModels
         private MealItemEditingViewModel itemEditing;
         private MealItemViewModel editItem;
         private bool wentToSettings;
+        private bool setIsDirtyWhenReady;
         private const byte LOCKED_DATE_TIME_RECENT_MINUTES = 3;
         private const string MEAL = "MEAL";
         private const string NAMES = "NAMES";
@@ -204,6 +205,15 @@ namespace Dietphone.ViewModels
         protected override void OnModelReady()
         {
             AddCopyOfItem();
+        }
+
+        protected override void OnCommonUiReady()
+        {
+            if (setIsDirtyWhenReady)
+            {
+                IsDirty = true;
+                setIsDirtyWhenReady = false;
+            }
         }
 
         protected override void MakeViewModel()
@@ -412,6 +422,7 @@ namespace Dietphone.ViewModels
                 {
                     var model = modelCopy.AddItem();
                     model.CopyFrom(AddCopyOfThisItem);
+                    setIsDirtyWhenReady = true;
                 }
                 else
                 {
