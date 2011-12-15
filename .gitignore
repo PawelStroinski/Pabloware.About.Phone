@@ -31,3 +31,5 @@ _ReSharper*/
 desktop.ini
 #Ignore Resource Editor project file because it contains absoulte filenames
 *.zreproj
+#Ignore tss file (added by git?)
+*.tss
