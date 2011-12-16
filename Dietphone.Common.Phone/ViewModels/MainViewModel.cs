@@ -16,7 +16,9 @@ namespace Dietphone.ViewModels
         private Navigator navigator;
         private MealItem tempMealItem;
         private bool addMealItem;
+        private int pivot;
         private readonly Factories factories;
+        private const string PIVOT = "PIVOT";
 
         public MainViewModel(Factories factories)
         {
@@ -48,6 +50,22 @@ namespace Dietphone.ViewModels
             }
         }
 
+        public int Pivot
+        {
+            get
+            {
+                return pivot;
+            }
+            set
+            {
+                if (pivot != value)
+                {
+                    pivot = value;
+                    OnPropertyChanged("Pivot");
+                }
+            }
+        }
+
         public void GoingToMealEditing()
         {
             if (addMealItem)
@@ -69,6 +87,21 @@ namespace Dietphone.ViewModels
         public void Settings()
         {
             navigator.GoToSettings();
+        }
+
+        public void Tombstone()
+        {
+            var state = StateProvider.State;
+            state[PIVOT] = Pivot;
+        }
+
+        public void Untombstone()
+        {
+            var state = StateProvider.State;
+            if (state.ContainsKey(PIVOT))
+            {
+                Pivot = (int)state[PIVOT];
+            }
         }
 
         protected void OnNavigatorChanged()

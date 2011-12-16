@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using TombstoneHelper;
 using System.Collections.Generic;
 
 namespace Dietphone.Views
@@ -45,12 +44,8 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.RestoreState();
-            // We need to restore pivot manually because TombstoneHelper will wait for
-            // event Pivot.Loaded which in this case is fired after page is shown to user.
-            // TombstoneHelper works this way probably because was bug in Pivot in WP 7.0.
-            Pivot.UntombstoneWith(this);
-            UntombstoneSearchNoRestoreUi();
+            ViewModel.Untombstone();
+            UntombstoneSearchButNotRestoreUi();
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             subConnector.Navigator = navigator;
             subConnector.Refresh();
@@ -69,9 +64,9 @@ namespace Dietphone.Views
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            this.SaveState(e);
             if (e.NavigationMode != NavigationMode.Back)
             {
+                ViewModel.Tombstone();
                 MealListing.Tombstone();
                 ProductListing.Tombstone();
                 TombstoneSearchBeforeExit();
@@ -173,7 +168,7 @@ namespace Dietphone.Views
             alreadyRestoredSearch = false;
         }
 
-        private void UntombstoneSearchNoRestoreUi()
+        private void UntombstoneSearchButNotRestoreUi()
         {
             if (State.ContainsKey(SEARCH))
             {

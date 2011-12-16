@@ -28,7 +28,7 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Translations.Dietphone, Source={StaticResource Translations}}" x:Name="Pivot" x:FieldModifier="private" SelectionChanged="Pivot_SelectionChanged">
+        <controls:Pivot Title="{Binding Translations.Dietphone, Source={StaticResource Translations}}" x:Name="Pivot" x:FieldModifier="private" SelectedIndex="{Binding Pivot, Mode=TwoWay}" SelectionChanged="Pivot_SelectionChanged">
             <controls:PivotItem Header="{Binding Path=Translations.Meals, Source={StaticResource Translations}}" x:Name="Meals" x:FieldModifier="private">
                 <views:MealListing HorizontalAlignment="Left" VerticalAlignment="Top" Width="480" Height="535" Margin="-12 0 -12 0" x:Name="MealListing" x:FieldModifier="private" DatesPoppedUp="MealListing_DatesPoppedUp" MouseEnter="MealListing_MouseEnter" />
             </controls:PivotItem>
