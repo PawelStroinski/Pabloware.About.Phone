@@ -18,6 +18,7 @@ namespace Dietphone.Views
         private bool searchShowed;
         private bool searchFocused;
         private bool alreadyRestoredSearch;
+        private bool isOpened;
         private const byte BACK_KEY = 27;
         private const string SEARCH = "SEARCH";
         private const string SEARCH_SHOWED = "SEARCH_SHOWED";
@@ -35,7 +36,7 @@ namespace Dietphone.Views
             ViewModel.ShowProductsOnly += ViewModel_ShowProductsOnly;
             DataContext = ViewModel;
             subConnector = new SubViewModelConnector(ViewModel);
-            subConnector.Loaded += delegate { RestoreSearchUi(); };
+            subConnector.Loaded += SubConnector_Loaded;
             subConnector.Refreshed += delegate { RestoreSearchUi(); };
             TranslateApplicationBar();
             MealListing.StateProvider = this;
@@ -44,6 +45,7 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            isOpened = true;
             ViewModel.Untombstone();
             UntombstoneSearchButNotRestoreUi();
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
@@ -60,6 +62,7 @@ namespace Dietphone.Views
                 ViewModel.MealEditing = mealEditing;
                 ViewModel.GoingToMealEditing();
             }
+            isOpened = false;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -84,6 +87,15 @@ namespace Dietphone.Views
                 {
                     subConnector.SubViewModel = ProductListing.ViewModel;
                 }
+        }
+
+        private void SubConnector_Loaded(object sender, EventArgs e)
+        {
+            RestoreSearchUi();
+            if (isOpened)
+            {
+                ViewModel.UiRendered();
+            }
         }
 
         private void Add_Click(object sender, EventArgs e)

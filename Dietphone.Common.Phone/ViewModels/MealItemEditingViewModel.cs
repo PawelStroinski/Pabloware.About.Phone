@@ -27,19 +27,19 @@ namespace Dietphone.ViewModels
         public void Confirm()
         {
             OnConfirmed();
-            IsVisible = false;
+            OnHidden();
         }
 
         public void Cancel()
         {
             OnCancelled();
-            IsVisible = false;
+            OnHidden();
         }
 
         public void Delete()
         {
             OnNeedToDelete();
-            IsVisible = false;
+            OnHidden();
         }
 
         public void Tombstone()
@@ -60,6 +60,18 @@ namespace Dietphone.ViewModels
                     MealItem.CopyFromModel(untombstoned);
                 }
             }
+        }
+
+        private void OnHidden()
+        {
+            IsVisible = false;
+            ClearTombstoning();
+        }
+
+        private void ClearTombstoning()
+        {
+            var state = StateProvider.State;
+            state.Remove(MEAL_ITEM);
         }
 
         protected void OnNeedToShow()

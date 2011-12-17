@@ -19,6 +19,8 @@ namespace Dietphone.ViewModels
         private int pivot;
         private readonly Factories factories;
         private const string PIVOT = "PIVOT";
+        private const string MEAL_ITEM_EDITING = "MEAL_ITEM_EDITING";
+        private const string MEAL_ITEM_PRODUCT = "MEAL_ITEM_PRODUCT";
 
         public MainViewModel(Factories factories)
         {
@@ -91,17 +93,18 @@ namespace Dietphone.ViewModels
 
         public void Tombstone()
         {
-            var state = StateProvider.State;
-            state[PIVOT] = Pivot;
+            TombstonePivot();
+            TombstoneMealItemEditing();
         }
 
         public void Untombstone()
         {
-            var state = StateProvider.State;
-            if (state.ContainsKey(PIVOT))
-            {
-                Pivot = (int)state[PIVOT];
-            }
+            UntombstonePivot();
+        }
+
+        public void UiRendered()
+        {
+            UntombstoneMealItemEditing();
         }
 
         protected void OnNavigatorChanged()
@@ -120,6 +123,53 @@ namespace Dietphone.ViewModels
             MealItemEditing.Confirmed += MealItemEditing_Confirmed;
             MealItemEditing.StateProvider = StateProvider;
             OnShowProductsOnly();
+        }
+
+        private void TombstonePivot()
+        {
+            var state = StateProvider.State;
+            state[PIVOT] = Pivot;
+        }
+
+        private void UntombstonePivot()
+        {
+            var state = StateProvider.State;
+            if (state.ContainsKey(PIVOT))
+            {
+                Pivot = (int)state[PIVOT];
+            }
+        }
+
+        private void TombstoneMealItemEditing()
+        {
+            var state = StateProvider.State;
+            state[MEAL_ITEM_EDITING] = MealItemEditing.IsVisible;
+            if (MealItemEditing.IsVisible)
+            {
+                var mealItem = MealItemEditing.MealItem;
+                state[MEAL_ITEM_PRODUCT] = mealItem.ProductId;
+                MealItemEditing.Tombstone();
+            }
+        }
+
+        private void UntombstoneMealItemEditing()
+        {
+            var state = StateProvider.State;
+            var mealItemEditing = false;
+            if (state.ContainsKey(MEAL_ITEM_EDITING))
+            {
+                mealItemEditing = (bool)state[MEAL_ITEM_EDITING];
+            }
+            if (mealItemEditing)
+            {
+                var productId = (Guid)state[MEAL_ITEM_PRODUCT];
+                var products = ProductListing.Products;
+                var product = products.FindById(productId);
+                if (product != null)
+                {
+                    AddMealItemWithProduct(product);
+                }
+            }
         }
 
         private void ProductListing_Choosed(object sender, ChoosedEventArgs e)
