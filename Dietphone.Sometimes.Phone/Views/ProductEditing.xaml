@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage 
+﻿<commonViews:StateProviderPage 
     x:Class="Dietphone.Views.ProductEditing"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -186,4 +186,4 @@
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
-</phone:PhoneApplicationPage>
+</commonViews:StateProviderPage >

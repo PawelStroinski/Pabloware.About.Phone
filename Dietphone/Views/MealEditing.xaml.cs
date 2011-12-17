@@ -11,10 +11,9 @@ using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class MealEditing : PhoneApplicationPage, StateProvider
+    public partial class MealEditing : StateProviderPage
     {
         public MealEditingViewModel ViewModel { get; private set; }
-        private bool isOpened;
         private const string TOP_ITEM_INDEX = "TOP_ITEM_INDEX";
 
         public MealEditing()
@@ -34,7 +33,7 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            isOpened = true;
+            base.OnNavigatedTo(e);
             if (ViewModel.Navigator == null)
             {
                 var navigator = new NavigatorImpl(NavigationService, NavigationContext);
@@ -55,7 +54,6 @@ namespace Dietphone.Views
                 ViewModel.Tombstone();
                 TombstoneTopItem();
             }
-            isOpened = false;
         }
 
         private void AddMealName_Click(object sender, RoutedEventArgs e)
@@ -218,7 +216,7 @@ namespace Dietphone.Views
 
         private void Items_Loaded(object sender, RoutedEventArgs e)
         {
-            if (isOpened)
+            if (IsOpened)
             {
                 if (ViewModel.NeedsScrollingItemsDown)
                 {
@@ -232,7 +230,7 @@ namespace Dietphone.Views
             }
             Dispatcher.BeginInvoke(() =>
             {
-                if (isOpened)
+                if (IsOpened)
                 {
                     ViewModel.UiRendered();
                 }

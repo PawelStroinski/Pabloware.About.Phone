@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class ProductEditing : PhoneApplicationPage, StateProvider
+    public partial class ProductEditing : StateProviderPage
     {
         private ProductEditingViewModel viewModel;
 
@@ -24,6 +24,7 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
             viewModel = new ProductEditingViewModel(MyApp.Factories, this);
             viewModel.Navigator = navigator;

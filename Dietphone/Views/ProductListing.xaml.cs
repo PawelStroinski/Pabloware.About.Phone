@@ -33,7 +33,15 @@ namespace Dietphone.Views
             ViewModel.DescriptorsUpdating += delegate { List.BeginDataUpdate(); };
             ViewModel.DescriptorsUpdated += delegate { List.EndDataUpdate(); };
             ViewModel.Refreshed += delegate { RestoreTopItem(); };
-            ViewModel.Loaded += delegate { Untombstone(); };
+            ViewModel.Loaded += ViewModel_Loaded;
+        }
+
+        private void ViewModel_Loaded(object sender, EventArgs e)
+        {
+            if (StateProvider.IsOpened)
+            {
+                Untombstone();
+            }
         }
 
         public void Tombstone()

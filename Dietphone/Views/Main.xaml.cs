@@ -11,14 +11,13 @@ using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
-    public partial class Main : PhoneApplicationPage, StateProvider
+    public partial class Main : StateProviderPage
     {
         public MainViewModel ViewModel { get; private set; }
         private SubViewModelConnector subConnector;
         private bool searchShowed;
         private bool searchFocused;
         private bool alreadyRestoredSearch;
-        private bool isOpened;
         private const byte BACK_KEY = 27;
         private const string SEARCH = "SEARCH";
         private const string SEARCH_SHOWED = "SEARCH_SHOWED";
@@ -45,7 +44,7 @@ namespace Dietphone.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            isOpened = true;
+            base.OnNavigatedTo(e);
             ViewModel.Untombstone();
             UntombstoneSearchButNotRestoreUi();
             var navigator = new NavigatorImpl(NavigationService, NavigationContext);
@@ -62,7 +61,7 @@ namespace Dietphone.Views
                 ViewModel.MealEditing = mealEditing;
                 ViewModel.GoingToMealEditing();
             }
-            isOpened = false;
+            base.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -92,7 +91,7 @@ namespace Dietphone.Views
         private void SubConnector_Loaded(object sender, EventArgs e)
         {
             RestoreSearchUi();
-            if (isOpened)
+            if (IsOpened)
             {
                 ViewModel.UiRendered();
             }
