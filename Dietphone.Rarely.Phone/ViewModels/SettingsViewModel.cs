@@ -8,7 +8,7 @@ using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : PivotTombstoningViewModel
     {
         public List<string> UiCultures { get; private set; }
         public List<string> ProductCultures { get; private set; }

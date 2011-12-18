@@ -5,20 +5,17 @@ using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : PivotTombstoningViewModel
     {
         public ProductListingViewModel ProductListing { private get; set; }
         public MealItemEditingViewModel MealItemEditing { private get; set; }
-        public StateProvider StateProvider { private get; set; }
         public MealEditingViewModel MealEditing { private get; set; }
         public event EventHandler ShowProductsOnly;
         private string search = string.Empty;
         private Navigator navigator;
         private MealItem tempMealItem;
         private bool addMealItem;
-        private int pivot;
         private readonly Factories factories;
-        private const string PIVOT = "PIVOT";
         private const string MEAL_ITEM_EDITING = "MEAL_ITEM_EDITING";
         private const string MEAL_ITEM_PRODUCT = "MEAL_ITEM_PRODUCT";
 
@@ -52,22 +49,6 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public int Pivot
-        {
-            get
-            {
-                return pivot;
-            }
-            set
-            {
-                if (pivot != value)
-                {
-                    pivot = value;
-                    OnPropertyChanged("Pivot");
-                }
-            }
-        }
-
         public void GoingToMealEditing()
         {
             if (addMealItem)
@@ -91,15 +72,10 @@ namespace Dietphone.ViewModels
             navigator.GoToSettings();
         }
 
-        public void Tombstone()
+        public override void Tombstone()
         {
-            TombstonePivot();
+            base.Tombstone();
             TombstoneMealItemEditing();
-        }
-
-        public void Untombstone()
-        {
-            UntombstonePivot();
         }
 
         public void UiRendered()
@@ -123,21 +99,6 @@ namespace Dietphone.ViewModels
             MealItemEditing.Confirmed += MealItemEditing_Confirmed;
             MealItemEditing.StateProvider = StateProvider;
             OnShowProductsOnly();
-        }
-
-        private void TombstonePivot()
-        {
-            var state = StateProvider.State;
-            state[PIVOT] = Pivot;
-        }
-
-        private void UntombstonePivot()
-        {
-            var state = StateProvider.State;
-            if (state.ContainsKey(PIVOT))
-            {
-                Pivot = (int)state[PIVOT];
-            }
         }
 
         private void TombstoneMealItemEditing()

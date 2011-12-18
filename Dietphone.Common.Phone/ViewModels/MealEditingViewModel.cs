@@ -33,8 +33,8 @@ namespace Dietphone.ViewModels
         private const string ITEM_EDITING = "EDIT_ITEM";
         private const string EDIT_ITEM_INDEX = "EDIT_ITEM_INDEX";
 
-        public MealEditingViewModel(Factories factories, StateProvider stateProvider)
-            : base(factories, stateProvider)
+        public MealEditingViewModel(Factories factories)
+            : base(factories)
         {
         }
 
@@ -246,7 +246,7 @@ namespace Dietphone.ViewModels
                 Meal.DeleteItem(editItem);
             };
             ItemEditing.CanDelete = true;
-            ItemEditing.StateProvider = stateProvider;
+            ItemEditing.StateProvider = StateProvider;
         }
 
         private void LoadNames()
@@ -263,7 +263,7 @@ namespace Dietphone.ViewModels
 
         protected override void TombstoneModel()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             var dto = new MealDTO();
             dto.CopyFrom(modelCopy);
             dto.DTOCopyItemsFrom(modelCopy);
@@ -272,7 +272,7 @@ namespace Dietphone.ViewModels
 
         protected override void UntombstoneModel()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             if (state.ContainsKey(MEAL))
             {
                 var dtoState = (string)state[MEAL];
@@ -287,7 +287,7 @@ namespace Dietphone.ViewModels
 
         protected override void TombstoneOthers()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             state[NOT_IS_LOCKED_DATE_TIME] = NotIsLockedDateTime;
             TombstoneNames();
             TombstoneItemEditing();
@@ -295,7 +295,7 @@ namespace Dietphone.ViewModels
 
         protected override void UntombstoneOthers()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             if (state.ContainsKey(NOT_IS_LOCKED_DATE_TIME))
             {
                 NotIsLockedDateTime = (bool)state[NOT_IS_LOCKED_DATE_TIME];
@@ -309,13 +309,13 @@ namespace Dietphone.ViewModels
             {
                 name.AddModelTo(names);
             }
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             state[NAMES] = names;
         }
 
         private void UntombstoneNames()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             if (state.ContainsKey(NAMES))
             {
                 var untombstoned = (List<MealName>)state[NAMES];
@@ -347,7 +347,7 @@ namespace Dietphone.ViewModels
 
         private void TombstoneItemEditing()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             state[ITEM_EDITING] = ItemEditing.IsVisible;
             if (ItemEditing.IsVisible)
             {
@@ -360,7 +360,7 @@ namespace Dietphone.ViewModels
 
         private void UntombstoneItemEditing()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             var itemEditing = false;
             if (state.ContainsKey(ITEM_EDITING))
             {

@@ -13,8 +13,8 @@ namespace Dietphone.Views
 {
     public partial class MealListing : UserControl
     {
-        public MealListingViewModel ViewModel { get; private set; }
         public StateProvider StateProvider { private get; set; }
+        public MealListingViewModel ViewModel { get; private set; }
         public event EventHandler DatesPoppedUp;
         private bool isTopItemMeal;
         private bool isTopItemDate;

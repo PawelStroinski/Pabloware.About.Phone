@@ -19,8 +19,9 @@ namespace Dietphone.Views
         public MealEditing()
         {
             InitializeComponent();
-            ViewModel = new MealEditingViewModel(MyApp.Factories, this)
+            ViewModel = new MealEditingViewModel(MyApp.Factories)
             {
+                StateProvider = this,
                 ItemEditing = ItemEditing.ViewModel
             };
             ViewModel.IsDirtyChanged += ViewModel_IsDirtyChanged;

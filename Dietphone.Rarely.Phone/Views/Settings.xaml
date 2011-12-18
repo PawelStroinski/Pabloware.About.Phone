@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage 
+﻿<commonViews:StateProviderPage 
     x:Class="Dietphone.Views.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:telerikInput="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Input"    
+    xmlns:commonViews="clr-namespace:Dietphone.Views;assembly=Dietphone.Common.Phone"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -20,7 +21,7 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Translations.SettingsUppercase, Source={StaticResource Translations}}">
+        <controls:Pivot Title="{Binding Translations.SettingsUppercase, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
             <controls:PivotItem Header="{Binding Translations.Results, Source={StaticResource Translations}}">
                 <Grid>
                     <ScrollViewer>
@@ -63,4 +64,4 @@
         </controls:Pivot>
     </Grid>
 
-</phone:PhoneApplicationPage>
+</commonViews:StateProviderPage>

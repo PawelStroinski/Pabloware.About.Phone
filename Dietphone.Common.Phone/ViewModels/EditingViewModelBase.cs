@@ -4,26 +4,22 @@ using Dietphone.Tools;
 
 namespace Dietphone.ViewModels
 {
-    public abstract class EditingViewModelBase<TModel> : ViewModelBase
+    public abstract class EditingViewModelBase<TModel> : PivotTombstoningViewModel
     {
         public Navigator Navigator { get; set; }
-        public int Pivot { get; set; }
         public event EventHandler<CannotSaveEventArgs> CannotSave;
         public event EventHandler IsDirtyChanged;
         protected TModel modelCopy;
         protected TModel modelSource;
         protected readonly Factories factories;
         protected readonly Finder finder;
-        protected readonly StateProvider stateProvider;
         private bool isDirty;
-        private const string PIVOT = "PIVOT";
         private const string IS_DIRTY = "IS_DIRTY";
 
-        public EditingViewModelBase(Factories factories, StateProvider stateProvider)
+        public EditingViewModelBase(Factories factories)
         {
             this.factories = factories;
             finder = factories.Finder;
-            this.stateProvider = stateProvider;
         }
 
         public bool IsDirty
@@ -60,11 +56,16 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public void Tombstone()
+        public override void Tombstone()
         {
             TombstoneModel();
             TombstoneOthers();
             TombstoneCommonUi();
+        }
+
+        public override void Untombstone()
+        {
+            throw new NotSupportedException("Use Load() instead");
         }
 
         public bool CanSave()
@@ -105,18 +106,18 @@ namespace Dietphone.ViewModels
 
         private void TombstoneCommonUi()
         {
-            var state = stateProvider.State;
-            state[PIVOT] = Pivot;
+            var state = StateProvider.State;
             state[IS_DIRTY] = IsDirty;
+            TombstonePivot();
         }
 
         private void UntombstoneCommonUi()
         {
-            var state = stateProvider.State;
-            if (state.ContainsKey(PIVOT))
+            var state = StateProvider.State;
+            if (state.ContainsKey(IS_DIRTY))
             {
-                Pivot = (int)state[PIVOT];
                 IsDirty = (bool)state[IS_DIRTY];
+                UntombstonePivot();
             }
         }
 

@@ -15,8 +15,8 @@ namespace Dietphone.ViewModels
         private const string PRODUCT = "PRODUCT";
         private const string CATEGORIES = "CATEGORIES";
 
-        public ProductEditingViewModel(Factories factories, StateProvider stateProvider)
-            : base(factories, stateProvider)
+        public ProductEditingViewModel(Factories factories)
+            : base(factories)
         {
         }
 
@@ -133,13 +133,13 @@ namespace Dietphone.ViewModels
 
         protected override void TombstoneModel()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             state[PRODUCT] = modelCopy.Serialize(string.Empty);
         }
 
         protected override void UntombstoneModel()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             if (state.ContainsKey(PRODUCT))
             {
                 var stateValue = (string)state[PRODUCT];
@@ -163,13 +163,13 @@ namespace Dietphone.ViewModels
             {
                 category.AddModelTo(categories);
             }
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             state[CATEGORIES] = categories;
         }
 
         private void UntombstoneCategories()
         {
-            var state = stateProvider.State;
+            var state = StateProvider.State;
             if (state.ContainsKey(CATEGORIES))
             {
                 var untombstoned = (List<Category>)state[CATEGORIES];

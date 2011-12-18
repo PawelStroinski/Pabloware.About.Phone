@@ -1,27 +1,25 @@
 ﻿// Kod LoadLicense() zaczerpnięty z http://www.jeff.wilcox.name/2011/07/my-app-about-page/
 using System.Windows.Controls;
-using System.Reflection;
 using Microsoft.Phone.Tasks;
-using System.Windows.Resources;
 using System.Windows;
-using System;
 using System.IO;
 using System.Windows.Shapes;
 using Dietphone.Tools;
 using Dietphone.Views;
+using System;
 
 namespace Dietphone.ViewModels
 {
-    public class AboutViewModel : ViewModelBase
+    public class AboutViewModel : PivotTombstoningViewModel
     {
         public StackPanel License { get; private set; }
-        private byte selectedPivot = DEFAULT_PIVOT;
+        private int pivot = DEFAULT_PIVOT;
         private readonly OptionalDispatcher dispatcher;
         private readonly ResourceStreamProvider resStreamProvider;
         private readonly AppVersion appVersion = new AppVersion();
         private const string MAIL = "dietphone@pabloware.com";
-        private const byte LICENSE_PIVOT = 1;
-        private const byte DEFAULT_PIVOT = 0;
+        private const int LICENSE_PIVOT = 1;
+        private const int DEFAULT_PIVOT = 0;
         private const string PATH_TO_LICENSE = "/Dietphone.Rarely.Phone;component/documents/license.{0}.txt";
         private const string CHANGELOG_URI = "http://www.pabloware.com/dietphone/changelog.{0}.xaml";
 
@@ -56,17 +54,17 @@ namespace Dietphone.ViewModels
             }
         }
 
-        public byte SelectedPivot
+        public override int Pivot
         {
             get
             {
-                OnSelectedPivotChange();
-                return selectedPivot;
+                OnPivotMayChanged();
+                return pivot;
             }
             set
             {
-                selectedPivot = value;
-                OnSelectedPivotChange();
+                pivot = value;
+                OnPivotMayChanged();
             }
         }
 
@@ -83,10 +81,9 @@ namespace Dietphone.ViewModels
             task.Show();
         }
 
-
-        private void OnSelectedPivotChange()
+        private void OnPivotMayChanged()
         {
-            if (selectedPivot == LICENSE_PIVOT)
+            if (pivot == LICENSE_PIVOT)
             {
                 LazyLoadLicense();
             }

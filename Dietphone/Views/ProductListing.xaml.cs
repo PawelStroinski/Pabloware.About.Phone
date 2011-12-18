@@ -12,8 +12,8 @@ namespace Dietphone.Views
 {
     public partial class ProductListing : UserControl
     {
-        public ProductListingViewModel ViewModel { get; private set; }
         public StateProvider StateProvider { private get; set; }
+        public ProductListingViewModel ViewModel { get; private set; }
         public event EventHandler CategoriesPoppedUp;
         private bool isTopItemCategory;
         private Guid topItemId;
