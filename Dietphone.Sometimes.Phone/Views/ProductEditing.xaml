@@ -40,7 +40,7 @@
     </phone:PhoneApplicationPage.Resources>
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Translations.Product, Source={StaticResource Translations}}">
+        <controls:Pivot Title="{Binding Translations.Product, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
             <!--ogólne-->
             <controls:PivotItem Header="{Binding Translations.General, Source={StaticResource Translations}}">
                 <StackPanel Margin="12,0">

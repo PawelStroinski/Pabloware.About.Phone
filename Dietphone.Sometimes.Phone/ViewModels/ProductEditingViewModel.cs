@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using Dietphone.Tools;
+using System.Linq;
 
 namespace Dietphone.ViewModels
 {
@@ -11,6 +12,8 @@ namespace Dietphone.ViewModels
         public ProductViewModel Product { get; private set; }
         private List<CategoryViewModel> addedCategories = new List<CategoryViewModel>();
         private List<CategoryViewModel> deletedCategories = new List<CategoryViewModel>();
+        private const string PRODUCT = "PRODUCT";
+        private const string CATEGORIES = "CATEGORIES";
 
         public ProductEditingViewModel(Factories factories, StateProvider stateProvider)
             : base(factories, stateProvider)
@@ -109,6 +112,7 @@ namespace Dietphone.ViewModels
         protected override void MakeViewModel()
         {
             LoadCategories();
+            UntombstoneCategories();
             MakeProductViewModelInternal();
         }
 
@@ -129,12 +133,70 @@ namespace Dietphone.ViewModels
 
         protected override void TombstoneModel()
         {
-            throw new System.NotImplementedException();
+            var state = stateProvider.State;
+            state[PRODUCT] = modelCopy.Serialize(string.Empty);
         }
 
         protected override void UntombstoneModel()
         {
-            throw new System.NotImplementedException();
+            var state = stateProvider.State;
+            if (state.ContainsKey(PRODUCT))
+            {
+                var stateValue = (string)state[PRODUCT];
+                var untombstoned = stateValue.Deserialize<Product>(string.Empty);
+                if (untombstoned.Id == modelCopy.Id)
+                {
+                    modelCopy.CopyFrom(untombstoned);
+                }
+            }
+        }
+
+        protected override void TombstoneOthers()
+        {
+            TombstoneCategories();
+        }
+
+        private void TombstoneCategories()
+        {
+            var categories = new List<Category>();
+            foreach (var category in Categories)
+            {
+                category.AddModelTo(categories);
+            }
+            var state = stateProvider.State;
+            state[CATEGORIES] = categories;
+        }
+
+        private void UntombstoneCategories()
+        {
+            var state = stateProvider.State;
+            if (state.ContainsKey(CATEGORIES))
+            {
+                var untombstoned = (List<Category>)state[CATEGORIES];
+                addedCategories.Clear();
+                var notUntombstoned = from category in Categories
+                                      where untombstoned.FindById(category.Id) == null
+                                      select category;
+                deletedCategories = notUntombstoned.ToList();
+                foreach (var deletedCategory in deletedCategories)
+                {
+                    Categories.Remove(deletedCategory);
+                }
+                foreach (var model in untombstoned)
+                {
+                    var existingViewModel = Categories.FindById(model.Id);
+                    if (existingViewModel != null)
+                    {
+                        existingViewModel.CopyFromModel(model);
+                    }
+                    else
+                    {
+                        var addedViewModel = new CategoryViewModel(model, factories);
+                        Categories.Add(addedViewModel);
+                        addedCategories.Add(addedViewModel);
+                    }
+                }
+            }
         }
 
         private void MakeProductViewModelInternal()

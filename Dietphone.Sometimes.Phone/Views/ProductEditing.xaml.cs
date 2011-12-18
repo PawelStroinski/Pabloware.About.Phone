@@ -34,6 +34,14 @@ namespace Dietphone.Views
             DataContext = viewModel;
         }
 
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode != NavigationMode.Back)
+            {
+                viewModel.Tombstone();
+            }
+        }
+
         private void ProductEditing_Loaded(object sender, RoutedEventArgs e)
         {
             var product = viewModel.Product;
@@ -102,6 +110,7 @@ namespace Dietphone.Views
                 {
                     viewModel.DeleteCategory();
                     Category.ForceRefresh(ProgressBar);
+                    Save.IsEnabled = viewModel.IsDirty;
                 });
             }
         }

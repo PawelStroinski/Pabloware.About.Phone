@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Dietphone.ViewModels
 {
-    public class MealNameViewModel : ViewModelWithBuffer<MealName>
+    public class MealNameViewModel : ViewModelWithBufferAcc<MealName>, HasId
     {
         public MealNameViewModel(MealName model, Factories factories)
             : base(model, factories)
@@ -37,25 +37,6 @@ namespace Dietphone.ViewModels
         public override string ToString()
         {
             return Name;
-        }
-
-        public void AddModelTo(List<MealName> target)
-        {
-            target.Add(BufferOrModel);
-        }
-
-        public void CopyFromModel(MealName source)
-        {
-            BufferOrModel.CopyFrom(source);
-        }
-    }
-
-    public static class MealNameExtensions
-    {
-        public static MealNameViewModel FindById(this IEnumerable<MealNameViewModel> names, Guid id)
-        {
-            var result = from name in names where name.Id == id select name;
-            return result.FirstOrDefault();
         }
     }
 }

@@ -128,6 +128,7 @@ namespace Dietphone.Views
                 {
                     ViewModel.DeleteName();
                     MealName.ForceRefresh(ProgressBar);
+                    Save.IsEnabled = ViewModel.IsDirty;
                 });
             }
         }

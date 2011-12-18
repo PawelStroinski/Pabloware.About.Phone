@@ -74,12 +74,17 @@ namespace Dietphone.Models
 
     public static class FinderExtensions
     {
-        public static T FindById<T>(this List<T> entities, Guid entityId) where T : EntityWithId
+        public static T FindById<T>(this IEnumerable<T> items, Guid itemId) where T : HasId
         {
-            var result = from entity in entities
-                         where entity.Id == entityId
-                         select entity;
+            var result = from item in items
+                         where item.Id == itemId
+                         select item;
             return result.FirstOrDefault();
         }
+    }
+
+    public interface HasId
+    {
+        Guid Id { get; }
     }
 }

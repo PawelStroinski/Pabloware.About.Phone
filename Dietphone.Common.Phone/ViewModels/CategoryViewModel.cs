@@ -3,7 +3,7 @@ using Dietphone.Models;
 
 namespace Dietphone.ViewModels
 {
-    public class CategoryViewModel : ViewModelWithBuffer<Category>, IComparable
+    public class CategoryViewModel : ViewModelWithBufferAcc<Category>, IComparable, HasId
     {
         public CategoryViewModel(Category model, Factories factories)
             : base(model, factories)

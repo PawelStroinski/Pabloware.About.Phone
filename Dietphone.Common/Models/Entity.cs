@@ -42,7 +42,7 @@ namespace Dietphone.Models
         }
     }
 
-    public class EntityWithId : Entity
+    public class EntityWithId : Entity, HasId
     {
         public Guid Id { get; set; }
     }

@@ -7,7 +7,7 @@ using Dietphone.Views;
 
 namespace Dietphone.ViewModels
 {
-    public class ProductViewModel : ViewModelBase
+    public class ProductViewModel : ViewModelBase, HasId
     {
         public Product Product { get; private set; }
         public IEnumerable<CategoryViewModel> Categories { private get; set; }
@@ -544,14 +544,5 @@ namespace Dietphone.ViewModels
     {
         public float CuPer100g { get; set; }
         public float FpuPer100g { get; set; }
-    }
-
-    public static class ProductExtensions
-    {
-        public static ProductViewModel FindById(this IEnumerable<ProductViewModel> products, Guid id)
-        {
-            var result = from product in products where product.Id == id select product;
-            return result.FirstOrDefault();
-        }
     }
 }

@@ -23,7 +23,7 @@
     telerikCore:InteractionEffectManager.IsInteractionEnabled="True">
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Path=Translations.Meal, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}" >
+        <controls:Pivot Title="{Binding Path=Translations.Meal, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
             <!--składniki-->
             <controls:PivotItem Header="{Binding Path=Translations.Ingredients, Source={StaticResource Translations}}">
                 <Grid Margin="21,0,10,0">
