@@ -17,11 +17,11 @@ namespace Dietphone.ViewModels
         private readonly OptionalDispatcher dispatcher;
         private readonly ResourceStreamProvider resStreamProvider;
         private readonly AppVersion appVersion = new AppVersion();
-        private const string MAIL = "dietphone@pabloware.com";
+        private const string MAIL = "wp7@pabloware.com";
         private const int LICENSE_PIVOT = 1;
         private const int DEFAULT_PIVOT = 0;
         private const string PATH_TO_LICENSE = "/Dietphone.Rarely.Phone;component/documents/license.{0}.txt";
-        private const string CHANGELOG_URI = "http://www.pabloware.com/dietphone/changelog.{0}.xaml";
+        private const string CHANGELOG_URI = "http://www.pabloware.com/wp7/dietphone.changelog.{0}.xaml";
 
         public AboutViewModel(OptionalDispatcher dispatcher, ResourceStreamProvider resStreamProvider)
         {

@@ -1091,7 +1091,7 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suggestions: dietphone@pabloware.com.
+        ///   Looks up a localized string similar to Suggestions: wp7@pabloware.com.
         /// </summary>
         public static string SuggestionsMail {
             get {

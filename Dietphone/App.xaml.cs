@@ -122,7 +122,7 @@ namespace Dietphone
         private void SendException(string exception)
         {
             EmailComposeTask task = new EmailComposeTask();
-            task.To = "dietphone@pabloware.com";
+            task.To = "wp7@pabloware.com";
             task.Body = String.Format(Translations.IWouldLikeToReportTheFollowingBug, exception);
             task.Subject = Translations.Bug;
             task.Show();

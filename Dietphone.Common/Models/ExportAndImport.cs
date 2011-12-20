@@ -9,7 +9,7 @@ namespace Dietphone.Models
         private readonly Factories factories;
         private readonly Finder finder;
         private readonly AppVersion appVersion = new AppVersion();
-        private const string NAMESPACE = "http://www.pabloware.com/dietphone";
+        private const string NAMESPACE = "http://www.pabloware.com/wp7";
 
         public ExportAndImport(Factories factories)
         {
