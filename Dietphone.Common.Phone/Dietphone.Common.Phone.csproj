@@ -47,7 +47,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
-      <HintPath>..\..\..\windowsphone\Toolkit Feb 2011 Source and Samples\Bin\Debug\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <HintPath>..\..\..\windowsphone\Toolkit Feb 2011 Source and Samples\Bin\Release\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices" />
