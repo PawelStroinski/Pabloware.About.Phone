@@ -1,13 +1,11 @@
 ﻿using Dietphone.Tools;
 using Dietphone.ViewModels;
-using Microsoft.Phone.Controls;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 
 namespace Dietphone.Views
 {
@@ -282,10 +280,13 @@ namespace Dietphone.Views
         {
             if (searchShowed)
             {
-                SearchBox.Focus();
-                var text = SearchBox.Text;
-                var textLength = text.Length;
-                SearchBox.Select(textLength, 0);
+                ShowSearchAnimation.Dispatcher.BeginInvoke(() =>
+                {
+                    SearchBox.Focus();
+                    var text = SearchBox.Text;
+                    var textLength = text.Length;
+                    SearchBox.Select(textLength, 0);
+                });
             }
         }
 
