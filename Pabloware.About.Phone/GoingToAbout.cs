@@ -1,4 +1,8 @@
-﻿using System;
+﻿// How to use:
+// This source file should be copied (or linked) to assembly which should open About page.
+// Then please create instance of GoingToAbout, fill its Dto property and call its Go() method.
+
+using System;
 using System.Net;
 using System.Text;
 using System.Windows.Navigation;
