@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace Dietphone.Tools
+namespace Pabloware.About.Tools
 {
-    public interface ResourceStreamProvider
+    internal interface ResourceStreamProvider
     {
         Stream GetResourceStream(string uri);
     }

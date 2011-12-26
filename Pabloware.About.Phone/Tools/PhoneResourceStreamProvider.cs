@@ -2,9 +2,9 @@
 using System.IO;
 using System.Windows;
 
-namespace Dietphone.Tools
+namespace Pabloware.About.Tools
 {
-    public class PhoneResourceStreamProvider : ResourceStreamProvider
+    internal class PhoneResourceStreamProvider : ResourceStreamProvider
     {
         public Stream GetResourceStream(string uri)
         {

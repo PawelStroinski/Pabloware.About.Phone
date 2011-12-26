@@ -1,5 +1,5 @@
-﻿<commonViews:StateProviderPage 
-    x:Class="Dietphone.Views.About"
+﻿<views:StateProviderPage 
+    x:Class="Pabloware.About.Views.About"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -7,9 +7,9 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="clr-namespace:Dietphone.Views"
-    xmlns:commonViews="clr-namespace:Dietphone.Views;assembly=Dietphone.Common.Phone"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    xmlns:views="clr-namespace:Pabloware.About.Views"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -20,48 +20,69 @@
         <ResourceDictionary Source="Resources.xaml"/>
     </phone:PhoneApplicationPage.Resources>
 
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideRightFadeIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:SlideTransition Mode="SlideLeftFadeOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:SlideTransition Mode="SlideRightFadeOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
     <Grid Background="Transparent">
-        <controls:Pivot Title="{Binding Translations.Dietphone, Source={StaticResource Translations}}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
+        <controls:Pivot Title="{Binding AppNameUppercase}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
             <!--o aplikacji-->
-            <controls:PivotItem Header="{Binding Translations.AboutApp, Source={StaticResource Translations}}">
+            <controls:PivotItem Header="{Binding AboutAppLabel}">
                 <ScrollViewer>
                     <StackPanel>
                         <!--AppName-->
                         <TextBlock Text="{Binding AppName}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" Margin="21,0,0,0"/>
                         <!--Publisher-->
-                        <TextBlock Text="{Binding Translations.FromPabloware, Source={StaticResource Translations}}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
+                        <TextBlock Text="{Binding Publisher}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
                         <!--Web-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    NavigateUri="http://www.pabloware.com/wp7"
-                                    Content="www.pabloware.com/wp7"
+                                    NavigateUri="{Binding Web}"
+                                    Content="{Binding WebLabel}"
                                     TargetName="_self"
                                     Margin="12,1,12,20"/>
                         <!--Version-->
-                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding AppVersion}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,0,24,1"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="{StaticResource PhoneFontSizeSmall}" FontFamily="{StaticResource PhoneFontFamilyNormal}" LineHeight="22" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" Text="{Binding Version}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="24,0,24,1"/>
                         <!--Review-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="{Binding Translations.ReviewThisApp, Source={StaticResource Translations}}"
+                                    Content="{Binding ReviewLabel}"
                                     Margin="12,1,12,7"
                                     Click="Review_Click"/>
                         <!--Feedback-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="{Binding Translations.SuggestionsMail, Source={StaticResource Translations}}"
+                                    Content="{Binding FeedbackLabel}"
                                     Margin="12,1,12,0"
                                     Click="Feddback_Click"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--licencja-->
-            <controls:PivotItem Header="{Binding Translations.License, Source={StaticResource Translations}}">
+            <controls:PivotItem Header="{Binding LicenseLabel}">
                 <ScrollViewer Margin="0,0,-12,24" x:Name="License" x:FieldModifier="private">
                     <ContentPresenter Content="{Binding License}" SizeChanged="LicenseControl_SizeChanged" Loaded="LicenseControl_Loaded"/>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--nowości-->
-            <controls:PivotItem Header="{Binding Translations.WhatsNew, Source={StaticResource Translations}}">
+            <controls:PivotItem Header="{Binding WhatsNewLabel}">
                 <ScrollViewer x:Name="Changelog" x:FieldModifier="private">
                     <views:WebXamlBlock
                         Margin="0,0,12,24"
@@ -74,14 +95,14 @@
                                 <TextBlock
                                     TextWrapping="Wrap"
                                     Style="{StaticResource PhoneTextLargeStyle}"
-                                    Text="{Binding Translations.WeInviteYouToVisitThisPageForInformationAbout, Source={StaticResource Translations}}"/>
+                                    Text="{Binding WeInviteYouLabel}"/>
                                 <TextBlock
                                     Text=" " />
                                 <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
                                     FontSize="{StaticResource PhoneFontSizeMediumLarge}"
-                                    NavigateUri="http://www.pabloware.com/wp7"
-                                    Content="www.pabloware.com/wp7"
+                                    NavigateUri="{Binding Web}"
+                                    Content="{Binding WebLabel}"
                                     TargetName="_self" />
                             </StackPanel>
                         </views:WebXamlBlock.FallbackContent>
@@ -90,4 +111,4 @@
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
-</commonViews:StateProviderPage>
+</views:StateProviderPage>

@@ -1,9 +1,9 @@
 ﻿using System.Windows;
-using Dietphone.ViewModels;
-using Dietphone.Tools;
+using Pabloware.About.ViewModels;
+using Pabloware.About.Tools;
 using System.Windows.Navigation;
 
-namespace Dietphone.Views
+namespace Pabloware.About.Views
 {
     public partial class About : StateProviderPage
     {
@@ -23,7 +23,9 @@ namespace Dietphone.Views
             base.OnNavigatedTo(e);
             var dispatcher = new OptionalDispatcher(Dispatcher);
             var resStreamProvider = new PhoneResourceStreamProvider();
+            var coming = new ComingToAbout(NavigationContext);
             viewModel = new AboutViewModel(dispatcher, resStreamProvider);
+            viewModel.Coming = coming;
             viewModel.StateProvider = this;
             viewModel.Untombstone();
             Untombstone();

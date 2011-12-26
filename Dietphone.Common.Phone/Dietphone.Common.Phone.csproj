@@ -74,6 +74,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Pabloware.About.Phone\GoingToAbout.cs">
+      <Link>ViewModels\GoingToAbout.cs</Link>
+    </Compile>
     <Compile Include="BinarySerializers\PhoneBinaryStreamProvider.cs" />
     <Compile Include="MyApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

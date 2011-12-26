@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Threading;
 
-namespace Dietphone.Tools
+namespace Pabloware.About.Tools
 {
-    public class OptionalDispatcher
+    internal class OptionalDispatcher
     {
         private readonly Dispatcher dispatcher;
 

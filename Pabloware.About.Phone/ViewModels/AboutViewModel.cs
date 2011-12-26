@@ -4,45 +4,121 @@ using Microsoft.Phone.Tasks;
 using System.Windows;
 using System.IO;
 using System.Windows.Shapes;
-using Dietphone.Tools;
-using Dietphone.Views;
+using Pabloware.About.Tools;
+using Pabloware.About.Views;
 using System;
 
-namespace Dietphone.ViewModels
+namespace Pabloware.About.ViewModels
 {
     public class AboutViewModel : PivotTombstoningViewModel
     {
         public StackPanel License { get; private set; }
         private int pivot = DEFAULT_PIVOT;
+        private AboutDto dto;
         private readonly OptionalDispatcher dispatcher;
         private readonly ResourceStreamProvider resStreamProvider;
-        private readonly AppVersion appVersion = new AppVersion();
-        private const string MAIL = "wp7@pabloware.com";
         private const int LICENSE_PIVOT = 1;
         private const int DEFAULT_PIVOT = 0;
-        private const string PATH_TO_LICENSE = "/Dietphone.Rarely.Phone;component/documents/license.{0}.txt";
-        private const string CHANGELOG_URI = "http://www.pabloware.com/wp7/dietphone.changelog.{0}.xaml";
 
-        public AboutViewModel(OptionalDispatcher dispatcher, ResourceStreamProvider resStreamProvider)
+        internal AboutViewModel(OptionalDispatcher dispatcher, ResourceStreamProvider resStreamProvider)
         {
             this.dispatcher = dispatcher;
             this.resStreamProvider = resStreamProvider;
+        }
+
+        internal ComingToAbout Coming
+        {
+            set
+            {
+                dto = value.Dto;
+            }
+        }
+
+        public string AppNameUppercase
+        {
+            get
+            {
+                return AppName.ToUpper();
+            }
+        }
+
+        public string AboutAppLabel
+        {
+            get
+            {
+                return dto.AboutAppLabel;
+            }
         }
 
         public string AppName
         {
             get
             {
-                return appVersion.GetAppName();
+                return dto.AppName;
             }
         }
 
-        public string AppVersion
+        public string Publisher
         {
             get
             {
-                var version = appVersion.GetAppVersion();
-                return string.Format(Translations.Version, version);
+                return string.Format(dto.PublisherLabel, dto.Publisher);
+            }
+        }
+
+        public string Web
+        {
+            get
+            {
+                return dto.Web;
+            }
+        }
+
+        public string WebLabel
+        {
+            get
+            {
+                return Web.Replace("http://", string.Empty);
+            }
+        }
+
+        public string Version
+        {
+            get
+            {
+                return string.Format(dto.VersionLabel, dto.Version);
+            }
+        }
+
+        public string ReviewLabel
+        {
+            get
+            {
+                return dto.ReviewLabel;
+            }
+        }
+
+        public string FeedbackLabel
+        {
+            get
+            {
+                return string.Format(dto.FeedbackLabel, dto.Mail);
+            }
+        }
+
+        public string LicenseLabel
+        {
+            get
+            {
+                return dto.LicenseLabel;
+            }
+        }
+
+        public string WhatsNewLabel
+        {
+            get
+            {
+                return dto.WhatsNewLabel;
             }
         }
 
@@ -50,7 +126,16 @@ namespace Dietphone.ViewModels
         {
             get
             {
-                return string.Format(CHANGELOG_URI, MyApp.CurrentUiCulture);
+                return string.Format(dto.ChangelogUri, dto.UiCulture);
+            }
+        }
+
+
+        public string WeInviteYouLabel
+        {
+            get
+            {
+                return dto.WeInviteYouLabel;
             }
         }
 
@@ -77,7 +162,7 @@ namespace Dietphone.ViewModels
         public void OpenFeedback()
         {
             EmailComposeTask task = new EmailComposeTask();
-            task.To = MAIL;
+            task.To = dto.Mail;
             task.Show();
         }
 
@@ -105,7 +190,7 @@ namespace Dietphone.ViewModels
         {
             License = new StackPanel();
             var children = License.Children;
-            var pathToLicense = string.Format(PATH_TO_LICENSE, MyApp.CurrentUiCulture);
+            var pathToLicense = string.Format(dto.PathToLicense, dto.UiCulture);
             var stream = resStreamProvider.GetResourceStream(pathToLicense);
             using (var reader = new StreamReader(stream))
             {

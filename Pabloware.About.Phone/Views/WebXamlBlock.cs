@@ -6,7 +6,7 @@ using System.Net;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Dietphone.Views
+namespace Pabloware.About.Views
 {
     public class WebXamlBlock : ContentControl
     {

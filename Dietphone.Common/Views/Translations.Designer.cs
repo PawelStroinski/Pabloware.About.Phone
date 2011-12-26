@@ -620,11 +620,11 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to from Pabloware.
+        ///   Looks up a localized string similar to from {0}.
         /// </summary>
-        public static string FromPabloware {
+        public static string From {
             get {
-                return ResourceManager.GetString("FromPabloware", resourceCulture);
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -1091,11 +1091,11 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suggestions: wp7@pabloware.com.
+        ///   Looks up a localized string similar to Suggestions: {0}.
         /// </summary>
-        public static string SuggestionsMail {
+        public static string Suggestions {
             get {
-                return ResourceManager.GetString("SuggestionsMail", resourceCulture);
+                return ResourceManager.GetString("Suggestions", resourceCulture);
             }
         }
         
