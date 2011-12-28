@@ -85,17 +85,17 @@
       <DependentUpon>Translations.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\PublicTranslations.cs" />
-    <Compile Include="Views\Translations.pl-PL.Designer.cs">
+    <Compile Include="Views\Translations.pl.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Translations.pl-PL.resx</DependentUpon>
+      <DependentUpon>Translations.pl.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Translations.pl-PL.resx">
+    <EmbeddedResource Include="Views\Translations.pl.resx">
       <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Translations.pl-PL.Designer.cs</LastGenOutput>
+      <LastGenOutput>Translations.pl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Translations.resx">
       <SubType>Designer</SubType>

@@ -219,30 +219,6 @@ Został wprowadzony, żeby ułatwić liczenie węglowodanów w posiłku.</value>
     <value>WBT czyli wymiennik białkowo-tłuszczowy to wartość energetyczna (kcal) pochodząca z białka i tłuszczu podzielona przez 100.
 Pozwala w jednej poręcznej liczbie określić zawartość białka i tłuszczu w posiłku.</value>
   </data>
-  <data name="AboutApp" xml:space="preserve">
-    <value>o aplikacji</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>od {0}</value>
-  </data>
-  <data name="Suggestions" xml:space="preserve">
-    <value>Sugestie: {0}</value>
-  </data>
-  <data name="License" xml:space="preserve">
-    <value>licencja</value>
-  </data>
-  <data name="ReviewThisApp" xml:space="preserve">
-    <value>Recenzuj tę aplikację</value>
-  </data>
-  <data name="WhatsNew" xml:space="preserve">
-    <value>co nowego</value>
-  </data>
-  <data name="WeInviteYouToVisitThisPageForInformationAbout" xml:space="preserve">
-    <value>Zapraszamy na nastepującą stronę w celu uzyskania informacji o najnowszej wersji aplikacji:</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Wersja: {0}</value>
-  </data>
   <data name="Dietphone" xml:space="preserve">
     <value>DIETPHONE</value>
   </data>

@@ -6,6 +6,8 @@ using System;
 using System.Net;
 using System.Text;
 using System.Windows.Navigation;
+using System.Threading;
+using System.Globalization;
 
 namespace Pabloware.About
 {
@@ -63,18 +65,10 @@ namespace Pabloware.About
         public string AppName { get; set; }
         public string Version { get; set; }
         public string Mail { get; set; }
-        public string Web { get; set; }
+        public string Url { get; set; }
         public string Publisher { get; set; }
         public string PathToLicense { get; set; }
-        public string ChangelogUri { get; set; }
+        public string ChangelogUrl { get; set; }
         public string UiCulture { get; set; }
-        public string AboutAppLabel { get; set; }
-        public string PublisherLabel { get; set; }
-        public string VersionLabel { get; set; }
-        public string ReviewLabel { get; set; }
-        public string FeedbackLabel { get; set; }
-        public string LicenseLabel { get; set; }
-        public string WhatsNewLabel { get; set; }
-        public string WeInviteYouLabel { get; set; }
     }
 }

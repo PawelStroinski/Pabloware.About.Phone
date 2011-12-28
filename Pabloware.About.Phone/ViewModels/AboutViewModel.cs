@@ -7,6 +7,7 @@ using System.Windows.Shapes;
 using Pabloware.About.Tools;
 using Pabloware.About.Views;
 using System;
+using System.Globalization;
 
 namespace Pabloware.About.ViewModels
 {
@@ -15,6 +16,7 @@ namespace Pabloware.About.ViewModels
         public StackPanel License { get; private set; }
         private int pivot = DEFAULT_PIVOT;
         private AboutDto dto;
+        private Translations translations;
         private readonly OptionalDispatcher dispatcher;
         private readonly ResourceStreamProvider resStreamProvider;
         private const int LICENSE_PIVOT = 1;
@@ -26,7 +28,7 @@ namespace Pabloware.About.ViewModels
             this.resStreamProvider = resStreamProvider;
         }
 
-        internal ComingToAbout Coming
+        internal ComingToAbout ComingToAbout
         {
             set
             {
@@ -42,14 +44,6 @@ namespace Pabloware.About.ViewModels
             }
         }
 
-        public string AboutAppLabel
-        {
-            get
-            {
-                return dto.AboutAppLabel;
-            }
-        }
-
         public string AppName
         {
             get
@@ -62,23 +56,23 @@ namespace Pabloware.About.ViewModels
         {
             get
             {
-                return string.Format(dto.PublisherLabel, dto.Publisher);
+                return string.Format(Translations.From, dto.Publisher);
             }
         }
 
-        public string Web
+        public string DisplayUrl
         {
             get
             {
-                return dto.Web;
+                return Url.Replace("http://", string.Empty);
             }
         }
 
-        public string WebLabel
+        public string Url
         {
             get
             {
-                return Web.Replace("http://", string.Empty);
+                return dto.Url;
             }
         }
 
@@ -86,56 +80,36 @@ namespace Pabloware.About.ViewModels
         {
             get
             {
-                return string.Format(dto.VersionLabel, dto.Version);
+                return string.Format(Translations.Version, dto.Version);
             }
         }
 
-        public string ReviewLabel
+        public string Suggestions
         {
             get
             {
-                return dto.ReviewLabel;
+                return string.Format(Translations.Suggestions, dto.Mail);
             }
         }
 
-        public string FeedbackLabel
+        public string ChangelogUrl
         {
             get
             {
-                return string.Format(dto.FeedbackLabel, dto.Mail);
+                return string.Format(dto.ChangelogUrl, dto.UiCulture);
             }
         }
 
-        public string LicenseLabel
+        public Translations Translations
         {
             get
             {
-                return dto.LicenseLabel;
-            }
-        }
-
-        public string WhatsNewLabel
-        {
-            get
-            {
-                return dto.WhatsNewLabel;
-            }
-        }
-
-        public string ChangelogUri
-        {
-            get
-            {
-                return string.Format(dto.ChangelogUri, dto.UiCulture);
-            }
-        }
-
-
-        public string WeInviteYouLabel
-        {
-            get
-            {
-                return dto.WeInviteYouLabel;
+                if (translations == null)
+                {
+                    translations = new Translations();
+                    SetTranslationsCulture();
+                }
+                return translations;
             }
         }
 
@@ -159,7 +133,7 @@ namespace Pabloware.About.ViewModels
             task.Show();
         }
 
-        public void OpenFeedback()
+        public void OpenSuggestions()
         {
             EmailComposeTask task = new EmailComposeTask();
             task.To = dto.Mail;
@@ -248,6 +222,12 @@ namespace Pabloware.About.ViewModels
             {
                 return null;
             }
+        }
+
+        private void SetTranslationsCulture()
+        {
+            var culture = new CultureInfo(dto.UiCulture);
+            Translations.Culture = culture;
         }
     }
 }

@@ -70,15 +70,6 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to about app.
-        /// </summary>
-        public static string AboutApp {
-            get {
-                return ResourceManager.GetString("AboutApp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to add.
         /// </summary>
         public static string Add {
@@ -620,15 +611,6 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to from {0}.
-        /// </summary>
-        public static string From {
-            get {
-                return ResourceManager.GetString("From", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Full square means maximum in category..
         /// </summary>
         public static string FullSquareMeansMaximumInCategory {
@@ -736,15 +718,6 @@ namespace Dietphone.Views {
         public static string LearnMoreAboutCuAndFpu {
             get {
                 return ResourceManager.GetString("LearnMoreAboutCuAndFpu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to license.
-        /// </summary>
-        public static string License {
-            get {
-                return ResourceManager.GetString("License", resourceCulture);
             }
         }
         
@@ -965,15 +938,6 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Review this app.
-        /// </summary>
-        public static string ReviewThisApp {
-            get {
-                return ResourceManager.GetString("ReviewThisApp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to save.
         /// </summary>
         public static string Save {
@@ -1091,15 +1055,6 @@ namespace Dietphone.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Suggestions: {0}.
-        /// </summary>
-        public static string Suggestions {
-            get {
-                return ResourceManager.GetString("Suggestions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The product does not exist..
         /// </summary>
         public static string TheProductDoesNotExist {
@@ -1186,33 +1141,6 @@ namespace Dietphone.Views {
         public static string Today {
             get {
                 return ResourceManager.GetString("Today", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version: {0}.
-        /// </summary>
-        public static string Version {
-            get {
-                return ResourceManager.GetString("Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to We invite you to visit this page for information about latest version of the app:.
-        /// </summary>
-        public static string WeInviteYouToVisitThisPageForInformationAbout {
-            get {
-                return ResourceManager.GetString("WeInviteYouToVisitThisPageForInformationAbout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to what&apos;s new.
-        /// </summary>
-        public static string WhatsNew {
-            get {
-                return ResourceManager.GetString("WhatsNew", resourceCulture);
             }
         }
         

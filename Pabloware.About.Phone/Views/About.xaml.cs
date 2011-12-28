@@ -23,9 +23,9 @@ namespace Pabloware.About.Views
             base.OnNavigatedTo(e);
             var dispatcher = new OptionalDispatcher(Dispatcher);
             var resStreamProvider = new PhoneResourceStreamProvider();
-            var coming = new ComingToAbout(NavigationContext);
+            var comingToAbout = new ComingToAbout(NavigationContext);
             viewModel = new AboutViewModel(dispatcher, resStreamProvider);
-            viewModel.Coming = coming;
+            viewModel.ComingToAbout = comingToAbout;
             viewModel.StateProvider = this;
             viewModel.Untombstone();
             Untombstone();
@@ -46,9 +46,9 @@ namespace Pabloware.About.Views
             viewModel.OpenReview();
         }
 
-        private void Feddback_Click(object sender, RoutedEventArgs e)
+        private void Suggestions_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.OpenFeedback();
+            viewModel.OpenSuggestions();
         }
 
         private void LicenseControl_SizeChanged(object sender, SizeChangedEventArgs e)

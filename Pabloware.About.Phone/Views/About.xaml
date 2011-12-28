@@ -38,18 +38,18 @@
     <Grid Background="Transparent">
         <controls:Pivot Title="{Binding AppNameUppercase}" SelectedIndex="{Binding Pivot, Mode=TwoWay}">
             <!--o aplikacji-->
-            <controls:PivotItem Header="{Binding AboutAppLabel}">
+            <controls:PivotItem Header="{Binding Translations.AboutApp}">
                 <ScrollViewer>
                     <StackPanel>
                         <!--AppName-->
                         <TextBlock Text="{Binding AppName}" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" VerticalAlignment="Top" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneAccentBrush}" Margin="21,0,0,0"/>
                         <!--Publisher-->
                         <TextBlock Text="{Binding Publisher}" FontSize="{StaticResource PhoneFontSizeLarge}" FontFamily="{StaticResource PhoneFontFamilySemiLight}" LineHeight="43" LineStackingStrategy="BlockLineHeight" Foreground="{StaticResource PhoneForegroundBrush}" TextWrapping="Wrap" VerticalAlignment="Top" Margin="21,0,0,0"/>
-                        <!--Web-->
+                        <!--Url-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    NavigateUri="{Binding Web}"
-                                    Content="{Binding WebLabel}"
+                                    NavigateUri="{Binding Url}"
+                                    Content="{Binding DisplayUrl}"
                                     TargetName="_self"
                                     Margin="12,1,12,20"/>
                         <!--Version-->
@@ -57,46 +57,46 @@
                         <!--Review-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="{Binding ReviewLabel}"
+                                    Content="{Binding Translations.ReviewThisApp}"
                                     Margin="12,1,12,7"
                                     Click="Review_Click"/>
-                        <!--Feedback-->
+                        <!--Suggestions-->
                         <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
-                                    Content="{Binding FeedbackLabel}"
+                                    Content="{Binding Suggestions}"
                                     Margin="12,1,12,0"
-                                    Click="Feddback_Click"/>
+                                    Click="Suggestions_Click"/>
                     </StackPanel>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--licencja-->
-            <controls:PivotItem Header="{Binding LicenseLabel}">
+            <controls:PivotItem Header="{Binding Translations.License}">
                 <ScrollViewer Margin="0,0,-12,24" x:Name="License" x:FieldModifier="private">
                     <ContentPresenter Content="{Binding License}" SizeChanged="LicenseControl_SizeChanged" Loaded="LicenseControl_Loaded"/>
                 </ScrollViewer>
             </controls:PivotItem>
             <!--nowości-->
-            <controls:PivotItem Header="{Binding WhatsNewLabel}">
+            <controls:PivotItem Header="{Binding Translations.WhatsNew}">
                 <ScrollViewer x:Name="Changelog" x:FieldModifier="private">
                     <views:WebXamlBlock
                         Margin="0,0,12,24"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
-                        XamlUri="{Binding ChangelogUri}"
+                        XamlUri="{Binding ChangelogUrl}"
                         SizeChanged="ChangelogControl_SizeChanged">
                         <views:WebXamlBlock.FallbackContent>
                             <StackPanel>
                                 <TextBlock
                                     TextWrapping="Wrap"
                                     Style="{StaticResource PhoneTextLargeStyle}"
-                                    Text="{Binding WeInviteYouLabel}"/>
+                                    Text="{Binding Translations.WeInviteYouToVisitThisPageForInformationAbout}"/>
                                 <TextBlock
                                     Text=" " />
                                 <HyperlinkButton
                                     Style="{StaticResource AccentHyperlink}"
                                     FontSize="{StaticResource PhoneFontSizeMediumLarge}"
-                                    NavigateUri="{Binding Web}"
-                                    Content="{Binding WebLabel}"
+                                    NavigateUri="{Binding Url}"
+                                    Content="{Binding DisplayUrl}"
                                     TargetName="_self" />
                             </StackPanel>
                         </views:WebXamlBlock.FallbackContent>

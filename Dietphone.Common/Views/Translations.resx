@@ -219,30 +219,6 @@ Purpose is to facilitate the counting of carbohydrates in meals. Also known as B
     <value>FPU (Fat-Protein Unit) means calories value coming from fat and protein divided by 100.
 So one number gives information on both fat and protein in meal.</value>
   </data>
-  <data name="AboutApp" xml:space="preserve">
-    <value>about app</value>
-  </data>
-  <data name="From" xml:space="preserve">
-    <value>from {0}</value>
-  </data>
-  <data name="Suggestions" xml:space="preserve">
-    <value>Suggestions: {0}</value>
-  </data>
-  <data name="License" xml:space="preserve">
-    <value>license</value>
-  </data>
-  <data name="ReviewThisApp" xml:space="preserve">
-    <value>Review this app</value>
-  </data>
-  <data name="WhatsNew" xml:space="preserve">
-    <value>what's new</value>
-  </data>
-  <data name="WeInviteYouToVisitThisPageForInformationAbout" xml:space="preserve">
-    <value>We invite you to visit this page for information about latest version of the app:</value>
-  </data>
-  <data name="Version" xml:space="preserve">
-    <value>Version: {0}</value>
-  </data>
   <data name="Dietphone" xml:space="preserve">
     <value>DIETPHONE</value>
   </data>
