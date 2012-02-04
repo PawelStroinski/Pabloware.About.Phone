@@ -9,5 +9,6 @@
         <Button Content="Clear meals" Height="23" HorizontalAlignment="Left" Margin="12,99,0,0" Name="ClearMeals" VerticalAlignment="Top" Width="99" Click="ClearMeals_Click" />
         <Button Content="Open products" Height="23" HorizontalAlignment="Left" Margin="117,99,0,0" Name="OpenProducts" VerticalAlignment="Top" Width="115" Click="OpenProducts_Click" />
         <Button Content="Set default meal names" Height="23" HorizontalAlignment="Left" Margin="238,99,0,0" Name="SetDefaultMealNames" VerticalAlignment="Top" Width="145" Click="SetDefaultMealNames_Click" />
+        <Button Content="Clear categories and products" Height="23" HorizontalAlignment="Left" Margin="12,143,0,0" Name="ClearCategoriesAndProducts" VerticalAlignment="Top" Width="196" DataContext="{Binding}" Click="ClearCategoriesAndProducts_Click" />
     </Grid>
 </Window>

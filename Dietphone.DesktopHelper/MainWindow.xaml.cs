@@ -81,5 +81,15 @@ namespace Dietphone.DesktopHelper
             var dinner = factories.CreateMealName();
             dinner.Kind = MealNameKind.Dinner;
         }
+
+        private void ClearCategoriesAndProducts_Click(object sender, RoutedEventArgs e)
+        {
+            var categories = factories.Categories;
+            categories.Clear();
+            var testCategory = factories.CreateCategory();
+            testCategory.Name = "test category";
+            var products = factories.Products;
+            products.Clear();
+        }
     }
 }
