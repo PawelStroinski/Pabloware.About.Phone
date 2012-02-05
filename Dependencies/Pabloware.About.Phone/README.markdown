@@ -1,0 +1,1 @@
+See [About Dialog for Windows Phone](https://github.com/PawelStroinski/Pabloware.About.Phone) for more information.

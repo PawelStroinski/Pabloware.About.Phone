@@ -1,0 +1,343 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Telerik.Windows.Controls.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Telerik.Windows.Controls.GroupHeaderItemTapEventArgs">
+            <summary>
+            Encapsulates the data associated with a Tap gesture over a group header item within <see cref="T:Telerik.Windows.Controls.RadJumpList"/>.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.GroupHeaderItemTapEventArgs.#ctor(Telerik.Windows.Controls.RadDataBoundListBoxItem,System.Windows.UIElement,System.Windows.Point)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.GroupHeaderItemTapEventArgs"/> class.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="container">The UIElement where the Tap gesture originated.</param>
+            <param name="manipulationOrigin">The manipulation origin.</param>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupHeaderItemTapEventArgs.ShowGroupPicker">
+            <summary>
+            Determines whether the built-in group picker should be displayed after group header Tap.
+            </summary>
+        </member>
+        <member name="T:Telerik.Windows.Controls.GroupPickerItemTapEventArgs">
+            <summary>
+            Encapsulates the data associated with a Tap gesture over an item within the <see cref="T:Telerik.Windows.Controls.RadJumpList"/> group picker.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.#ctor(System.Windows.Controls.ContentControl)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.GroupPickerItemTapEventArgs"/> class.
+            </summary>
+            <param name="element">The element.</param>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.Item">
+            <summary>
+            Gets the visual element instance that was tapped.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.DataItem">
+            <summary>
+            Gets the data item associated with the tapped element.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.ClosePicker">
+            <summary>
+            Determines whether the group picker should be closed after this Tap.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.ScrollToItem">
+            <summary>
+            Determines whether the group picker should be closed after this Tap.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.GroupPickerItemTapEventArgs.DataItemToNavigate">
+            <summary>
+            Gets or sets the item to navigate to after the tap. Defaults to the data item associated with the event.
+            </summary>
+        </member>
+        <member name="T:Telerik.Windows.Controls.JumpList.JumpListGroupPicker">
+            <summary>
+            Represents the groups picker displayed in <see cref="T:Telerik.Windows.Controls.RadJumpList"/> control.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPicker.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.JumpList.JumpListGroupPicker"/> class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPicker.GetContainerForItemOverride">
+            <summary>
+            Creates or identifies the element that is used to display the given item.
+            </summary>
+            <returns>
+            The element that is used to display the given item.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPicker.PrepareContainerForItemOverride(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Prepares the specified element to display the specified item.
+            </summary>
+            <param name="element">The element used to display the specified item.</param>
+            <param name="item">The item to display.</param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPicker.ClearContainerForItemOverride(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Undoes the effects of the <see cref="M:System.Windows.Controls.ItemsControl.PrepareContainerForItemOverride(System.Windows.DependencyObject,System.Object)"/> method.
+            </summary>
+            <param name="element">The container element.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="P:Telerik.Windows.Controls.JumpList.JumpListGroupPicker.Owner">
+            <summary>
+            Gets the <see cref="T:Telerik.Windows.Controls.RadJumpList"/> instance this picker is attached to.
+            </summary>
+        </member>
+        <member name="T:Telerik.Windows.Controls.JumpList.JumpListGroupPickerItem">
+            <summary>
+            Represents the visual item within a <see cref="T:Telerik.Windows.Controls.JumpList.JumpListGroupPicker"/> items control.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPickerItem.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.JumpList.JumpListGroupPickerItem"/> class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.JumpList.JumpListGroupPickerItem.OnManipulationCompleted(System.Windows.Input.ManipulationCompletedEventArgs)">
+            <summary>
+            Called when the <see cref="E:System.Windows.Controls.Control.ManipulationCompleted"/> event occurs. This member overrides <see cref="M:System.Windows.UIElement.OnManipulationCompleted(System.Object,System.Windows.Input.ManipulationCompletedEventArgs)"/>.
+            </summary>
+            <param name="e">Event data for the event.</param>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RadJumpList">
+            <summary>
+            Represents a list control that supports visual representation of groups and corresponding sub-items.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerItemsPanelProperty">
+            <summary>
+            Identifies the GroupPickerPanel dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerOpenAnimationProperty">
+            <summary>
+            Identifies the GroupPickerOpenAnimation dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerCloseAnimationProperty">
+            <summary>
+            Identifies the GroupPickerCloseAnimation dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerItemsSourceProperty">
+            <summary>
+            Identifies the GroupPickerItemsSource dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.IsGroupPickerEnabledProperty">
+            <summary>
+            Identifies the GroupPickerPanel dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.IsGroupPickerOpenProperty">
+            <summary>
+            Identifies the GroupPickerPanel dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerItemTemplateSelectorProperty">
+            <summary>
+            Identifies the GroupPickerItemTemplateSelector dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerItemTemplateProperty">
+            <summary>
+            Identifies the GroupPickerItemTemplate dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupPickerItemStyleProperty">
+            <summary>
+            Identifies the GroupPickerItemStyle dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupHeaderTemplateSelectorProperty">
+            <summary>
+            Identifies the GroupHeaderTemplateSelector dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupHeaderTemplateProperty">
+            <summary>
+            Identifies the GroupHeaderTemplate dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadJumpList.GroupHeaderStyleProperty">
+            <summary>
+            Identifies the GroupHeaderStyle dependency property.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RadJumpList"/> class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.BeginDataUpdate">
+            <summary>
+            Begins a batch data update operation. Useful when adding more than one data descriptor simultaneously.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.EndDataUpdate">
+            <summary>
+            Ends a batch data update operation. Should be stacked with a previous <see cref="M:Telerik.Windows.Controls.RadJumpList.BeginDataUpdate"/> call.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.RefreshData">
+            <summary>
+            Forces explicit re-evaluation of the data.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.OnApplyTemplate">
+            <summary>
+            When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>. In simplest terms, this means the method is called just before a UI element displays in an application. For more information, see Remarks.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.OnGroupPickerItemTap(System.Windows.Controls.ContentControl)">
+            <summary>
+            Callback used by the group picker to notify for a Tap gesture over a group item.
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.InitializeListSource">
+            <summary>
+            Initializes the list source.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.OnItemTap(Telerik.Windows.Controls.RadDataBoundListBoxItem,System.Windows.UIElement,System.Windows.Point)">
+            <summary>
+            Handles a click from a child visual item.
+            </summary>
+            <param name="item"></param>
+            <param name="container"></param>
+            <param name="hitPoint"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadJumpList.PrepareContainerForItemOverride(Telerik.Windows.Controls.RadVirtualizingDataControlItem,Telerik.Windows.Data.IDataSourceItem)">
+            <summary>
+            Prepares the specified element to display the specified item.
+            </summary>
+            <param name="element">The element used to display the specified item.</param>
+            <param name="item">The item to display.</param>
+        </member>
+        <member name="E:Telerik.Windows.Controls.RadJumpList.GroupHeaderItemTap">
+            <summary>
+            Occurs when a group header item container has been tapped.
+            </summary>
+        </member>
+        <member name="E:Telerik.Windows.Controls.RadJumpList.GroupPickerItemTap">
+            <summary>
+            Occurs when an item within the group picker has been tapped.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerItemsPanel">
+            <summary>
+            Gets or sets the group picker panel.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.IsGroupPickerEnabled">
+            <summary>
+            Gets or sets a boolean value determining whether the group picker panel
+            can be shown by tapping on a group's header.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.IsGroupPickerOpen">
+            <summary>
+            Gets or sets a boolean value determining whether the group picker window is currently opened.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerOpenAnimation">
+            <summary>
+            Gets or sets the animation used to display the group picker.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerCloseAnimation">
+            <summary>
+            Gets or sets the animation used to hide the group picker.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerItemTemplate">
+            <summary>
+            Gets or sets an instance of the <see cref="T:System.Windows.DataTemplate"/> class that represents
+            the template used to define the visual appearance of a group picker.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerItemTemplateSelector">
+            <summary>
+            Gets or sets an instance of the <see cref="T:Telerik.Windows.Controls.DataTemplateSelector"/> class
+            that is used to select a template for a group displayed in the group picker panel.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupHeaderTemplateSelector">
+            <summary>
+            Gets or sets an instance of the <see cref="T:Telerik.Windows.Controls.DataTemplateSelector"/> class
+            that is used to select a template for a group's header.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerItemsSource">
+            <summary>
+            Gets or sets user-defined collection of items to be displayed within the group picker.
+            If this collection is specified, user is responsible for handling the GroupPickerItemTap event.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.Groups">
+            <summary>
+            Gets an array with all the top-level groups or null if no grouping data operation is applied.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupHeaderTemplate">
+            <summary>
+            Gets or sets an instance of the <see cref="T:System.Windows.DataTemplate"/> class that represents
+            the template used to define the visual appearance of a group's header.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupHeaderStyle">
+            <summary>
+            Gets or sets the Style instance to be applied to group headers.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupPickerItemStyle">
+            <summary>
+            Gets or sets the Style instance to be applied to the group picker items.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.GroupDescriptors">
+            <summary>
+            Gets an instance of the class that
+            holds instances of the <see cref="T:Telerik.Windows.Data.DataDescriptor"/> class which
+            describe the data groups.
+            </summary>
+            <value>The group descriptors.</value>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.FilterDescriptors">
+            <summary>
+            Gets an instance of the class that
+            holds instances of the <see cref="T:Telerik.Windows.Data.DataDescriptor"/> class which
+            describe the filters.
+            </summary>
+            <value>The filter descriptors.</value>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.SortDescriptors">
+            <summary>
+            Gets an instance of the class that
+            holds instances of the <see cref="T:Telerik.Windows.Data.DataDescriptor"/> class which define
+            how the data is sorted.
+            </summary>
+            <value>The sort descriptors.</value>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadJumpList.PickerWindow">
+            <summary>
+            This property is internal because it is used in the unit tests for the <see cref="T:Telerik.Windows.Controls.RadJumpList"/>
+            control.
+            </summary>
+        </member>
+    </members>
+</doc>

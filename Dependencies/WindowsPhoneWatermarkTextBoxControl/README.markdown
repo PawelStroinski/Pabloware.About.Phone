@@ -1,0 +1,1 @@
+See [Windows Phone 7 Silverlight Watermark TextBox Control](http://watermarktextbox.codeplex.com/) for more information. Here is modified version to mimic Search textbox from OS. Send email to `pawel-dot-stroinski-at-pabloware-dot-com` to get the source of this modified version.

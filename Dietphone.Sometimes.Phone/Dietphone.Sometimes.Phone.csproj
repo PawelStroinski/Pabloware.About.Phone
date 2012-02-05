@@ -42,12 +42,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Coding4Fun.Phone.Controls">
-      <HintPath>..\..\..\windowsphone\Coding4Fun.Phone\bin\Release\Coding4Fun.Phone.Controls.dll</HintPath>
+      <HintPath>..\Dependencies\Coding4Fun.Phone.Controls\Coding4Fun.Phone.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
-      <HintPath>..\..\..\windowsphone\Toolkit Feb 2011 Source and Samples\Bin\Release\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+      <HintPath>..\Dependencies\Microsoft.Phone.Controls.Toolkit\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Windows" />
@@ -56,13 +56,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="Telerik.Windows.Controls.Input">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Controls.Input.dll</HintPath>
+      <HintPath>..\Dependencies\Telerik.Windows\Telerik.Windows.Controls.Input.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Controls.Primitives">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Controls.Primitives.dll</HintPath>
+      <HintPath>..\Dependencies\Telerik.Windows\Telerik.Windows.Controls.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Core">
-      <HintPath>..\..\..\windowsphone\RadControls\Binaries\WindowsPhone\Telerik.Windows.Core.dll</HintPath>
+      <HintPath>..\Dependencies\Telerik.Windows\Telerik.Windows.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,1 @@
+See [RadControls for Windows Phone](http://www.telerik.com/products/windows-phone.aspx) for more information. Here are assemblies from trial version, which enable anyone to build project.
