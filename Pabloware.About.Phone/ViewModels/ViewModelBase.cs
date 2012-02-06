@@ -1,4 +1,4 @@
-﻿// Kod zaczerpnięty z http://www.japf.fr/2009/02/very-simple-mvvm-demo-application/ i dostosowany do SL oraz dodano obsługę powiadomień o wszystkich properites
+﻿// Code taken from http://www.japf.fr/2009/02/very-simple-mvvm-demo-application/ and adjusted for SL as well as added support for notification of all properties
 // The following code is inspired by the work of Josh Smith
 // http://joshsmithonwpf.wordpress.com/
 using System.ComponentModel;

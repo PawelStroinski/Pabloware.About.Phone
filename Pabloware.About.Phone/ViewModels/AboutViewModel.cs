@@ -1,4 +1,4 @@
-﻿// Kod LoadLicense() zaczerpnięty z http://www.jeff.wilcox.name/2011/07/my-app-about-page/
+﻿// LoadLicense() code taken from http://www.jeff.wilcox.name/2011/07/my-app-about-page/
 using System.Windows.Controls;
 using Microsoft.Phone.Tasks;
 using System.Windows;

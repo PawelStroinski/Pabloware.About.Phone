@@ -1,5 +1,7 @@
-﻿// How to use:
-// This source file should be copied (or linked) to assembly which should open About page.
+﻿// GoingToAbout.cs file version: 1
+// -------------------------------
+// How to use:
+// This source file should be copied to assembly which is supposed to open About page.
 // Then please create instance of GoingToAbout, fill its Dto property and call its Go() method.
 
 using System;

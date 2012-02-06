@@ -1,4 +1,4 @@
-﻿// Na podstawie http://www.jeff.wilcox.name/2011/07/my-app-about-page/
+﻿// Based on http://www.jeff.wilcox.name/2011/07/my-app-about-page/
 using System.Windows.Controls;
 using System;
 using System.Windows;

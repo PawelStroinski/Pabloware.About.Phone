@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pabloware.About.Phone", "Pabloware.About.Phone.csproj", "{AAC63FCC-5E62-4013-A005-0C4682B4E2D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pabloware.About.Phone", "Pabloware.About.Phone\Pabloware.About.Phone.csproj", "{AAC63FCC-5E62-4013-A005-0C4682B4E2D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,1 +1,0 @@
-See [Coding4Fun Tools](http://coding4fun.codeplex.com/) for more information.
